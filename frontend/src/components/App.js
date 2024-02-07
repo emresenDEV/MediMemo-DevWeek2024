@@ -9,8 +9,8 @@ function App() {
         <div className="App">
             <NavBar />
             <Switch>
-                <Route exact path="/"> </Route>
-                <Route exact path="/path1">  </Route>
+                <Route exact path="/"> </Route> 
+                {/* <Route exact path="/path1">  </Route> */}
             </Switch>
         </div>
     );
