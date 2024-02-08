@@ -1,15 +1,16 @@
-import React, { useState } from "react";
-import { NavLink } from 'react-router-dom';
+import React, {useState} from "react";
+import {NavLink} from 'react-router-dom';
 
 function NavBar() {
   const [user, setUser] = useState("test")
 
-  function logout(){
+  function logout() {
     console.log("this will log out the user and navigate to home page")
     setUser("")
   }
 
-  if (user) return (
+  if (user)
+    return (
     <div className = "topnav">
         <p className="left-nav">Medi Memo</p>
         <NavLink className="middle-nav" to="/home">Home</NavLink>
@@ -33,5 +34,3 @@ function NavBar() {
 }
 
 export default NavBar
-
-

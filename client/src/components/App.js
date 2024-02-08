@@ -1,7 +1,8 @@
 import React from "react";
-import NavBar from "./NavBar";
 // import components
-import { Switch, Route } from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
+
+import NavBar from "./NavBar";
 
 function App() {
 
@@ -10,10 +11,11 @@ function App() {
             <NavBar />
             <Switch>
                 <Route exact path="/"> </Route> 
-                {/* <Route exact path="/path1">  </Route> */}
+                {/* <Route exact path="/path1">  </Route> */
+}
             </Switch>
         </div>
     );
-}
+            }
 
-export default App;
+            export default App;
