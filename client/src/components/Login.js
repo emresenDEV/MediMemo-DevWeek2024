@@ -28,22 +28,26 @@ function Login() {
             <h1>Welcome Back!</h1>
             <p>Please log in to your account.</p>
             <form onSubmit={handleSubmit}>
-              <div className="input">
+              <div className="input-div">
               <label >Email Address *
                 <br/>
-                <input id="email" type="text" placeholder="Enter email" value={formData.email} onChange={handleChange}/>
+                {/* <input id="email" type="text" placeholder="Enter email" value={formData.email} onChange={handleChange}/> */}
+                <input id="email" type="text" value={formData.email} onChange={handleChange}/>
               </label>
               </div>
-              <div className="input">
+              <div className="input-div">
               <label >Password *
                 <br/>
-                <input id="password" type="text" placeholder="Enter strong password" value={formData.password} onChange={handleChange}/>
+                {/* <input id="password" type="text" placeholder="Enter strong password" value={formData.password} onChange={handleChange}/> */}
+                <input id="password" type="text" value={formData.password} onChange={handleChange}/>
               </label>
               </div>
-              <div className="input">
+              <p id="password-rules">Password must be 8 characters with a capital letter, a number, and a symbol</p>
+              <div className="input-div">
               <label >Provider code
                 <br/>
-                <input id="code" type="text" placeholder="Enter provider code" value={formData.password} onChange={handleChange}/>
+                {/* <input id="code" type="text" placeholder="Enter provider code" value={formData.password} onChange={handleChange}/> */}
+                <input id="code" type="text" value={formData.password} onChange={handleChange}/>
               </label>
               </div>
               <div className="remember-forgot">
@@ -57,7 +61,10 @@ function Login() {
               <a id="forgot-password" href="/recover-password">Forgot password?</a>
               </span>
               </div>
-              <button id="submit-login" type="submit">Submit</button>
+              <div>
+              <button id="login-button" type="submit">Login</button>
+              <button id="signup-button" type="submit">Create Account</button>
+              </div>
             </form>
           </div>
         </div>

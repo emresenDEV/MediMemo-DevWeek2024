@@ -80,10 +80,11 @@ body {
 .overlay {
   background-color: white;
   border-radius: 15px;
-  width: 70vw;
-  height: 70vh;
+  width: 76vw;
+  height: 80vh;
   display: flex;
-  border: #dfe1e0 2px solid;
+  border: #dfe1e0 4px solid;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;;
 }
 
 .overlay-col {
@@ -99,10 +100,10 @@ body {
 .login-image {
   /* height: 100%; */
   /* border: red 1px solid; */
-  width: 35vw;
-  height: 70vh;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border-radius: 0 15px 15px 0;
+  border-radius: 0 10px 10px 0;
 }
 
 .login-text {
@@ -115,19 +116,21 @@ body {
   transform: translate(-50%,-50%);
 }
 
-.input{
+.input-div {
   border: grey 1px solid;
   padding: 5px;
   margin-bottom: 10px;
   border-radius: 6px;
 }
 
-.input input {
+input {
   border: none;
-  text-decoration: none;
-  appearance: none;
-  -webkit-appearance: none;
-  box-shadow: none;
+  outline: none;
+  background: transparent;
+}
+
+.input-div:has(input:focus) {
+  border: #6191b8 2px solid;
 }
 
 .remember-forgot {
@@ -141,3 +144,34 @@ body {
 form button {
   text-decoration: none;
 }
+
+#password-rules {
+  font-size: 10px;
+}
+
+#login-button {
+  color: white;
+  background-color: #6191b8;
+}
+
+#signup-button {
+  background-color: transparent;
+  float: right
+}
+
+#signup-button, #login-button {
+  border: #6191b8 2px solid;
+  border-radius: 8px;
+  padding: 10px 15px;
+}
+
+form div:has(button) {
+  display: flex;
+  gap: 15px;
+}
+
+form div button {
+  flex: 1;
+  /* justify-content: space-between; */
+}
+
