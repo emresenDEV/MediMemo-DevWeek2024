@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { NavLink } from 'react-router-dom';
 
 function NavBar() {
-  const [user, setUser] = useState("test")
+  const [user, setUser] = useState("")
 
   function logout(){
     console.log("this will log out the user and navigate to home page")

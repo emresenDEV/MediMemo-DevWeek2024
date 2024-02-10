@@ -10,10 +10,10 @@ function App() {
     // return jsx
     return (
         <div className="App">
-            <NavBar />
+            {/* <NavBar /> */}
             <Switch>
                 {/* <Route exact path="/portal"> <Portal/> </Route> */}
-                <Route exact path="/login"> <Login/> </Route>
+                <Route exact path="/"> <Login/> </Route>
                 {/* <Route exact path="/path1">  </Route> */}
             </Switch>
         </div>

@@ -65,3 +65,79 @@ body {
   background-color: rgba(219, 219, 227, 0.468);
   border-radius: 15px;
 }
+
+/* login ******************************************/
+
+.background {
+  background-color: #A6BDD0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.overlay {
+  background-color: white;
+  border-radius: 15px;
+  width: 70vw;
+  height: 70vh;
+  display: flex;
+  border: #dfe1e0 2px solid;
+}
+
+.overlay-col {
+  flex: 50%;
+  height: fit-container;
+  /* border: red 1px solid; */
+}
+
+/* .col-right {
+  border-left: black solid 1px;
+} */
+
+.login-image {
+  /* height: 100%; */
+  /* border: red 1px solid; */
+  width: 35vw;
+  height: 70vh;
+  object-fit: cover;
+  border-radius: 0 15px 15px 0;
+}
+
+.login-text {
+  text-align: left;
+  /* border: black 1px solid; */
+  padding: 5vw;
+  position: relative;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+
+.input{
+  border: grey 1px solid;
+  padding: 5px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+}
+
+.input input {
+  border: none;
+  text-decoration: none;
+  appearance: none;
+  -webkit-appearance: none;
+  box-shadow: none;
+}
+
+.remember-forgot {
+  margin-bottom: 10px;
+}
+
+#span-forgot {
+  float: right;
+}
+
+form button {
+  text-decoration: none;
+}
