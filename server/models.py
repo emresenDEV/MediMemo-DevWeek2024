@@ -23,6 +23,17 @@ class User(db.Model, SerializerMixin):
   
   @password_hash.setter
   def password_hash(self, password):
+    #checks password security
+    if len(password) < 8:
+      raise ValueError('Password must be at least 8 characters.')
+    if any(char.isspace() for char in password):
+      raise ValueError('Paswords cannot contain spaces.')
+    if any(char.isupper() for char in password) == False:
+      raise ValueError('Password must contain an uppercase letter')
+    if any(char.isdigit() for char in password) == False:
+      raise ValueError('Password must contain a number.')
+    if all(char.isalnum() for char in password) == True:
+      raise ValueError('Password must contain a symbol.')
     # generates hashed version of password
     new_hashed_password = bcrypt.generate_password_hash(password, rounds=12)
     self._password_hash = new_hashed_password
@@ -33,17 +44,10 @@ class User(db.Model, SerializerMixin):
 
   @validates('email')
   def validates_email(self, key, value):
-    if value:
+    if "@" in value and "." in value:
       return value
     else:
       raise ValueError('User must be given a email.')
-    
-  @validates('_password_hash')
-  def validates_password(self, key, _password_hash):
-    if _password_hash:
-      return _password_hash
-    else:
-      raise ValueError('User must be given a _password_hash.')
     
   @validates('type')
   def validates_password(self, key, type):

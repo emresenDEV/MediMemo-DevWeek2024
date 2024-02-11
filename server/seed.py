@@ -7,12 +7,12 @@ def create_users():
     email = "tom@gmail.com",
     type = "provider"
     )
-  u1.password_hash = "1234"
+  u1.password_hash = "Abcdefgh1@"
   u2 = User(
     email = "jerry@gmail.com",
     type = "patient"
     )
-  u2.password_hash = "1234"
+  u2.password_hash = "1234567A&"
   users = [u1, u2]
   return users
 
