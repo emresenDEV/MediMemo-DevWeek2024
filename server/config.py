@@ -10,8 +10,9 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///medimemo.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-convention = {"fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s"}
-metadata = MetaData(naming_convention=convention)
+metadata = MetaData(naming_convention={
+    "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
+})
 db = SQLAlchemy(metadata=metadata)
 
 # create our migration using our db
