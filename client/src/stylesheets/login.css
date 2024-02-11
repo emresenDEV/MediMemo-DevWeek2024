@@ -79,7 +79,7 @@ form button {
 }
 
 #password-rules {
-  font-size: 12px;
+  font-size: 14px;
 }
 
 #login-button {
@@ -96,6 +96,11 @@ form button {
   border: #0f395cbb 2px solid;
   border-radius: 8px;
   padding: 10px 15px;
+  margin-bottom: 20px
+}
+
+#signup-button:hover, #login-button:hover {
+  box-shadow: rgba(196, 196, 196, 0.7) 0px 1px 2px 0px, rgba(196, 196, 196, 0.35) 0px 2px 6px 2px;
 }
 
 form div:has(button) {
@@ -107,6 +112,6 @@ form div button {
   flex: 1;
 }
 
-button:hover, label:has(input[type="checkbox"]) {
+button:hover, label:has(input[type="checkbox"]), input[type="checkbox"] {
   cursor: pointer;
 }

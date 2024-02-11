@@ -2,30 +2,48 @@ import React, { useState } from "react";
 
 function Login() {
   // javascript
-  const [formData, setFormData] = useState(
+  function handleFocus(e) { //lets user click on any part of the div to type their information
+    const input = e.target.querySelector("input")
+    if (input) {
+      input.focus()
+    }
+  }
+
+  const [formData, setFormData] = useState( //temporarily stores what the user has entered into the form
     {
       email: "",
       password: "",
       code: ""
     })
 
-  function handleChange(e) {
+  function handleChange(e) { //adds any changes to the form to the temporary storage
     setFormData({
       ...formData,
       [e.target.id]: e.target.value,
     });
   }
 
-  function handleSubmit(e) {
+  function handleSubmit(e) { //submits form
     e.preventDefault()
+    const action = document.activeElement.name //records which action is being taken
+    // console.log(formData, action)
+    if (action === 'login') {
+      console.log("client clicked log in")
+    }
+    if (action === 'signup') {
+      console.log("client clicked create account")
+    }
+    // setFormData({ //clears the form
+    //   email: "",
+    //   password: "",
+    //   code: ""
+    // })
   }
 
-  function handleFocus(e) {
-    const input = e.target.querySelector("input")
-    if (input) {
-      input.focus()
-    }
-  }
+  // function handleLogin(e) {
+  //   e.preventDefault()
+  //   console.log(e.target)
+  // }
 
   return (
     // jsx here
@@ -35,6 +53,7 @@ function Login() {
           <div className="login-text">
             <h1>Welcome Back!</h1>
             <p>Please log in to your account.</p>
+            {/* <form> */}
             <form onSubmit={handleSubmit}>
               <div className="input-div" onClick={handleFocus}>
               <label>Email Address *
@@ -70,8 +89,9 @@ function Login() {
               </span>
               </div>
               <div>
-              <button id="login-button" type="submit">Login</button>
-              <button id="signup-button" type="submit">Create Account</button>
+              <button id="login-button" type="submit" name="login">Log In</button>
+              {/* <button id="login-button" type="submit" onClick={handleLogin}>Login</button> */}
+              <button id="signup-button" type="submit" name="signup">Create Account</button>
               </div>
             </form>
           </div>
