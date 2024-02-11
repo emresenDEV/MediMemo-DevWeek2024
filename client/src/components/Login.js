@@ -6,6 +6,7 @@ function Login() {
     {
       email: "",
       password: "",
+      code: ""
     })
 
   function handleChange(e) {
@@ -19,6 +20,13 @@ function Login() {
     e.preventDefault()
   }
 
+  function handleFocus(e) {
+    const input = e.target.querySelector("input")
+    if (input) {
+      input.focus()
+    }
+  }
+
   return (
     // jsx here
     <div className="background">
@@ -28,14 +36,14 @@ function Login() {
             <h1>Welcome Back!</h1>
             <p>Please log in to your account.</p>
             <form onSubmit={handleSubmit}>
-              <div className="input-div">
-              <label >Email Address *
+              <div className="input-div" onClick={handleFocus}>
+              <label>Email Address *
                 <br/>
                 {/* <input id="email" type="text" placeholder="Enter email" value={formData.email} onChange={handleChange}/> */}
                 <input id="email" type="text" value={formData.email} onChange={handleChange}/>
               </label>
               </div>
-              <div className="input-div">
+              <div className="input-div" onClick={handleFocus}>
               <label >Password *
                 <br/>
                 {/* <input id="password" type="text" placeholder="Enter strong password" value={formData.password} onChange={handleChange}/> */}
@@ -43,11 +51,11 @@ function Login() {
               </label>
               </div>
               <p id="password-rules">Password must be 8 characters with a capital letter, a number, and a symbol</p>
-              <div className="input-div">
+              <div className="input-div" onClick={handleFocus}>
               <label >Provider code
                 <br/>
                 {/* <input id="code" type="text" placeholder="Enter provider code" value={formData.password} onChange={handleChange}/> */}
-                <input id="code" type="text" value={formData.password} onChange={handleChange}/>
+                <input id="code" type="text" value={formData.code} onChange={handleChange}/>
               </label>
               </div>
               <div className="remember-forgot">
