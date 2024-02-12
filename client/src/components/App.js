@@ -8,8 +8,8 @@ import ProviderPortal from "./ProviderPortal";
 
 function App() {
     // javascript here
-    const [user, setUser] = useState("")
-    // const [user, setUser] = useState({type:"patient"})
+    // const [user, setUser] = useState("")
+    const [user, setUser] = useState({type:"patient"})
     // const [user, setUser] = useState({type:"provider"})
     // return jsx
 

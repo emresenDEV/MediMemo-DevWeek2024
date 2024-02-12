@@ -1,2 +1,4 @@
 -- SQLite
+
 SELECT * FROM users
+;
