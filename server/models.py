@@ -4,14 +4,13 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy_serializer import SerializerMixin
 from config import db, bcrypt
 
-class User(db.Model, SerializerMixin):
-  __tablename__ = 'users'
+class Client(db.Model, SerializerMixin):
+  __tablename__ = 'clients'
   # serialize_rules = ('','')
 
   id = db.Column(db.Integer, primary_key=True)
   email = db.Column(db.String, unique=True)
   _password_hash = db.Column(db.String)
-  type = db.Column(db.String)
 
   #add relationships
 
@@ -49,55 +48,87 @@ class User(db.Model, SerializerMixin):
     else:
       raise ValueError('User must be given a email.')
     
-  @validates('type')
-  def validates_password(self, key, type):
+  def __repr__(self):
+    return f'<User {self.id}: {self.email}>'
+
+class Provider(db.Model, SerializerMixin):
+  __tablename__ = 'providers'
+  # serialize_rules = ('','')
+
+  id = db.Column(db.Integer, primary_key=True)
+  email = db.Column(db.String, unique=True)
+  _password_hash = db.Column(db.String)
+  provider_code = db.Column(db.String, unique=True)
+
+  #add relationships
+
+  # add password_hash property and authenticate instance methods here
+  @property
+  def password_hash(self):
+    # ensures user does not have access to password
+    raise AttributeError("You don't have permission to view the password")
+  
+  @password_hash.setter
+  def password_hash(self, password):
+    #checks password security
+    if len(password) < 8:
+      raise ValueError('Password must be at least 8 characters.')
+    if any(char.isspace() for char in password):
+      raise ValueError('Paswords cannot contain spaces.')
+    if any(char.isupper() for char in password) == False:
+      raise ValueError('Password must contain an uppercase letter')
+    if any(char.isdigit() for char in password) == False:
+      raise ValueError('Password must contain a number.')
+    if all(char.isalnum() for char in password) == True:
+      raise ValueError('Password must contain a symbol.')
+    # generates hashed version of password
+    new_hashed_password = bcrypt.generate_password_hash(password, rounds=12)
+    self._password_hash = new_hashed_password
+
+  def authenticate(self, password):
+    # check if inputted password matches user's password
+    return bcrypt.check_password_hash(self._password_hash, bcrypt.generate_password_hash(password, rounds=12))
+
+  @validates('email')
+  def validates_email(self, key, value):
+    if "@" in value and "." in value:
+      return value
+    else:
+      raise ValueError('Provider must be given a email.')
+
+  @validates('provider_code')
+  def validates_provider_code(self, key, type):
     if type:
       return type
     else:
-      raise ValueError('User must be given a type.')
+      raise ValueError('Provider must be given a provider code.')
     
   def __repr__(self):
-    return f'<User {self.id}: {self.email} ({self.type})>'
+    return f'<User {self.id}: {self.email}, provider_code {self.provider_code} >'
 
-class UserCodeJoin(db.Model, SerializerMixin):
-  __tablename__ = 'users_codes'
+class ClientProvider(db.Model, SerializerMixin):
+  __tablename__ = 'clients_providers'
   # serialize_rules = ('','')
 
   id = db.Column(db.Integer, primary_key=True)
-  userFK = db.Column(db.String, unique=True)
-  codeFK = db.Column(db.String)
+  clientFK = db.Column(db.String)
+  providerFK = db.Column(db.String)
 
   #add relationships
 
-  @validates('userFK')
-  def validates_userFK(self, key, userFK):
-    if userFK:
-      return userFK
+  @validates('clientFK')
+  def validates_clientFK(self, key, clientFK):
+    if clientFK:
+      return clientFK
     else:
-      raise ValueError('UserCodeJoin must be given a userFK.')
+      raise ValueError('ClientsProviders must be given a clientFK.')
     
-  @validates('codeFK')
-  def validates_codeFK(self, key, codeFK):
-    if codeFK:
-      return codeFK
+  @validates('providerFK')
+  def validates_providerFK(self, key, providerFK):
+    if providerFK:
+      return providerFK
     else:
-      raise ValueError('UserCodeJoin must be given a codeFK.')
+      raise ValueError('ClientsProviders must be given a providerFK.')
     
   def __repr__(self):
-    return f'<UserCodeJoin {self.id}: user {self.userFK} code {self.codeFK}>'
-  
-class ProviderCode(db.Model, SerializerMixin):
-  __tablename__ = 'codes'
-  # serialize_rules = ('','')
-
-  id = db.Column(db.Integer, primary_key=True)
-  code = db.Column(db.String)
-
-  #add relationships
-
-  @validates('code')
-  def validates_code(self, key, code):
-    if code:
-      return code
-    else:
-      raise ValueError('ProviderCode must be given a code value.')
+    return f'<ClientsProviders {self.id}: client {self.clientFK}, provider {self.providerFK}>'

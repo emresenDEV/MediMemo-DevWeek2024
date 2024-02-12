@@ -1,64 +1,141 @@
 from config import app, db
 from flask import make_response, request, session
-from models import User, UserCodeJoin, ProviderCode
+from models import Client, ClientProvider, Provider
 from sqlalchemy import UniqueConstraint
 
 @app.route('/')
 def index():
     return ''
 
-# users ------------------------------------------------------------------------
-@app.route('/users', methods=['POST'])
-def users():
-    if request.method == 'POST':
+# clients ------------------------------------------------------------------------
+@app.route('/clients', methods=['GET', 'POST'])
+def clients():
+    if request.method == 'GET':
+        clients = Client.query.all()
+        client_dict = [client.to_dict() for client in clients]
+        response = make_response(
+            client_dict,
+            200
+        )
+    elif request.method == 'POST':
         form_data = request.get_json()
         try:
-            new_user_obj = User(
+            new_client_obj = Client(
+                email = form_data['email'],
+                _password_hash = form_data['_password_hash']
+            )
+            db.session.add(new_client_obj)
+            db.session.commit()
+            response = make_response(
+                new_client_obj.to_dict(),
+                201
+            )
+        except ValueError:
+            response = make_response(
+                {"errors": ["validation errors in POST to clients"]},
+                400
+            )
+            return response
+    return response
+
+@app.route('/client/<int:id>', methods=['GET', 'PATCH', 'DELETE'])
+def clients_by_id(id):
+    client = Client.query.filter(Client.id == id).first()
+    if client:
+        if request.method == 'GET':
+            response = make_response(
+                client.to_dict(),
+                200
+            )
+        elif request.method == 'PATCH':
+            form_data = request.get_json()
+            try:
+                for attr in form_data:
+                    setattr(client, attr, form_data.get(attr))
+                db.session.commit()
+                response = make_response(
+                    client.to_dict(),
+                    202
+                )
+            except ValueError:
+                response = make_response(
+                    {"errors": ["validation errors in PATCH to clients id"]},
+                    400
+                )
+                return response
+        elif request.method == 'DELETE':
+            db.session.delete(client)
+            db.session.commit()
+            response = make_response(
+                {},
+                204
+            )
+    else:
+        response = make_response(
+            {"error": "Client not found"},
+            404
+        )
+    return response
+
+# providers ------------------------------------------------------------------------
+@app.route('/providers', methods=['GET', 'POST'])
+def providers():
+    if request.method == 'GET':
+        providers = Provider.query.all()
+        provider_dict = [provider.to_dict() for provider in providers]
+        response = make_response(
+            provider_dict,
+            200
+        )
+    elif request.method == 'POST':
+        form_data = request.get_json()
+        try:
+            new_provider_obj = Provider(
                 email = form_data['email'],
                 _password_hash = form_data['_password_hash'],
-                type = form_data['type']
+                provider_code = form_data['provider_code']
             )
-            db.session.add(new_user_obj)
+            db.session.add(new_provider_obj)
             db.session.commit()
             response = make_response(
-                new_user_obj.to_dict(),
+                new_provider_obj.to_dict(),
                 201
             )
         except ValueError:
             response = make_response(
-                {"errors": ["validation errors in POST to users"]},
+                {"errors": ["validation errors in POST to providers"]},
                 400
             )
             return response
-        return response
+    return response
 
-@app.route('/user/<int:id>', methods=['GET', 'PATCH', 'DELETE'])
-def users_by_id(id):
-    user = User.query.filter(User.id == id).first()
-    if user:
+@app.route('/provider/<int:id>', methods=['GET', 'PATCH', 'DELETE'])
+def providers_by_id(id):
+    provider = Provider.query.filter(Provider.id == id).first()
+    if provider:
         if request.method == 'GET':
             response = make_response(
-                user.to_dict(),
+                provider.to_dict(),
                 200
             )
         elif request.method == 'PATCH':
             form_data = request.get_json()
             try:
                 for attr in form_data:
-                    setattr(user, attr, form_data.get(attr))
+                    setattr(provider, attr, form_data.get(attr))
                 db.session.commit()
                 response = make_response(
-                    user.to_dict(),
+                    provider.to_dict(),
                     202
                 )
             except ValueError:
                 response = make_response(
-                    {"errors": ["validation errors in PATCH to users id"]},
+                    {"errors": ["validation errors in PATCH to providers id"]},
                     400
                 )
                 return response
         elif request.method == 'DELETE':
-            db.session.delete(user)
+            db.session.delete(provider)
             db.session.commit()
             response = make_response(
                 {},
@@ -66,124 +143,69 @@ def users_by_id(id):
             )
     else:
         response = make_response(
-            {"error": "User not found"},
+            {"error": "provider not found"},
             404
         )
     return response
 
-# codes ------------------------------------------------------------------------
-@app.route('/codes', methods=['POST'])
-def codes():
-    if request.method == 'POST':
+# clients_providers ------------------------------------------------------------------------
+@app.route('/clients_providers', methods=['GET', 'POST'])
+def clients_providers():
+    if request.method == 'GET':
+        clients_providers = ClientProvider.query.all()
+        client_provider_dict = [client_provider.to_dict() for client_provider in clients_providers]
+        response = make_response(
+            client_provider_dict,
+            200
+        )
+    elif request.method == 'POST':
         form_data = request.get_json()
         try:
-            new_code_obj = ProviderCode(
-                code = form_data['code']
+            new_client_provider_obj = ClientProvider(
+                clientFK = form_data['clientFK'],
+                providerFK = form_data['_password_hash']
             )
-            db.session.add(new_code_obj)
+            db.session.add(new_client_provider_obj)
             db.session.commit()
             response = make_response(
-                new_code_obj.to_dict(),
+                new_client_provider_obj.to_dict(),
                 201
             )
         except ValueError:
             response = make_response(
-                {"errors": ["validation errors in POST to codes"]},
+                {"errors": ["validation errors in POST to clients_providers"]},
                 400
             )
             return response
-        return response
-
-@app.route('/code/<int:id>', methods=['GET', 'PATCH', 'DELETE'])
-def codes_by_id(id):
-    code = ProviderCode.query.filter(ProviderCode.id == id).first()
-    if code:
-        if request.method == 'GET':
-            response = make_response(
-                code.to_dict(),
-                200
-            )
-        elif request.method == 'PATCH':
-            form_data = request.get_json()
-            try:
-                for attr in form_data:
-                    setattr(code, attr, form_data.get(attr))
-                db.session.commit()
-                response = make_response(
-                    code.to_dict(),
-                    202
-                )
-            except ValueError:
-                response = make_response(
-                    {"errors": ["validation errors in PATCH to codes id"]},
-                    400
-                )
-                return response
-        elif request.method == 'DELETE':
-            db.session.delete(code)
-            db.session.commit()
-            response = make_response(
-                {},
-                204
-            )
-    else:
-        response = make_response(
-            {"error": "Code not found"},
-            404
-        )
     return response
 
-# users_codes ------------------------------------------------------------------------
-@app.route('/users_codes', methods=['POST'])
-def users_codes():
-    if request.method == 'POST':
-        form_data = request.get_json()
-        try:
-            new_user_code_obj = UserCodeJoin(
-                userFK = form_data['userFK'],
-                codeFK = form_data['_password_hash']
-            )
-            db.session.add(new_user_code_obj)
-            db.session.commit()
-            response = make_response(
-                new_user_code_obj.to_dict(),
-                201
-            )
-        except ValueError:
-            response = make_response(
-                {"errors": ["validation errors in POST to users_codes"]},
-                400
-            )
-            return response
-        return response
-
-@app.route('/user_code/<int:id>', methods=['GET', 'PATCH', 'DELETE'])
-def users_codes_by_id(id):
-    user_code = UserCodeJoin.query.filter(UserCodeJoin.id == id).first()
-    if user_code:
+@app.route('/client_provider/<int:id>', methods=['GET', 'PATCH', 'DELETE'])
+def clients_providers_by_id(id):
+    client_provider = ClientProvider.query.filter(ClientProvider.id == id).first()
+    if client_provider:
         if request.method == 'GET':
             response = make_response(
-                user_code.to_dict(),
+                client_provider.to_dict(),
                 200
             )
         elif request.method == 'PATCH':
             form_data = request.get_json()
             try:
                 for attr in form_data:
-                    setattr(user_code, attr, form_data.get(attr))
+                    setattr(client_provider, attr, form_data.get(attr))
                 db.session.commit()
                 response = make_response(
-                    user_code.to_dict(),
+                    client_provider.to_dict(),
                     202
                 )
             except ValueError:
                 response = make_response(
-                    {"errors": ["validation errors in PATCH to users_codes id"]},
+                    {"errors": ["validation errors in PATCH to clients_providers id"]},
                     400
                 )
                 return response
         elif request.method == 'DELETE':
-            db.session.delete(user_code)
+            db.session.delete(client_provider)
             db.session.commit()
             response = make_response(
                 {},
@@ -191,7 +213,7 @@ def users_codes_by_id(id):
             )
     else:
         response = make_response(
-            {"error": "UserCodeJoin not found"},
+            {"error": "ClientProvider not found"},
             404
         )
     return response
