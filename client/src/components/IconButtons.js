@@ -17,7 +17,7 @@ import AddIcon from '@mui/icons-material/Add';
             // Medications
             // Medical Records
             // Schedule Appointment (Form)
-    //GOAL: User can click on the icons to navigate to the respective pages. FIXME: is this what we want? Or do we want all of this in the navigation menu at the top? 
+    //GOAL: User can click on the icons to navigate to the respective pages. FIXME: is this what we want? Or do we want all of this in the navigation menu at the top? Test
 function IconButtons() {
     return (
     <div>
