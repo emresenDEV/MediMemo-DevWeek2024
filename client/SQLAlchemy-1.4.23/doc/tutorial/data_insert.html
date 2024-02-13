@@ -1,0 +1,457 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+        <title>
+            
+    
+    Inserting Rows with Core
+ &mdash;
+    SQLAlchemy 1.4 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/changelog.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 1.4 Documentation" href="../index.html" />
+        <link rel="up" title="Working with Data" href="data.html" />
+        <link rel="next" title="Selecting Rows with Core or ORM" href="data_select.html" />
+        <link rel="prev" title="Working with Data" href="data.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">1.4.23</span>
+
+
+        | Release Date: August 18, 2021
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 1.4 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 1.4 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../contents.html">Contents</a> |
+                <a href="../genindex.html">Index</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="SQLAlchemy 1.4 / 2.0 Tutorial">SQLAlchemy 1.4 / 2.0 Tutorial</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="engine.html">Establishing Connectivity - the Engine</a></span></li>
+<li><span class="link-container"><a class="reference external" href="dbapi_transactions.html">Working with Transactions and the DBAPI</a></span></li>
+<li><span class="link-container"><a class="reference external" href="metadata.html">Working with Database Metadata</a></span></li>
+<li><span class="link-container"><a class="reference external" href="data.html">Working with Data</a></span><ul>
+<li class="selected"><span class="link-container"><strong>Inserting Rows with Core</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#the-insert-sql-expression-construct">The insert() SQL Expression Construct</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#executing-the-statement">Executing the Statement</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#insert-usually-generates-the-values-clause-automatically">INSERT usually generates the “values” clause automatically</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#insert-from-select">INSERT…FROM SELECT</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#insert-returning">INSERT…RETURNING</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="data_select.html">Selecting Rows with Core or ORM</a></span></li>
+<li><span class="link-container"><a class="reference external" href="data_update.html">Updating and Deleting Rows with Core</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="orm_data_manipulation.html">Data Manipulation with the ORM</a></span></li>
+<li><span class="link-container"><a class="reference external" href="orm_related_objects.html">Working with Related Objects</a></span></li>
+<li><span class="link-container"><a class="reference external" href="further_reading.html">Further Reading</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    
+
+    <div id="docs-body" class="withsidebar tutorial-data_insert" >
+        
+<div class="topic">
+<p class="topic-title">SQLAlchemy 1.4 / 2.0 Tutorial</p>
+<p>This page is part of the <a class="reference internal" href="index.html"><span class="doc">SQLAlchemy 1.4 / 2.0 Tutorial</span></a>.</p>
+<p>Previous: <a class="reference internal" href="data.html"><span class="doc">Working with Data</span></a>   |   Next: <a class="reference internal" href="data_select.html"><span class="doc">Selecting Rows with Core or ORM</span></a></p>
+</div>
+<section class="core-header" id="inserting-rows-with-core">
+<span id="tutorial-core-insert"></span><h1>Inserting Rows with Core<a class="headerlink" href="#inserting-rows-with-core" title="Permalink to this headline">¶</a></h1>
+<p>When using Core, a SQL INSERT statement is generated using the
+<a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.insert" title="sqlalchemy.sql.expression.insert"><code class="xref py py-func docutils literal notranslate"><span class="pre">insert()</span></code></a> function - this function generates a new instance of
+<a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a> which represents an INSERT statement in SQL, that adds
+new data into a table.</p>
+<div class="orm-header docutils container">
+<p><strong>ORM Readers</strong> - The way that rows are INSERTed into the database from an ORM
+perspective makes use of object-centric APIs on the <a class="reference internal" href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> object known as the
+<a class="reference internal" href="../glossary.html#term-unit-of-work"><span class="xref std std-term">unit of work</span></a> process,
+and is fairly different from the Core-only approach described here.
+The more ORM-focused sections later starting at <a class="reference internal" href="orm_data_manipulation.html#tutorial-inserting-orm"><span class="std std-ref">Inserting Rows with the ORM</span></a>
+subsequent to the Expression Language sections introduce this.</p>
+</div>
+<section id="the-insert-sql-expression-construct">
+<h2>The insert() SQL Expression Construct<a class="headerlink" href="#the-insert-sql-expression-construct" title="Permalink to this headline">¶</a></h2>
+<p>A simple example of <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a> illustrating the target table
+and the VALUES clause at once:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">insert</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">insert</span><span class="p">(</span><span class="n">user_table</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;spongebob&#39;</span><span class="p">,</span> <span class="n">fullname</span><span class="o">=</span><span class="s2">&quot;Spongebob Squarepants&quot;</span><span class="p">)</span></pre></div>
+</div>
+<p>The above <code class="docutils literal notranslate"><span class="pre">stmt</span></code> variable is an instance of <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a>.  Most
+SQL expressions can be stringified in place as a means to see the general
+form of what’s being produced:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span>
+<div class='show_sql'><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">user_account</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">fullname</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(:</span><span class="n">name</span><span class="p">,</span> <span class="p">:</span><span class="n">fullname</span><span class="p">)</span>
+</div></pre></div>
+</div>
+<p>The stringified form is created by producing a <a class="reference internal" href="../core/internals.html#sqlalchemy.engine.Compiled" title="sqlalchemy.engine.Compiled"><code class="xref py py-class docutils literal notranslate"><span class="pre">Compiled</span></code></a> form
+of the object which includes a database-specific string SQL representation of
+the statement; we can acquire this object directly using the
+<a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.ClauseElement.compile" title="sqlalchemy.sql.expression.ClauseElement.compile"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ClauseElement.compile()</span></code></a> method:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">compiled</span> <span class="o">=</span> <span class="n">stmt</span><span class="o">.</span><span class="n">compile</span><span class="p">()</span></pre></div>
+</div>
+<p>Our <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a> construct is an example of a “parameterized”
+construct, illustrated previously at <a class="reference internal" href="dbapi_transactions.html#tutorial-sending-parameters"><span class="std std-ref">Sending Parameters</span></a>; to
+view the <code class="docutils literal notranslate"><span class="pre">name</span></code> and <code class="docutils literal notranslate"><span class="pre">fullname</span></code> <a class="reference internal" href="../glossary.html#term-bound-parameters"><span class="xref std std-term">bound parameters</span></a>, these are
+available from the <a class="reference internal" href="../core/internals.html#sqlalchemy.engine.Compiled" title="sqlalchemy.engine.Compiled"><code class="xref py py-class docutils literal notranslate"><span class="pre">Compiled</span></code></a> construct as well:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">compiled</span><span class="o">.</span><span class="n">params</span>
+<span class="go">{&#39;name&#39;: &#39;spongebob&#39;, &#39;fullname&#39;: &#39;Spongebob Squarepants&#39;}</span></pre></div>
+</div>
+</section>
+<section id="executing-the-statement">
+<h2>Executing the Statement<a class="headerlink" href="#executing-the-statement" title="Permalink to this headline">¶</a></h2>
+<p>Invoking the statement we can INSERT a row into <code class="docutils literal notranslate"><span class="pre">user_table</span></code>.
+The INSERT SQL as well as the bundled parameters can be seen in the
+SQL logging:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">result</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+<div class='show_sql'><span class="k">BEGIN</span> <span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">user_account</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">fullname</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="o">?</span><span class="p">,</span> <span class="o">?</span><span class="p">)</span>
+<span class="p">[...]</span> <span class="p">(</span><span class="s1">&#39;spongebob&#39;</span><span class="p">,</span> <span class="s1">&#39;Spongebob Squarepants&#39;</span><span class="p">)</span>
+<span class="k">COMMIT</span>
+</div></pre></div>
+</div>
+<p>In its simple form above, the INSERT statement does not return any rows, and if
+only a single row is inserted, it will usually include the ability to return
+information about column-level default values that were generated during the
+INSERT of that row, most commonly an integer primary key value.  In the above
+case the first row in a SQLite database will normally return <code class="docutils literal notranslate"><span class="pre">1</span></code> for the
+first integer primary key value, which we can acquire using the
+<a class="reference internal" href="../core/connections.html#sqlalchemy.engine.CursorResult.inserted_primary_key" title="sqlalchemy.engine.CursorResult.inserted_primary_key"><code class="xref py py-attr docutils literal notranslate"><span class="pre">CursorResult.inserted_primary_key</span></code></a> accessor:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">result</span><span class="o">.</span><span class="n">inserted_primary_key</span>
+<span class="go">(1,)</span></pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><a class="reference internal" href="../core/connections.html#sqlalchemy.engine.CursorResult.inserted_primary_key" title="sqlalchemy.engine.CursorResult.inserted_primary_key"><code class="xref py py-attr docutils literal notranslate"><span class="pre">CursorResult.inserted_primary_key</span></code></a> returns a tuple
+because a primary key may contain multiple columns.  This is known as
+a <a class="reference internal" href="../glossary.html#term-composite-primary-key"><span class="xref std std-term">composite primary key</span></a>.  The <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.CursorResult.inserted_primary_key" title="sqlalchemy.engine.CursorResult.inserted_primary_key"><code class="xref py py-attr docutils literal notranslate"><span class="pre">CursorResult.inserted_primary_key</span></code></a>
+is intended to always contain the complete primary key of the record just
+inserted, not just a “cursor.lastrowid” kind of value, and is also intended
+to be populated regardless of whether or not “autoincrement” were used, hence
+to express a complete primary key it’s a tuple.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.4.8: </span>the tuple returned by
+<a class="reference internal" href="../core/connections.html#sqlalchemy.engine.CursorResult.inserted_primary_key" title="sqlalchemy.engine.CursorResult.inserted_primary_key"><code class="xref py py-attr docutils literal notranslate"><span class="pre">CursorResult.inserted_primary_key</span></code></a> is now a named tuple
+fullfilled by returning it as a <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Row" title="sqlalchemy.engine.Row"><code class="xref py py-class docutils literal notranslate"><span class="pre">Row</span></code></a> object.</p>
+</div>
+</section>
+<section id="insert-usually-generates-the-values-clause-automatically">
+<span id="tutorial-core-insert-values-clause"></span><h2>INSERT usually generates the “values” clause automatically<a class="headerlink" href="#insert-usually-generates-the-values-clause-automatically" title="Permalink to this headline">¶</a></h2>
+<p>The example above made use of the <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert.values" title="sqlalchemy.sql.expression.Insert.values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.values()</span></code></a> method to
+explicitly create the VALUES clause of the SQL INSERT statement.   This method
+in fact has some variants that allow for special forms such as multiple rows in
+one statement and insertion of SQL expressions.   However the usual way that
+<a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a> is used is such that the VALUES clause is generated
+automatically from the parameters passed to the
+<a class="reference internal" href="../core/future.html#sqlalchemy.future.Connection.execute" title="sqlalchemy.future.Connection.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code></a> method; below we INSERT two more rows to
+illustrate this:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">result</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">insert</span><span class="p">(</span><span class="n">user_table</span><span class="p">),</span>
+<span class="gp">... </span>        <span class="p">[</span>
+<span class="gp">... </span>            <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;sandy&quot;</span><span class="p">,</span> <span class="s2">&quot;fullname&quot;</span><span class="p">:</span> <span class="s2">&quot;Sandy Cheeks&quot;</span><span class="p">},</span>
+<span class="gp">... </span>            <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;patrick&quot;</span><span class="p">,</span> <span class="s2">&quot;fullname&quot;</span><span class="p">:</span> <span class="s2">&quot;Patrick Star&quot;</span><span class="p">}</span>
+<span class="gp">... </span>        <span class="p">]</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">... </span>    <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+<div class='show_sql'><span class="k">BEGIN</span> <span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">user_account</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">fullname</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="o">?</span><span class="p">,</span> <span class="o">?</span><span class="p">)</span>
+<span class="p">[...]</span> <span class="p">((</span><span class="s1">&#39;sandy&#39;</span><span class="p">,</span> <span class="s1">&#39;Sandy Cheeks&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;patrick&#39;</span><span class="p">,</span> <span class="s1">&#39;Patrick Star&#39;</span><span class="p">))</span>
+<span class="k">COMMIT</span>
+</div></pre></div>
+</div>
+<p>The execution above features “executemany” form first illustrated at
+<a class="reference internal" href="dbapi_transactions.html#tutorial-multiple-parameters"><span class="std std-ref">Sending Multiple Parameters</span></a>, however unlike when using the
+<a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.text" title="sqlalchemy.sql.expression.text"><code class="xref py py-func docutils literal notranslate"><span class="pre">text()</span></code></a> construct, we didn’t have to spell out any SQL.
+By passing a dictionary or list of dictionaries to the <a class="reference internal" href="../core/future.html#sqlalchemy.future.Connection.execute" title="sqlalchemy.future.Connection.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code></a>
+method in conjunction with the <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a> construct, the
+<a class="reference internal" href="../core/future.html#sqlalchemy.future.Connection" title="sqlalchemy.future.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> ensures that the column names which are passed
+will be expressed in the VALUES clause of the <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a>
+construct automatically.</p>
+<div class="admonition deepalchemy">
+<p class="admonition-title">Deep Alchemy</p>
+<p>Hi, welcome to the first edition of <strong>Deep Alchemy</strong>.   The person on the
+left is known as <strong>The Alchemist</strong>, and you’ll note they are <strong>not</strong> a wizard,
+as the pointy hat is not sticking upwards.   The Alchemist comes around to
+describe things that are generally <strong>more advanced and/or tricky</strong> and
+additionally <strong>not usually needed</strong>, but for whatever reason they feel you
+should know about this thing that SQLAlchemy can do.</p>
+<p>In this edition, towards the goal of having some interesting data in the
+<code class="docutils literal notranslate"><span class="pre">address_table</span></code> as well, below is a more advanced example illustrating
+how the <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert.values" title="sqlalchemy.sql.expression.Insert.values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.values()</span></code></a> method may be used explicitly while at
+the same time including for additional VALUES generated from the
+parameters.    A <a class="reference internal" href="../glossary.html#term-scalar-subquery"><span class="xref std std-term">scalar subquery</span></a> is constructed, making use of the
+<a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> construct introduced in the next section, and the
+parameters used in the subquery are set up using an explicit bound
+parameter name, established using the <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.bindparam" title="sqlalchemy.sql.expression.bindparam"><code class="xref py py-func docutils literal notranslate"><span class="pre">bindparam()</span></code></a> construct.</p>
+<p>This is some slightly <strong>deeper</strong> alchemy just so that we can add related
+rows without fetching the primary key identifiers from the <code class="docutils literal notranslate"><span class="pre">user_table</span></code>
+operation into the application.   Most Alchemists will simply use the ORM
+which takes care of things like this for us.</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">select</span><span class="p">,</span> <span class="n">bindparam</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scalar_subquery</span> <span class="o">=</span> <span class="p">(</span>
+<span class="gp">... </span>    <span class="n">select</span><span class="p">(</span><span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">.</span>
+<span class="gp">... </span>    <span class="n">where</span><span class="p">(</span><span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="o">==</span><span class="n">bindparam</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">))</span><span class="o">.</span>
+<span class="gp">... </span>    <span class="n">scalar_subquery</span><span class="p">()</span>
+<span class="gp">... </span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">result</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">insert</span><span class="p">(</span><span class="n">address_table</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="n">scalar_subquery</span><span class="p">),</span>
+<span class="gp">... </span>        <span class="p">[</span>
+<span class="gp">... </span>            <span class="p">{</span><span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="s1">&#39;spongebob&#39;</span><span class="p">,</span> <span class="s2">&quot;email_address&quot;</span><span class="p">:</span> <span class="s2">&quot;spongebob@sqlalchemy.org&quot;</span><span class="p">},</span>
+<span class="gp">... </span>            <span class="p">{</span><span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="s1">&#39;sandy&#39;</span><span class="p">,</span> <span class="s2">&quot;email_address&quot;</span><span class="p">:</span> <span class="s2">&quot;sandy@sqlalchemy.org&quot;</span><span class="p">},</span>
+<span class="gp">... </span>            <span class="p">{</span><span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="s1">&#39;sandy&#39;</span><span class="p">,</span> <span class="s2">&quot;email_address&quot;</span><span class="p">:</span> <span class="s2">&quot;sandy@squirrelpower.org&quot;</span><span class="p">},</span>
+<span class="gp">... </span>        <span class="p">]</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">... </span>    <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+<div class='show_sql'><span class="k">BEGIN</span> <span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">address</span> <span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">email_address</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">((</span><span class="k">SELECT</span> <span class="n">user_account</span><span class="p">.</span><span class="n">id</span>
+<span class="k">FROM</span> <span class="n">user_account</span>
+<span class="k">WHERE</span> <span class="n">user_account</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="o">?</span><span class="p">),</span> <span class="o">?</span><span class="p">)</span>
+<span class="p">[...]</span> <span class="p">((</span><span class="s1">&#39;spongebob&#39;</span><span class="p">,</span> <span class="s1">&#39;spongebob@sqlalchemy.org&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;sandy&#39;</span><span class="p">,</span> <span class="s1">&#39;sandy@sqlalchemy.org&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;sandy&#39;</span><span class="p">,</span> <span class="s1">&#39;sandy@squirrelpower.org&#39;</span><span class="p">))</span>
+<span class="k">COMMIT</span>
+</div></pre></div>
+</div>
+</div>
+</section>
+<section id="insert-from-select">
+<span id="tutorial-insert-from-select"></span><h2>INSERT…FROM SELECT<a class="headerlink" href="#insert-from-select" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a> construct can compose
+an INSERT that gets rows directly from a SELECT using the <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert.from_select" title="sqlalchemy.sql.expression.Insert.from_select"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.from_select()</span></code></a>
+method:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">select_stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;@aol.com&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">insert_stmt</span> <span class="o">=</span> <span class="n">insert</span><span class="p">(</span><span class="n">address_table</span><span class="p">)</span><span class="o">.</span><span class="n">from_select</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="s2">&quot;user_id&quot;</span><span class="p">,</span> <span class="s2">&quot;email_address&quot;</span><span class="p">],</span> <span class="n">select_stmt</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">insert_stmt</span><span class="p">)</span>
+<div class='show_sql'><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">address</span> <span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">email_address</span><span class="p">)</span>
+<span class="k">SELECT</span> <span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="p">,</span> <span class="n">user_account</span><span class="p">.</span><span class="n">name</span> <span class="o">||</span> <span class="p">:</span><span class="n">name_1</span> <span class="k">AS</span> <span class="n">anon_1</span>
+<span class="k">FROM</span> <span class="n">user_account</span>
+</div></pre></div>
+</div>
+</section>
+<section id="insert-returning">
+<span id="tutorial-insert-returning"></span><h2>INSERT…RETURNING<a class="headerlink" href="#insert-returning" title="Permalink to this headline">¶</a></h2>
+<p>The RETURNING clause for supported backends is used
+automatically in order to retrieve the last inserted primary key value
+as well as the values for server defaults.   However the RETURNING clause
+may also be specified explicitly using the <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert.returning" title="sqlalchemy.sql.expression.Insert.returning"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.returning()</span></code></a>
+method; in this case, the <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a>
+object that’s returned when the statement is executed has rows which
+can be fetched:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">insert_stmt</span> <span class="o">=</span> <span class="n">insert</span><span class="p">(</span><span class="n">address_table</span><span class="p">)</span><span class="o">.</span><span class="n">returning</span><span class="p">(</span><span class="n">address_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">address_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">insert_stmt</span><span class="p">)</span>
+<div class='show_sql'><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">address</span> <span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">email_address</span><span class="p">)</span>
+<span class="k">VALUES</span> <span class="p">(:</span><span class="n">id</span><span class="p">,</span> <span class="p">:</span><span class="n">user_id</span><span class="p">,</span> <span class="p">:</span><span class="n">email_address</span><span class="p">)</span>
+<span class="n">RETURNING</span> <span class="n">address</span><span class="p">.</span><span class="n">id</span><span class="p">,</span> <span class="n">address</span><span class="p">.</span><span class="n">email_address</span>
+</div></pre></div>
+</div>
+<p>It can also be combined with <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert.from_select" title="sqlalchemy.sql.expression.Insert.from_select"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.from_select()</span></code></a>,
+as in the example below that builds upon the example stated in
+<a class="reference internal" href="#tutorial-insert-from-select"><span class="std std-ref">INSERT…FROM SELECT</span></a>:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">select_stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;@aol.com&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">insert_stmt</span> <span class="o">=</span> <span class="n">insert</span><span class="p">(</span><span class="n">address_table</span><span class="p">)</span><span class="o">.</span><span class="n">from_select</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="s2">&quot;user_id&quot;</span><span class="p">,</span> <span class="s2">&quot;email_address&quot;</span><span class="p">],</span> <span class="n">select_stmt</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">insert_stmt</span><span class="o">.</span><span class="n">returning</span><span class="p">(</span><span class="n">address_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">address_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="p">))</span>
+<div class='show_sql'><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">address</span> <span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">email_address</span><span class="p">)</span>
+<span class="k">SELECT</span> <span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="p">,</span> <span class="n">user_account</span><span class="p">.</span><span class="n">name</span> <span class="o">||</span> <span class="p">:</span><span class="n">name_1</span> <span class="k">AS</span> <span class="n">anon_1</span>
+<span class="k">FROM</span> <span class="n">user_account</span> <span class="n">RETURNING</span> <span class="n">address</span><span class="p">.</span><span class="n">id</span><span class="p">,</span> <span class="n">address</span><span class="p">.</span><span class="n">email_address</span>
+</div></pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The RETURNING feature is also supported by UPDATE and DELETE statements,
+which will be introduced later in this tutorial.
+The RETURNING feature is generally <a class="footnote-reference brackets" href="#id2" id="id1">1</a> only
+supported for statement executions that use a single set of bound
+parameters; that is, it wont work with the “executemany” form introduced
+at <a class="reference internal" href="dbapi_transactions.html#tutorial-multiple-parameters"><span class="std std-ref">Sending Multiple Parameters</span></a>.    Additionally, some dialects
+such as the Oracle dialect only allow RETURNING to return a single row
+overall, meaning it won’t work with “INSERT..FROM SELECT” nor will it
+work with multiple row <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></a> or <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Delete" title="sqlalchemy.sql.expression.Delete"><code class="xref py py-class docutils literal notranslate"><span class="pre">Delete</span></code></a>
+forms.</p>
+<dl class="footnote brackets">
+<dt class="label" id="id2"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>There is internal support for the
+<a class="reference internal" href="../dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.psycopg2" title="sqlalchemy.dialects.postgresql.psycopg2"><code class="xref py py-mod docutils literal notranslate"><span class="pre">psycopg2</span></code></a> dialect to INSERT many rows at once
+and also support RETURNING, which is leveraged by the SQLAlchemy
+ORM.   However this feature has not been generalized to all dialects
+and is not yet part of SQLAlchemy’s regular API.</p>
+</dd>
+</dl>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a> - in the SQL Expression API documentation</p>
+</div>
+</section>
+</section>
+<div class="topic">
+<p class="topic-title">SQLAlchemy 1.4 / 2.0 Tutorial</p>
+<p>Next Tutorial Section: <a class="reference internal" href="data_select.html"><span class="doc">Selecting Rows with Core or ORM</span></a></p>
+</div>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="data.html" title="previous chapter">Working with Data</a>
+        Next:
+        <a href="data_select.html" title="next chapter">Selecting Rows with Core or ORM</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2021, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.1.2.
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '1.4.23',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/detectmobile.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

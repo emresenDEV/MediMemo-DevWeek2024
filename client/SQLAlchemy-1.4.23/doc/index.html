@@ -1,0 +1,276 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+        <title>
+            
+    
+    SQLAlchemy Documentation
+ &mdash;
+    SQLAlchemy 1.4 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="_static/changelog.css" type="text/css" />
+                <link rel="stylesheet" href="_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+        <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="SQLAlchemy 1.4 Documentation" href="#" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">1.4.23</span>
+
+
+        | Release Date: August 18, 2021
+
+    </div>
+
+    <h1><a href="#">SQLAlchemy 1.4 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="">
+
+        <div id="index-nav">
+            <form class="search" action="search.html" method="get">
+              <label>
+                 Search terms:
+              <input type="text" placeholder="search..." name="q" size="12" />
+              </label>
+              <input type="submit" value="Search" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+
+            <p>
+            <a href="contents.html">Contents</a> |
+            <a href="genindex.html">Index</a>
+            </p>
+
+        </div>
+
+
+    </div>
+
+    
+
+    <div id="docs-body" class=" index" >
+        
+<section id="sqlalchemy-documentation">
+<span id="index-toplevel"></span><h1>SQLAlchemy Documentation<a class="headerlink" href="#sqlalchemy-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="left-right-container docutils container">
+<div class="leftmost docutils container">
+<p class="h2">Getting Started</p>
+</div>
+<div class="docutils container">
+<p>A high level view and getting set up.</p>
+<p><a class="reference internal" href="intro.html"><span class="doc">Overview</span></a> |
+<a class="reference internal" href="intro.html#installation"><span class="std std-ref">Installation Guide</span></a> |
+<a class="reference internal" href="faq/index.html"><span class="doc">Frequently Asked Questions</span></a> |
+<a class="reference internal" href="changelog/migration_14.html"><span class="doc">Migration from 1.3</span></a> |
+<a class="reference internal" href="glossary.html"><span class="doc">Glossary</span></a> |
+<a class="reference internal" href="errors.html"><span class="doc">Error Messages</span></a> |
+<a class="reference internal" href="changelog/index.html"><span class="doc">Changelog catalog</span></a></p>
+</div>
+</div>
+<div class="left-right-container docutils container">
+<div class="leftmost docutils container">
+<p class="h2">Tutorials</p>
+</div>
+<div class="docutils container">
+<p><strong>SQLAlchemy 1.4 / 2.0 Transitional</strong></p>
+<p>SQLAlchemy 2.0 is functionally available as part of SQLAlchemy 1.4, and integrates
+Core and ORM working styles more closely than ever.   The new tutorial introduces
+both concepts in parallel.  New users and those starting new projects should start here!</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="tutorial/index.html"><span class="doc">SQLAlchemy 1.4 / 2.0 Tutorial</span></a> - SQLAlchemy 2.0’s main tutorial</p></li>
+<li><p><a class="reference internal" href="changelog/migration_20.html"><span class="doc">Migrating to SQLAlchemy 2.0</span></a> - Complete background on migrating from 1.3 or 1.4 to 2.0</p></li>
+</ul>
+</div>
+<div class="docutils container">
+<p><strong>SQLAlchemy 1.x Releases</strong></p>
+<p>The 1.x Object Relational Tutorial and Core Tutorial are the legacy tutorials
+that should be consulted for existing SQLAlchemy codebases.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="orm/tutorial.html"><span class="doc">Object Relational Tutorial (1.x API)</span></a></p></li>
+<li><p><a class="reference internal" href="core/tutorial.html"><span class="doc">SQL Expression Language Tutorial (1.x API)</span></a></p></li>
+</ul>
+</div>
+</div>
+<div class="left-right-container docutils container">
+<div class="leftmost docutils container">
+<p class="h2">Reference Documentation</p>
+</div>
+<div class="orm docutils container">
+<p><strong>SQLAlchemy ORM</strong></p>
+<ul class="simple">
+<li><p><strong>ORM Configuration:</strong>
+<a class="reference internal" href="orm/mapper_config.html"><span class="doc">Mapper Configuration</span></a> |
+<a class="reference internal" href="orm/relationships.html"><span class="doc">Relationship Configuration</span></a></p></li>
+<li><p><strong>ORM Usage:</strong>
+<a class="reference internal" href="orm/session.html"><span class="doc">Session Usage and Guidelines</span></a> |
+<a class="reference internal" href="orm/loading_objects.html"><span class="doc">Querying Data, Loading Objects</span></a> |
+<a class="reference internal" href="orm/extensions/asyncio.html"><span class="doc">AsyncIO Support</span></a></p></li>
+<li><p><strong>Configuration Extensions:</strong>
+<a class="reference internal" href="orm/extensions/mypy.html"><span class="doc">Mypy integration</span></a> |
+<a class="reference internal" href="orm/extensions/associationproxy.html"><span class="doc">Association Proxy</span></a> |
+<a class="reference internal" href="orm/extensions/hybrid.html"><span class="doc">Hybrid Attributes</span></a> |
+<a class="reference internal" href="orm/extensions/automap.html"><span class="doc">Automap</span></a> |
+<a class="reference internal" href="orm/extensions/mutable.html"><span class="doc">Mutable Scalars</span></a> |
+<a class="reference internal" href="orm/extensions/index.html"><span class="doc">All extensions</span></a></p></li>
+<li><p><strong>Extending the ORM:</strong>
+<a class="reference internal" href="orm/extending.html"><span class="doc">ORM Events and Internals</span></a></p></li>
+<li><p><strong>Other:</strong>
+<a class="reference internal" href="orm/examples.html"><span class="doc">Introduction to Examples</span></a></p></li>
+</ul>
+</div>
+<div class="core docutils container">
+<p><strong>SQLAlchemy Core</strong></p>
+<ul class="simple">
+<li><p><strong>Engines, Connections, Pools:</strong>
+<a class="reference internal" href="core/engines.html"><span class="doc">Engine Configuration</span></a> |
+<a class="reference internal" href="core/connections.html"><span class="doc">Connections, Transactions, Results</span></a> |
+<a class="reference internal" href="orm/extensions/asyncio.html"><span class="doc">AsyncIO Support</span></a> |
+<a class="reference internal" href="core/pooling.html"><span class="doc">Connection Pooling</span></a></p></li>
+<li><p><strong>Schema Definition:</strong>
+<a class="reference internal" href="core/schema.html"><span class="doc">Overview</span></a> |
+<a class="reference internal" href="core/metadata.html"><span class="std std-ref">Tables and Columns</span></a> |
+<a class="reference internal" href="core/reflection.html"><span class="std std-ref">Database Introspection (Reflection)</span></a> |
+<a class="reference internal" href="core/defaults.html"><span class="std std-ref">Insert/Update Defaults</span></a> |
+<a class="reference internal" href="core/constraints.html"><span class="std std-ref">Constraints and Indexes</span></a> |
+<a class="reference internal" href="core/ddl.html"><span class="std std-ref">Using Data Definition Language (DDL)</span></a></p></li>
+<li><p><strong>SQL Reference:</strong>
+<a class="reference internal" href="core/expression_api.html"><span class="doc">SQL Expression API docs</span></a></p></li>
+<li><p><strong>Datatypes:</strong>
+<a class="reference internal" href="core/types.html"><span class="std std-ref">Overview</span></a> |
+<a class="reference internal" href="core/custom_types.html#types-custom"><span class="std std-ref">Building Custom Types</span></a> |
+<a class="reference internal" href="core/type_api.html#types-api"><span class="std std-ref">API</span></a></p></li>
+<li><p><strong>Core Basics:</strong>
+<a class="reference internal" href="core/api_basics.html"><span class="doc">Overview</span></a> |
+<a class="reference internal" href="core/inspection.html"><span class="doc">Runtime Inspection API</span></a> |
+<a class="reference internal" href="core/event.html"><span class="doc">Event System</span></a> |
+<a class="reference internal" href="core/events.html"><span class="doc">Core Event Interfaces</span></a> |
+<a class="reference internal" href="core/compiler.html"><span class="doc">Creating Custom SQL Constructs</span></a></p></li>
+</ul>
+</div>
+</div>
+<div class="left-right-container docutils container">
+<div class="leftmost docutils container">
+<p class="h2">Dialect Documentation</p>
+</div>
+<div class="docutils container">
+<p>The <strong>dialect</strong> is the system SQLAlchemy uses to communicate with various types of DBAPIs and databases.
+This section describes notes, options, and usage patterns regarding individual dialects.</p>
+<p><a class="reference internal" href="dialects/postgresql.html"><span class="doc">PostgreSQL</span></a> |
+<a class="reference internal" href="dialects/mysql.html"><span class="doc">MySQL</span></a> |
+<a class="reference internal" href="dialects/sqlite.html"><span class="doc">SQLite</span></a> |
+<a class="reference internal" href="dialects/oracle.html"><span class="doc">Oracle</span></a> |
+<a class="reference internal" href="dialects/mssql.html"><span class="doc">Microsoft SQL Server</span></a></p>
+<p><a class="reference internal" href="dialects/index.html"><span class="doc">More Dialects …</span></a></p>
+</div>
+</div>
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links">
+
+    <div id="docs-copyright">
+        &copy; <a href="copyright.html">Copyright</a> 2007-2021, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.1.2.
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    './',
+          VERSION:     '1.4.23',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="_static/detectmobile.js"></script>
+    <script type="text/javascript" src="_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

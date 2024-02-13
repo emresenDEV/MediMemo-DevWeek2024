@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 // import components
 import NavBar from "./NavBar";
 import Login from "./Login";
-import PatientPortal from "./PatientPortal";
+import PatientPortal from "./PatientSelectProvider";
 import ProviderPortal from "./ProviderPortal";
 
 function App() {

@@ -16,7 +16,6 @@ sqlalchemy-serializer = "1.4.1"
 importlib-metadata = "6.0.0"
 flask-cors = "*"
 
-
 [dev-packages]
 livereload = "*"
 

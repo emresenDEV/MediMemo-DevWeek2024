@@ -1,0 +1,662 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+        <title>
+            
+    
+    Working with Transactions and the DBAPI
+ &mdash;
+    SQLAlchemy 1.4 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/changelog.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 1.4 Documentation" href="../index.html" />
+        <link rel="up" title="SQLAlchemy 1.4 / 2.0 Tutorial" href="index.html" />
+        <link rel="next" title="Working with Database Metadata" href="metadata.html" />
+        <link rel="prev" title="Establishing Connectivity - the Engine" href="engine.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">1.4.23</span>
+
+
+        | Release Date: August 18, 2021
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 1.4 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 1.4 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../contents.html">Contents</a> |
+                <a href="../genindex.html">Index</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="SQLAlchemy 1.4 / 2.0 Tutorial">SQLAlchemy 1.4 / 2.0 Tutorial</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="engine.html">Establishing Connectivity - the Engine</a></span></li>
+<li class="selected"><span class="link-container"><strong>Working with Transactions and the DBAPI</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#getting-a-connection">Getting a Connection</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#committing-changes">Committing Changes</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#basics-of-statement-execution">Basics of Statement Execution</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#fetching-rows">Fetching Rows</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#sending-parameters">Sending Parameters</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#sending-multiple-parameters">Sending Multiple Parameters</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#bundling-parameters-with-a-statement">Bundling Parameters with a Statement</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#executing-with-an-orm-session">Executing with an ORM Session</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="metadata.html">Working with Database Metadata</a></span></li>
+<li><span class="link-container"><a class="reference external" href="data.html">Working with Data</a></span></li>
+<li><span class="link-container"><a class="reference external" href="orm_data_manipulation.html">Data Manipulation with the ORM</a></span></li>
+<li><span class="link-container"><a class="reference external" href="orm_related_objects.html">Working with Related Objects</a></span></li>
+<li><span class="link-container"><a class="reference external" href="further_reading.html">Further Reading</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    
+
+    <div id="docs-body" class="withsidebar tutorial-dbapi_transactions" >
+        
+<div class="topic">
+<p class="topic-title">SQLAlchemy 1.4 / 2.0 Tutorial</p>
+<p>This page is part of the <a class="reference internal" href="index.html"><span class="doc">SQLAlchemy 1.4 / 2.0 Tutorial</span></a>.</p>
+<p>Previous: <a class="reference internal" href="engine.html"><span class="doc">Establishing Connectivity - the Engine</span></a>   |   Next: <a class="reference internal" href="metadata.html"><span class="doc">Working with Database Metadata</span></a></p>
+</div>
+<section id="working-with-transactions-and-the-dbapi">
+<span id="tutorial-working-with-transactions"></span><h1>Working with Transactions and the DBAPI<a class="headerlink" href="#working-with-transactions-and-the-dbapi" title="Permalink to this headline">¶</a></h1>
+<p>With the <a class="reference internal" href="../core/future.html#sqlalchemy.future.Engine" title="sqlalchemy.future.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> object ready to go, we may now proceed
+to dive into the basic operation of an <a class="reference internal" href="../core/future.html#sqlalchemy.future.Engine" title="sqlalchemy.future.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> and
+its primary interactive endpoints, the <a class="reference internal" href="../core/future.html#sqlalchemy.future.Connection" title="sqlalchemy.future.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> and
+<a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a>.   We will additionally introduce the ORM’s
+<a class="reference internal" href="../glossary.html#term-facade"><span class="xref std std-term">facade</span></a> for these objects, known as the <a class="reference internal" href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>.</p>
+<div class="orm-header docutils container">
+<p><strong>Note to ORM readers</strong></p>
+<p>When using the ORM, the <a class="reference internal" href="../core/future.html#sqlalchemy.future.Engine" title="sqlalchemy.future.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> is managed by another
+object called the <a class="reference internal" href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>.  The <a class="reference internal" href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> in
+modern SQLAlchemy emphasizes a transactional and SQL execution pattern that
+is largely identical to that of the <a class="reference internal" href="../core/future.html#sqlalchemy.future.Connection" title="sqlalchemy.future.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> discussed
+below, so while this subsection is Core-centric, all of the concepts here
+are essentially relevant to ORM use as well and is recommended for all ORM
+learners.   The execution pattern used by the <a class="reference internal" href="../core/future.html#sqlalchemy.future.Connection" title="sqlalchemy.future.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>
+will be contrasted with that of the <a class="reference internal" href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> at the end
+of this section.</p>
+</div>
+<p>As we have yet to introduce the SQLAlchemy Expression Language that is the
+primary feature of SQLAlchemy, we will make use of one simple construct within
+this package called the <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.text" title="sqlalchemy.sql.expression.text"><code class="xref py py-func docutils literal notranslate"><span class="pre">text()</span></code></a> construct, which allows us to write
+SQL statements as <strong>textual SQL</strong>.   Rest assured that textual SQL in
+day-to-day SQLAlchemy use is by far the exception rather than the rule for most
+tasks, even though it always remains fully available.</p>
+<section class="core-header" id="getting-a-connection">
+<span id="tutorial-getting-connection"></span><h2>Getting a Connection<a class="headerlink" href="#getting-a-connection" title="Permalink to this headline">¶</a></h2>
+<p>The sole purpose of the <a class="reference internal" href="../core/future.html#sqlalchemy.future.Engine" title="sqlalchemy.future.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> object from a user-facing
+perspective is to provide a unit of
+connectivity to the database called the <a class="reference internal" href="../core/future.html#sqlalchemy.future.Connection" title="sqlalchemy.future.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>.   When
+working with the Core directly, the <a class="reference internal" href="../core/future.html#sqlalchemy.future.Connection" title="sqlalchemy.future.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> object
+is how all interaction with the database is done.   As the <a class="reference internal" href="../core/future.html#sqlalchemy.future.Connection" title="sqlalchemy.future.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>
+represents an open resource against the database, we want to always limit
+the scope of our use of this object to a specific context, and the best
+way to do that is by using Python context manager form, also known as
+<a class="reference external" href="https://docs.python.org/3/reference/compound_stmts.html#with">the with statement</a>.
+Below we illustrate “Hello World”, using a textual SQL statement.  Textual
+SQL is emitted using a construct called <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.text" title="sqlalchemy.sql.expression.text"><code class="xref py py-func docutils literal notranslate"><span class="pre">text()</span></code></a> that will be discussed
+in more detail later:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">text</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">result</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;select &#39;hello world&#39;&quot;</span><span class="p">))</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">all</span><span class="p">())</span>
+<div class='show_sql'><span class="k">BEGIN</span> <span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<span class="k">select</span> <span class="s1">&#39;hello world&#39;</span>
+<span class="p">[...]</span> <span class="p">()</span>
+</div><span class="go">[(&#39;hello world&#39;,)]</span>
+<div class='show_sql'><span class="k">ROLLBACK</span>
+</div></pre></div>
+</div>
+<p>In the above example, the context manager provided for a database connection
+and also framed the operation inside of a transaction. The default behavior of
+the Python DBAPI includes that a transaction is always in progress; when the
+scope of the connection is <a class="reference internal" href="../glossary.html#term-released"><span class="xref std std-term">released</span></a>, a ROLLBACK is emitted to end the
+transaction.   The transaction is <strong>not committed automatically</strong>; when we want
+to commit data we normally need to call <a class="reference internal" href="../core/future.html#sqlalchemy.future.Connection.commit" title="sqlalchemy.future.Connection.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.commit()</span></code></a>
+as we’ll see in the next section.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>“autocommit” mode is available for special cases.  The section
+<a class="reference internal" href="../core/connections.html#dbapi-autocommit"><span class="std std-ref">Setting Transaction Isolation Levels including DBAPI Autocommit</span></a> discusses this.</p>
+</div>
+<p>The result of our SELECT was also returned in an object called
+<a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a> that will be discussed later, however for the moment
+we’ll add that it’s best to ensure this object is consumed within the
+“connect” block, and is not passed along outside of the scope of our connection.</p>
+</section>
+<section class="core-header" id="committing-changes">
+<span id="tutorial-committing-data"></span><h2>Committing Changes<a class="headerlink" href="#committing-changes" title="Permalink to this headline">¶</a></h2>
+<p>We just learned that the DBAPI connection is non-autocommitting.  What if
+we want to commit some data?   We can alter our above example to create a
+table and insert some data, and the transaction is then committed using
+the <a class="reference internal" href="../core/future.html#sqlalchemy.future.Connection.commit" title="sqlalchemy.future.Connection.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.commit()</span></code></a> method, invoked <strong>inside</strong> the block
+where we acquired the <a class="reference internal" href="../core/future.html#sqlalchemy.future.Connection" title="sqlalchemy.future.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> object:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="go"># &quot;commit as you go&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;CREATE TABLE some_table (x int, y int)&quot;</span><span class="p">))</span>
+<span class="gp">... </span>    <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">text</span><span class="p">(</span><span class="s2">&quot;INSERT INTO some_table (x, y) VALUES (:x, :y)&quot;</span><span class="p">),</span>
+<span class="gp">... </span>        <span class="p">[{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">}]</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">... </span>    <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+<div class='show_sql'><span class="k">BEGIN</span> <span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">some_table</span> <span class="p">(</span><span class="n">x</span> <span class="nb">int</span><span class="p">,</span> <span class="n">y</span> <span class="nb">int</span><span class="p">)</span>
+<span class="p">[...]</span> <span class="p">()</span>
+<span class="o">&lt;</span><span class="n">sqlalchemy</span><span class="p">.</span><span class="n">engine</span><span class="p">.</span><span class="k">cursor</span><span class="p">.</span><span class="n">CursorResult</span> <span class="k">object</span> <span class="k">at</span> <span class="mi">0</span><span class="n">x</span><span class="p">...</span><span class="o">&gt;</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">some_table</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="o">?</span><span class="p">,</span> <span class="o">?</span><span class="p">)</span>
+<span class="p">[...]</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="o">&lt;</span><span class="n">sqlalchemy</span><span class="p">.</span><span class="n">engine</span><span class="p">.</span><span class="k">cursor</span><span class="p">.</span><span class="n">CursorResult</span> <span class="k">object</span> <span class="k">at</span> <span class="mi">0</span><span class="n">x</span><span class="p">...</span><span class="o">&gt;</span>
+<span class="k">COMMIT</span>
+</div></pre></div>
+</div>
+<p>Above, we emitted two SQL statements that are generally transactional, a
+“CREATE TABLE” statement <a class="footnote-reference brackets" href="#id2" id="id1">1</a> and an “INSERT” statement that’s parameterized
+(the parameterization syntax above is discussed a few sections below in
+<a class="reference internal" href="#tutorial-multiple-parameters"><span class="std std-ref">Sending Multiple Parameters</span></a>).  As we want the work we’ve done to be
+committed within our block, we invoke the
+<a class="reference internal" href="../core/future.html#sqlalchemy.future.Connection.commit" title="sqlalchemy.future.Connection.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.commit()</span></code></a> method which commits the transaction. After
+we call this method inside the block, we can continue to run more SQL
+statements and if we choose we may call <a class="reference internal" href="../core/future.html#sqlalchemy.future.Connection.commit" title="sqlalchemy.future.Connection.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.commit()</span></code></a>
+again for subsequent statements.  SQLAlchemy refers to this style as <strong>commit as
+you go</strong>.</p>
+<p>There is also another style of committing data, which is that we can declare
+our “connect” block to be a transaction block up front.   For this mode of
+operation, we use the <a class="reference internal" href="../core/future.html#sqlalchemy.future.Engine.begin" title="sqlalchemy.future.Engine.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Engine.begin()</span></code></a> method to acquire the
+connection, rather than the <a class="reference internal" href="../core/future.html#sqlalchemy.future.Engine.connect" title="sqlalchemy.future.Engine.connect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Engine.connect()</span></code></a> method.  This method
+will both manage the scope of the <a class="reference internal" href="../core/future.html#sqlalchemy.future.Connection" title="sqlalchemy.future.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> and also
+enclose everything inside of a transaction with COMMIT at the end, assuming
+a successful block, or ROLLBACK in case of exception raise.  This style
+may be referred towards as <strong>begin once</strong>:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="go"># &quot;begin once&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">text</span><span class="p">(</span><span class="s2">&quot;INSERT INTO some_table (x, y) VALUES (:x, :y)&quot;</span><span class="p">),</span>
+<span class="gp">... </span>        <span class="p">[{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">},</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}]</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<div class='show_sql'><span class="k">BEGIN</span> <span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">some_table</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="o">?</span><span class="p">,</span> <span class="o">?</span><span class="p">)</span>
+<span class="p">[...]</span> <span class="p">((</span><span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="o">&lt;</span><span class="n">sqlalchemy</span><span class="p">.</span><span class="n">engine</span><span class="p">.</span><span class="k">cursor</span><span class="p">.</span><span class="n">CursorResult</span> <span class="k">object</span> <span class="k">at</span> <span class="mi">0</span><span class="n">x</span><span class="p">...</span><span class="o">&gt;</span>
+<span class="k">COMMIT</span>
+</div></pre></div>
+</div>
+<p>“Begin once” style is often preferred as it is more succinct and indicates the
+intention of the entire block up front.   However, within this tutorial we will
+normally use “commit as you go” style as it is more flexible for demonstration
+purposes.</p>
+<div class="topic">
+<p class="topic-title">What’s “BEGIN (implicit)”?</p>
+<p>You might have noticed the log line “BEGIN (implicit)” at the start of a
+transaction block.  “implicit” here means that SQLAlchemy <strong>did not
+actually send any command</strong> to the database; it just considers this to be
+the start of the DBAPI’s implicit transaction.   You can register
+<a class="reference internal" href="../core/events.html#core-sql-events"><span class="std std-ref">event hooks</span></a> to intercept this event, for example.</p>
+</div>
+<dl class="footnote brackets">
+<dt class="label" id="id2"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p><a class="reference internal" href="../glossary.html#term-DDL"><span class="xref std std-term">DDL</span></a> refers to the subset of SQL that instructs the database
+to create, modify, or remove schema-level constructs such as tables. DDL
+such as “CREATE TABLE” is recommended to be within a transaction block that
+ends with COMMIT, as many databases uses transactional DDL such that the
+schema changes don’t take place until the transaction is committed. However,
+as we’ll see later, we usually let SQLAlchemy run DDL sequences for us as
+part of a higher level operation where we don’t generally need to worry
+about the COMMIT.</p>
+</dd>
+</dl>
+</section>
+<section class="core-header" id="basics-of-statement-execution">
+<h2>Basics of Statement Execution<a class="headerlink" href="#basics-of-statement-execution" title="Permalink to this headline">¶</a></h2>
+<p>We have seen a few examples that run SQL statements against a database, making
+use of a method called <a class="reference internal" href="../core/future.html#sqlalchemy.future.Connection.execute" title="sqlalchemy.future.Connection.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code></a>, in conjunction with
+an object called <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.text" title="sqlalchemy.sql.expression.text"><code class="xref py py-func docutils literal notranslate"><span class="pre">text()</span></code></a>, and returning an object called
+<a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a>.  In this section we’ll illustrate more closely the
+mechanics and interactions of these components.</p>
+<div class="orm-header docutils container">
+<p>Most of the content in this section applies equally well to modern ORM
+use when using the <a class="reference internal" href="../orm/session_api.html#sqlalchemy.orm.Session.execute" title="sqlalchemy.orm.Session.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code></a> method, which works
+very similarly to that of <a class="reference internal" href="../core/future.html#sqlalchemy.future.Connection.execute" title="sqlalchemy.future.Connection.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code></a>, including that
+ORM result rows are delivered using the same <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a>
+interface used by Core.</p>
+</div>
+<section class="orm-addin" id="fetching-rows">
+<span id="tutorial-fetching-rows"></span><h3>Fetching Rows<a class="headerlink" href="#fetching-rows" title="Permalink to this headline">¶</a></h3>
+<p>We’ll first illustrate the <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a> object more closely by
+making use of the rows we’ve inserted previously, running a textual SELECT
+statement on the table we’ve created:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">result</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;SELECT x, y FROM some_table&quot;</span><span class="p">))</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;x: </span><span class="si">{</span><span class="n">row</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s2">  y: </span><span class="si">{</span><span class="n">row</span><span class="o">.</span><span class="n">y</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class='show_sql'><span class="k">BEGIN</span> <span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<span class="k">SELECT</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="k">FROM</span> <span class="n">some_table</span>
+<span class="p">[...]</span> <span class="p">()</span>
+</div><span class="go">x: 1  y: 1</span>
+<span class="go">x: 2  y: 4</span>
+<span class="go">x: 6  y: 8</span>
+<span class="go">x: 9  y: 10</span>
+<div class='show_sql'><span class="k">ROLLBACK</span>
+</div></pre></div>
+</div>
+<p>Above, the “SELECT” string we executed selected all rows from our table.
+The object returned is called <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a> and represents an
+iterable object of result rows.</p>
+<p><a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a> has lots of methods for
+fetching and transforming rows, such as the <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Result.all" title="sqlalchemy.engine.Result.all"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.all()</span></code></a>
+method illustrated previously, which returns a list of all <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Row" title="sqlalchemy.engine.Row"><code class="xref py py-class docutils literal notranslate"><span class="pre">Row</span></code></a>
+objects.   It also implements the Python iterator interface so that we can
+iterate over the collection of <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Row" title="sqlalchemy.engine.Row"><code class="xref py py-class docutils literal notranslate"><span class="pre">Row</span></code></a> objects directly.</p>
+<p>The <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Row" title="sqlalchemy.engine.Row"><code class="xref py py-class docutils literal notranslate"><span class="pre">Row</span></code></a> objects themselves are intended to act like Python
+<a class="reference external" href="https://docs.python.org/3/library/collections.html#collections.namedtuple">named tuples</a>.
+Below we illustrate a variety of ways to access rows.</p>
+<ul>
+<li><p><strong>Tuple Assignment</strong> - This is the most Python-idiomatic style, which is to assign variables
+to each row positionally as they are received:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;select x, y from some_table&quot;</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+    <span class="c1"># ...</span></pre></div>
+</div>
+</li>
+<li><p><strong>Integer Index</strong> - Tuples are Python sequences, so regular integer access is available too:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;select x, y from some_table&quot;</span><span class="p">))</span>
+
+  <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+      <span class="n">x</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></pre></div>
+</div>
+</li>
+<li><p><strong>Attribute Name</strong> - As these are Python named tuples, the tuples have dynamic attribute names
+matching the names of each column.  These names are normally the names that the
+SQL statement assigns to the columns in each row.  While they are usually
+fairly predictable and can also be controlled by labels, in less defined cases
+they may be subject to database-specific behaviors:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;select x, y from some_table&quot;</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">y</span>
+
+    <span class="c1"># illustrate use with Python f-strings</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Row: </span><span class="si">{</span><span class="n">row</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">row</span><span class="o">.</span><span class="n">y</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></pre></div>
+</div>
+</li>
+<li><p><strong>Mapping Access</strong> - To receive rows as Python <strong>mapping</strong> objects, which is
+essentially a read-only version of Python’s interface to the common <code class="docutils literal notranslate"><span class="pre">dict</span></code>
+object, the <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a> may be <strong>transformed</strong> into a
+<a class="reference internal" href="../core/connections.html#sqlalchemy.engine.MappingResult" title="sqlalchemy.engine.MappingResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">MappingResult</span></code></a> object using the
+<a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Result.mappings" title="sqlalchemy.engine.Result.mappings"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.mappings()</span></code></a> modifier; this is a result object that yields
+dictionary-like <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.RowMapping" title="sqlalchemy.engine.RowMapping"><code class="xref py py-class docutils literal notranslate"><span class="pre">RowMapping</span></code></a> objects rather than
+<a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Row" title="sqlalchemy.engine.Row"><code class="xref py py-class docutils literal notranslate"><span class="pre">Row</span></code></a> objects:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;select x, y from some_table&quot;</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">dict_row</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">mappings</span><span class="p">():</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">dict_row</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">dict_row</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span></pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section class="orm-addin" id="sending-parameters">
+<span id="tutorial-sending-parameters"></span><h3>Sending Parameters<a class="headerlink" href="#sending-parameters" title="Permalink to this headline">¶</a></h3>
+<p>SQL statements are usually accompanied by data that is to be passed with the
+statement itself, as we saw in the INSERT example previously. The
+<a class="reference internal" href="../core/future.html#sqlalchemy.future.Connection.execute" title="sqlalchemy.future.Connection.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code></a> method therefore also accepts parameters,
+which are referred towards as <a class="reference internal" href="../glossary.html#term-bound-parameters"><span class="xref std std-term">bound parameters</span></a>.  A rudimentary example
+might be if we wanted to limit our SELECT statement only to rows that meet a
+certain criteria, such as rows where the “y” value were greater than a certain
+value that is passed in to a function.</p>
+<p>In order to achieve this such that the SQL statement can remain fixed and
+that the driver can properly sanitize the value, we add a WHERE criteria to
+our statement that names a new parameter called “y”; the <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.text" title="sqlalchemy.sql.expression.text"><code class="xref py py-func docutils literal notranslate"><span class="pre">text()</span></code></a>
+construct accepts these using a colon format “<code class="docutils literal notranslate"><span class="pre">:y</span></code>”.   The actual value for
+“<code class="docutils literal notranslate"><span class="pre">:y</span></code>” is then passed as the second argument to
+<a class="reference internal" href="../core/future.html#sqlalchemy.future.Connection.execute" title="sqlalchemy.future.Connection.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code></a> in the form of a dictionary:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">result</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">text</span><span class="p">(</span><span class="s2">&quot;SELECT x, y FROM some_table WHERE y &gt; :y&quot;</span><span class="p">),</span>
+<span class="gp">... </span>        <span class="p">{</span><span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+<span class="gp">... </span>       <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;x: </span><span class="si">{</span><span class="n">row</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s2">  y: </span><span class="si">{</span><span class="n">row</span><span class="o">.</span><span class="n">y</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class='show_sql'><span class="k">BEGIN</span> <span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<span class="k">SELECT</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="k">FROM</span> <span class="n">some_table</span> <span class="k">WHERE</span> <span class="n">y</span> <span class="o">&gt;</span> <span class="o">?</span>
+<span class="p">[...]</span> <span class="p">(</span><span class="mi">2</span><span class="p">,)</span>
+</div><span class="go">x: 2  y: 4</span>
+<span class="go">x: 6  y: 8</span>
+<span class="go">x: 9  y: 10</span>
+<div class='show_sql'><span class="k">ROLLBACK</span>
+</div></pre></div>
+</div>
+<p>In the logged SQL output, we can see that the bound parameter <code class="docutils literal notranslate"><span class="pre">:y</span></code> was
+converted into a question mark when it was sent to the SQLite database.
+This is because the SQLite database driver uses a format called “qmark parameter style”,
+which is one of six different formats allowed by the DBAPI specification.
+SQLAlchemy abstracts these formats into just one, which is the “named” format
+using a colon.</p>
+<div class="topic">
+<p class="topic-title">Always use bound parameters</p>
+<p>As mentioned at the beginning of this section, textual SQL is not the usual
+way we work with SQLAlchemy.  However, when using textual SQL, a Python
+literal value, even non-strings like integers or dates, should <strong>never be
+stringified into SQL string directly</strong>; a parameter should <strong>always</strong> be
+used.  This is most famously known as how to avoid SQL injection attacks
+when the data is untrusted.  However it also allows the SQLAlchemy dialects
+and/or DBAPI to correctly handle the incoming input for the backend.
+Outside of plain textual SQL use cases, SQLAlchemy’s Core Expression API
+otherwise ensures that Python literal values are passed as bound parameters
+where appropriate.</p>
+</div>
+</section>
+<section id="sending-multiple-parameters">
+<span id="tutorial-multiple-parameters"></span><h3>Sending Multiple Parameters<a class="headerlink" href="#sending-multiple-parameters" title="Permalink to this headline">¶</a></h3>
+<p>In the example at <a class="reference internal" href="#tutorial-committing-data"><span class="std std-ref">Committing Changes</span></a>, we executed an INSERT
+statement where it appeared that we were able to INSERT multiple rows into the
+database at once.  For statements that <strong>operate upon data, but do not return
+result sets</strong>, namely <a class="reference internal" href="../glossary.html#term-DML"><span class="xref std std-term">DML</span></a> statements such as “INSERT” which don’t
+include a phrase like “RETURNING”, we can send <strong>multi params</strong> to the
+<a class="reference internal" href="../core/future.html#sqlalchemy.future.Connection.execute" title="sqlalchemy.future.Connection.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code></a> method by passing a list of dictionaries
+instead of a single dictionary, thus allowing the single SQL statement to
+be invoked against each parameter set individually:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">text</span><span class="p">(</span><span class="s2">&quot;INSERT INTO some_table (x, y) VALUES (:x, :y)&quot;</span><span class="p">),</span>
+<span class="gp">... </span>        <span class="p">[{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="mi">12</span><span class="p">},</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="mi">13</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="mi">14</span><span class="p">}]</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">... </span>    <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+<div class='show_sql'><span class="k">BEGIN</span> <span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">some_table</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="o">?</span><span class="p">,</span> <span class="o">?</span><span class="p">)</span>
+<span class="p">[...]</span> <span class="p">((</span><span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span> <span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">))</span>
+<span class="o">&lt;</span><span class="n">sqlalchemy</span><span class="p">.</span><span class="n">engine</span><span class="p">.</span><span class="k">cursor</span><span class="p">.</span><span class="n">CursorResult</span> <span class="k">object</span> <span class="k">at</span> <span class="mi">0</span><span class="n">x</span><span class="p">...</span><span class="o">&gt;</span>
+<span class="k">COMMIT</span>
+</div></pre></div>
+</div>
+<p>Behind the scenes, the <a class="reference internal" href="../core/future.html#sqlalchemy.future.Connection" title="sqlalchemy.future.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> objects uses a DBAPI feature
+known as <a class="reference external" href="https://www.python.org/dev/peps/pep-0249/#id18">cursor.executemany()</a>. This method performs the
+equivalent operation of invoking the given SQL statement against each parameter
+set individually.   The DBAPI may optimize this operation in a variety of ways,
+by using prepared statements, or by concatenating the parameter sets into a
+single SQL statement in some cases.  Some SQLAlchemy dialects may also use
+alternate APIs for this case, such as the <a class="reference internal" href="../dialects/postgresql.html#postgresql-psycopg2"><span class="std std-ref">psycopg2 dialect for PostgreSQL</span></a> which uses more performant APIs
+for this use case.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>you may have noticed this section isn’t tagged as an ORM concept.
+That’s because the “multiple parameters” use case is <strong>usually</strong> used
+for INSERT statements, which when using the ORM are invoked in a different
+way.   Multiple parameters also may be used with UPDATE and DELETE
+statements to emit distinct UPDATE/DELETE operations on a per-row basis,
+however again when using the ORM, there is a different technique
+generally used for updating or deleting many individual rows separately.</p>
+</div>
+</section>
+<section class="orm-addin" id="bundling-parameters-with-a-statement">
+<span id="tutorial-bundling-parameters"></span><h3>Bundling Parameters with a Statement<a class="headerlink" href="#bundling-parameters-with-a-statement" title="Permalink to this headline">¶</a></h3>
+<p>The two previous cases illustrate a series of parameters being passed to
+accompany a SQL statement.    For single-parameter statement executions,
+SQLAlchemy’s use of parameters is in fact more often than not done by
+<strong>bundling</strong> the parameters with the statement itself, which is a primary
+feature of the SQL Expression Language and makes for queries that can be
+composed naturally while still making use of parameterization in all cases.
+This concept will be discussed in much more detail in the sections that follow;
+for a brief preview, the <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.text" title="sqlalchemy.sql.expression.text"><code class="xref py py-func docutils literal notranslate"><span class="pre">text()</span></code></a> construct itself being part of the
+SQL Expression Language supports this feature by using the
+<a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.TextClause.bindparams" title="sqlalchemy.sql.expression.TextClause.bindparams"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TextClause.bindparams()</span></code></a> method; this is a <a class="reference internal" href="../glossary.html#term-generative"><span class="xref std std-term">generative</span></a> method that
+returns a new copy of the SQL construct with additional state added, in this
+case the parameter values we want to pass along:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">text</span><span class="p">(</span><span class="s2">&quot;SELECT x, y FROM some_table WHERE y &gt; :y ORDER BY x, y&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">bindparams</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">result</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+<span class="gp">... </span>       <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;x: </span><span class="si">{</span><span class="n">row</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s2">  y: </span><span class="si">{</span><span class="n">row</span><span class="o">.</span><span class="n">y</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class='show_sql'><span class="k">BEGIN</span> <span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<span class="k">SELECT</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="k">FROM</span> <span class="n">some_table</span> <span class="k">WHERE</span> <span class="n">y</span> <span class="o">&gt;</span> <span class="o">?</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
+<span class="p">[...]</span> <span class="p">(</span><span class="mi">6</span><span class="p">,)</span>
+</div><span class="go">x: 6  y: 8</span>
+<span class="go">x: 9  y: 10</span>
+<span class="go">x: 11  y: 12</span>
+<span class="go">x: 13  y: 14</span>
+<div class='show_sql'><span class="k">ROLLBACK</span>
+</div></pre></div>
+</div>
+<p>The interesting thing to note above is that even though we passed only a single
+argument, <code class="docutils literal notranslate"><span class="pre">stmt</span></code>, to the <a class="reference internal" href="../core/future.html#sqlalchemy.future.Connection.execute" title="sqlalchemy.future.Connection.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code></a> method, the
+execution of the statement illustrated both the SQL string as well as the
+separate parameter tuple.</p>
+</section>
+</section>
+<section class="orm-addin" id="executing-with-an-orm-session">
+<span id="tutorial-executing-orm-session"></span><h2>Executing with an ORM Session<a class="headerlink" href="#executing-with-an-orm-session" title="Permalink to this headline">¶</a></h2>
+<p>As mentioned previously, most of the patterns and examples above apply to
+use with the ORM as well, so here we will introduce this usage so that
+as the tutorial proceeds, we will be able to illustrate each pattern in
+terms of Core and ORM use together.</p>
+<p>The fundamental transactional / database interactive object when using the
+ORM is called the <a class="reference internal" href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>.  In modern SQLAlchemy, this object
+is used in a manner very similar to that of the <a class="reference internal" href="../core/future.html#sqlalchemy.future.Connection" title="sqlalchemy.future.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>,
+and in fact as the <a class="reference internal" href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> is used, it refers to a
+<a class="reference internal" href="../core/future.html#sqlalchemy.future.Connection" title="sqlalchemy.future.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> internally which it uses to emit SQL.</p>
+<p>When the <a class="reference internal" href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> is used with non-ORM constructs, it
+passes through the SQL statements we give it and does not generally do things
+much differently from how the <a class="reference internal" href="../core/future.html#sqlalchemy.future.Connection" title="sqlalchemy.future.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> does directly, so
+we can illustrate it here in terms of the simple textual SQL
+operations we’ve already learned.</p>
+<p>The <a class="reference internal" href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> has a few different creational patterns, but
+here we will illustrate the most basic one that tracks exactly with how
+the <a class="reference internal" href="../core/future.html#sqlalchemy.future.Connection" title="sqlalchemy.future.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> is used which is to construct it within
+a context manager:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">Session</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">text</span><span class="p">(</span><span class="s2">&quot;SELECT x, y FROM some_table WHERE y &gt; :y ORDER BY x, y&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">bindparams</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">result</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+<span class="gp">... </span>       <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;x: </span><span class="si">{</span><span class="n">row</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s2">  y: </span><span class="si">{</span><span class="n">row</span><span class="o">.</span><span class="n">y</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class='show_sql'><span class="k">BEGIN</span> <span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<span class="k">SELECT</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="k">FROM</span> <span class="n">some_table</span> <span class="k">WHERE</span> <span class="n">y</span> <span class="o">&gt;</span> <span class="o">?</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
+<span class="p">[...]</span> <span class="p">(</span><span class="mi">6</span><span class="p">,)</span>
+</div><span class="go">x: 6  y: 8</span>
+<span class="go">x: 9  y: 10</span>
+<span class="go">x: 11  y: 12</span>
+<span class="go">x: 13  y: 14</span>
+<div class='show_sql'><span class="k">ROLLBACK</span>
+</div></pre></div>
+</div>
+<p>The example above can be compared to the example in the preceding section
+in <a class="reference internal" href="#tutorial-bundling-parameters"><span class="std std-ref">Bundling Parameters with a Statement</span></a> - we directly replace the call to
+<code class="docutils literal notranslate"><span class="pre">with</span> <span class="pre">engine.connect()</span> <span class="pre">as</span> <span class="pre">conn</span></code> with <code class="docutils literal notranslate"><span class="pre">with</span> <span class="pre">Session(engine)</span> <span class="pre">as</span> <span class="pre">session</span></code>,
+and then make use of the <a class="reference internal" href="../orm/session_api.html#sqlalchemy.orm.Session.execute" title="sqlalchemy.orm.Session.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code></a> method just like we
+do with the <a class="reference internal" href="../core/future.html#sqlalchemy.future.Connection.execute" title="sqlalchemy.future.Connection.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code></a> method.</p>
+<p>Also, like the <a class="reference internal" href="../core/future.html#sqlalchemy.future.Connection" title="sqlalchemy.future.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>, the <a class="reference internal" href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> features
+“commit as you go” behavior using the <a class="reference internal" href="../orm/session_api.html#sqlalchemy.orm.Session.commit" title="sqlalchemy.orm.Session.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code></a> method,
+illustrated below using a textual UPDATE statement to alter some of
+our data:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">result</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">text</span><span class="p">(</span><span class="s2">&quot;UPDATE some_table SET y=:y WHERE x=:x&quot;</span><span class="p">),</span>
+<span class="gp">... </span>        <span class="p">[{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span><span class="mi">11</span><span class="p">},</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="mi">13</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="mi">15</span><span class="p">}]</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">... </span>    <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+<div class='show_sql'><span class="k">BEGIN</span> <span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<span class="k">UPDATE</span> <span class="n">some_table</span> <span class="k">SET</span> <span class="n">y</span><span class="o">=?</span> <span class="k">WHERE</span> <span class="n">x</span><span class="o">=?</span>
+<span class="p">[...]</span> <span class="p">((</span><span class="mi">11</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">13</span><span class="p">))</span>
+<span class="k">COMMIT</span>
+</div></pre></div>
+</div>
+<p>Above, we invoked an UPDATE statement using the bound-parameter, “executemany”
+style of execution introduced at <a class="reference internal" href="#tutorial-multiple-parameters"><span class="std std-ref">Sending Multiple Parameters</span></a>, ending
+the block with a “commit as you go” commit.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The <a class="reference internal" href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> doesn’t actually hold onto the
+<a class="reference internal" href="../core/future.html#sqlalchemy.future.Connection" title="sqlalchemy.future.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> object after it ends the transaction.  It
+gets a new <a class="reference internal" href="../core/future.html#sqlalchemy.future.Connection" title="sqlalchemy.future.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> from the <a class="reference internal" href="../core/future.html#sqlalchemy.future.Engine" title="sqlalchemy.future.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>
+when executing SQL against the database is next needed.</p>
+</div>
+<p>The <a class="reference internal" href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> obviously has a lot more tricks up its sleeve
+than that, however understanding that it has a <a class="reference internal" href="../orm/session_api.html#sqlalchemy.orm.Session.execute" title="sqlalchemy.orm.Session.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code></a>
+method that’s used the same way as <a class="reference internal" href="../core/future.html#sqlalchemy.future.Connection.execute" title="sqlalchemy.future.Connection.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code></a> will
+get us started with the examples that follow later.</p>
+</section>
+</section>
+<div class="topic">
+<p class="topic-title">SQLAlchemy 1.4 / 2.0 Tutorial</p>
+<p>Next Tutorial Section: <a class="reference internal" href="metadata.html"><span class="doc">Working with Database Metadata</span></a></p>
+</div>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="engine.html" title="previous chapter">Establishing Connectivity - the Engine</a>
+        Next:
+        <a href="metadata.html" title="next chapter">Working with Database Metadata</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2021, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.1.2.
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '1.4.23',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/detectmobile.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

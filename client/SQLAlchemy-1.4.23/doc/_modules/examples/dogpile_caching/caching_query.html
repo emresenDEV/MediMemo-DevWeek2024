@@ -1,0 +1,366 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        
+        <title>
+            
+    
+    examples.dogpile_caching.caching_query
+ &mdash;
+    SQLAlchemy 1.4 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../../../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../../../_static/changelog.css" type="text/css" />
+                <link rel="stylesheet" href="../../../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+        <link rel="copyright" title="Copyright" href="../../../copyright.html" />
+    <link rel="top" title="SQLAlchemy 1.4 Documentation" href="../../../index.html" />
+        <link rel="up" title="Module code" href="../../index.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">1.4.23</span>
+
+
+        | Release Date: August 18, 2021
+
+    </div>
+
+    <h1><a href="../../../index.html">SQLAlchemy 1.4 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="">
+
+        <div id="index-nav">
+            <form class="search" action="../../../search.html" method="get">
+              <label>
+                 Search terms:
+              <input type="text" placeholder="search..." name="q" size="12" />
+              </label>
+              <input type="submit" value="Search" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+
+            <p>
+            <a href="../../../contents.html">Contents</a> |
+            <a href="../../../genindex.html">Index</a>
+            </p>
+
+        </div>
+
+
+    </div>
+
+    
+
+    <div id="docs-body" class=" _modules-examples-dogpile_caching-caching_query" >
+        
+<h1>Source code for examples.dogpile_caching.caching_query</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Represent functions and classes</span>
+<span class="sd">which allow the usage of Dogpile caching with SQLAlchemy.</span>
+<span class="sd">Introduces a query option called FromCache.</span>
+
+<span class="sd">.. versionchanged:: 1.4  the caching approach has been altered to work</span>
+<span class="sd">   based on a session event.</span>
+
+
+<span class="sd">The three new concepts introduced here are:</span>
+
+<span class="sd"> * ORMCache - an extension for an ORM :class:`.Session`</span>
+<span class="sd">   retrieves results in/from dogpile.cache.</span>
+<span class="sd"> * FromCache - a query option that establishes caching</span>
+<span class="sd">   parameters on a Query</span>
+<span class="sd"> * RelationshipCache - a variant of FromCache which is specific</span>
+<span class="sd">   to a query invoked during a lazy load.</span>
+
+<span class="sd">The rest of what&#39;s here are standard SQLAlchemy and</span>
+<span class="sd">dogpile.cache constructs.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">dogpile.cache.api</span> <span class="kn">import</span> <span class="n">NO_VALUE</span>
+
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">event</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">loading</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm.interfaces</span> <span class="kn">import</span> <span class="n">UserDefinedOption</span>
+
+
+<span class="k">class</span> <span class="nc">ORMCache</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;An add-on for an ORM :class:`.Session` optionally loads full results</span>
+<span class="sd">    from a dogpile cache region.</span>
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">regions</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cache_regions</span> <span class="o">=</span> <span class="n">regions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_statement_cache</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">def</span> <span class="nf">listen_on_session</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session_factory</span><span class="p">):</span>
+        <span class="n">event</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">session_factory</span><span class="p">,</span> <span class="s2">&quot;do_orm_execute&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_do_orm_execute</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_do_orm_execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">orm_context</span><span class="p">):</span>
+
+        <span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">orm_context</span><span class="o">.</span><span class="n">user_defined_options</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="n">RelationshipCache</span><span class="p">):</span>
+                <span class="n">opt</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">_process_orm_context</span><span class="p">(</span><span class="n">orm_context</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">opt</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">continue</span>
+
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="n">FromCache</span><span class="p">):</span>
+                <span class="n">dogpile_region</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache_regions</span><span class="p">[</span><span class="n">opt</span><span class="o">.</span><span class="n">region</span><span class="p">]</span>
+
+                <span class="n">our_cache_key</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">_generate_cache_key</span><span class="p">(</span>
+                    <span class="n">orm_context</span><span class="o">.</span><span class="n">statement</span><span class="p">,</span> <span class="n">orm_context</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span> <span class="bp">self</span>
+                <span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">opt</span><span class="o">.</span><span class="n">ignore_expiration</span><span class="p">:</span>
+                    <span class="n">cached_value</span> <span class="o">=</span> <span class="n">dogpile_region</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                        <span class="n">our_cache_key</span><span class="p">,</span>
+                        <span class="n">expiration_time</span><span class="o">=</span><span class="n">opt</span><span class="o">.</span><span class="n">expiration_time</span><span class="p">,</span>
+                        <span class="n">ignore_expiration</span><span class="o">=</span><span class="n">opt</span><span class="o">.</span><span class="n">ignore_expiration</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+
+                    <span class="k">def</span> <span class="nf">createfunc</span><span class="p">():</span>
+                        <span class="k">return</span> <span class="n">orm_context</span><span class="o">.</span><span class="n">invoke_statement</span><span class="p">()</span><span class="o">.</span><span class="n">freeze</span><span class="p">()</span>
+
+                    <span class="n">cached_value</span> <span class="o">=</span> <span class="n">dogpile_region</span><span class="o">.</span><span class="n">get_or_create</span><span class="p">(</span>
+                        <span class="n">our_cache_key</span><span class="p">,</span>
+                        <span class="n">createfunc</span><span class="p">,</span>
+                        <span class="n">expiration_time</span><span class="o">=</span><span class="n">opt</span><span class="o">.</span><span class="n">expiration_time</span><span class="p">,</span>
+                    <span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">cached_value</span> <span class="ow">is</span> <span class="n">NO_VALUE</span><span class="p">:</span>
+                    <span class="c1"># keyerror?   this is bigger than a keyerror...</span>
+                    <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">()</span>
+
+                <span class="n">orm_result</span> <span class="o">=</span> <span class="n">loading</span><span class="o">.</span><span class="n">merge_frozen_result</span><span class="p">(</span>
+                    <span class="n">orm_context</span><span class="o">.</span><span class="n">session</span><span class="p">,</span>
+                    <span class="n">orm_context</span><span class="o">.</span><span class="n">statement</span><span class="p">,</span>
+                    <span class="n">cached_value</span><span class="p">,</span>
+                    <span class="n">load</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="k">return</span> <span class="n">orm_result</span><span class="p">()</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">invalidate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">statement</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">opt</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Invalidate the cache value represented by a statement.&quot;&quot;&quot;</span>
+
+        <span class="n">statement</span> <span class="o">=</span> <span class="n">statement</span><span class="o">.</span><span class="n">__clause_element__</span><span class="p">()</span>
+
+        <span class="n">dogpile_region</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache_regions</span><span class="p">[</span><span class="n">opt</span><span class="o">.</span><span class="n">region</span><span class="p">]</span>
+
+        <span class="n">cache_key</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">_generate_cache_key</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+        <span class="n">dogpile_region</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">cache_key</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">FromCache</span><span class="p">(</span><span class="n">UserDefinedOption</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Specifies that a Query should load results from a cache.&quot;&quot;&quot;</span>
+
+    <span class="n">propagate_to_loaders</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">region</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span>
+        <span class="n">cache_key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">expiration_time</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">ignore_expiration</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Construct a new FromCache.</span>
+
+<span class="sd">        :param region: the cache region.  Should be a</span>
+<span class="sd">         region configured in the dictionary of dogpile</span>
+<span class="sd">         regions.</span>
+
+<span class="sd">        :param cache_key: optional.  A string cache key</span>
+<span class="sd">         that will serve as the key to the query.   Use this</span>
+<span class="sd">         if your query has a huge amount of parameters (such</span>
+<span class="sd">         as when using in_()) which correspond more simply to</span>
+<span class="sd">         some other identifier.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">region</span> <span class="o">=</span> <span class="n">region</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cache_key</span> <span class="o">=</span> <span class="n">cache_key</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expiration_time</span> <span class="o">=</span> <span class="n">expiration_time</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ignore_expiration</span> <span class="o">=</span> <span class="n">ignore_expiration</span>
+
+    <span class="k">def</span> <span class="nf">_gen_cache_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">anon_map</span><span class="p">,</span> <span class="n">bindparams</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">_generate_cache_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">statement</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">orm_cache</span><span class="p">):</span>
+        <span class="n">statement_cache_key</span> <span class="o">=</span> <span class="n">statement</span><span class="o">.</span><span class="n">_generate_cache_key</span><span class="p">()</span>
+
+        <span class="n">key</span> <span class="o">=</span> <span class="n">statement_cache_key</span><span class="o">.</span><span class="n">to_offline_string</span><span class="p">(</span>
+            <span class="n">orm_cache</span><span class="o">.</span><span class="n">_statement_cache</span><span class="p">,</span> <span class="n">statement</span><span class="p">,</span> <span class="n">parameters</span>
+        <span class="p">)</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cache_key</span><span class="p">)</span>
+        <span class="c1"># print(&quot;here&#39;s our key...%s&quot; % key)</span>
+        <span class="k">return</span> <span class="n">key</span>
+
+
+<span class="k">class</span> <span class="nc">RelationshipCache</span><span class="p">(</span><span class="n">FromCache</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Specifies that a Query as called within a &quot;lazy load&quot;</span>
+<span class="sd">    should load results from a cache.&quot;&quot;&quot;</span>
+
+    <span class="n">propagate_to_loaders</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">attribute</span><span class="p">,</span>
+        <span class="n">region</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span>
+        <span class="n">cache_key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">expiration_time</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">ignore_expiration</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Construct a new RelationshipCache.</span>
+
+<span class="sd">        :param attribute: A Class.attribute which</span>
+<span class="sd">         indicates a particular class relationship() whose</span>
+<span class="sd">         lazy loader should be pulled from the cache.</span>
+
+<span class="sd">        :param region: name of the cache region.</span>
+
+<span class="sd">        :param cache_key: optional.  A string cache key</span>
+<span class="sd">         that will serve as the key to the query, bypassing</span>
+<span class="sd">         the usual means of forming a key from the Query itself.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">region</span> <span class="o">=</span> <span class="n">region</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cache_key</span> <span class="o">=</span> <span class="n">cache_key</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expiration_time</span> <span class="o">=</span> <span class="n">expiration_time</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ignore_expiration</span> <span class="o">=</span> <span class="n">ignore_expiration</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_relationship_options</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="p">(</span><span class="n">attribute</span><span class="o">.</span><span class="n">property</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">class_</span><span class="p">,</span> <span class="n">attribute</span><span class="o">.</span><span class="n">property</span><span class="o">.</span><span class="n">key</span><span class="p">):</span> <span class="bp">self</span>
+        <span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">_process_orm_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">orm_context</span><span class="p">):</span>
+        <span class="n">current_path</span> <span class="o">=</span> <span class="n">orm_context</span><span class="o">.</span><span class="n">loader_strategy_path</span>
+
+        <span class="k">if</span> <span class="n">current_path</span><span class="p">:</span>
+            <span class="n">mapper</span><span class="p">,</span> <span class="n">prop</span> <span class="o">=</span> <span class="n">current_path</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="n">prop</span><span class="o">.</span><span class="n">key</span>
+
+            <span class="k">for</span> <span class="bp">cls</span> <span class="ow">in</span> <span class="n">mapper</span><span class="o">.</span><span class="n">class_</span><span class="o">.</span><span class="vm">__mro__</span><span class="p">:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_relationship_options</span><span class="p">:</span>
+                    <span class="n">relationship_option</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_relationship_options</span><span class="p">[</span>
+                        <span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+                    <span class="p">]</span>
+                    <span class="k">return</span> <span class="n">relationship_option</span>
+
+    <span class="k">def</span> <span class="nf">and_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Chain another RelationshipCache option to this one.</span>
+
+<span class="sd">        While many RelationshipCache objects can be specified on a single</span>
+<span class="sd">        Query separately, chaining them together allows for a more efficient</span>
+<span class="sd">        lookup during load.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_relationship_options</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">option</span><span class="o">.</span><span class="n">_relationship_options</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></pre></div>
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links">
+
+    <div id="docs-copyright">
+        &copy; <a href="../../../copyright.html">Copyright</a> 2007-2021, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.1.2.
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../../../',
+          VERSION:     '1.4.23',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../../../_static/detectmobile.js"></script>
+    <script type="text/javascript" src="../../../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

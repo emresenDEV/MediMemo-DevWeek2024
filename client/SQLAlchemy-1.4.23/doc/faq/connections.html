@@ -1,0 +1,632 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+        <title>
+            
+    
+    Connections / Engines
+ &mdash;
+    SQLAlchemy 1.4 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/changelog.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 1.4 Documentation" href="../index.html" />
+        <link rel="up" title="Frequently Asked Questions" href="index.html" />
+        <link rel="next" title="MetaData / Schema" href="metadata_schema.html" />
+        <link rel="prev" title="Frequently Asked Questions" href="index.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">1.4.23</span>
+
+
+        | Release Date: August 18, 2021
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 1.4 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 1.4 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../contents.html">Contents</a> |
+                <a href="../genindex.html">Index</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="Frequently Asked Questions">Frequently Asked Questions</a>
+        </h3>
+
+        <ul>
+<li class="selected"><span class="link-container"><strong>Connections / Engines</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#how-do-i-configure-logging">How do I configure logging?</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#how-do-i-pool-database-connections-are-my-connections-pooled">How do I pool database connections?   Are my connections pooled?</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#how-do-i-pass-custom-connect-arguments-to-my-database-api">How do I pass custom connect arguments to my database API?</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#mysql-server-has-gone-away">“MySQL Server has gone away”</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#commands-out-of-sync-you-can-t-run-this-command-now-this-result-object-does-not-return-rows-it-has-been-closed-automatically">“Commands out of sync; you can’t run this command now” / “This result object does not return rows. It has been closed automatically”</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#how-do-i-retry-a-statement-execution-automatically">How Do I “Retry” a Statement Execution Automatically?</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#using-dbapi-autocommit-allows-for-a-readonly-version-of-transparent-reconnect">Using DBAPI Autocommit Allows for a Readonly Version of Transparent Reconnect</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#why-does-sqlalchemy-issue-so-many-rollbacks">Why does SQLAlchemy issue so many ROLLBACKs?</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#i-m-on-myisam-how-do-i-turn-it-off">I’m on MyISAM - how do I turn it off?</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#i-m-on-sql-server-how-do-i-turn-those-rollbacks-into-commits">I’m on SQL Server - how do I turn those ROLLBACKs into COMMITs?</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#i-am-using-multiple-connections-with-a-sqlite-database-typically-to-test-transaction-operation-and-my-test-program-is-not-working">I am using multiple connections with a SQLite database (typically to test transaction operation), and my test program is not working!</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#how-do-i-get-at-the-raw-dbapi-connection-when-using-an-engine">How do I get at the raw DBAPI connection when using an Engine?</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#how-do-i-use-engines-connections-sessions-with-python-multiprocessing-or-os-fork">How do I use engines / connections / sessions with Python multiprocessing, or os.fork()?</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="metadata_schema.html">MetaData / Schema</a></span></li>
+<li><span class="link-container"><a class="reference external" href="sqlexpressions.html">SQL Expressions</a></span></li>
+<li><span class="link-container"><a class="reference external" href="ormconfiguration.html">ORM Configuration</a></span></li>
+<li><span class="link-container"><a class="reference external" href="performance.html">Performance</a></span></li>
+<li><span class="link-container"><a class="reference external" href="sessions.html">Sessions / Queries</a></span></li>
+<li><span class="link-container"><a class="reference external" href="thirdparty.html">Third Party Integration Issues</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    
+
+    <div id="docs-body" class="withsidebar faq-connections" >
+        
+<section id="connections-engines">
+<h1>Connections / Engines<a class="headerlink" href="#connections-engines" title="Permalink to this headline">¶</a></h1>
+<div class="contents faq local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#how-do-i-configure-logging" id="id1">How do I configure logging?</a></p></li>
+<li><p><a class="reference internal" href="#how-do-i-pool-database-connections-are-my-connections-pooled" id="id2">How do I pool database connections?   Are my connections pooled?</a></p></li>
+<li><p><a class="reference internal" href="#how-do-i-pass-custom-connect-arguments-to-my-database-api" id="id3">How do I pass custom connect arguments to my database API?</a></p></li>
+<li><p><a class="reference internal" href="#mysql-server-has-gone-away" id="id4">“MySQL Server has gone away”</a></p></li>
+<li><p><a class="reference internal" href="#commands-out-of-sync-you-can-t-run-this-command-now-this-result-object-does-not-return-rows-it-has-been-closed-automatically" id="id5">“Commands out of sync; you can’t run this command now” / “This result object does not return rows. It has been closed automatically”</a></p></li>
+<li><p><a class="reference internal" href="#how-do-i-retry-a-statement-execution-automatically" id="id6">How Do I “Retry” a Statement Execution Automatically?</a></p>
+<ul>
+<li><p><a class="reference internal" href="#using-dbapi-autocommit-allows-for-a-readonly-version-of-transparent-reconnect" id="id7">Using DBAPI Autocommit Allows for a Readonly Version of Transparent Reconnect</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#why-does-sqlalchemy-issue-so-many-rollbacks" id="id8">Why does SQLAlchemy issue so many ROLLBACKs?</a></p>
+<ul>
+<li><p><a class="reference internal" href="#i-m-on-myisam-how-do-i-turn-it-off" id="id9">I’m on MyISAM - how do I turn it off?</a></p></li>
+<li><p><a class="reference internal" href="#i-m-on-sql-server-how-do-i-turn-those-rollbacks-into-commits" id="id10">I’m on SQL Server - how do I turn those ROLLBACKs into COMMITs?</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#i-am-using-multiple-connections-with-a-sqlite-database-typically-to-test-transaction-operation-and-my-test-program-is-not-working" id="id11">I am using multiple connections with a SQLite database (typically to test transaction operation), and my test program is not working!</a></p></li>
+<li><p><a class="reference internal" href="#how-do-i-get-at-the-raw-dbapi-connection-when-using-an-engine" id="id12">How do I get at the raw DBAPI connection when using an Engine?</a></p></li>
+<li><p><a class="reference internal" href="#how-do-i-use-engines-connections-sessions-with-python-multiprocessing-or-os-fork" id="id13">How do I use engines / connections / sessions with Python multiprocessing, or os.fork()?</a></p></li>
+</ul>
+</div>
+<section id="how-do-i-configure-logging">
+<h2>How do I configure logging?<a class="headerlink" href="#how-do-i-configure-logging" title="Permalink to this headline">¶</a></h2>
+<p>See <a class="reference internal" href="../core/engines.html#dbengine-logging"><span class="std std-ref">Configuring Logging</span></a>.</p>
+</section>
+<section id="how-do-i-pool-database-connections-are-my-connections-pooled">
+<h2>How do I pool database connections?   Are my connections pooled?<a class="headerlink" href="#how-do-i-pool-database-connections-are-my-connections-pooled" title="Permalink to this headline">¶</a></h2>
+<p>SQLAlchemy performs application-level connection pooling automatically
+in most cases.  With the exception of SQLite, a <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> object
+refers to a <a class="reference internal" href="../core/pooling.html#sqlalchemy.pool.QueuePool" title="sqlalchemy.pool.QueuePool"><code class="xref py py-class docutils literal notranslate"><span class="pre">QueuePool</span></code></a> as a source of connectivity.</p>
+<p>For more detail, see <a class="reference internal" href="../core/engines.html"><span class="std std-ref">Engine Configuration</span></a> and <a class="reference internal" href="../core/pooling.html"><span class="std std-ref">Connection Pooling</span></a>.</p>
+</section>
+<section id="how-do-i-pass-custom-connect-arguments-to-my-database-api">
+<h2>How do I pass custom connect arguments to my database API?<a class="headerlink" href="#how-do-i-pass-custom-connect-arguments-to-my-database-api" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="../core/engines.html#sqlalchemy.create_engine" title="sqlalchemy.create_engine"><code class="xref py py-func docutils literal notranslate"><span class="pre">create_engine()</span></code></a> call accepts additional arguments either
+directly via the <code class="docutils literal notranslate"><span class="pre">connect_args</span></code> keyword argument:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">e</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;mysql://scott:tiger@localhost/test&quot;</span><span class="p">,</span>
+                    <span class="n">connect_args</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;encoding&quot;</span><span class="p">:</span> <span class="s2">&quot;utf8&quot;</span><span class="p">})</span></pre></div>
+</div>
+<p>Or for basic string and integer arguments, they can usually be specified
+in the query string of the URL:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">e</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;mysql://scott:tiger@localhost/test?encoding=utf8&quot;</span><span class="p">)</span></pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../core/engines.html#custom-dbapi-args"><span class="std std-ref">Custom DBAPI connect() arguments / on-connect routines</span></a></p>
+</div>
+</section>
+<section id="mysql-server-has-gone-away">
+<h2>“MySQL Server has gone away”<a class="headerlink" href="#mysql-server-has-gone-away" title="Permalink to this headline">¶</a></h2>
+<p>The primary cause of this error is that the MySQL connection has timed out
+and has been closed by the server.   The MySQL server closes connections
+which have been idle a period of time which defaults to eight hours.
+To accommodate this, the immediate setting is to enable the
+<a class="reference internal" href="../core/engines.html#sqlalchemy.create_engine.params.pool_recycle" title="sqlalchemy.create_engine"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">create_engine.pool_recycle</span></code></a> setting, which will ensure that a
+connection which is older than a set amount of seconds will be discarded
+and replaced with a new connection when it is next checked out.</p>
+<p>For the more general case of accommodating database restarts and other
+temporary loss of connectivity due to network issues, connections that
+are in the pool may be recycled in response to more generalized disconnect
+detection techniques.  The section <a class="reference internal" href="../core/pooling.html#pool-disconnects"><span class="std std-ref">Dealing with Disconnects</span></a> provides
+background on both “pessimistic” (e.g. pre-ping) and “optimistic”
+(e.g. graceful recovery) techniques.   Modern SQLAlchemy tends to favor
+the “pessimistic” approach.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../core/pooling.html#pool-disconnects"><span class="std std-ref">Dealing with Disconnects</span></a></p>
+</div>
+</section>
+<section id="commands-out-of-sync-you-can-t-run-this-command-now-this-result-object-does-not-return-rows-it-has-been-closed-automatically">
+<span id="mysql-sync-errors"></span><h2>“Commands out of sync; you can’t run this command now” / “This result object does not return rows. It has been closed automatically”<a class="headerlink" href="#commands-out-of-sync-you-can-t-run-this-command-now-this-result-object-does-not-return-rows-it-has-been-closed-automatically" title="Permalink to this headline">¶</a></h2>
+<p>The MySQL drivers have a fairly wide class of failure modes whereby the state of
+the connection to the server is in an invalid state.  Typically, when the connection
+is used again, one of these two error messages will occur.    The reason is because
+the state of the server has been changed to one in which the client library
+does not expect, such that when the client library emits a new statement
+on the connection, the server does not respond as expected.</p>
+<p>In SQLAlchemy, because database connections are pooled, the issue of the messaging
+being out of sync on a connection becomes more important, since when an operation
+fails, if the connection itself is in an unusable state, if it goes back into the
+connection pool, it will malfunction when checked out again.  The mitigation
+for this issue is that the connection is <strong>invalidated</strong> when such a failure
+mode occurs so that the underlying database connection to MySQL is discarded.
+This invalidation occurs automatically for many known failure modes and can
+also be called explicitly via the <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection.invalidate" title="sqlalchemy.engine.Connection.invalidate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.invalidate()</span></code></a> method.</p>
+<p>There is also a second class of failure modes within this category where a context manager
+such as <code class="docutils literal notranslate"><span class="pre">with</span> <span class="pre">session.begin_nested():</span></code> wants to “roll back” the transaction
+when an error occurs; however within some failure modes of the connection, the
+rollback itself (which can also be a RELEASE SAVEPOINT operation) also
+fails, causing misleading stack traces.</p>
+<p>Originally, the cause of this error used to be fairly simple, it meant that
+a multithreaded program was invoking commands on a single connection from more
+than one thread.   This applied to the original “MySQLdb” native-C driver that was
+pretty much the only driver in use.   However, with the introduction of pure Python
+drivers like PyMySQL and MySQL-connector-Python, as well as increased use of
+tools such as gevent/eventlet, multiprocessing (often with Celery), and others,
+there is a whole series of factors that has been known to cause this problem, some of
+which have been improved across SQLAlchemy versions but others which are unavoidable:</p>
+<ul>
+<li><p><strong>Sharing a connection among threads</strong> - This is the original reason these kinds
+of errors occurred.  A program used the same connection in two or more threads at
+the same time, meaning multiple sets of messages got mixed up on the connection,
+putting the server-side session into a state that the client no longer knows how
+to interpret.   However, other causes are usually more likely today.</p></li>
+<li><p><strong>Sharing the filehandle for the connection among processes</strong> - This usually occurs
+when a program uses <code class="docutils literal notranslate"><span class="pre">os.fork()</span></code> to spawn a new process, and a TCP connection
+that is present in th parent process gets shared into one or more child processes.
+As multiple processes are now emitting messages to essentially the same filehandle,
+the server receives interleaved messages and breaks the state of the connection.</p>
+<p>This scenario can occur very easily if a program uses Python’s “multiprocessing”
+module and makes use of an <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> that was created in the parent
+process.  It’s common that “multiprocessing” is in use when using tools like
+Celery.  The correct approach should be either that a new <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>
+is produced when a child process first starts, discarding any <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>
+that came down from the parent process; or, the <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> that’s inherited
+from the parent process can have it’s internal pool of connections disposed by
+calling <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine.dispose" title="sqlalchemy.engine.Engine.dispose"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Engine.dispose()</span></code></a>.</p>
+</li>
+<li><p><strong>Greenlet Monkeypatching w/ Exits</strong> - When using a library like gevent or eventlet
+that monkeypatches the Python networking API, libraries like PyMySQL are now
+working in an asynchronous mode of operation, even though they are not developed
+explicitly against this model.  A common issue is that a greenthread is interrupted,
+often due to timeout logic in the application.  This results in the <code class="docutils literal notranslate"><span class="pre">GreenletExit</span></code>
+exception being raised, and the pure-Python MySQL driver is interrupted from
+its work, which may have been that it was receiving a response from the server
+or preparing to otherwise reset the state of the connection.   When the exception
+cuts all that work short, the conversation between client and server is now
+out of sync and subsequent usage of the connection may fail.   SQLAlchemy
+as of version 1.1.0 knows how to guard against this, as if a database operation
+is interrupted by a so-called “exit exception”, which includes <code class="docutils literal notranslate"><span class="pre">GreenletExit</span></code>
+and any other subclass of Python <code class="docutils literal notranslate"><span class="pre">BaseException</span></code> that is not also a subclass
+of <code class="docutils literal notranslate"><span class="pre">Exception</span></code>, the connection is invalidated.</p></li>
+<li><p><strong>Rollbacks / SAVEPOINT releases failing</strong> - Some classes of error cause
+the connection to be unusable within the context of a transaction, as well
+as when operating in a “SAVEPOINT” block.  In these cases, the failure
+on the connection has rendered any SAVEPOINT as no longer existing, yet
+when SQLAlchemy, or the application, attempts to “roll back” this savepoint,
+the “RELEASE SAVEPOINT” operation fails, typically with a message like
+“savepoint does not exist”.   In this case, under Python 3 there will be
+a chain of exceptions output, where the ultimate “cause” of the error
+will be displayed as well.  Under Python 2, there are no “chained” exceptions,
+however recent versions of SQLAlchemy will attempt to emit a warning
+illustrating the original failure cause, while still throwing the
+immediate error which is the failure of the ROLLBACK.</p></li>
+</ul>
+</section>
+<section id="how-do-i-retry-a-statement-execution-automatically">
+<span id="faq-execute-retry"></span><h2>How Do I “Retry” a Statement Execution Automatically?<a class="headerlink" href="#how-do-i-retry-a-statement-execution-automatically" title="Permalink to this headline">¶</a></h2>
+<p>The documentation section <a class="reference internal" href="../core/pooling.html#pool-disconnects"><span class="std std-ref">Dealing with Disconnects</span></a> discusses the strategies
+available for pooled connections that have been disconnected since the last
+time a particular connection was checked out.   The most modern feature
+in this regard is the <a class="reference internal" href="../core/engines.html#sqlalchemy.create_engine.params.pre_ping" title="sqlalchemy.create_engine"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">create_engine.pre_ping</span></code></a> parameter, which
+allows that a “ping” is emitted on a database connection when it’s retrieved
+from the pool, reconnecting if the current connection has been disconnected.</p>
+<p>It’s important to note that this “ping” is only emitted <strong>before</strong> the
+connection is actually used for an operation.   Once the connection is
+delivered to the caller, per the Python <a class="reference internal" href="../glossary.html#term-DBAPI"><span class="xref std std-term">DBAPI</span></a> specification it is now
+subject to an <strong>autobegin</strong> operation, which means it will automatically BEGIN
+a new transaction when it is first used that remains in effect for subsequent
+statements, until the DBAPI-level <code class="docutils literal notranslate"><span class="pre">connection.commit()</span></code> or
+<code class="docutils literal notranslate"><span class="pre">connection.rollback()</span></code> method is invoked.</p>
+<p>As discussed at <a class="reference internal" href="../core/connections.html#autocommit"><span class="std std-ref">Library Level (e.g. emulated) Autocommit</span></a>, there is a library level “autocommit”
+feature which is deprecated in 1.4 that causes <a class="reference internal" href="../glossary.html#term-DML"><span class="xref std std-term">DML</span></a> and <a class="reference internal" href="../glossary.html#term-DDL"><span class="xref std std-term">DDL</span></a>
+executions to commit automatically after individual statements are executed;
+however, outside of this deprecated case, modern use of SQLAlchemy works with
+this transaction in all cases and does not commit any data unless explicitly
+told to commit.</p>
+<p>At the ORM level, a similar situation where the ORM
+<a class="reference internal" href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> object also presents a legacy “autocommit” operation is
+present; however even if this legacy mode of operation is used, the
+<a class="reference internal" href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> still makes use of transactions internally,
+particularly within the <a class="reference internal" href="../orm/session_api.html#sqlalchemy.orm.Session.flush" title="sqlalchemy.orm.Session.flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.flush()</span></code></a> process.</p>
+<p>The implication that this has for the notion of “retrying” a statement is that
+in the default case, when a connection is lost, <strong>the entire transaction is
+lost</strong>. There is no useful way that the database can “reconnect and retry” and
+continue where it left off, since data is already lost.   For this reason,
+SQLAlchemy does not have a transparent “reconnection” feature that works
+mid-transaction, for the case when the database connection has disconnected
+while being used. The canonical approach to dealing with mid-operation
+disconnects is to <strong>retry the entire operation from the start of the
+transaction</strong>, often by using a Python “retry” decorator, or to otherwise
+architect the application in such a way that it is resilient against
+transactions that are dropped.</p>
+<p>There is also the notion of extensions that can keep track of all of the
+statements that have proceeded within a transaction and then replay them all in
+a new transaction in order to approximate a “retry” operation.  SQLAlchemy’s
+<a class="reference internal" href="../core/events.html"><span class="std std-ref">event system</span></a> does allow such a system to be
+constructed, however this approach is also not generally useful as there is
+no way to guarantee that those
+<a class="reference internal" href="../glossary.html#term-DML"><span class="xref std std-term">DML</span></a> statements will be working against the same state, as once a
+transaction has ended the state of the database in a new transaction may be
+totally different.   Architecting “retry” explicitly into the application
+at the points at which transactional operations begin and commit remains
+the better approach since the application-level transactional methods are
+the ones that know best how to re-run their steps.</p>
+<p>Otherwise, if SQLAlchemy were to provide a feature that transparently and
+silently “reconnected” a connection mid-transaction, the effect would be that
+data is silently lost.   By trying to hide the problem, SQLAlchemy would make
+the situation much worse.</p>
+<p>However, if we are <strong>not</strong> using transactions, then there are more options
+available, as the next section describes.</p>
+<section id="using-dbapi-autocommit-allows-for-a-readonly-version-of-transparent-reconnect">
+<span id="faq-execute-retry-autocommit"></span><h3>Using DBAPI Autocommit Allows for a Readonly Version of Transparent Reconnect<a class="headerlink" href="#using-dbapi-autocommit-allows-for-a-readonly-version-of-transparent-reconnect" title="Permalink to this headline">¶</a></h3>
+<p>With the rationale for not having a transparent reconnection mechanism stated,
+the preceding section rests upon the assumption that the application is in
+fact using DBAPI-level transactions.  As most DBAPIs now offer <a class="reference internal" href="../core/connections.html#dbapi-autocommit"><span class="std std-ref">native
+“autocommit” settings</span></a>, we can make use of these features to
+provide a limited form of transparent reconnect for <strong>read only,
+autocommit only operations</strong>.  A transparent statement retry may be applied to
+the <code class="docutils literal notranslate"><span class="pre">cursor.execute()</span></code> method of the DBAPI, however it is still not safe to
+apply to the <code class="docutils literal notranslate"><span class="pre">cursor.executemany()</span></code> method of the DBAPI, as the statement may
+have consumed any portion of the arguments given.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The following recipe should <strong>not</strong> be used for operations that
+write data.   Users should carefully read and understand how the recipe
+works and test failure modes very carefully against the specifically
+targeted DBAPI driver before making production use of this recipe.
+The retry mechanism does not guarantee prevention of disconnection errors
+in all cases.</p>
+</div>
+<p>A simple retry mechanism may be applied to the DBAPI level <code class="docutils literal notranslate"><span class="pre">cursor.execute()</span></code>
+method by making use of the <a class="reference internal" href="../core/events.html#sqlalchemy.events.DialectEvents.do_execute" title="sqlalchemy.events.DialectEvents.do_execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DialectEvents.do_execute()</span></code></a> and
+<a class="reference internal" href="../core/events.html#sqlalchemy.events.DialectEvents.do_execute_no_params" title="sqlalchemy.events.DialectEvents.do_execute_no_params"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DialectEvents.do_execute_no_params()</span></code></a> hooks, which will be able to
+intercept disconnections during statement executions.   It will <strong>not</strong>
+intercept connection failures during result set fetch operations, for those
+DBAPIs that don’t fully buffer result sets.  The recipe requires that the
+database support DBAPI level autocommit and is <strong>not guaranteed</strong> for
+particular backends.  A single function <code class="docutils literal notranslate"><span class="pre">reconnecting_engine()</span></code> is presented
+which applies the event hooks to a given <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> object,
+returning an always-autocommit version that enables DBAPI-level autocommit.
+A connection will transparently reconnect for single-parameter and no-parameter
+statement executions:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">event</span>
+
+
+<span class="k">def</span> <span class="nf">reconnecting_engine</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="n">num_retries</span><span class="p">,</span> <span class="n">retry_interval</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_run_with_retries</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">cursor</span><span class="p">,</span> <span class="n">statement</span><span class="p">,</span> <span class="o">*</span><span class="n">arg</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">retry</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_retries</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">fn</span><span class="p">(</span><span class="n">cursor</span><span class="p">,</span> <span class="n">statement</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">,</span> <span class="o">*</span><span class="n">arg</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">engine</span><span class="o">.</span><span class="n">dialect</span><span class="o">.</span><span class="n">dbapi</span><span class="o">.</span><span class="n">Error</span> <span class="k">as</span> <span class="n">raw_dbapi_err</span><span class="p">:</span>
+                <span class="n">connection</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">root_connection</span>
+                <span class="k">if</span> <span class="n">engine</span><span class="o">.</span><span class="n">dialect</span><span class="o">.</span><span class="n">is_disconnect</span><span class="p">(</span>
+                    <span class="n">raw_dbapi_err</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">cursor</span>
+                <span class="p">):</span>
+                    <span class="k">if</span> <span class="n">retry</span> <span class="o">&gt;</span> <span class="n">num_retries</span><span class="p">:</span>
+                        <span class="k">raise</span>
+                    <span class="n">engine</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                        <span class="s2">&quot;disconnection error, retrying operation&quot;</span><span class="p">,</span>
+                        <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="n">connection</span><span class="o">.</span><span class="n">invalidate</span><span class="p">()</span>
+
+                    <span class="c1"># use SQLAlchemy 2.0 API if available</span>
+                    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="s2">&quot;rollback&quot;</span><span class="p">):</span>
+                        <span class="n">connection</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">trans</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">get_transaction</span><span class="p">()</span>
+                        <span class="k">if</span> <span class="n">trans</span><span class="p">:</span>
+                            <span class="n">trans</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
+
+                    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">retry_interval</span><span class="p">)</span>
+                    <span class="n">context</span><span class="o">.</span><span class="n">cursor</span> <span class="o">=</span> <span class="n">cursor</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="n">e</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">execution_options</span><span class="p">(</span><span class="n">isolation_level</span><span class="o">=</span><span class="s2">&quot;AUTOCOMMIT&quot;</span><span class="p">)</span>
+
+    <span class="nd">@event</span><span class="o">.</span><span class="n">listens_for</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="s2">&quot;do_execute_no_params&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">do_execute_no_params</span><span class="p">(</span><span class="n">cursor</span><span class="p">,</span> <span class="n">statement</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_run_with_retries</span><span class="p">(</span>
+            <span class="n">context</span><span class="o">.</span><span class="n">dialect</span><span class="o">.</span><span class="n">do_execute_no_params</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">cursor</span><span class="p">,</span> <span class="n">statement</span>
+        <span class="p">)</span>
+
+    <span class="nd">@event</span><span class="o">.</span><span class="n">listens_for</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="s2">&quot;do_execute&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">do_execute</span><span class="p">(</span><span class="n">cursor</span><span class="p">,</span> <span class="n">statement</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_run_with_retries</span><span class="p">(</span>
+            <span class="n">context</span><span class="o">.</span><span class="n">dialect</span><span class="o">.</span><span class="n">do_execute</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">cursor</span><span class="p">,</span> <span class="n">statement</span><span class="p">,</span> <span class="n">parameters</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">e</span></pre></div>
+</div>
+<p>Given the above recipe, a reconnection mid-transaction may be demonstrated
+using the following proof of concept script.  Once run, it will emit a
+<code class="docutils literal notranslate"><span class="pre">SELECT</span> <span class="pre">1</span></code> statement to the database every five seconds:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">select</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+
+    <span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;mysql://scott:tiger@localhost/test&quot;</span><span class="p">,</span> <span class="n">echo_pool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">do_a_thing</span><span class="p">(</span><span class="n">engine</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ping: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">select</span><span class="p">([</span><span class="mi">1</span><span class="p">]))</span><span class="o">.</span><span class="n">scalar</span><span class="p">())</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+    <span class="n">e</span> <span class="o">=</span> <span class="n">reconnecting_engine</span><span class="p">(</span>
+        <span class="n">create_engine</span><span class="p">(</span>
+            <span class="s2">&quot;mysql://scott:tiger@localhost/test&quot;</span><span class="p">,</span> <span class="n">echo_pool</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">),</span>
+        <span class="n">num_retries</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+        <span class="n">retry_interval</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">do_a_thing</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></pre></div>
+</div>
+<p>Restart the database while the script runs to demonstrate the transparent
+reconnect operation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python reconnect_test.py
+ping: 1
+ping: 1
+disconnection error, retrying operation
+Traceback (most recent call last):
+  ...
+MySQLdb._exceptions.OperationalError: (2006, &#39;MySQL server has gone away&#39;)
+2020-10-19 16:16:22,624 INFO sqlalchemy.pool.impl.QueuePool Invalidate connection &lt;_mysql.connection open to &#39;localhost&#39; at 0xf59240&gt;
+ping: 1
+ping: 1
+...</pre></div>
+</div>
+<p>The above recipe is tested for SQLAlchemy 1.4.</p>
+</section>
+</section>
+<section id="why-does-sqlalchemy-issue-so-many-rollbacks">
+<h2>Why does SQLAlchemy issue so many ROLLBACKs?<a class="headerlink" href="#why-does-sqlalchemy-issue-so-many-rollbacks" title="Permalink to this headline">¶</a></h2>
+<p>SQLAlchemy currently assumes DBAPI connections are in “non-autocommit” mode -
+this is the default behavior of the Python database API, meaning it
+must be assumed that a transaction is always in progress. The
+connection pool issues <code class="docutils literal notranslate"><span class="pre">connection.rollback()</span></code> when a connection is returned.
+This is so that any transactional resources remaining on the connection are
+released. On a database like PostgreSQL or MSSQL where table resources are
+aggressively locked, this is critical so that rows and tables don’t remain
+locked within connections that are no longer in use. An application can
+otherwise hang. It’s not just for locks, however, and is equally critical on
+any database that has any kind of transaction isolation, including MySQL with
+InnoDB. Any connection that is still inside an old transaction will return
+stale data, if that data was already queried on that connection within
+isolation. For background on why you might see stale data even on MySQL, see
+<a class="reference external" href="https://dev.mysql.com/doc/refman/5.1/en/innodb-transaction-model.html">https://dev.mysql.com/doc/refman/5.1/en/innodb-transaction-model.html</a></p>
+<section id="i-m-on-myisam-how-do-i-turn-it-off">
+<h3>I’m on MyISAM - how do I turn it off?<a class="headerlink" href="#i-m-on-myisam-how-do-i-turn-it-off" title="Permalink to this headline">¶</a></h3>
+<p>The behavior of the connection pool’s connection return behavior can be
+configured using <code class="docutils literal notranslate"><span class="pre">reset_on_return</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.pool</span> <span class="kn">import</span> <span class="n">QueuePool</span>
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s1">&#39;mysql://scott:tiger@localhost/myisam_database&#39;</span><span class="p">,</span> <span class="n">pool</span><span class="o">=</span><span class="n">QueuePool</span><span class="p">(</span><span class="n">reset_on_return</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span></pre></div>
+</div>
+</section>
+<section id="i-m-on-sql-server-how-do-i-turn-those-rollbacks-into-commits">
+<h3>I’m on SQL Server - how do I turn those ROLLBACKs into COMMITs?<a class="headerlink" href="#i-m-on-sql-server-how-do-i-turn-those-rollbacks-into-commits" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">reset_on_return</span></code> accepts the values <code class="docutils literal notranslate"><span class="pre">commit</span></code>, <code class="docutils literal notranslate"><span class="pre">rollback</span></code> in addition
+to <code class="docutils literal notranslate"><span class="pre">True</span></code>, <code class="docutils literal notranslate"><span class="pre">False</span></code>, and <code class="docutils literal notranslate"><span class="pre">None</span></code>.   Setting to <code class="docutils literal notranslate"><span class="pre">commit</span></code> will cause
+a COMMIT as any connection is returned to the pool:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s1">&#39;mssql://scott:tiger@mydsn&#39;</span><span class="p">,</span> <span class="n">pool</span><span class="o">=</span><span class="n">QueuePool</span><span class="p">(</span><span class="n">reset_on_return</span><span class="o">=</span><span class="s1">&#39;commit&#39;</span><span class="p">))</span></pre></div>
+</div>
+</section>
+</section>
+<section id="i-am-using-multiple-connections-with-a-sqlite-database-typically-to-test-transaction-operation-and-my-test-program-is-not-working">
+<h2>I am using multiple connections with a SQLite database (typically to test transaction operation), and my test program is not working!<a class="headerlink" href="#i-am-using-multiple-connections-with-a-sqlite-database-typically-to-test-transaction-operation-and-my-test-program-is-not-working" title="Permalink to this headline">¶</a></h2>
+<p>If using a SQLite <code class="docutils literal notranslate"><span class="pre">:memory:</span></code> database, or a version of SQLAlchemy prior
+to version 0.7, the default connection pool is the <a class="reference internal" href="../core/pooling.html#sqlalchemy.pool.SingletonThreadPool" title="sqlalchemy.pool.SingletonThreadPool"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingletonThreadPool</span></code></a>,
+which maintains exactly one SQLite connection per thread.  So two
+connections in use in the same thread will actually be the same SQLite
+connection.   Make sure you’re not using a :memory: database and
+use <a class="reference internal" href="../core/pooling.html#sqlalchemy.pool.NullPool" title="sqlalchemy.pool.NullPool"><code class="xref py py-class docutils literal notranslate"><span class="pre">NullPool</span></code></a>, which is the default for non-memory databases in
+current SQLAlchemy versions.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../dialects/sqlite.html#pysqlite-threading-pooling"><span class="std std-ref">Threading/Pooling Behavior</span></a> - info on PySQLite’s behavior.</p>
+</div>
+</section>
+<section id="how-do-i-get-at-the-raw-dbapi-connection-when-using-an-engine">
+<h2>How do I get at the raw DBAPI connection when using an Engine?<a class="headerlink" href="#how-do-i-get-at-the-raw-dbapi-connection-when-using-an-engine" title="Permalink to this headline">¶</a></h2>
+<p>With a regular SA engine-level Connection, you can get at a pool-proxied
+version of the DBAPI connection via the <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection.connection" title="sqlalchemy.engine.Connection.connection"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Connection.connection</span></code></a> attribute on
+<a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>, and for the really-real DBAPI connection you can call the
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">ConnectionFairy.connection</span></code> attribute on that - but there should never be any need to access
+the non-pool-proxied DBAPI connection, as all methods are proxied through:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">connection</span><span class="o">.&lt;</span><span class="n">do</span> <span class="n">DBAPI</span> <span class="n">things</span><span class="o">&gt;</span>
+<span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">(</span><span class="o">&lt;</span><span class="n">DBAPI</span> <span class="n">specific</span> <span class="n">arguments</span><span class="o">..&gt;</span><span class="p">)</span></pre></div>
+</div>
+<p>You must ensure that you revert any isolation level settings or other
+operation-specific settings on the connection back to normal before returning
+it to the pool.</p>
+<p>As an alternative to reverting settings, you can call the <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection.detach" title="sqlalchemy.engine.Connection.detach"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.detach()</span></code></a> method on
+either <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> or the proxied connection, which will de-associate
+the connection from the pool such that it will be closed and discarded
+when <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection.close" title="sqlalchemy.engine.Connection.close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.close()</span></code></a> is called:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conn</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>  <span class="c1"># detaches the DBAPI connection from the connection pool</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">connection</span><span class="o">.&lt;</span><span class="n">go</span> <span class="n">nuts</span><span class="o">&gt;</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>  <span class="c1"># connection is closed for real, the pool replaces it with a new connection</span></pre></div>
+</div>
+</section>
+<section id="how-do-i-use-engines-connections-sessions-with-python-multiprocessing-or-os-fork">
+<h2>How do I use engines / connections / sessions with Python multiprocessing, or os.fork()?<a class="headerlink" href="#how-do-i-use-engines-connections-sessions-with-python-multiprocessing-or-os-fork" title="Permalink to this headline">¶</a></h2>
+<p>This is covered in the section <a class="reference internal" href="../core/pooling.html#pooling-multiprocessing"><span class="std std-ref">Using Connection Pools with Multiprocessing or os.fork()</span></a>.</p>
+</section>
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="index.html" title="previous chapter">Frequently Asked Questions</a>
+        Next:
+        <a href="metadata_schema.html" title="next chapter">MetaData / Schema</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2021, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.1.2.
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '1.4.23',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/detectmobile.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

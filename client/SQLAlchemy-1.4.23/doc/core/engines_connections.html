@@ -1,0 +1,302 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+        <title>
+            
+    
+    Engine and Connection Use
+ &mdash;
+    SQLAlchemy 1.4 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/changelog.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 1.4 Documentation" href="../index.html" />
+        <link rel="up" title="SQLAlchemy Core" href="index.html" />
+        <link rel="next" title="Engine Configuration" href="engines.html" />
+        <link rel="prev" title="Base Type API" href="type_api.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">1.4.23</span>
+
+
+        | Release Date: August 18, 2021
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 1.4 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 1.4 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../contents.html">Contents</a> |
+                <a href="../genindex.html">Index</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="SQLAlchemy Core">SQLAlchemy Core</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="tutorial.html">SQL Expression Language Tutorial (1.x API)</a></span></li>
+<li><span class="link-container"><a class="reference external" href="expression_api.html">SQL Statements and Expressions API</a></span></li>
+<li><span class="link-container"><a class="reference external" href="schema.html">Schema Definition Language</a></span></li>
+<li><span class="link-container"><a class="reference external" href="types.html">Column and Data Types</a></span></li>
+<li class="selected"><span class="link-container"><strong>Engine and Connection Use</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="engines.html">Engine Configuration</a></span></li>
+<li><span class="link-container"><a class="reference external" href="connections.html">Working with Engines and Connections</a></span></li>
+<li><span class="link-container"><a class="reference external" href="pooling.html">Connection Pooling</a></span></li>
+<li><span class="link-container"><a class="reference external" href="events.html">Core Events</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="api_basics.html">Core API Basics</a></span></li>
+<li><span class="link-container"><a class="reference external" href="future.html">SQLAlchemy 2.0 Future (Core)</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    
+
+    <div id="docs-body" class="withsidebar core-engines_connections" >
+        
+<section id="engine-and-connection-use">
+<h1>Engine and Connection Use<a class="headerlink" href="#engine-and-connection-use" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="engines.html">Engine Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="engines.html#supported-databases">Supported Databases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="engines.html#database-urls">Database Urls</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="engines.html#postgresql">PostgreSQL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="engines.html#mysql">MySQL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="engines.html#oracle">Oracle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="engines.html#microsoft-sql-server">Microsoft SQL Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="engines.html#sqlite">SQLite</a></li>
+<li class="toctree-l3"><a class="reference internal" href="engines.html#others">Others</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="engines.html#engine-creation-api">Engine Creation API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="engines.html#pooling">Pooling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="engines.html#custom-dbapi-connect-arguments-on-connect-routines">Custom DBAPI connect() arguments / on-connect routines</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="engines.html#special-keyword-arguments-passed-to-dbapi-connect">Special Keyword Arguments Passed to dbapi.connect()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="engines.html#controlling-how-parameters-are-passed-to-the-dbapi-connect-function">Controlling how parameters are passed to the DBAPI connect() function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="engines.html#modifying-the-dbapi-connection-after-connect-or-running-commands-after-connect">Modifying the DBAPI connection after connect, or running commands after connect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="engines.html#fully-replacing-the-dbapi-connect-function">Fully Replacing the DBAPI <code class="docutils literal notranslate"><span class="pre">connect()</span></code> function</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="engines.html#configuring-logging">Configuring Logging</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="engines.html#more-on-the-echo-flag">More on the Echo Flag</a></li>
+<li class="toctree-l3"><a class="reference internal" href="engines.html#setting-the-logging-name">Setting the Logging Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="engines.html#setting-per-connection-sub-engine-tokens">Setting Per-Connection / Sub-Engine Tokens</a></li>
+<li class="toctree-l3"><a class="reference internal" href="engines.html#hiding-parameters">Hiding Parameters</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="connections.html">Working with Engines and Connections</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#basic-usage">Basic Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#using-transactions">Using Transactions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#nesting-of-transaction-blocks">Nesting of Transaction Blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#library-level-e-g-emulated-autocommit">Library Level (e.g. emulated) Autocommit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#setting-transaction-isolation-levels-including-dbapi-autocommit">Setting Transaction Isolation Levels including DBAPI Autocommit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#using-server-side-cursors-a-k-a-stream-results">Using Server Side Cursors (a.k.a. stream results)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#connectionless-execution-implicit-execution">Connectionless Execution, Implicit Execution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#translation-of-schema-names">Translation of Schema Names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#sql-compilation-caching">SQL Compilation Caching</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#configuration">Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#estimating-cache-performance-using-logging">Estimating Cache Performance Using Logging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#how-much-memory-does-the-cache-use">How much memory does the cache use?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#disabling-or-using-an-alternate-dictionary-to-cache-some-or-all-statements">Disabling or using an alternate dictionary to cache some (or all) statements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#caching-for-third-party-dialects">Caching for Third Party Dialects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#using-lambdas-to-add-significant-speed-gains-to-statement-production">Using Lambdas to add significant speed gains to statement production</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#engine-disposal">Engine Disposal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#working-with-driver-sql-and-raw-dbapi-connections">Working with Driver SQL and Raw DBAPI Connections</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#invoking-sql-strings-directly-to-the-driver">Invoking SQL strings directly to the driver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#working-with-the-dbapi-cursor-directly">Working with the DBAPI cursor directly</a></li>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#calling-stored-procedures">Calling Stored Procedures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#multiple-result-sets">Multiple Result Sets</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#registering-new-dialects">Registering New Dialects</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#registering-dialects-in-process">Registering Dialects In-Process</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#connection-engine-api">Connection / Engine API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#result-set-api">Result Set  API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pooling.html">Connection Pooling</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pooling.html#connection-pool-configuration">Connection Pool Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pooling.html#switching-pool-implementations">Switching Pool Implementations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pooling.html#using-a-custom-connection-function">Using a Custom Connection Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pooling.html#constructing-a-pool">Constructing a Pool</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pooling.html#reset-on-return">Reset On Return</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pooling.html#pool-events">Pool Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pooling.html#dealing-with-disconnects">Dealing with Disconnects</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pooling.html#disconnect-handling-pessimistic">Disconnect Handling - Pessimistic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pooling.html#disconnect-handling-optimistic">Disconnect Handling - Optimistic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pooling.html#more-on-invalidation">More on Invalidation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pooling.html#using-fifo-vs-lifo">Using FIFO vs. LIFO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pooling.html#using-connection-pools-with-multiprocessing-or-os-fork">Using Connection Pools with Multiprocessing or os.fork()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pooling.html#api-documentation-available-pool-implementations">API Documentation - Available Pool Implementations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="events.html">Core Events</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="events.html#connection-pool-events">Connection Pool Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events.html#sql-execution-and-connection-events">SQL Execution and Connection Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events.html#schema-events">Schema Events</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="type_api.html" title="previous chapter">Base Type API</a>
+        Next:
+        <a href="engines.html" title="next chapter">Engine Configuration</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2021, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.1.2.
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '1.4.23',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/detectmobile.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

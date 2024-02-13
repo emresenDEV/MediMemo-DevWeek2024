@@ -1,0 +1,591 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+        <title>
+            
+    
+    Mapper Configuration with Declarative
+ &mdash;
+    SQLAlchemy 1.4 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/changelog.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 1.4 Documentation" href="../index.html" />
+        <link rel="up" title="Mapping Classes with Declarative" href="declarative_mapping.html" />
+        <link rel="next" title="Composing Mapped Hierarchies with Mixins" href="declarative_mixins.html" />
+        <link rel="prev" title="Table Configuration with Declarative" href="declarative_tables.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">1.4.23</span>
+
+
+        | Release Date: August 18, 2021
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 1.4 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 1.4 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../contents.html">Contents</a> |
+                <a href="../genindex.html">Index</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="tutorial.html">Object Relational Tutorial (1.x API)</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mapper_config.html">Mapper Configuration</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="mapping_styles.html">Mapping Python Classes</a></span></li>
+<li><span class="link-container"><a class="reference external" href="declarative_mapping.html">Mapping Classes with Declarative</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="declarative_tables.html">Table Configuration with Declarative</a></span></li>
+<li class="selected"><span class="link-container"><strong>Mapper Configuration with Declarative</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#defining-mapped-properties-with-declarative">Defining Mapped Properties with Declarative</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#mapper-configuration-options-with-declarative">Mapper Configuration Options with Declarative</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#other-declarative-mapping-directives">Other Declarative Mapping Directives</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#declare-last"><code class="docutils literal notranslate"><span class="pre">__declare_last__()</span></code></a></span></li>
+<li><span class="link-container"><a class="reference external" href="#declare-first"><code class="docutils literal notranslate"><span class="pre">__declare_first__()</span></code></a></span></li>
+<li><span class="link-container"><a class="reference external" href="#metadata"><code class="docutils literal notranslate"><span class="pre">metadata</span></code></a></span></li>
+<li><span class="link-container"><a class="reference external" href="#abstract"><code class="docutils literal notranslate"><span class="pre">__abstract__</span></code></a></span></li>
+<li><span class="link-container"><a class="reference external" href="#table-cls"><code class="docutils literal notranslate"><span class="pre">__table_cls__</span></code></a></span></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="declarative_mixins.html">Composing Mapped Hierarchies with Mixins</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="scalar_mapping.html">Mapping Columns and Expressions</a></span></li>
+<li><span class="link-container"><a class="reference external" href="inheritance.html">Mapping Class Inheritance Hierarchies</a></span></li>
+<li><span class="link-container"><a class="reference external" href="nonstandard_mappings.html">Non-Traditional Mappings</a></span></li>
+<li><span class="link-container"><a class="reference external" href="versioning.html">Configuring a Version Counter</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mapping_api.html">Class Mapping API</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="relationships.html">Relationship Configuration</a></span></li>
+<li><span class="link-container"><a class="reference external" href="loading_objects.html">Querying Data, Loading Objects</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session.html">Using the Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extending.html">Events and Internals</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extensions/index.html">ORM Extensions</a></span></li>
+<li><span class="link-container"><a class="reference external" href="examples.html">ORM Examples</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    
+
+    <div id="docs-body" class="withsidebar orm-declarative_config" >
+        
+<section id="mapper-configuration-with-declarative">
+<span id="orm-declarative-mapper-config-toplevel"></span><h1>Mapper Configuration with Declarative<a class="headerlink" href="#mapper-configuration-with-declarative" title="Permalink to this headline">¶</a></h1>
+<p>The section <a class="reference internal" href="mapping_styles.html#orm-mapper-configuration-overview"><span class="std std-ref">Mapper Configuration Overview</span></a> discusses the general
+configurational elements of a <a class="reference internal" href="mapping_api.html#sqlalchemy.orm.Mapper" title="sqlalchemy.orm.Mapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code></a> construct, which is the
+structure that defines how a particular user defined class is mapped to a
+database table or other SQL construct.    The following sections describe
+specific details about how the declarative system goes about constructing
+the <a class="reference internal" href="mapping_api.html#sqlalchemy.orm.Mapper" title="sqlalchemy.orm.Mapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code></a>.</p>
+<section id="defining-mapped-properties-with-declarative">
+<span id="orm-declarative-properties"></span><h2>Defining Mapped Properties with Declarative<a class="headerlink" href="#defining-mapped-properties-with-declarative" title="Permalink to this headline">¶</a></h2>
+<p>The examples given at <a class="reference internal" href="declarative_tables.html"><span class="std std-ref">Table Configuration with Declarative</span></a>
+illustrate mappings against table-bound columns;
+the mapping of an individual column to an ORM class attribute is represented
+internally by the <a class="reference internal" href="internals.html#sqlalchemy.orm.ColumnProperty" title="sqlalchemy.orm.ColumnProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColumnProperty</span></code></a> construct.   There are many
+other varieties of mapper properties, the most common being the
+<a class="reference internal" href="relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code></a> construct.  Other kinds of properties include
+synonyms to columns which are defined using the <a class="reference internal" href="mapped_attributes.html#sqlalchemy.orm.synonym" title="sqlalchemy.orm.synonym"><code class="xref py py-func docutils literal notranslate"><span class="pre">synonym()</span></code></a>
+construct, SQL expressions that are defined using the <a class="reference internal" href="mapping_columns.html#sqlalchemy.orm.column_property" title="sqlalchemy.orm.column_property"><code class="xref py py-func docutils literal notranslate"><span class="pre">column_property()</span></code></a>
+construct, and deferred columns and SQL expressions which load only when
+accessed, defined using the <a class="reference internal" href="loading_columns.html#sqlalchemy.orm.deferred" title="sqlalchemy.orm.deferred"><code class="xref py py-func docutils literal notranslate"><span class="pre">deferred()</span></code></a> construct.</p>
+<p>While an <a class="reference internal" href="mapping_styles.html#orm-imperative-mapping"><span class="std std-ref">imperative mapping</span></a> makes use of
+the <a class="reference internal" href="mapping_styles.html#orm-mapping-properties"><span class="std std-ref">properties</span></a> dictionary to establish
+all the mapped class attributes, in the declarative
+mapping, these properties are all specified inline with the class definition,
+which in the case of a declarative table mapping are inline with the
+<a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> objects that will be used to generate a
+<a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> object.</p>
+<p>Working with the example mapping of <code class="docutils literal notranslate"><span class="pre">User</span></code> and <code class="docutils literal notranslate"><span class="pre">Address</span></code>, we may illustrate
+a declarative table mapping that includes not just <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>
+objects but also relationships and SQL expressions:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># mapping attributes using declarative with declarative table</span>
+<span class="c1"># i.e. __tablename__</span>
+
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Column</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">Text</span><span class="p">,</span> <span class="n">ForeignKey</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">column_property</span><span class="p">,</span> <span class="n">relationship</span><span class="p">,</span> <span class="n">deferred</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">declarative_base</span>
+
+<span class="n">Base</span> <span class="o">=</span> <span class="n">declarative_base</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;user&#39;</span>
+
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+    <span class="n">firstname</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
+    <span class="n">lastname</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
+
+    <span class="n">fullname</span> <span class="o">=</span> <span class="n">column_property</span><span class="p">(</span><span class="n">firstname</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">lastname</span><span class="p">)</span>
+
+    <span class="n">addresses</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Address&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Address</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;address&#39;</span>
+
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">user_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;user.id&quot;</span><span class="p">))</span>
+    <span class="n">email_address</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+    <span class="n">address_statistics</span> <span class="o">=</span> <span class="n">deferred</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">Text</span><span class="p">))</span>
+
+    <span class="n">user</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;User&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;addresses&quot;</span><span class="p">)</span></pre></div>
+</div>
+<p>The above declarative table mapping features two tables, each with a
+<a class="reference internal" href="relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code></a> referring to the other, as well as a simple
+SQL expression mapped by <a class="reference internal" href="mapping_columns.html#sqlalchemy.orm.column_property" title="sqlalchemy.orm.column_property"><code class="xref py py-func docutils literal notranslate"><span class="pre">column_property()</span></code></a>, and an additional
+<a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> that will be loaded on a “deferred” basis as defined
+by the <a class="reference internal" href="loading_columns.html#sqlalchemy.orm.deferred" title="sqlalchemy.orm.deferred"><code class="xref py py-func docutils literal notranslate"><span class="pre">deferred()</span></code></a> construct.    More documentation
+on these particular concepts may be found at <a class="reference internal" href="basic_relationships.html#relationship-patterns"><span class="std std-ref">Basic Relationship Patterns</span></a>,
+<a class="reference internal" href="mapped_sql_expr.html#mapper-column-property-sql-expressions"><span class="std std-ref">Using column_property</span></a>, and <a class="reference internal" href="loading_columns.html#deferred"><span class="std std-ref">Deferred Column Loading</span></a>.</p>
+<p>Properties may be specified with a declarative mapping as above using
+“hybrid table” style as well; the <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> objects that
+are directly part of a table move into the <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> definition
+but everything else, including composed SQL expressions, would still be
+inline with the class definition.  Constructs that need to refer to a
+<a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> directly would reference it in terms of the
+<a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> object.  To illustrate the above mapping using
+hybrid table style:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># mapping attributes using declarative with imperative table</span>
+<span class="c1"># i.e. __table__</span>
+
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Table</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Column</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">Text</span><span class="p">,</span> <span class="n">ForeignKey</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">column_property</span><span class="p">,</span> <span class="n">relationship</span><span class="p">,</span> <span class="n">deferred</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">declarative_base</span>
+
+<span class="n">Base</span> <span class="o">=</span> <span class="n">declarative_base</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__table__</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span>
+        <span class="s2">&quot;user&quot;</span><span class="p">,</span>
+        <span class="n">Base</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+        <span class="n">Column</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+        <span class="n">Column</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">),</span>
+        <span class="n">Column</span><span class="p">(</span><span class="s2">&quot;firstname&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">)),</span>
+        <span class="n">Column</span><span class="p">(</span><span class="s2">&quot;lastname&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
+    <span class="p">)</span>
+
+    <span class="n">fullname</span> <span class="o">=</span> <span class="n">column_property</span><span class="p">(</span><span class="n">__table__</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">firstname</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">__table__</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">lastname</span><span class="p">)</span>
+
+    <span class="n">addresses</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Address&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Address</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__table__</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span>
+        <span class="s2">&quot;address&quot;</span><span class="p">,</span>
+        <span class="n">Base</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+        <span class="n">Column</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+        <span class="n">Column</span><span class="p">(</span><span class="s2">&quot;user_id&quot;</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;user.id&quot;</span><span class="p">)),</span>
+        <span class="n">Column</span><span class="p">(</span><span class="s2">&quot;email_address&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">),</span>
+        <span class="n">Column</span><span class="p">(</span><span class="s2">&quot;address_statistics&quot;</span><span class="p">,</span> <span class="n">Text</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">address_statistics</span> <span class="o">=</span> <span class="n">deferred</span><span class="p">(</span><span class="n">__table__</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">address_statistics</span><span class="p">)</span>
+
+    <span class="n">user</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;User&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;addresses&quot;</span><span class="p">)</span></pre></div>
+</div>
+<p>Things to note above:</p>
+<ul class="simple">
+<li><p>The address <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> contains a column called <code class="docutils literal notranslate"><span class="pre">address_statistics</span></code>,
+however we re-map this column under the same attribute name to be under
+the control of a <a class="reference internal" href="loading_columns.html#sqlalchemy.orm.deferred" title="sqlalchemy.orm.deferred"><code class="xref py py-func docutils literal notranslate"><span class="pre">deferred()</span></code></a> construct.</p></li>
+<li><p>With both declararative table and hybrid table mappings, when we define a
+<a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.ForeignKey" title="sqlalchemy.schema.ForeignKey"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKey</span></code></a> construct, we always name the target table
+using the <strong>table name</strong>, and not the mapped class name.</p></li>
+<li><p>When we define <a class="reference internal" href="relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code></a> constructs, as these constructs
+create a linkage between two mapped classes where one necessarily is defined
+before the other, we can refer to the remote class using its string name.
+This functionality also extends into the area of other arguments specified
+on the <a class="reference internal" href="relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code></a> such as the “primary join” and “order by”
+arguments.   See the section <a class="reference internal" href="basic_relationships.html#orm-declarative-relationship-eval"><span class="std std-ref">Late-Evaluation of Relationship Arguments</span></a> for
+details on this.</p></li>
+</ul>
+</section>
+<section id="mapper-configuration-options-with-declarative">
+<span id="orm-declarative-mapper-options"></span><h2>Mapper Configuration Options with Declarative<a class="headerlink" href="#mapper-configuration-options-with-declarative" title="Permalink to this headline">¶</a></h2>
+<p>With all mapping forms, the mapping of the class is configured through
+parameters that become part of the <a class="reference internal" href="mapping_api.html#sqlalchemy.orm.Mapper" title="sqlalchemy.orm.Mapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code></a> object.
+The function which ultimately receives these arguments is the
+<a class="reference internal" href="mapping_api.html#sqlalchemy.orm.mapper" title="sqlalchemy.orm.mapper"><code class="xref py py-func docutils literal notranslate"><span class="pre">mapper()</span></code></a> function, and are delivered to it from one of
+the front-facing mapping functions defined on the <a class="reference internal" href="mapping_api.html#sqlalchemy.orm.registry" title="sqlalchemy.orm.registry"><code class="xref py py-class docutils literal notranslate"><span class="pre">registry</span></code></a>
+object.</p>
+<p>For the declarative form of mapping, mapper arguments are specified
+using the <code class="docutils literal notranslate"><span class="pre">__mapper_args__</span></code> declarative class variable, which is a dictionary
+that is passed as keyword arguments to the <a class="reference internal" href="mapping_api.html#sqlalchemy.orm.mapper" title="sqlalchemy.orm.mapper"><code class="xref py py-func docutils literal notranslate"><span class="pre">mapper()</span></code></a> function.
+Some examples:</p>
+<p><strong>Version ID Column</strong></p>
+<p>The <a class="reference internal" href="mapping_api.html#sqlalchemy.orm.mapper.params.version_id_col" title="sqlalchemy.orm.mapper"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">mapper.version_id_col</span></code></a> and
+<a class="reference internal" href="mapping_api.html#sqlalchemy.orm.mapper.params.version_id_generator" title="sqlalchemy.orm.mapper"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">mapper.version_id_generator</span></code></a> parameters:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="k">class</span> <span class="nc">Widget</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;widgets&#39;</span>
+
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">timestamp</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">DateTime</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">__mapper_args__</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;version_id_col&#39;</span><span class="p">:</span> <span class="n">timestamp</span><span class="p">,</span>
+        <span class="s1">&#39;version_id_generator&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+    <span class="p">}</span></pre></div>
+</div>
+<p><strong>Single Table Inheritance</strong></p>
+<p>The <a class="reference internal" href="mapping_api.html#sqlalchemy.orm.mapper.params.polymorphic_on" title="sqlalchemy.orm.mapper"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">mapper.polymorphic_on</span></code></a> and
+<a class="reference internal" href="mapping_api.html#sqlalchemy.orm.mapper.params.polymorphic_identity" title="sqlalchemy.orm.mapper"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">mapper.polymorphic_identity</span></code></a> parameters:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Person</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;person&#39;</span>
+
+    <span class="n">person_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">__mapper_args__</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">polymorphic_on</span><span class="o">=</span><span class="nb">type</span><span class="p">,</span>
+        <span class="n">polymorphic_identity</span><span class="o">=</span><span class="s2">&quot;person&quot;</span>
+    <span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Employee</span><span class="p">(</span><span class="n">Person</span><span class="p">):</span>
+    <span class="n">__mapper_args__</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">polymorphic_identity</span><span class="o">=</span><span class="s2">&quot;employee&quot;</span>
+    <span class="p">)</span></pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">__mapper_args__</span></code> dictionary may be generated from a class-bound
+descriptor method rather than from a fixed dictionary by making use of the
+<a class="reference internal" href="mapping_api.html#sqlalchemy.orm.declared_attr" title="sqlalchemy.orm.declared_attr"><code class="xref py py-func docutils literal notranslate"><span class="pre">declared_attr()</span></code></a> construct.   The section <a class="reference internal" href="declarative_mixins.html"><span class="std std-ref">Composing Mapped Hierarchies with Mixins</span></a>
+discusses this concept further.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="declarative_mixins.html"><span class="std std-ref">Composing Mapped Hierarchies with Mixins</span></a></p>
+</div>
+</section>
+<section id="other-declarative-mapping-directives">
+<h2>Other Declarative Mapping Directives<a class="headerlink" href="#other-declarative-mapping-directives" title="Permalink to this headline">¶</a></h2>
+<section id="declare-last">
+<h3><code class="docutils literal notranslate"><span class="pre">__declare_last__()</span></code><a class="headerlink" href="#declare-last" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">__declare_last__()</span></code> hook allows definition of
+a class level function that is automatically called by the
+<a class="reference internal" href="events.html#sqlalchemy.orm.MapperEvents.after_configured" title="sqlalchemy.orm.MapperEvents.after_configured"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MapperEvents.after_configured()</span></code></a> event, which occurs after mappings are
+assumed to be completed and the ‘configure’ step has finished:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyClass</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">__declare_last__</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="s2">&quot;&quot;</span>
+        <span class="c1"># do something with mappings</span></pre></div>
+</div>
+</section>
+<section id="declare-first">
+<h3><code class="docutils literal notranslate"><span class="pre">__declare_first__()</span></code><a class="headerlink" href="#declare-first" title="Permalink to this headline">¶</a></h3>
+<p>Like <code class="docutils literal notranslate"><span class="pre">__declare_last__()</span></code>, but is called at the beginning of mapper
+configuration via the <a class="reference internal" href="events.html#sqlalchemy.orm.MapperEvents.before_configured" title="sqlalchemy.orm.MapperEvents.before_configured"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MapperEvents.before_configured()</span></code></a> event:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyClass</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">__declare_first__</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="s2">&quot;&quot;</span>
+        <span class="c1"># do something before mappings are configured</span></pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.9.3.</span></p>
+</div>
+</section>
+<section id="metadata">
+<span id="declarative-metadata"></span><h3><code class="docutils literal notranslate"><span class="pre">metadata</span></code><a class="headerlink" href="#metadata" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> collection normally used to assign a new
+<a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> is the <code class="xref py py-attr docutils literal notranslate"><span class="pre">registry.metadata</span></code> attribute
+associated with the <a class="reference internal" href="mapping_api.html#sqlalchemy.orm.registry" title="sqlalchemy.orm.registry"><code class="xref py py-class docutils literal notranslate"><span class="pre">registry</span></code></a> object in use. When using a
+declarative base class such as that generated by <a class="reference internal" href="mapping_api.html#sqlalchemy.orm.declarative_base" title="sqlalchemy.orm.declarative_base"><code class="xref py py-func docutils literal notranslate"><span class="pre">declarative_base()</span></code></a>
+as well as <a class="reference internal" href="mapping_api.html#sqlalchemy.orm.registry.generate_base" title="sqlalchemy.orm.registry.generate_base"><code class="xref py py-meth docutils literal notranslate"><span class="pre">registry.generate_base()</span></code></a>, this <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a>
+is also normally present also as an attribute named <code class="docutils literal notranslate"><span class="pre">.metadata</span></code> that’s
+directly on the base class, and thus also on the mapped class via
+inheritance.    Declarative uses this attribute, when present, in order to
+determine the target <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> collection, or if not
+present, uses the <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> associated directly with the
+<a class="reference internal" href="mapping_api.html#sqlalchemy.orm.registry" title="sqlalchemy.orm.registry"><code class="xref py py-class docutils literal notranslate"><span class="pre">registry</span></code></a>.</p>
+<p>This attribute may also be assigned towards in order to affect the
+<a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> collection to be used on a per-mapped-hierarchy basis
+for a single base and/or <a class="reference internal" href="mapping_api.html#sqlalchemy.orm.registry" title="sqlalchemy.orm.registry"><code class="xref py py-class docutils literal notranslate"><span class="pre">registry</span></code></a>. This takes effect whether a
+declarative base class is used or if the <a class="reference internal" href="mapping_api.html#sqlalchemy.orm.registry.mapped" title="sqlalchemy.orm.registry.mapped"><code class="xref py py-meth docutils literal notranslate"><span class="pre">registry.mapped()</span></code></a> decorator
+is used directly, thus allowing patterns such as the metadata-per-abstract base
+example in the next section, <a class="reference internal" href="#declarative-abstract"><span class="std std-ref">__abstract__</span></a>. A similar pattern can
+be illustrated using <a class="reference internal" href="mapping_api.html#sqlalchemy.orm.registry.mapped" title="sqlalchemy.orm.registry.mapped"><code class="xref py py-meth docutils literal notranslate"><span class="pre">registry.mapped()</span></code></a> as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">reg</span> <span class="o">=</span> <span class="n">registry</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">BaseOne</span><span class="p">:</span>
+    <span class="n">metadata</span> <span class="o">=</span> <span class="n">MetaData</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">BaseTwo</span><span class="p">:</span>
+    <span class="n">metadata</span> <span class="o">=</span> <span class="n">MetaData</span><span class="p">()</span>
+
+<span class="nd">@reg</span><span class="o">.</span><span class="n">mapped</span>
+<span class="k">class</span> <span class="nc">ClassOne</span><span class="p">:</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;t1&#39;</span>  <span class="c1"># will use reg.metadata</span>
+
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nd">@reg</span><span class="o">.</span><span class="n">mapped</span>
+<span class="k">class</span> <span class="nc">ClassTwo</span><span class="p">(</span><span class="n">BaseOne</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;t1&#39;</span>  <span class="c1"># will use BaseOne.metadata</span>
+
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nd">@reg</span><span class="o">.</span><span class="n">mapped</span>
+<span class="k">class</span> <span class="nc">ClassThree</span><span class="p">(</span><span class="n">BaseOne</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;t1&#39;</span>  <span class="c1"># will use BaseTwo.metadata</span>
+
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></pre></div>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.4.3: </span>The <a class="reference internal" href="mapping_api.html#sqlalchemy.orm.registry.mapped" title="sqlalchemy.orm.registry.mapped"><code class="xref py py-meth docutils literal notranslate"><span class="pre">registry.mapped()</span></code></a> decorator will
+honor an attribute named <code class="docutils literal notranslate"><span class="pre">.metadata</span></code> on the class as an alternate
+<a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> collection to be used in place of the
+<a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> that’s on the <a class="reference internal" href="mapping_api.html#sqlalchemy.orm.registry" title="sqlalchemy.orm.registry"><code class="xref py py-class docutils literal notranslate"><span class="pre">registry</span></code></a> itself.
+This matches the behavior of the base class returned by the
+<a class="reference internal" href="mapping_api.html#sqlalchemy.orm.registry.generate_base" title="sqlalchemy.orm.registry.generate_base"><code class="xref py py-meth docutils literal notranslate"><span class="pre">registry.generate_base()</span></code></a> and <a class="reference internal" href="mapping_api.html#sqlalchemy.orm.declarative_base" title="sqlalchemy.orm.declarative_base"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sqlalchemy.orm.declarative_base()</span></code></a>
+method/function.  Note this feature was broken due to a regression in
+1.4.0, 1.4.1 and 1.4.2, even when using <a class="reference internal" href="mapping_api.html#sqlalchemy.orm.declarative_base" title="sqlalchemy.orm.declarative_base"><code class="xref py py-func docutils literal notranslate"><span class="pre">declarative_base()</span></code></a>;
+1.4.3 is needed to restore the behavior.</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#declarative-abstract"><span class="std std-ref">__abstract__</span></a></p>
+</div>
+</section>
+<section id="abstract">
+<span id="declarative-abstract"></span><h3><code class="docutils literal notranslate"><span class="pre">__abstract__</span></code><a class="headerlink" href="#abstract" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">__abstract__</span></code> causes declarative to skip the production
+of a table or mapper for the class entirely.  A class can be added within a
+hierarchy in the same way as mixin (see <a class="reference internal" href="extensions/declarative/mixins.html#declarative-mixins"><span class="std std-ref">Mixin and Custom Base Classes</span></a>), allowing
+subclasses to extend just from the special class:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SomeAbstractBase</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__abstract__</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">some_helpful_method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s2">&quot;&quot;</span>
+
+    <span class="nd">@declared_attr</span>
+    <span class="k">def</span> <span class="nf">__mapper_args__</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;helpful mapper arguments&quot;</span><span class="p">:</span><span class="kc">True</span><span class="p">}</span>
+
+<span class="k">class</span> <span class="nc">MyMappedClass</span><span class="p">(</span><span class="n">SomeAbstractBase</span><span class="p">):</span>
+    <span class="s2">&quot;&quot;</span></pre></div>
+</div>
+<p>One possible use of <code class="docutils literal notranslate"><span class="pre">__abstract__</span></code> is to use a distinct
+<a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> for different bases:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Base</span> <span class="o">=</span> <span class="n">declarative_base</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">DefaultBase</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__abstract__</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">metadata</span> <span class="o">=</span> <span class="n">MetaData</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">OtherBase</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__abstract__</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">metadata</span> <span class="o">=</span> <span class="n">MetaData</span><span class="p">()</span></pre></div>
+</div>
+<p>Above, classes which inherit from <code class="docutils literal notranslate"><span class="pre">DefaultBase</span></code> will use one
+<a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> as the registry of tables, and those which inherit from
+<code class="docutils literal notranslate"><span class="pre">OtherBase</span></code> will use a different one. The tables themselves can then be
+created perhaps within distinct databases:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DefaultBase</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">create_all</span><span class="p">(</span><span class="n">some_engine</span><span class="p">)</span>
+<span class="n">OtherBase</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">create_all</span><span class="p">(</span><span class="n">some_other_engine</span><span class="p">)</span></pre></div>
+</div>
+</section>
+<section id="table-cls">
+<h3><code class="docutils literal notranslate"><span class="pre">__table_cls__</span></code><a class="headerlink" href="#table-cls" title="Permalink to this headline">¶</a></h3>
+<p>Allows the callable / class used to generate a <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> to be customized.
+This is a very open-ended hook that can allow special customizations
+to a <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> that one generates here:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">__table_cls__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">metadata</span><span class="p">,</span> <span class="o">*</span><span class="n">arg</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Table</span><span class="p">(</span>
+            <span class="s2">&quot;my_&quot;</span> <span class="o">+</span> <span class="n">name</span><span class="p">,</span>
+            <span class="n">metadata</span><span class="p">,</span> <span class="o">*</span><span class="n">arg</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span>
+        <span class="p">)</span></pre></div>
+</div>
+<p>The above mixin would cause all <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> objects generated to include
+the prefix <code class="docutils literal notranslate"><span class="pre">&quot;my_&quot;</span></code>, followed by the name normally specified using the
+<code class="docutils literal notranslate"><span class="pre">__tablename__</span></code> attribute.</p>
+<p><code class="docutils literal notranslate"><span class="pre">__table_cls__</span></code> also supports the case of returning <code class="docutils literal notranslate"><span class="pre">None</span></code>, which
+causes the class to be considered as single-table inheritance vs. its subclass.
+This may be useful in some customization schemes to determine that single-table
+inheritance should take place based on the arguments for the table itself,
+such as, define as single-inheritance if there is no primary key present:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">AutoTable</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="nd">@declared_attr</span>
+    <span class="k">def</span> <span class="nf">__tablename__</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">__table_cls__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">arg</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">arg</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Column</span><span class="p">)</span> <span class="ow">and</span> <span class="n">obj</span><span class="o">.</span><span class="n">primary_key</span><span class="p">)</span> <span class="ow">or</span> \
+                    <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">PrimaryKeyConstraint</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">Table</span><span class="p">(</span><span class="o">*</span><span class="n">arg</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">None</span>
+
+<span class="k">class</span> <span class="nc">Person</span><span class="p">(</span><span class="n">AutoTable</span><span class="p">,</span> <span class="n">Base</span><span class="p">):</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Employee</span><span class="p">(</span><span class="n">Person</span><span class="p">):</span>
+    <span class="n">employee_name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span></pre></div>
+</div>
+<p>The above <code class="docutils literal notranslate"><span class="pre">Employee</span></code> class would be mapped as single-table inheritance
+against <code class="docutils literal notranslate"><span class="pre">Person</span></code>; the <code class="docutils literal notranslate"><span class="pre">employee_name</span></code> column would be added as a member
+of the <code class="docutils literal notranslate"><span class="pre">Person</span></code> table.</p>
+</section>
+</section>
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="declarative_tables.html" title="previous chapter">Table Configuration with Declarative</a>
+        Next:
+        <a href="declarative_mixins.html" title="next chapter">Composing Mapped Hierarchies with Mixins</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2021, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.1.2.
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '1.4.23',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/detectmobile.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

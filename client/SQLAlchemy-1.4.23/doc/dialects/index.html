@@ -1,0 +1,405 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+        <title>
+            
+    
+    Dialects
+ &mdash;
+    SQLAlchemy 1.4 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/changelog.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 1.4 Documentation" href="../index.html" />
+        <link rel="next" title="PostgreSQL" href="postgresql.html" />
+        <link rel="prev" title="SQLAlchemy 2.0 Future (Core)" href="../core/future.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">1.4.23</span>
+
+
+        | Release Date: August 18, 2021
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 1.4 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 1.4 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../contents.html">Contents</a> |
+                <a href="../genindex.html">Index</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="../index.html" title="SQLAlchemy 1.4 Documentation">SQLAlchemy 1.4 Documentation</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="../intro.html">Overview</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../tutorial/index.html">SQLAlchemy 1.4 / 2.0 Tutorial</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../orm/index.html">SQLAlchemy ORM</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../core/index.html">SQLAlchemy Core</a></span></li>
+<li class="selected"><span class="link-container"><strong>Dialects</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#included-dialects">Included Dialects</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#support-levels-for-included-dialects">Support Levels for Included Dialects</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#support-definitions">Support Definitions</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#deprecated-no-longer-supported-dialects">Deprecated, no longer supported dialects</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#external-dialects">External Dialects</a></span></li>
+<li><span class="link-container"><a class="reference external" href="postgresql.html">PostgreSQL</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mysql.html">MySQL and MariaDB</a></span></li>
+<li><span class="link-container"><a class="reference external" href="sqlite.html">SQLite</a></span></li>
+<li><span class="link-container"><a class="reference external" href="oracle.html">Oracle</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mssql.html">Microsoft SQL Server</a></span></li>
+<li><span class="link-container"><a class="reference external" href="firebird.html">Firebird</a></span></li>
+<li><span class="link-container"><a class="reference external" href="sybase.html">Sybase</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="../faq/index.html">Frequently Asked Questions</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../errors.html">Error Messages</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../changelog/index.html">Changes and Migration</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    
+
+    <div id="docs-body" class="withsidebar dialects-index" >
+        
+<section id="dialects">
+<span id="dialect-toplevel"></span><h1>Dialects<a class="headerlink" href="#dialects" title="Permalink to this headline">¶</a></h1>
+<p>The <strong>dialect</strong> is the system SQLAlchemy uses to communicate with various types of <a class="reference internal" href="../glossary.html#term-DBAPI"><span class="xref std std-term">DBAPI</span></a> implementations and databases.
+The sections that follow contain reference documentation and notes specific to the usage of each backend, as well as notes
+for the various DBAPIs.</p>
+<p>All dialects require that an appropriate DBAPI driver is installed.</p>
+<section id="included-dialects">
+<h2>Included Dialects<a class="headerlink" href="#included-dialects" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="postgresql.html">PostgreSQL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mysql.html">MySQL and MariaDB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sqlite.html">SQLite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oracle.html">Oracle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mssql.html">Microsoft SQL Server</a></li>
+</ul>
+</div>
+<section id="support-levels-for-included-dialects">
+<h3>Support Levels for Included Dialects<a class="headerlink" href="#support-levels-for-included-dialects" title="Permalink to this headline">¶</a></h3>
+<p>The following table summarizes the support level for each included dialect.</p>
+<table class="docutils align-default" id="id6">
+<caption><span class="caption-text"><strong>Supported database versions for included dialects</strong></span><a class="headerlink" href="#id6" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Database</p></th>
+<th class="head"><p><a class="reference internal" href="#term-Fully-tested-in-CI"><span class="xref std std-term">Fully tested in CI</span></a></p></th>
+<th class="head"><p><a class="reference internal" href="#term-Normal-support"><span class="xref std std-term">Normal support</span></a></p></th>
+<th class="head"><p><a class="reference internal" href="#term-Best-effort"><span class="xref std std-term">Best effort</span></a></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Microsoft SQL Server</strong></p></td>
+<td><p>2017</p></td>
+<td><p>2012+</p></td>
+<td><p>2005+</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>MySQL / MariaDB</strong></p></td>
+<td><p>5.6, 5.7, 8.0 / 10.4, 10.5</p></td>
+<td><p>5.6+ / 10+</p></td>
+<td><p>5.0.2+ / 5.0.2+</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Oracle</strong></p></td>
+<td><p>11.2, 18c</p></td>
+<td><p>11+</p></td>
+<td><p>8+</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>PostgreSQL</strong></p></td>
+<td><p>9.6, 10, 11, 12, 13</p></td>
+<td><p>9.6+</p></td>
+<td><p>8+</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>SQLite</strong></p></td>
+<td><p>3.21, 3.28+</p></td>
+<td><p>3.12+</p></td>
+<td><p>3.7.16+</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="support-definitions">
+<h3>Support Definitions<a class="headerlink" href="#support-definitions" title="Permalink to this headline">¶</a></h3>
+<dl class="glossary simple">
+<dt id="term-Fully-tested-in-CI">Fully tested in CI<a class="headerlink" href="#term-Fully-tested-in-CI" title="Permalink to this term">¶</a></dt><dd><p><strong>Fully tested in CI</strong> indicates a version that is tested in the sqlalchemy
+CI system and passes all the tests in the test suite.</p>
+</dd>
+<dt id="term-Normal-support">Normal support<a class="headerlink" href="#term-Normal-support" title="Permalink to this term">¶</a></dt><dd><p><strong>Normal support</strong> indicates that most features should work,
+but not all versions are tested in the ci configuration so there may
+be some not supported edge cases. We will try to fix issues that affect
+these versions.</p>
+</dd>
+<dt id="term-Best-effort">Best effort<a class="headerlink" href="#term-Best-effort" title="Permalink to this term">¶</a></dt><dd><p><strong>Best effort</strong> indicates that we try to support basic features on them,
+but most likely there will be unsupported features or errors in some use cases.
+Pull requests with associated issues may be accepted to continue supporting
+older versions, which are reviewed on a case-by-case basis.</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="deprecated-no-longer-supported-dialects">
+<h2>Deprecated, no longer supported dialects<a class="headerlink" href="#deprecated-no-longer-supported-dialects" title="Permalink to this headline">¶</a></h2>
+<p>The following dialects have implementations within SQLAlchemy, but they are not
+part of continuous integration testing nor are they actively developed.
+These dialects are deprecated and will be removed in future major releases.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="firebird.html">Firebird</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sybase.html">Sybase</a></li>
+</ul>
+</div>
+<p>Note that both of these dialects now have third-party implementations that
+are maintained separately. See the following list.</p>
+</section>
+<section id="external-dialects">
+<span id="external-toplevel"></span><h2>External Dialects<a class="headerlink" href="#external-dialects" title="Permalink to this headline">¶</a></h2>
+<p>Currently maintained external dialect projects for SQLAlchemy include:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 51%" />
+<col style="width: 49%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Database</p></th>
+<th class="head"><p>Dialect</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Amazon Redshift (via psycopg2)</p></td>
+<td><p><a class="reference external" href="https://pypi.org/project/sqlalchemy-redshift">sqlalchemy-redshift</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>Apache Drill</p></td>
+<td><p><a class="reference external" href="https://github.com/JohnOmernik/sqlalchemy-drill">sqlalchemy-drill</a></p></td>
+</tr>
+<tr class="row-even"><td><p>Apache Druid</p></td>
+<td><p><a class="reference external" href="https://github.com/druid-io/pydruid">pydruid</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>Apache Hive and Presto</p></td>
+<td><p><a class="reference external" href="https://github.com/dropbox/PyHive#sqlalchemy">PyHive</a></p></td>
+</tr>
+<tr class="row-even"><td><p>Apache Solr</p></td>
+<td><p><a class="reference external" href="https://github.com/aadel/sqlalchemy-solr">sqlalchemy-solr</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>CockroachDB</p></td>
+<td><p><a class="reference external" href="https://github.com/cockroachdb/sqlalchemy-cockroachdb">sqlalchemy-cockroachdb</a></p></td>
+</tr>
+<tr class="row-even"><td><p>CrateDB  <a class="footnote-reference brackets" href="#id5" id="id1">1</a></p></td>
+<td><p><a class="reference external" href="https://github.com/crate/crate-python">crate-python</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>EXASolution</p></td>
+<td><p><a class="reference external" href="https://github.com/blue-yonder/sqlalchemy_exasol">sqlalchemy_exasol</a></p></td>
+</tr>
+<tr class="row-even"><td><p>Elasticsearch (readonly)</p></td>
+<td><p><a class="reference external" href="https://github.com/preset-io/elasticsearch-dbapi/">elasticsearch-dbapi</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>Firebird</p></td>
+<td><p><a class="reference external" href="https://github.com/pauldex/sqlalchemy-firebird">sqlalchemy-firebird</a></p></td>
+</tr>
+<tr class="row-even"><td><p>Google BigQuery</p></td>
+<td><p><a class="reference external" href="https://github.com/mxmzdlv/pybigquery/">pybigquery</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>Google Sheets</p></td>
+<td><p><a class="reference external" href="https://github.com/betodealmeida/gsheets-db-api">gsheets</a></p></td>
+</tr>
+<tr class="row-even"><td><p>IBM DB2 and Informix</p></td>
+<td><p><a class="reference external" href="https://pypi.org/project/ibm-db-sa/">ibm-db-sa</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>IBM Netezza Performance Server <a class="footnote-reference brackets" href="#id5" id="id2">1</a></p></td>
+<td><p><a class="reference external" href="https://pypi.org/project/nzalchemy/">nzalchemy</a></p></td>
+</tr>
+<tr class="row-even"><td><p>Microsoft Access (via pyodbc)</p></td>
+<td><p><a class="reference external" href="https://pypi.org/project/sqlalchemy-access/">sqlalchemy-access</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>Microsoft SQL Server (via python-tds)</p></td>
+<td><p><a class="reference external" href="https://github.com/m32/sqlalchemy-tds">sqlalchemy-tds</a></p></td>
+</tr>
+<tr class="row-even"><td><p>Microsoft SQL Server (via turbodbc)</p></td>
+<td><p><a class="reference external" href="https://pypi.org/project/sqlalchemy-turbodbc/">sqlalchemy-turbodbc</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>MonetDB <a class="footnote-reference brackets" href="#id5" id="id3">1</a></p></td>
+<td><p><a class="reference external" href="https://github.com/gijzelaerr/sqlalchemy-monetdb">sqlalchemy-monetdb</a></p></td>
+</tr>
+<tr class="row-even"><td><p>SAP ASE (fork of former Sybase dialect)</p></td>
+<td><p><a class="reference external" href="https://pypi.org/project/sqlalchemy-sybase/">sqlalchemy-sybase</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>SAP Hana <a class="footnote-reference brackets" href="#id5" id="id4">1</a></p></td>
+<td><p><a class="reference external" href="https://github.com/SAP/sqlalchemy-hana">sqlalchemy-hana</a></p></td>
+</tr>
+<tr class="row-even"><td><p>SAP Sybase SQL Anywhere</p></td>
+<td><p><a class="reference external" href="https://github.com/sqlanywhere/sqlalchemy-sqlany">sqlalchemy-sqlany</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>Snowflake</p></td>
+<td><p><a class="reference external" href="https://github.com/snowflakedb/snowflake-sqlalchemy">snowflake-sqlalchemy</a></p></td>
+</tr>
+<tr class="row-even"><td><p>Teradata Vantage</p></td>
+<td><p><a class="reference external" href="https://pypi.org/project/teradatasqlalchemy/">teradatasqlalchemy</a></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="footnote brackets">
+<dt class="label" id="id5"><span class="brackets">1</span><span class="fn-backref">(<a href="#id1">1</a>,<a href="#id2">2</a>,<a href="#id3">3</a>,<a href="#id4">4</a>)</span></dt>
+<dd><p>Supports version 1.3.x only at the moment.</p>
+</dd>
+</dl>
+</section>
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="../core/future.html" title="previous chapter">SQLAlchemy 2.0 Future (Core)</a>
+        Next:
+        <a href="postgresql.html" title="next chapter">PostgreSQL</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2021, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.1.2.
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '1.4.23',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/detectmobile.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

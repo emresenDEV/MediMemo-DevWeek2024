@@ -1,0 +1,262 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+        <title>
+            
+    
+    Establishing Connectivity - the Engine
+ &mdash;
+    SQLAlchemy 1.4 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/changelog.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 1.4 Documentation" href="../index.html" />
+        <link rel="up" title="SQLAlchemy 1.4 / 2.0 Tutorial" href="index.html" />
+        <link rel="next" title="Working with Transactions and the DBAPI" href="dbapi_transactions.html" />
+        <link rel="prev" title="SQLAlchemy 1.4 / 2.0 Tutorial" href="index.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">1.4.23</span>
+
+
+        | Release Date: August 18, 2021
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 1.4 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 1.4 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../contents.html">Contents</a> |
+                <a href="../genindex.html">Index</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="SQLAlchemy 1.4 / 2.0 Tutorial">SQLAlchemy 1.4 / 2.0 Tutorial</a>
+        </h3>
+
+        <ul>
+<li class="selected"><span class="link-container"><strong>Establishing Connectivity - the Engine</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span></li>
+<li><span class="link-container"><a class="reference external" href="dbapi_transactions.html">Working with Transactions and the DBAPI</a></span></li>
+<li><span class="link-container"><a class="reference external" href="metadata.html">Working with Database Metadata</a></span></li>
+<li><span class="link-container"><a class="reference external" href="data.html">Working with Data</a></span></li>
+<li><span class="link-container"><a class="reference external" href="orm_data_manipulation.html">Data Manipulation with the ORM</a></span></li>
+<li><span class="link-container"><a class="reference external" href="orm_related_objects.html">Working with Related Objects</a></span></li>
+<li><span class="link-container"><a class="reference external" href="further_reading.html">Further Reading</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    
+
+    <div id="docs-body" class="withsidebar tutorial-engine" >
+        
+<div class="topic">
+<p class="topic-title">SQLAlchemy 1.4 / 2.0 Tutorial</p>
+<p>This page is part of the <a class="reference internal" href="index.html"><span class="doc">SQLAlchemy 1.4 / 2.0 Tutorial</span></a>.</p>
+<p>Previous: <a class="reference internal" href="index.html"><span class="doc">SQLAlchemy 1.4 / 2.0 Tutorial</span></a>   |   Next: <a class="reference internal" href="dbapi_transactions.html"><span class="doc">Working with Transactions and the DBAPI</span></a></p>
+</div>
+<section id="establishing-connectivity-the-engine">
+<span id="tutorial-engine"></span><h1>Establishing Connectivity - the Engine<a class="headerlink" href="#establishing-connectivity-the-engine" title="Permalink to this headline">¶</a></h1>
+<p>The start of any SQLAlchemy application is an object called the
+<a class="reference internal" href="../core/future.html#sqlalchemy.future.Engine" title="sqlalchemy.future.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>.   This object acts as a central source of connections
+to a particular database, providing both a factory as well as a holding
+space called a <a class="reference internal" href="../core/pooling.html"><span class="std std-ref">connection pool</span></a> for these database
+connections.   The engine is typically a global object created just
+once for a particular database server, and is configured using a URL string
+which will describe how it should connect to the database host or backend.</p>
+<p>For this tutorial we will use an in-memory-only SQLite database. This is an
+easy way to test things without needing to have an actual pre-existing database
+set up.  The <a class="reference internal" href="../core/future.html#sqlalchemy.future.Engine" title="sqlalchemy.future.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> is created by using <a class="reference internal" href="../core/engines.html#sqlalchemy.create_engine" title="sqlalchemy.create_engine"><code class="xref py py-func docutils literal notranslate"><span class="pre">create_engine()</span></code></a>, specifying
+the <a class="reference internal" href="../core/engines.html#sqlalchemy.create_engine.params.future" title="sqlalchemy.create_engine"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">create_engine.future</span></code></a> flag set to <code class="docutils literal notranslate"><span class="pre">True</span></code> so that we make full use
+of <a class="reference internal" href="../glossary.html#term-2.0-style"><span class="xref std std-term">2.0 style</span></a> usage:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;sqlite+pysqlite:///:memory:&quot;</span><span class="p">,</span> <span class="n">echo</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">future</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></pre></div>
+</div>
+<p>The main argument to <a class="reference internal" href="../core/engines.html#sqlalchemy.create_engine" title="sqlalchemy.create_engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">create_engine</span></code></a>
+is a string URL, above passed as the string <code class="docutils literal notranslate"><span class="pre">&quot;sqlite+pysqlite:///:memory:&quot;</span></code>.
+This string indicates to the <a class="reference internal" href="../core/future.html#sqlalchemy.future.Engine" title="sqlalchemy.future.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> three important
+facts:</p>
+<ol class="arabic simple">
+<li><p>What kind of database are we communicating with?   This is the <code class="docutils literal notranslate"><span class="pre">sqlite</span></code>
+portion above, which links in SQLAlchemy to an object known as the
+<a class="reference internal" href="../glossary.html#term-dialect"><span class="xref std std-term">dialect</span></a>.</p></li>
+<li><p>What <a class="reference internal" href="../glossary.html#term-DBAPI"><span class="xref std std-term">DBAPI</span></a> are we using?  The Python <a class="reference internal" href="../glossary.html#term-DBAPI"><span class="xref std std-term">DBAPI</span></a> is a third party
+driver that SQLAlchemy uses to interact with a particular database.  In
+this case, we’re using the name <code class="docutils literal notranslate"><span class="pre">pysqlite</span></code>, which in modern Python
+use is the <a class="reference external" href="https://docs.python.org/library/sqlite3.html">sqlite3</a> standard
+library interface for SQLite. If omitted, SQLAlchemy will use a default
+<a class="reference internal" href="../glossary.html#term-DBAPI"><span class="xref std std-term">DBAPI</span></a> for the particular database selected.</p></li>
+<li><p>How do we locate the database?   In this case, our URL includes the phrase
+<code class="docutils literal notranslate"><span class="pre">/:memory:</span></code>, which is an indicator to the <code class="docutils literal notranslate"><span class="pre">sqlite3</span></code> module that we
+will be using an <strong>in-memory-only</strong> database.   This kind of database
+is perfect for experimenting as it does not require any server nor does
+it need to create new files.</p></li>
+</ol>
+<aside class="sidebar">
+<p class="sidebar-title">Lazy Connecting</p>
+<p>The <a class="reference internal" href="../core/future.html#sqlalchemy.future.Engine" title="sqlalchemy.future.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>, when first returned by <a class="reference internal" href="../core/engines.html#sqlalchemy.create_engine" title="sqlalchemy.create_engine"><code class="xref py py-func docutils literal notranslate"><span class="pre">create_engine()</span></code></a>,
+has not actually tried to connect to the database yet; that happens
+only the first time it is asked to perform a task against the database.
+This is a software design pattern known as <a class="reference internal" href="../glossary.html#term-lazy-initialization"><span class="xref std std-term">lazy initialization</span></a>.</p>
+</aside>
+<p>We have also specified a parameter <a class="reference internal" href="../core/engines.html#sqlalchemy.create_engine.params.echo" title="sqlalchemy.create_engine"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">create_engine.echo</span></code></a>, which
+will instruct the <a class="reference internal" href="../core/future.html#sqlalchemy.future.Engine" title="sqlalchemy.future.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> to log all of the SQL it emits to a
+Python logger that will write to standard out.   This flag is a shorthand way
+of setting up
+<a class="reference internal" href="../core/engines.html#dbengine-logging"><span class="std std-ref">Python logging more formally</span></a> and is useful for
+experimentation in scripts.   Many of the SQL examples will include this
+SQL logging output beneath a <code class="docutils literal notranslate"><span class="pre">[SQL]</span></code> link that when clicked, will reveal
+the full SQL interaction.</p>
+</section>
+<div class="topic">
+<p class="topic-title">SQLAlchemy 1.4 / 2.0 Tutorial</p>
+<p>Next Tutorial Section: <a class="reference internal" href="dbapi_transactions.html"><span class="doc">Working with Transactions and the DBAPI</span></a></p>
+</div>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="index.html" title="previous chapter">SQLAlchemy 1.4 / 2.0 Tutorial</a>
+        Next:
+        <a href="dbapi_transactions.html" title="next chapter">Working with Transactions and the DBAPI</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2021, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.1.2.
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '1.4.23',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/detectmobile.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

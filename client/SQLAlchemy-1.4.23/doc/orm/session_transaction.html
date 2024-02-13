@@ -1,0 +1,926 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+        <title>
+            
+    
+    Transactions and Connection Management
+ &mdash;
+    SQLAlchemy 1.4 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/changelog.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 1.4 Documentation" href="../index.html" />
+        <link rel="up" title="Using the Session" href="session.html" />
+        <link rel="next" title="Additional Persistence Techniques" href="persistence_techniques.html" />
+        <link rel="prev" title="Cascades" href="cascades.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">1.4.23</span>
+
+
+        | Release Date: August 18, 2021
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 1.4 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 1.4 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../contents.html">Contents</a> |
+                <a href="../genindex.html">Index</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="tutorial.html">Object Relational Tutorial (1.x API)</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mapper_config.html">Mapper Configuration</a></span></li>
+<li><span class="link-container"><a class="reference external" href="relationships.html">Relationship Configuration</a></span></li>
+<li><span class="link-container"><a class="reference external" href="loading_objects.html">Querying Data, Loading Objects</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session.html">Using the Session</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="session_basics.html">Session Basics</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session_state_management.html">State Management</a></span></li>
+<li><span class="link-container"><a class="reference external" href="cascades.html">Cascades</a></span></li>
+<li class="selected"><span class="link-container"><strong>Transactions and Connection Management</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#managing-transactions">Managing Transactions</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#using-savepoint">Using SAVEPOINT</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#session-level-vs-engine-level-transaction-control">Session-level vs. Engine level transaction control</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#commit-as-you-go">Commit as you go</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#begin-once">Begin Once</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#nested-transaction">Nested Transaction</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#explicit-begin">Explicit Begin</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#migrating-from-the-subtransaction-pattern">Migrating from the “subtransaction” pattern</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#enabling-two-phase-commit">Enabling Two-Phase Commit</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#setting-transaction-isolation-levels-dbapi-autocommit">Setting Transaction Isolation Levels / DBAPI AUTOCOMMIT</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#setting-isolation-for-a-sessionmaker-engine-wide">Setting Isolation For A Sessionmaker / Engine Wide</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#setting-isolation-for-individual-sessions">Setting Isolation for Individual Sessions</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#setting-isolation-for-individual-transactions">Setting Isolation for Individual Transactions</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#tracking-transaction-state-with-events">Tracking Transaction State with Events</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#joining-a-session-into-an-external-transaction-such-as-for-test-suites">Joining a Session into an External Transaction (such as for test suites)</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="persistence_techniques.html">Additional Persistence Techniques</a></span></li>
+<li><span class="link-container"><a class="reference external" href="contextual.html">Contextual/Thread-local Sessions</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session_events.html">Tracking queries, object and Session Changes with Events</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session_api.html">Session API</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="extending.html">Events and Internals</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extensions/index.html">ORM Extensions</a></span></li>
+<li><span class="link-container"><a class="reference external" href="examples.html">ORM Examples</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    
+
+    <div id="docs-body" class="withsidebar orm-session_transaction" >
+        
+<section id="transactions-and-connection-management">
+<h1>Transactions and Connection Management<a class="headerlink" href="#transactions-and-connection-management" title="Permalink to this headline">¶</a></h1>
+<section id="managing-transactions">
+<span id="unitofwork-transaction"></span><h2>Managing Transactions<a class="headerlink" href="#managing-transactions" title="Permalink to this headline">¶</a></h2>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.4: </span>Session transaction management has been revised
+to be clearer and easier to use.  In particular, it now features
+“autobegin” operation, which means the point at which a transaction begins
+may be controlled, without using the legacy “autocommit” mode.</p>
+</div>
+<p>The <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> tracks the state of a single “virtual” transaction
+at a time, using an object called
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.SessionTransaction" title="sqlalchemy.orm.SessionTransaction"><code class="xref py py-class docutils literal notranslate"><span class="pre">SessionTransaction</span></code></a>.   This object then makes use of the underyling
+<a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> or engines to which the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>
+object is bound in order to start real connection-level transactions using
+the <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> object as needed.</p>
+<p>This “virtual” transaction is created automatically when needed, or can
+alternatively be started using the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.begin" title="sqlalchemy.orm.Session.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin()</span></code></a> method.  To
+as great a degree as possible, Python context manager use is supported both
+at the level of creating <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> objects as well as to maintain
+the scope of the <a class="reference internal" href="session_api.html#sqlalchemy.orm.SessionTransaction" title="sqlalchemy.orm.SessionTransaction"><code class="xref py py-class docutils literal notranslate"><span class="pre">SessionTransaction</span></code></a>.</p>
+<p>Below, assume we start with a <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">Session</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span></pre></div>
+</div>
+<p>We can now run operations within a demarcated transaction using a context
+manager:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">begin</span><span class="p">():</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">some_object</span><span class="p">())</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">some_other_object</span><span class="p">())</span>
+<span class="c1"># commits transaction at the end, or rolls back if there</span>
+<span class="c1"># was an exception raised</span></pre></div>
+</div>
+<p>At the end of the above context, assuming no exceptions were raised, any
+pending objects will be flushed to the database and the database transaction
+will be committed. If an exception was raised within the above block, then the
+transaction would be rolled back.  In both cases, the above
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> subsequent to exiting the block is ready to be used in
+subsequent transactions.</p>
+<p>The <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.begin" title="sqlalchemy.orm.Session.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin()</span></code></a> method is optional, and the
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> may also be used in a commit-as-you-go approach, where it
+will begin transactions automatically as needed; these only need be committed
+or rolled back:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+
+<span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">some_object</span><span class="p">())</span>
+<span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">some_other_object</span><span class="p">())</span>
+
+<span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>  <span class="c1"># commits</span>
+
+<span class="c1"># will automatically begin again</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="o">&lt;</span> <span class="n">some</span> <span class="n">select</span> <span class="n">statment</span> <span class="o">&gt;</span><span class="p">)</span>
+<span class="n">session</span><span class="o">.</span><span class="n">add_all</span><span class="p">([</span><span class="n">more_objects</span><span class="p">,</span> <span class="o">...</span><span class="p">])</span>
+<span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>  <span class="c1"># commits</span>
+
+<span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">still_another_object</span><span class="p">)</span>
+<span class="n">session</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>  <span class="c1"># flush still_another_object</span>
+<span class="n">session</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>   <span class="c1"># rolls back still_another_object</span></pre></div>
+</div>
+<p>The <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> itself features a <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.close" title="sqlalchemy.orm.Session.close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.close()</span></code></a>
+method.  If the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> is begun within a transaction that
+has not yet been committed or rolled back, this method will cancel
+(i.e. rollback) that transaction, and also expunge all objects contained
+within the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> object’s state.   If the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>
+is being used in such a way that a call to <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.commit" title="sqlalchemy.orm.Session.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code></a>
+or <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.rollback" title="sqlalchemy.orm.Session.rollback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code></a> is not guaranteed (e.g. not within a context
+manager or similar), the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.close" title="sqlalchemy.orm.Session.close"><code class="xref py py-class docutils literal notranslate"><span class="pre">close</span></code></a> method may be used
+to ensure all resources are released:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># expunges all objects, releases all transactions unconditionally</span>
+<span class="c1"># (with rollback), releases all database connections back to their</span>
+<span class="c1"># engines</span>
+<span class="n">session</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></pre></div>
+</div>
+<p>Finally, the session construction / close process can itself be run
+via context manager.  This is the best way to ensure that the scope of
+a <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> object’s use is scoped within a fixed block.
+Illustrated via the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> constructor
+first:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">some_object</span><span class="p">())</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">some_other_object</span><span class="p">())</span>
+
+    <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>  <span class="c1"># commits</span>
+
+    <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">still_another_object</span><span class="p">)</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>  <span class="c1"># flush still_another_object</span>
+
+    <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>  <span class="c1"># commits</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="o">&lt;</span><span class="n">some</span> <span class="n">SELECT</span> <span class="n">statement</span><span class="o">&gt;</span><span class="p">)</span>
+
+<span class="c1"># remaining transactional state from the .execute() call is</span>
+<span class="c1"># discarded</span></pre></div>
+</div>
+<p>Similarly, the <a class="reference internal" href="session_api.html#sqlalchemy.orm.sessionmaker" title="sqlalchemy.orm.sessionmaker"><code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code></a> can be used in the same way:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Session</span> <span class="o">=</span> <span class="n">sesssionmaker</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">begin</span><span class="p">():</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">some_object</span><span class="p">)</span>
+    <span class="c1"># commits</span>
+
+<span class="c1"># closes the Session</span></pre></div>
+</div>
+<p><a class="reference internal" href="session_api.html#sqlalchemy.orm.sessionmaker" title="sqlalchemy.orm.sessionmaker"><code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code></a> itself includes a <a class="reference internal" href="session_api.html#sqlalchemy.orm.sessionmaker.begin" title="sqlalchemy.orm.sessionmaker.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sessionmaker.begin()</span></code></a>
+method to allow both operations to take place at once:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">Session</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">some_object</span><span class="p">):</span></pre></div>
+</div>
+<section id="using-savepoint">
+<span id="session-begin-nested"></span><h3>Using SAVEPOINT<a class="headerlink" href="#using-savepoint" title="Permalink to this headline">¶</a></h3>
+<p>SAVEPOINT transactions, if supported by the underlying engine, may be
+delineated using the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.begin_nested" title="sqlalchemy.orm.Session.begin_nested"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin_nested()</span></code></a>
+method:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">()</span>
+
+<span class="k">with</span> <span class="n">Session</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">u1</span><span class="p">)</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">u2</span><span class="p">)</span>
+
+    <span class="n">nested</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">begin_nested</span><span class="p">()</span> <span class="c1"># establish a savepoint</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">u3</span><span class="p">)</span>
+    <span class="n">nested</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>  <span class="c1"># rolls back u3, keeps u1 and u2</span>
+
+<span class="c1"># commits u1 and u2</span></pre></div>
+</div>
+<p>Each time <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.begin_nested" title="sqlalchemy.orm.Session.begin_nested"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin_nested()</span></code></a> is called, a new “BEGIN SAVEPOINT”
+command is emitted to the database wih a unique identifier.  When
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionTransaction.commit()</span></code> is called, “RELEASE SAVEPOINT”
+is emitted on the database, and if instead
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionTransaction.rollback()</span></code> is called, “ROLLBACK TO SAVEPOINT”
+is emitted.</p>
+<p><a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.begin_nested" title="sqlalchemy.orm.Session.begin_nested"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin_nested()</span></code></a> may also be used as a context manager in the
+same manner as that of the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.begin" title="sqlalchemy.orm.Session.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin()</span></code></a> method:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">records</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">begin_nested</span><span class="p">():</span>
+            <span class="n">session</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Skipped record </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">record</span><span class="p">)</span>
+<span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></pre></div>
+</div>
+<p>When <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.begin_nested" title="sqlalchemy.orm.Session.begin_nested"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin_nested()</span></code></a> is called, a
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.flush" title="sqlalchemy.orm.Session.flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.flush()</span></code></a> is unconditionally issued
+(regardless of the <code class="docutils literal notranslate"><span class="pre">autoflush</span></code> setting). This is so that when a
+rollback on this nested transaction occurs, the full state of the
+session is expired, thus causing all subsequent attribute/instance access to
+reference the full state of the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.session.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> right
+before <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.begin_nested" title="sqlalchemy.orm.Session.begin_nested"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin_nested()</span></code></a> was called.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../core/connections.html#sqlalchemy.engine.NestedTransaction" title="sqlalchemy.engine.NestedTransaction"><code class="xref py py-class docutils literal notranslate"><span class="pre">NestedTransaction</span></code></a> - the <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.NestedTransaction" title="sqlalchemy.engine.NestedTransaction"><code class="xref py py-class docutils literal notranslate"><span class="pre">NestedTransaction</span></code></a> class is the
+Core-level construct that is used by the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> internally
+to produce SAVEPOINT blocks.</p>
+</div>
+</section>
+<section id="session-level-vs-engine-level-transaction-control">
+<span id="orm-session-vs-engine"></span><h3>Session-level vs. Engine level transaction control<a class="headerlink" href="#session-level-vs-engine-level-transaction-control" title="Permalink to this headline">¶</a></h3>
+<p>As of SQLAlchemy 1.4, the <a class="reference internal" href="session_api.html#sqlalchemy.orm.sessionmaker" title="sqlalchemy.orm.sessionmaker"><code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code></a> and Core
+<a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> objects both support <a class="reference internal" href="../glossary.html#term-2.0-style"><span class="xref std std-term">2.0 style</span></a> operation,
+by making use of the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.params.future" title="sqlalchemy.orm.Session"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.future</span></code></a> flag as well as the
+<code class="xref py py-paramref docutils literal notranslate"><span class="pre">create_engine.future</span></code> flag so that these two objects
+assume 2.0-style semantics.</p>
+<p>When using future mode, there should be equivalent semantics between
+the two packages, at the level of the <a class="reference internal" href="session_api.html#sqlalchemy.orm.sessionmaker" title="sqlalchemy.orm.sessionmaker"><code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code></a> vs.
+the <a class="reference internal" href="../core/future.html#sqlalchemy.future.Engine" title="sqlalchemy.future.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>, as well as the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> vs.
+the <a class="reference internal" href="../core/future.html#sqlalchemy.future.Connection" title="sqlalchemy.future.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>.  The following sections detail
+these scenarios based on the following scheme:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ORM</span> <span class="p">(</span><span class="n">using</span> <span class="n">future</span> <span class="n">Session</span><span class="p">)</span>                    <span class="n">Core</span> <span class="p">(</span><span class="n">using</span> <span class="n">future</span> <span class="n">engine</span><span class="p">)</span>
+<span class="o">-----------------------------------------</span>     <span class="o">-----------------------------------</span>
+<span class="n">sessionmaker</span>                                  <span class="n">Engine</span>
+<span class="n">Session</span>                                       <span class="n">Connection</span>
+<span class="n">sessionmaker</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span>                          <span class="n">Engine</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span>
+<span class="n">some_session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>                         <span class="n">some_connection</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+<span class="k">with</span> <span class="n">some_sessionmaker</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>          <span class="k">with</span> <span class="n">some_engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+<span class="k">with</span> <span class="n">some_sessionmaker</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>    <span class="k">with</span> <span class="n">some_engine</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+<span class="k">with</span> <span class="n">some_session</span><span class="o">.</span><span class="n">begin_nested</span><span class="p">()</span> <span class="k">as</span> <span class="n">sp</span><span class="p">:</span>       <span class="k">with</span> <span class="n">some_connection</span><span class="o">.</span><span class="n">begin_nested</span><span class="p">()</span> <span class="k">as</span> <span class="n">sp</span><span class="p">:</span></pre></div>
+</div>
+<section id="commit-as-you-go">
+<h4>Commit as you go<a class="headerlink" href="#commit-as-you-go" title="Permalink to this headline">¶</a></h4>
+<p>Both <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> and <a class="reference internal" href="../core/future.html#sqlalchemy.future.Connection" title="sqlalchemy.future.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> feature
+<a class="reference internal" href="../core/future.html#sqlalchemy.future.Connection.commit" title="sqlalchemy.future.Connection.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.commit()</span></code></a> and <a class="reference internal" href="../core/future.html#sqlalchemy.future.Connection.rollback" title="sqlalchemy.future.Connection.rollback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.rollback()</span></code></a>
+methods.   Using SQLAlchemy 2.0-style operation, these methods affect the
+<strong>outermost</strong> transaction in all cases.</p>
+<p>Engine:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;postgresql://user:pass@host/dbname&quot;</span><span class="p">,</span> <span class="n">future</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+        <span class="n">some_table</span><span class="o">.</span><span class="n">insert</span><span class="p">(),</span>
+        <span class="p">[</span>
+            <span class="p">{</span><span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="s2">&quot;some data one&quot;</span><span class="p">},</span>
+            <span class="p">{</span><span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="s2">&quot;some data two&quot;</span><span class="p">},</span>
+            <span class="p">{</span><span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="s2">&quot;some data three&quot;</span><span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></pre></div>
+</div>
+<p>Session:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="n">future</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">add_all</span><span class="p">([</span>
+        <span class="n">SomeClass</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s2">&quot;some data one&quot;</span><span class="p">),</span>
+        <span class="n">SomeClass</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s2">&quot;some data two&quot;</span><span class="p">),</span>
+        <span class="n">SomeClass</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s2">&quot;some data three&quot;</span><span class="p">)</span>
+    <span class="p">])</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></pre></div>
+</div>
+</section>
+<section id="begin-once">
+<h4>Begin Once<a class="headerlink" href="#begin-once" title="Permalink to this headline">¶</a></h4>
+<p>Both <a class="reference internal" href="session_api.html#sqlalchemy.orm.sessionmaker" title="sqlalchemy.orm.sessionmaker"><code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code></a> and <a class="reference internal" href="../core/future.html#sqlalchemy.future.Engine" title="sqlalchemy.future.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> feature a
+<a class="reference internal" href="../core/future.html#sqlalchemy.future.Engine.begin" title="sqlalchemy.future.Engine.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Engine.begin()</span></code></a> method that will both procure a new object
+with which to execute SQL statements (the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> and
+<a class="reference internal" href="../core/future.html#sqlalchemy.future.Connection" title="sqlalchemy.future.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>, respectively) and then return a context manager
+that will maintain a begin/commit/rollback context for that object.</p>
+<p>Engine:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;postgresql://user:pass@host/dbname&quot;</span><span class="p">,</span> <span class="n">future</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+        <span class="n">some_table</span><span class="o">.</span><span class="n">insert</span><span class="p">(),</span>
+        <span class="p">[</span>
+            <span class="p">{</span><span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="s2">&quot;some data one&quot;</span><span class="p">},</span>
+            <span class="p">{</span><span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="s2">&quot;some data two&quot;</span><span class="p">},</span>
+            <span class="p">{</span><span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="s2">&quot;some data three&quot;</span><span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+<span class="c1"># commits and closes automatically</span></pre></div>
+</div>
+<p>Session:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="n">future</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">Session</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">add_all</span><span class="p">([</span>
+        <span class="n">SomeClass</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s2">&quot;some data one&quot;</span><span class="p">),</span>
+        <span class="n">SomeClass</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s2">&quot;some data two&quot;</span><span class="p">),</span>
+        <span class="n">SomeClass</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s2">&quot;some data three&quot;</span><span class="p">)</span>
+    <span class="p">])</span>
+<span class="c1"># commits and closes automatically</span></pre></div>
+</div>
+</section>
+<section id="nested-transaction">
+<h4>Nested Transaction<a class="headerlink" href="#nested-transaction" title="Permalink to this headline">¶</a></h4>
+<p>When using a SAVEPOINT via the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.begin_nested" title="sqlalchemy.orm.Session.begin_nested"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin_nested()</span></code></a> or
+<a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection.begin_nested" title="sqlalchemy.engine.Connection.begin_nested"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.begin_nested()</span></code></a> methods, the transaction object
+returned must be used to commit or rollback the SAVEPOINT.  Calling
+the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.commit" title="sqlalchemy.orm.Session.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code></a> or <a class="reference internal" href="../core/future.html#sqlalchemy.future.Connection.commit" title="sqlalchemy.future.Connection.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.commit()</span></code></a> methods
+will always commit the <strong>outermost</strong> transaction; this is a SQLAlchemy 2.0
+specific behavior that is reversed from the 1.x series.</p>
+<p>Engine:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;postgresql://user:pass@host/dbname&quot;</span><span class="p">,</span> <span class="n">future</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+    <span class="n">savepoint</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">begin_nested</span><span class="p">()</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+        <span class="n">some_table</span><span class="o">.</span><span class="n">insert</span><span class="p">(),</span>
+        <span class="p">[</span>
+            <span class="p">{</span><span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="s2">&quot;some data one&quot;</span><span class="p">},</span>
+            <span class="p">{</span><span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="s2">&quot;some data two&quot;</span><span class="p">},</span>
+            <span class="p">{</span><span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="s2">&quot;some data three&quot;</span><span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">savepoint</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>  <span class="c1"># or rollback</span>
+
+<span class="c1"># commits automatically</span></pre></div>
+</div>
+<p>Session:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="n">future</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">Session</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="n">savepoint</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">begin_nested</span><span class="p">()</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">add_all</span><span class="p">([</span>
+        <span class="n">SomeClass</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s2">&quot;some data one&quot;</span><span class="p">),</span>
+        <span class="n">SomeClass</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s2">&quot;some data two&quot;</span><span class="p">),</span>
+        <span class="n">SomeClass</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s2">&quot;some data three&quot;</span><span class="p">)</span>
+    <span class="p">])</span>
+    <span class="n">savepoint</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>  <span class="c1"># or rollback</span>
+<span class="c1"># commits automatically</span></pre></div>
+</div>
+</section>
+</section>
+<section id="explicit-begin">
+<span id="session-explicit-begin"></span><span id="session-autocommit"></span><h3>Explicit Begin<a class="headerlink" href="#explicit-begin" title="Permalink to this headline">¶</a></h3>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.4: </span>SQLAlchemy 1.4 deprecates “autocommit mode”, which is historically enabled
+by using the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.params.autocommit" title="sqlalchemy.orm.Session"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.autocommit</span></code></a> flag.    Going forward,
+a new approach to allowing usage of the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.begin" title="sqlalchemy.orm.Session.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin()</span></code></a> method
+is new “autobegin” behavior so that the method may now be called when
+a <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> is first constructed, or after the previous
+transaction has ended and before it begins a new one.</p>
+<p>For background on migrating away from the “subtransaction” pattern for
+frameworks that rely upon nesting of begin()/commit() pairs, see the
+next section <a class="reference internal" href="#session-subtransactions"><span class="std std-ref">Migrating from the “subtransaction” pattern</span></a>.</p>
+</div>
+<p>The <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> features “autobegin” behavior, meaning that as soon
+as operations begin to take place, it ensures a <a class="reference internal" href="session_api.html#sqlalchemy.orm.SessionTransaction" title="sqlalchemy.orm.SessionTransaction"><code class="xref py py-class docutils literal notranslate"><span class="pre">SessionTransaction</span></code></a>
+is present to track ongoing operations.   This transaction is completed
+when <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.commit" title="sqlalchemy.orm.Session.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code></a> is called.</p>
+<p>It is often desirable, particularly in framework integrations, to control the
+point at which the “begin” operation occurs.  To suit this, the
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> uses an “autobegin” strategy, such that the
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.begin" title="sqlalchemy.orm.Session.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin()</span></code></a> method may be called directly for a
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> that has not already had a transaction begun:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+<span class="n">session</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">item1</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Item</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">item2</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Item</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">item1</span><span class="o">.</span><span class="n">foo</span> <span class="o">=</span> <span class="s1">&#39;bar&#39;</span>
+    <span class="n">item2</span><span class="o">.</span><span class="n">bar</span> <span class="o">=</span> <span class="s1">&#39;foo&#39;</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
+    <span class="k">raise</span></pre></div>
+</div>
+<p>The above pattern is more idiomatically invoked using a context manager:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+<span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">begin</span><span class="p">():</span>
+    <span class="n">item1</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Item</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">item2</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Item</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">item1</span><span class="o">.</span><span class="n">foo</span> <span class="o">=</span> <span class="s1">&#39;bar&#39;</span>
+    <span class="n">item2</span><span class="o">.</span><span class="n">bar</span> <span class="o">=</span> <span class="s1">&#39;foo&#39;</span></pre></div>
+</div>
+<p>The <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.begin" title="sqlalchemy.orm.Session.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin()</span></code></a> method and the session’s “autobegin” process
+use the same sequence of steps to begin the transaction.   This includes
+that the <a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.after_transaction_create" title="sqlalchemy.orm.SessionEvents.after_transaction_create"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.after_transaction_create()</span></code></a> event is invoked
+when it occurs; this hook is used by frameworks in order to integrate their
+own transactional processes with that of the ORM <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>.</p>
+<section id="migrating-from-the-subtransaction-pattern">
+<span id="session-subtransactions"></span><h4>Migrating from the “subtransaction” pattern<a class="headerlink" href="#migrating-from-the-subtransaction-pattern" title="Permalink to this headline">¶</a></h4>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 1.4: </span>The <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.begin.params.subtransactions" title="sqlalchemy.orm.Session.begin"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.begin.subtransactions</span></code></a>
+flag is deprecated.  While the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> still uses the
+“subtransactions” pattern internally, it is not suitable for end-user
+use as it leads to confusion, and additionally it may be removed from
+the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> itself in version 2.0 once “autocommit”
+mode is removed.</p>
+</div>
+<p>The “subtransaction” pattern that was often used with autocommit mode is
+also deprecated in 1.4.  This pattern allowed the use of the
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.begin" title="sqlalchemy.orm.Session.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin()</span></code></a> method when a transaction were already begun,
+resulting in a construct called a “subtransaction”, which was essentially
+a block that would prevent the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.commit" title="sqlalchemy.orm.Session.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code></a> method from actually
+committing.</p>
+<p>This pattern has been shown to be confusing in real world applications, and
+it is preferable for an application to ensure that the top-most level of database
+operations are performed with a single begin/commit pair.</p>
+<p>To provide backwards compatibility for applications that make use of this
+pattern, the following context manager or a similar implementation based on
+a decorator may be used:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">contextlib</span>
+
+<span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
+<span class="k">def</span> <span class="nf">transaction</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">session</span><span class="o">.</span><span class="n">in_transaction</span><span class="p">():</span>
+        <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">begin</span><span class="p">():</span>
+            <span class="k">yield</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">yield</span></pre></div>
+</div>
+<p>The above context manager may be used in the same way the
+“subtransaction” flag works, such as in the following example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># method_a starts a transaction and calls method_b</span>
+<span class="k">def</span> <span class="nf">method_a</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">transaction</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
+        <span class="n">method_b</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
+
+<span class="c1"># method_b also starts a transaction, but when</span>
+<span class="c1"># called from method_a participates in the ongoing</span>
+<span class="c1"># transaction.</span>
+<span class="k">def</span> <span class="nf">method_b</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">transaction</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">SomeObject</span><span class="p">(</span><span class="s1">&#39;bat&#39;</span><span class="p">,</span> <span class="s1">&#39;lala&#39;</span><span class="p">))</span>
+
+<span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+
+<span class="c1"># create a Session and call method_a</span>
+<span class="k">with</span> <span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="n">method_a</span><span class="p">(</span><span class="n">session</span><span class="p">)</span></pre></div>
+</div>
+<p>To compare towards the preferred idiomatic pattern, the begin block should
+be at the outermost level.  This removes the need for individual functions
+or methods to be concerned with the details of transaction demarcation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">method_a</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
+    <span class="n">method_b</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">method_b</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">SomeObject</span><span class="p">(</span><span class="s1">&#39;bat&#39;</span><span class="p">,</span> <span class="s1">&#39;lala&#39;</span><span class="p">))</span>
+
+<span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+
+<span class="c1"># create a Session and call method_a</span>
+<span class="k">with</span> <span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">begin</span><span class="p">():</span>
+        <span class="n">method_a</span><span class="p">(</span><span class="n">session</span><span class="p">)</span></pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../core/connections.html#connections-subtransactions"><span class="std std-ref">Migrating from the “nesting” pattern</span></a> - similar pattern based on Core only</p>
+</div>
+</section>
+</section>
+<section id="enabling-two-phase-commit">
+<span id="session-twophase"></span><h3>Enabling Two-Phase Commit<a class="headerlink" href="#enabling-two-phase-commit" title="Permalink to this headline">¶</a></h3>
+<p>For backends which support two-phase operation (currently MySQL and
+PostgreSQL), the session can be instructed to use two-phase commit semantics.
+This will coordinate the committing of transactions across databases so that
+the transaction is either committed or rolled back in all databases. You can
+also <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.prepare" title="sqlalchemy.orm.Session.prepare"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.prepare()</span></code></a> the session for
+interacting with transactions not managed by SQLAlchemy. To use two phase
+transactions set the flag <code class="docutils literal notranslate"><span class="pre">twophase=True</span></code> on the session:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">engine1</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s1">&#39;postgresql://db1&#39;</span><span class="p">)</span>
+<span class="n">engine2</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s1">&#39;postgresql://db2&#39;</span><span class="p">)</span>
+
+<span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">twophase</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># bind User operations to engine 1, Account operations to engine 2</span>
+<span class="n">Session</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">binds</span><span class="o">=</span><span class="p">{</span><span class="n">User</span><span class="p">:</span><span class="n">engine1</span><span class="p">,</span> <span class="n">Account</span><span class="p">:</span><span class="n">engine2</span><span class="p">})</span>
+
+<span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+
+<span class="c1"># .... work with accounts and users</span>
+
+<span class="c1"># commit.  session will issue a flush to all DBs, and a prepare step to all DBs,</span>
+<span class="c1"># before committing both transactions</span>
+<span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></pre></div>
+</div>
+</section>
+<section id="setting-transaction-isolation-levels-dbapi-autocommit">
+<span id="session-transaction-isolation"></span><h3>Setting Transaction Isolation Levels / DBAPI AUTOCOMMIT<a class="headerlink" href="#setting-transaction-isolation-levels-dbapi-autocommit" title="Permalink to this headline">¶</a></h3>
+<p>Most DBAPIs support the concept of configurable transaction <a class="reference internal" href="../glossary.html#term-isolation"><span class="xref std std-term">isolation</span></a> levels.
+These are traditionally the four levels “READ UNCOMMITTED”, “READ COMMITTED”,
+“REPEATABLE READ” and “SERIALIZABLE”.  These are usually applied to a
+DBAPI connection before it begins a new transaction, noting that most
+DBAPIs will begin this transaction implicitly when SQL statements are first
+emitted.</p>
+<p>DBAPIs that support isolation levels also usually support the concept of true
+“autocommit”, which means that the DBAPI connection itself will be placed into
+a non-transactional autocommit mode.   This usually means that the typical
+DBAPI behavior of emitting “BEGIN” to the database automatically no longer
+occurs, but it may also include other directives.   When using this mode,
+<strong>the DBAPI does not use a transaction under any circumstances</strong>.  SQLAlchemy
+methods like <code class="docutils literal notranslate"><span class="pre">.begin()</span></code>, <code class="docutils literal notranslate"><span class="pre">.commit()</span></code> and <code class="docutils literal notranslate"><span class="pre">.rollback()</span></code> pass silently.</p>
+<p>SQLAlchemy’s dialects support settable isolation modes on a per-<a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>
+or per-<a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> basis, using flags at both the
+<a class="reference internal" href="../core/engines.html#sqlalchemy.create_engine" title="sqlalchemy.create_engine"><code class="xref py py-func docutils literal notranslate"><span class="pre">create_engine()</span></code></a> level as well as at the <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection.execution_options" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execution_options()</span></code></a>
+level.</p>
+<p>When using the ORM <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>, it acts as a <em>facade</em> for engines and
+connections, but does not expose transaction isolation directly.  So in
+order to affect transaction isolation level, we need to act upon the
+<a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> or <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> as appropriate.</p>
+<section id="setting-isolation-for-a-sessionmaker-engine-wide">
+<h4>Setting Isolation For A Sessionmaker / Engine Wide<a class="headerlink" href="#setting-isolation-for-a-sessionmaker-engine-wide" title="Permalink to this headline">¶</a></h4>
+<p>To set up a <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> or <a class="reference internal" href="session_api.html#sqlalchemy.orm.sessionmaker" title="sqlalchemy.orm.sessionmaker"><code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code></a> with a specific
+isolation level globally, the first technique is that an
+<a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> can be constructed against a specific isolation level
+in all cases, which is then used as the source of connectivity for a
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> and/or <a class="reference internal" href="session_api.html#sqlalchemy.orm.sessionmaker" title="sqlalchemy.orm.sessionmaker"><code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">sessionmaker</span>
+
+<span class="n">eng</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span>
+    <span class="s2">&quot;postgresql://scott:tiger@localhost/test&quot;</span><span class="p">,</span>
+    <span class="n">isolation_level</span><span class="o">=</span><span class="s1">&#39;REPEATABLE READ&#39;</span>
+<span class="p">)</span>
+
+<span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">eng</span><span class="p">)</span></pre></div>
+</div>
+<p>Another option, useful if there are to be two engines with different isolation
+levels at once, is to use the <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine.execution_options" title="sqlalchemy.engine.Engine.execution_options"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Engine.execution_options()</span></code></a> method,
+which will produce a shallow copy of the original <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> which
+shares the same connection pool as the parent engine.  This is often preferable
+when operations will be separated into “transactional” and “autocommit”
+operations:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">sessionmaker</span>
+
+<span class="n">eng</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;postgresql://scott:tiger@localhost/test&quot;</span><span class="p">)</span>
+
+<span class="n">autocommit_engine</span> <span class="o">=</span> <span class="n">eng</span><span class="o">.</span><span class="n">execution_options</span><span class="p">(</span><span class="n">isolation_level</span><span class="o">=</span><span class="s2">&quot;AUTOCOMMIT&quot;</span><span class="p">)</span>
+
+<span class="n">transactional_session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">eng</span><span class="p">)</span>
+<span class="n">autocommit_session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">autocommit_engine</span><span class="p">)</span></pre></div>
+</div>
+<p>Above, both “<code class="docutils literal notranslate"><span class="pre">eng</span></code>” and <code class="docutils literal notranslate"><span class="pre">&quot;autocommit_engine&quot;</span></code> share the same dialect and
+connection pool.  However the “AUTOCOMMIT” mode will be set upon connections
+when they are acquired from the <code class="docutils literal notranslate"><span class="pre">autocommit_engine</span></code>.  The two
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.sessionmaker" title="sqlalchemy.orm.sessionmaker"><code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code></a> objects “<code class="docutils literal notranslate"><span class="pre">transactional_session</span></code>” and “<code class="docutils literal notranslate"><span class="pre">autocommit_session&quot;</span></code>
+then inherit these characteristics when they work with database connections.</p>
+<p>The “<code class="docutils literal notranslate"><span class="pre">autocommit_session</span></code>” <strong>continues to have transactional semantics</strong>,
+including that
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.commit" title="sqlalchemy.orm.Session.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code></a> and <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.rollback" title="sqlalchemy.orm.Session.rollback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code></a> still consider
+themselves to be “committing” and “rolling back” objects, however the
+transaction will be silently absent.  For this reason, <strong>it is typical,
+though not strictly required, that a Session with AUTOCOMMIT isolation be
+used in a read-only fashion</strong>, that is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">autocommit_session</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="n">some_objects</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="o">&lt;</span><span class="n">statement</span><span class="o">&gt;</span><span class="p">)</span>
+    <span class="n">some_other_objects</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="o">&lt;</span><span class="n">statement</span><span class="o">&gt;</span><span class="p">)</span>
+
+<span class="c1"># closes connection</span></pre></div>
+</div>
+</section>
+<section id="setting-isolation-for-individual-sessions">
+<h4>Setting Isolation for Individual Sessions<a class="headerlink" href="#setting-isolation-for-individual-sessions" title="Permalink to this headline">¶</a></h4>
+<p>When we make a new <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>, either using the constructor directly
+or when we call upon the callable produced by a <a class="reference internal" href="session_api.html#sqlalchemy.orm.sessionmaker" title="sqlalchemy.orm.sessionmaker"><code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code></a>,
+we can pass the <code class="docutils literal notranslate"><span class="pre">bind</span></code> argument directly, overriding the pre-existing bind.
+We can for example create our <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> from a default
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.sessionmaker" title="sqlalchemy.orm.sessionmaker"><code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code></a> and pass an engine set for autocommit:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plain_engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;postgresql://scott:tiger@localhost/test&quot;</span><span class="p">)</span>
+
+<span class="n">autocommit_engine</span> <span class="o">=</span> <span class="n">eng</span><span class="o">.</span><span class="n">execution_options</span><span class="p">(</span><span class="n">isolation_level</span><span class="o">=</span><span class="s2">&quot;AUTOCOMMIT&quot;</span><span class="p">)</span>
+
+<span class="c1"># will normally use plain_engine</span>
+<span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">plain_engine</span><span class="p">)</span>
+
+<span class="c1"># make a specific Session that will use the &quot;autocommit&quot; engine</span>
+<span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">autocommit_engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="c1"># work with session</span></pre></div>
+</div>
+<p>For the case where the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> or <a class="reference internal" href="session_api.html#sqlalchemy.orm.sessionmaker" title="sqlalchemy.orm.sessionmaker"><code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code></a> is
+configured with multiple “binds”, we can either re-specify the <code class="docutils literal notranslate"><span class="pre">binds</span></code>
+argument fully, or if we want to only replace specific binds, we
+can use the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.bind_mapper" title="sqlalchemy.orm.Session.bind_mapper"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.bind_mapper()</span></code></a> or <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.bind_table" title="sqlalchemy.orm.Session.bind_table"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.bind_table()</span></code></a>
+methods:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">bind_mapper</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">autocommit_engine</span><span class="p">)</span></pre></div>
+</div>
+</section>
+<section id="setting-isolation-for-individual-transactions">
+<h4>Setting Isolation for Individual Transactions<a class="headerlink" href="#setting-isolation-for-individual-transactions" title="Permalink to this headline">¶</a></h4>
+<p>A key caveat regarding isolation level is that the setting cannot be
+safely modified on a <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> where a transaction has already
+started.  Databases cannot change the isolation level of a transaction
+in progress, and some DBAPIs and SQLAlchemy dialects
+have inconsistent behaviors in this area.</p>
+<p>Therefore it is preferable to use a <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> that is up front
+bound to an engine with the desired isolation level.  However, the isolation
+level on a per-connection basis can be affected by using the
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.connection" title="sqlalchemy.orm.Session.connection"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.connection()</span></code></a> method at the start of a transaction:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">Session</span>
+
+<span class="c1"># assume session just constructed</span>
+<span class="n">sess</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+
+<span class="c1"># call connection() with options before any other operations proceed.</span>
+<span class="c1"># this will procure a new connection from the bound engine and begin a real</span>
+<span class="c1"># database transaction.</span>
+<span class="n">sess</span><span class="o">.</span><span class="n">connection</span><span class="p">(</span><span class="n">execution_options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;isolation_level&#39;</span><span class="p">:</span> <span class="s1">&#39;SERIALIZABLE&#39;</span><span class="p">})</span>
+
+<span class="c1"># ... work with session in SERIALIZABLE isolation level...</span>
+
+<span class="c1"># commit transaction.  the connection is released</span>
+<span class="c1"># and reverted to its previous isolation level.</span>
+<span class="n">sess</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+<span class="c1"># subsequent to commit() above, a new transaction may be begun if desired,</span>
+<span class="c1"># which will proceed with the previous default isolation level unless</span>
+<span class="c1"># it is set again.</span></pre></div>
+</div>
+<p>Above, we first produce a <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> using either the constructor or a
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.sessionmaker" title="sqlalchemy.orm.sessionmaker"><code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code></a>. Then we explicitly set up the start of a database-level
+transaction by calling upon <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.connection" title="sqlalchemy.orm.Session.connection"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.connection()</span></code></a>, which provides for
+execution options that will be passed to the connection before the
+database-level transaction is begun.  The transaction proceeds with this
+selected isolation level.   When the transaction completes, the isolation
+level is reset on the connection to its default before the connection is
+returned to the connection pool.</p>
+<p>The <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.begin" title="sqlalchemy.orm.Session.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin()</span></code></a> method may also be used to begin the
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> level transaction; calling upon
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.connection" title="sqlalchemy.orm.Session.connection"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.connection()</span></code></a> subsequent to that call may be used to set up
+the per-connection-transaction isolation level:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sess</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">sess</span><span class="o">.</span><span class="n">begin</span><span class="p">():</span>
+    <span class="c1"># call connection() with options before any other operations proceed.</span>
+    <span class="c1"># this will procure a new connection from the bound engine and begin a</span>
+    <span class="c1"># real database transaction.</span>
+    <span class="n">sess</span><span class="o">.</span><span class="n">connection</span><span class="p">(</span><span class="n">execution_options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;isolation_level&#39;</span><span class="p">:</span> <span class="s1">&#39;SERIALIZABLE&#39;</span><span class="p">})</span>
+
+    <span class="c1"># ... work with session in SERIALIZABLE isolation level...</span>
+
+<span class="c1"># outside the block, the transaction has been committed.  the connection is</span>
+<span class="c1"># released and reverted to its previous isolation level.</span></pre></div>
+</div>
+</section>
+</section>
+<section id="tracking-transaction-state-with-events">
+<h3>Tracking Transaction State with Events<a class="headerlink" href="#tracking-transaction-state-with-events" title="Permalink to this headline">¶</a></h3>
+<p>See the section <a class="reference internal" href="session_events.html#session-transaction-events"><span class="std std-ref">Transaction Events</span></a> for an overview
+of the available event hooks for session transaction state changes.</p>
+</section>
+</section>
+<section id="joining-a-session-into-an-external-transaction-such-as-for-test-suites">
+<span id="session-external-transaction"></span><h2>Joining a Session into an External Transaction (such as for test suites)<a class="headerlink" href="#joining-a-session-into-an-external-transaction-such-as-for-test-suites" title="Permalink to this headline">¶</a></h2>
+<p>If a <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> is being used which is already in a transactional
+state (i.e. has a <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Transaction" title="sqlalchemy.engine.Transaction"><code class="xref py py-class docutils literal notranslate"><span class="pre">Transaction</span></code></a> established), a <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> can
+be made to participate within that transaction by just binding the
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> to that <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>. The usual rationale for this
+is a test suite that allows ORM code to work freely with a <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>,
+including the ability to call <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.commit" title="sqlalchemy.orm.Session.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code></a>, where afterwards the
+entire database interaction is rolled back.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.4: </span>This section introduces a new version of the
+“join into an external transaction” recipe that will work equally well
+for both <a class="reference internal" href="../glossary.html#term-2.0-style"><span class="xref std std-term">2.0 style</span></a> and <a class="reference internal" href="../glossary.html#term-1.x-style"><span class="xref std std-term">1.x style</span></a> engines and sessions.
+The recipe here from previous versions such as 1.3 will also continue to
+work for 1.x engines and sessions.</p>
+</div>
+<p>The recipe works by establishing a <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> within a
+transaction and optionally a SAVEPOINT, then passing it to a <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> as the
+“bind”.   The <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> detects that the given <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>
+is already in a transaction and will not run COMMIT on it if the transaction
+is in fact an outermost transaction.   Then when the test tears down, the
+transaction is rolled back so that any data changes throughout the test
+are reverted:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">sessionmaker</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="kn">import</span> <span class="n">TestCase</span>
+
+<span class="c1"># global application scope.  create Session class, engine</span>
+<span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">()</span>
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s1">&#39;postgresql://...&#39;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">SomeTest</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># connect to the database</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+
+        <span class="c1"># begin a non-ORM transaction</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trans</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span>
+
+
+        <span class="c1"># bind an individual Session to the connection</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="p">)</span>
+
+
+        <span class="c1">###    optional     ###</span>
+
+        <span class="c1"># if the database supports SAVEPOINT (SQLite needs special</span>
+        <span class="c1"># config for this to work), starting a savepoint</span>
+        <span class="c1"># will allow tests to also use rollback within tests</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">nested</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">begin_nested</span><span class="p">()</span>
+
+        <span class="nd">@event</span><span class="o">.</span><span class="n">listens_for</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="p">,</span> <span class="s2">&quot;after_transaction_end&quot;</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">end_savepoint</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">transaction</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">nested</span><span class="o">.</span><span class="n">is_active</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">nested</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">begin_nested</span><span class="p">()</span>
+
+        <span class="c1">### ^^^ optional ^^^ ###</span>
+
+    <span class="k">def</span> <span class="nf">test_something</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># use the session in tests.</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Foo</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">test_something_with_rollbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># if the SAVEPOINT steps are taken, then a test can also</span>
+        <span class="c1"># use session.rollback() and continue working with the database</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Bar</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Foo</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="c1"># rollback - everything that happened with the</span>
+        <span class="c1"># Session above (including calls to commit())</span>
+        <span class="c1"># is rolled back.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trans</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
+
+        <span class="c1"># return connection to the Engine</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></pre></div>
+</div>
+<p>The above recipe is part of SQLAlchemy’s own CI to ensure that it remains
+working as expected.</p>
+</section>
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="cascades.html" title="previous chapter">Cascades</a>
+        Next:
+        <a href="persistence_techniques.html" title="next chapter">Additional Persistence Techniques</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2021, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.1.2.
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '1.4.23',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/detectmobile.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

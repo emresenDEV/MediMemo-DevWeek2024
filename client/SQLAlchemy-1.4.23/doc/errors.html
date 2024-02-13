@@ -1,0 +1,1316 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+        <title>
+            
+    
+    Error Messages
+ &mdash;
+    SQLAlchemy 1.4 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="_static/changelog.css" type="text/css" />
+                <link rel="stylesheet" href="_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+        <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="SQLAlchemy 1.4 Documentation" href="index.html" />
+        <link rel="next" title="Changes and Migration" href="changelog/index.html" />
+        <link rel="prev" title="Third Party Integration Issues" href="faq/thirdparty.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">1.4.23</span>
+
+
+        | Release Date: August 18, 2021
+
+    </div>
+
+    <h1><a href="index.html">SQLAlchemy 1.4 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="index.html">SQLAlchemy 1.4 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="contents.html">Contents</a> |
+                <a href="genindex.html">Index</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="SQLAlchemy 1.4 Documentation">SQLAlchemy 1.4 Documentation</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="intro.html">Overview</a></span></li>
+<li><span class="link-container"><a class="reference external" href="tutorial/index.html">SQLAlchemy 1.4 / 2.0 Tutorial</a></span></li>
+<li><span class="link-container"><a class="reference external" href="orm/index.html">SQLAlchemy ORM</a></span></li>
+<li><span class="link-container"><a class="reference external" href="core/index.html">SQLAlchemy Core</a></span></li>
+<li><span class="link-container"><a class="reference external" href="dialects/index.html">Dialects</a></span></li>
+<li><span class="link-container"><a class="reference external" href="faq/index.html">Frequently Asked Questions</a></span></li>
+<li class="selected"><span class="link-container"><strong>Error Messages</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#legacy-api-features">Legacy API Features</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#select-construct-created-in-legacy-mode-keyword-arguments-etc">select() construct created in “legacy” mode; keyword arguments, etc.</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#the-some-function-in-sqlalchemy-2-0-will-no-longer-something">The &lt;some function&gt; in SQLAlchemy 2.0 will no longer &lt;something&gt;</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#a-bind-was-located-via-legacy-bound-metadata-but-since-future-true-is-set-on-this-session-this-bind-is-ignored">A bind was located via legacy bound metadata, but since future=True is set on this Session, this bind is ignored.</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#object-is-being-merged-into-a-session-along-the-backref-cascade">Object is being merged into a Session along the backref cascade</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#connections-and-transactions">Connections and Transactions</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#queuepool-limit-of-size-x-overflow-y-reached-connection-timed-out-timeout-z">QueuePool limit of size &lt;x&gt; overflow &lt;y&gt; reached, connection timed out, timeout &lt;z&gt;</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#can-t-reconnect-until-invalid-transaction-is-rolled-back">Can’t reconnect until invalid transaction is rolled back</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#this-connection-is-on-an-inactive-transaction-please-rollback-fully-before-proceeding">This connection is on an inactive transaction.  Please rollback() fully before proceeding</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#dbapi-errors">DBAPI Errors</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#interfaceerror">InterfaceError</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#databaseerror">DatabaseError</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#dataerror">DataError</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#operationalerror">OperationalError</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#integrityerror">IntegrityError</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#internalerror">InternalError</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#programmingerror">ProgrammingError</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#notsupportederror">NotSupportedError</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#sql-expression-language">SQL Expression Language</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#compiler-strsqlcompiler-can-t-render-element-of-type-element-type">Compiler StrSQLCompiler can’t render element of type &lt;element type&gt;</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#typeerror-operator-not-supported-between-instances-of-columnproperty-and-something">TypeError: &lt;operator&gt; not supported between instances of ‘ColumnProperty’ and &lt;something&gt;</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#this-compiled-object-is-not-bound-to-any-engine-or-connection">This Compiled object is not bound to any Engine or Connection</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#a-value-is-required-for-bind-parameter-x-in-parameter-group-y">A value is required for bind parameter &lt;x&gt; (in parameter group &lt;y&gt;)</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#expected-from-clause-got-select-to-create-a-from-clause-use-the-subquery-method">Expected FROM clause, got Select.  To create a FROM clause, use the .subquery() method</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#object-relational-mapping">Object Relational Mapping</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#parent-instance-x-is-not-bound-to-a-session-lazy-load-deferred-load-refresh-etc-operation-cannot-proceed">Parent instance &lt;x&gt; is not bound to a Session; (lazy load/deferred load/refresh/etc.) operation cannot proceed</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#this-session-s-transaction-has-been-rolled-back-due-to-a-previous-exception-during-flush">This Session’s transaction has been rolled back due to a previous exception during flush</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#for-relationship-relationship-delete-orphan-cascade-is-normally-configured-only-on-the-one-side-of-a-one-to-many-relationship-and-not-on-the-many-side-of-a-many-to-one-or-many-to-many-relationship">For relationship &lt;relationship&gt;, delete-orphan cascade is normally configured only on the “one” side of a one-to-many relationship, and not on the “many” side of a many-to-one or many-to-many relationship.</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#instance-instance-is-already-associated-with-an-instance-of-instance-via-its-attribute-attribute-and-is-only-allowed-a-single-parent">Instance &lt;instance&gt; is already associated with an instance of &lt;instance&gt; via its &lt;attribute&gt; attribute, and is only allowed a single parent.</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#relationship-x-will-copy-column-q-to-column-p-which-conflicts-with-relationship-s-y">relationship X will copy column Q to column P, which conflicts with relationship(s): ‘Y’</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#asyncio-exceptions">AsyncIO Exceptions</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#awaitrequired">AwaitRequired</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#missinggreenlet">MissingGreenlet</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#core-exception-classes">Core Exception Classes</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#orm-exception-classes">ORM Exception Classes</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="changelog/index.html">Changes and Migration</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    
+
+    <div id="docs-body" class="withsidebar errors" >
+        
+<section id="error-messages">
+<span id="errors"></span><h1>Error Messages<a class="headerlink" href="#error-messages" title="Permalink to this headline">¶</a></h1>
+<p>This section lists descriptions and background for common error messages
+and warnings raised or emitted by SQLAlchemy.</p>
+<p>SQLAlchemy normally raises errors within the context of a SQLAlchemy-specific
+exception class.  For details on these classes, see
+<a class="reference internal" href="core/exceptions.html"><span class="std std-ref">Core Exceptions</span></a> and <a class="reference internal" href="orm/exceptions.html"><span class="std std-ref">ORM Exceptions</span></a>.</p>
+<p>SQLAlchemy errors can roughly be separated into two categories, the
+<strong>programming-time error</strong> and the <strong>runtime error</strong>.     Programming-time
+errors are raised as a result of functions or methods being called with
+incorrect arguments, or from other configuration-oriented methods such  as
+mapper configurations that can’t be resolved.   The programming-time error is
+typically immediate and deterministic.    The runtime error on the other hand
+represents a failure that occurs as a program runs in response to some
+condition that occurs arbitrarily, such as database connections being
+exhausted or some data-related issue occurring.   Runtime errors are more
+likely to be seen in the logs of a running application as the program
+encounters these states in response to load and data being encountered.</p>
+<p>Since runtime errors are not as easy to reproduce and often occur in response
+to some arbitrary condition as the program runs, they are more difficult to
+debug and also affect programs that have already been put into production.</p>
+<p>Within this section, the goal is to try to provide background on some of the
+most common runtime errors as well as programming time errors.</p>
+<section id="legacy-api-features">
+<h2>Legacy API Features<a class="headerlink" href="#legacy-api-features" title="Permalink to this headline">¶</a></h2>
+<section id="select-construct-created-in-legacy-mode-keyword-arguments-etc">
+<span id="error-c9ae"></span><h3>select() construct created in “legacy” mode; keyword arguments, etc.<a class="headerlink" href="#select-construct-created-in-legacy-mode-keyword-arguments-etc" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> construct has been updated as of SQLAlchemy
+1.4 to support the newer calling style that will be standard in
+<a class="reference internal" href="#error-b8d9"><span class="std std-ref">SQLAlchemy 2.0</span></a>.   For backwards compatibility in the
+interm, the construct accepts arguments in both the “legacy” style as well
+as the “new” style.</p>
+<p>The “new” style features that column and table expressions are passed
+positionally to the <a class="reference internal" href="core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> construct only; any other
+modifiers to the object must be passed using subsequent method chaining:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># this is the way to do it going forward</span>
+<span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">table1</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">myid</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">table1</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">myid</span> <span class="o">==</span> <span class="n">table2</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">otherid</span><span class="p">)</span></pre></div>
+</div>
+<p>For comparison, a <a class="reference internal" href="core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> in legacy forms of SQLAlchemy,
+before methods like <a class="reference internal" href="core/selectable.html#sqlalchemy.sql.expression.Select.where" title="sqlalchemy.sql.expression.Select.where"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.where()</span></code></a> were even added, would like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># this is how it was documented in original SQLAlchemy versions</span>
+<span class="c1"># many years ago</span>
+<span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">([</span><span class="n">table1</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">myid</span><span class="p">],</span> <span class="n">whereclause</span><span class="o">=</span><span class="n">table1</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">myid</span> <span class="o">==</span> <span class="n">table2</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">otherid</span><span class="p">)</span></pre></div>
+</div>
+<p>Or even that the “whereclause” would be passed positionally:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># this is also how it was documented in original SQLAlchemy versions</span>
+<span class="c1"># many years ago</span>
+<span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">([</span><span class="n">table1</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">myid</span><span class="p">],</span> <span class="n">table1</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">myid</span> <span class="o">==</span> <span class="n">table2</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">otherid</span><span class="p">)</span></pre></div>
+</div>
+<p>For some years now, the additional “whereclause” and other arguments that are
+accepted have been removed from most narrative documentation, leading to a
+calling style that is most familiar as the list of column arguments passed
+as a list, but no further arguments:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># this is how it&#39;s been documented since around version 1.0 or so</span>
+<span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">([</span><span class="n">table1</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">myid</span><span class="p">])</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">table1</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">myid</span> <span class="o">==</span> <span class="n">table2</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">otherid</span><span class="p">)</span></pre></div>
+</div>
+<p>The document at <a class="reference internal" href="changelog/migration_20.html#migration-20-5284"><span class="std std-ref">select() no longer accepts varied constructor arguments, columns are passed positionally</span></a> describes this change in terms
+of <a class="reference internal" href="changelog/migration_20.html"><span class="std std-ref">2.0 Migration</span></a>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="changelog/migration_20.html#migration-20-5284"><span class="std std-ref">select() no longer accepts varied constructor arguments, columns are passed positionally</span></a></p>
+<p><a class="reference internal" href="changelog/migration_20.html"><span class="std std-ref">Migrating to SQLAlchemy 2.0</span></a></p>
+</div>
+</section>
+<section id="the-some-function-in-sqlalchemy-2-0-will-no-longer-something">
+<span id="error-b8d9"></span><h3>The &lt;some function&gt; in SQLAlchemy 2.0 will no longer &lt;something&gt;<a class="headerlink" href="#the-some-function-in-sqlalchemy-2-0-will-no-longer-something" title="Permalink to this headline">¶</a></h3>
+<p>SQLAlchemy 2.0 is expected to be a major shift for a wide variety of key
+SQLAlchemy usage patterns in both the Core and ORM components.   The goal
+of this release is to make a slight readjustment in some of the most
+fundamental assumptions of SQLAlchemy since its early beginnings, and
+to deliver a newly streamlined usage model that is hoped to be significantly
+more minimalist and consistent between the Core and ORM components, as well as
+more capable.</p>
+<p>Introduced at <a class="reference internal" href="changelog/migration_20.html"><span class="std std-ref">Migrating to SQLAlchemy 2.0</span></a>, the SQLAlchemy 2.0 project includes
+a comprehensive future compatibility system that is to be integrated into the
+1.4 series of SQLAlchemy, such that applications will have a clear,
+unambiguous, and incremental upgrade path in order to migrate applications to
+being fully 2.0 compatible.   The <a class="reference internal" href="core/exceptions.html#sqlalchemy.exc.RemovedIn20Warning" title="sqlalchemy.exc.RemovedIn20Warning"><code class="xref py py-class docutils literal notranslate"><span class="pre">RemovedIn20Warning</span></code></a> deprecation
+warning is at the base of this system to provide guidance on what behaviors in
+an existing codebase will need to be modified.  An overview of how to enable
+this warning is at <a class="reference internal" href="changelog/migration_14.html#deprecation-20-mode"><span class="std std-ref">SQLAlchemy 2.0 Deprecations Mode</span></a>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="changelog/migration_20.html"><span class="std std-ref">Migrating to SQLAlchemy 2.0</span></a>  - An overview of the upgrade process from
+the 1.x series, as well as the current goals and progress of SQLAlchemy
+2.0.</p>
+<p><a class="reference internal" href="changelog/migration_14.html#deprecation-20-mode"><span class="std std-ref">SQLAlchemy 2.0 Deprecations Mode</span></a> - specific guidelines on how to use
+“2.0 deprecations mode” in SQLAlchemy 1.4.</p>
+</div>
+</section>
+<section id="a-bind-was-located-via-legacy-bound-metadata-but-since-future-true-is-set-on-this-session-this-bind-is-ignored">
+<span id="error-c9bf"></span><h3>A bind was located via legacy bound metadata, but since future=True is set on this Session, this bind is ignored.<a class="headerlink" href="#a-bind-was-located-via-legacy-bound-metadata-but-since-future-true-is-set-on-this-session-this-bind-is-ignored" title="Permalink to this headline">¶</a></h3>
+<p>The concept of “bound metadata” is being removed in SQLAlchemy 2.0.  This
+refers to the <a class="reference internal" href="core/metadata.html#sqlalchemy.schema.MetaData.params.bind" title="sqlalchemy.schema.MetaData"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">MetaData.bind</span></code></a> parameter on the
+<a class="reference internal" href="core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> object that in turn allows objects like the ORM
+<a class="reference internal" href="orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> to associate a particular mapped class with an
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code>.   In SQLAlchemy 2.0, the <a class="reference internal" href="orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> must be
+linked to each <code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code> directly. That is, instead of instantiating
+the <a class="reference internal" href="orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> or
+<a class="reference internal" href="orm/session_api.html#sqlalchemy.orm.sessionmaker" title="sqlalchemy.orm.sessionmaker"><code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code></a> without any arguments, and associating the
+<a class="reference internal" href="core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> with the <a class="reference internal" href="core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;sqlite://&quot;</span><span class="p">)</span>
+<span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">()</span>
+<span class="n">metadata</span> <span class="o">=</span> <span class="n">MetaData</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+<span class="n">Base</span> <span class="o">=</span> <span class="n">declarative_base</span><span class="p">(</span><span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">MyClass</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="c1"># ...</span>
+
+
+<span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+<span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">MyClass</span><span class="p">())</span>
+<span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></pre></div>
+</div>
+<p>The <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> must instead be associated directly with the
+<a class="reference internal" href="orm/session_api.html#sqlalchemy.orm.sessionmaker" title="sqlalchemy.orm.sessionmaker"><code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code></a> or <a class="reference internal" href="orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>.  The
+<a class="reference internal" href="core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> object should no longer be associated with any
+engine:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;sqlite://&quot;</span><span class="p">)</span>
+<span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+<span class="n">Base</span> <span class="o">=</span> <span class="n">declarative_base</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">MyClass</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="c1"># ...</span>
+
+
+<span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+<span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">MyClass</span><span class="p">())</span>
+<span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></pre></div>
+</div>
+<p>In SQLAlchemy 1.4, this <a class="reference internal" href="glossary.html#term-2.0-style"><span class="xref std std-term">2.0 style</span></a> behavior is enabled when the
+<a class="reference internal" href="orm/session_api.html#sqlalchemy.orm.Session.params.future" title="sqlalchemy.orm.Session"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.future</span></code></a> flag is set on <a class="reference internal" href="orm/session_api.html#sqlalchemy.orm.sessionmaker" title="sqlalchemy.orm.sessionmaker"><code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code></a>
+or <a class="reference internal" href="orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>.</p>
+</section>
+<section id="object-is-being-merged-into-a-session-along-the-backref-cascade">
+<span id="error-s9r1"></span><h3>Object is being merged into a Session along the backref cascade<a class="headerlink" href="#object-is-being-merged-into-a-session-along-the-backref-cascade" title="Permalink to this headline">¶</a></h3>
+<p>This message refers to the “backref cascade” behavior of SQLAlchemy,
+which is described at <a class="reference internal" href="orm/cascades.html#backref-cascade"><span class="std std-ref">Controlling Cascade on Backrefs</span></a>.   This refers to the action of
+an object being added into a <a class="reference internal" href="orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> as a result of another
+object that’s already present in that session being associated with it.
+As this behavior has been shown to be more confusing than helpful,
+the <a class="reference internal" href="orm/relationship_api.html#sqlalchemy.orm.relationship.params.cascade_backrefs" title="sqlalchemy.orm.relationship"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.cascade_backrefs</span></code></a> and
+<a class="reference internal" href="orm/relationship_api.html#sqlalchemy.orm.backref.params.cascade_backrefs" title="sqlalchemy.orm.backref"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">backref.cascade_backrefs</span></code></a> parameters were added, which can
+be set to <code class="docutils literal notranslate"><span class="pre">False</span></code> to disable it, and in SQLAlchemy 2.0 the “cascade backrefs”
+behavior will be disabled completely.</p>
+<p>To set <a class="reference internal" href="orm/relationship_api.html#sqlalchemy.orm.relationship.params.cascade_backrefs" title="sqlalchemy.orm.relationship"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.cascade_backrefs</span></code></a> to <code class="docutils literal notranslate"><span class="pre">False</span></code> on a
+backref that is currently configured using the
+<a class="reference internal" href="orm/relationship_api.html#sqlalchemy.orm.relationship.params.backref" title="sqlalchemy.orm.relationship"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.backref</span></code></a> string parameter, the backref must
+be declared using the <a class="reference internal" href="orm/relationship_api.html#sqlalchemy.orm.backref" title="sqlalchemy.orm.backref"><code class="xref py py-func docutils literal notranslate"><span class="pre">backref()</span></code></a> function first so that the
+<a class="reference internal" href="orm/relationship_api.html#sqlalchemy.orm.backref.params.cascade_backrefs" title="sqlalchemy.orm.backref"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">backref.cascade_backrefs</span></code></a> parameter may be passed.</p>
+<p>Alternatively, the entire “cascade backrefs” behavior can be turned off
+across the board by using the <a class="reference internal" href="orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> in “future” mode,
+by passing <code class="docutils literal notranslate"><span class="pre">True</span></code> for the <a class="reference internal" href="orm/session_api.html#sqlalchemy.orm.Session.params.future" title="sqlalchemy.orm.Session"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.future</span></code></a> parameter.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="orm/cascades.html#backref-cascade"><span class="std std-ref">Controlling Cascade on Backrefs</span></a> - complete description of the cascade backrefs
+behavior</p>
+<p><a class="reference internal" href="changelog/migration_14.html#change-5150"><span class="std std-ref">cascade_backrefs behavior deprecated for removal in 2.0</span></a> - background on the change for SQLAlchemy 2.0.</p>
+</div>
+</section>
+</section>
+<section id="connections-and-transactions">
+<h2>Connections and Transactions<a class="headerlink" href="#connections-and-transactions" title="Permalink to this headline">¶</a></h2>
+<section id="queuepool-limit-of-size-x-overflow-y-reached-connection-timed-out-timeout-z">
+<span id="error-3o7r"></span><h3>QueuePool limit of size &lt;x&gt; overflow &lt;y&gt; reached, connection timed out, timeout &lt;z&gt;<a class="headerlink" href="#queuepool-limit-of-size-x-overflow-y-reached-connection-timed-out-timeout-z" title="Permalink to this headline">¶</a></h3>
+<p>This is possibly the most common runtime error experienced, as it directly
+involves the work load of the application surpassing a configured limit, one
+which typically applies to nearly all SQLAlchemy applications.</p>
+<p>The following points summarize what this error means, beginning with the
+most fundamental points that most SQLAlchemy users should already be
+familiar with.</p>
+<ul>
+<li><p><strong>The SQLAlchemy Engine object uses a pool of connections by default</strong> - What
+this means is that when one makes use of a SQL database connection resource
+of an <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> object, and then <a class="reference internal" href="glossary.html#term-releases"><span class="xref std std-term">releases</span></a> that resource,
+the database connection itself remains connected to the database and
+is returned to an internal queue where it can be used again.  Even though
+the code may appear to be ending its conversation with the database, in many
+cases the application will still maintain a fixed number of database connections
+that persist until the application ends or the pool is explicitly disposed.</p></li>
+<li><p>Because of the pool, when an application makes use of a SQL database
+connection, most typically from either making use of <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Engine.connect" title="sqlalchemy.engine.Engine.connect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Engine.connect()</span></code></a>
+or when making queries using an ORM <a class="reference internal" href="orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>, this activity
+does not necessarily establish a new connection to the database at the
+moment the connection object is acquired; it instead consults the
+connection pool for a connection, which will often retrieve an existing
+connection from the pool to be re-used.  If no connections are available,
+the pool will create a new database connection, but only if the
+pool has not surpassed a configured capacity.</p></li>
+<li><p>The default pool used in most cases is called <a class="reference internal" href="core/pooling.html#sqlalchemy.pool.QueuePool" title="sqlalchemy.pool.QueuePool"><code class="xref py py-class docutils literal notranslate"><span class="pre">QueuePool</span></code></a>.  When
+you ask this pool to give you a connection and none are available, it
+will create a new connection <strong>if the total number of connections in play
+are less than a configured value</strong>.  This value is equal to the
+<strong>pool size plus the max overflow</strong>.     That means if you have configured
+your engine as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;mysql://u:p@host/db&quot;</span><span class="p">,</span> <span class="n">pool_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">max_overflow</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span></pre></div>
+</div>
+<p>The above <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> will allow <strong>at most 30 connections</strong> to be in
+play at any time, not including connections that were detached from the
+engine or invalidated.  If a request for a new connection arrives and
+30 connections are already in use by other parts of the application,
+the connection pool will block for a fixed period of time,
+before timing out and raising this error message.</p>
+<p>In order to allow for a higher number of connections be in use at once,
+the pool can be adjusted using the
+<a class="reference internal" href="core/engines.html#sqlalchemy.create_engine.params.pool_size" title="sqlalchemy.create_engine"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">create_engine.pool_size</span></code></a> and <a class="reference internal" href="core/engines.html#sqlalchemy.create_engine.params.max_overflow" title="sqlalchemy.create_engine"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">create_engine.max_overflow</span></code></a>
+parameters as passed to the <a class="reference internal" href="core/engines.html#sqlalchemy.create_engine" title="sqlalchemy.create_engine"><code class="xref py py-func docutils literal notranslate"><span class="pre">create_engine()</span></code></a> function.      The timeout
+to wait for a connection to be available is configured using the
+<a class="reference internal" href="core/engines.html#sqlalchemy.create_engine.params.pool_timeout" title="sqlalchemy.create_engine"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">create_engine.pool_timeout</span></code></a> parameter.</p>
+</li>
+<li><p>The pool can be configured to have unlimited overflow by setting
+<a class="reference internal" href="core/engines.html#sqlalchemy.create_engine.params.max_overflow" title="sqlalchemy.create_engine"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">create_engine.max_overflow</span></code></a> to the value “-1”.  With this setting,
+the pool will still maintain a fixed pool of connections, however it will
+never block upon a new connection being requested; it will instead unconditionally
+make a new connection if none are available.</p>
+<p>However, when running in this way, if the application has an issue where it
+is using up all available connectivity resources, it will eventually hit the
+configured limit of available connections on the database itself, which will
+again return an error.  More seriously, when the application exhausts the
+database of connections, it usually will have caused a great
+amount of  resources to be used up before failing, and can also interfere
+with other applications and database status mechanisms that rely upon being
+able to connect to the database.</p>
+<p>Given the above, the connection pool can be looked at as a <strong>safety valve
+for connection use</strong>, providing a critical layer of protection against
+a rogue application causing the entire database to become unavailable
+to all other applications.   When receiving this error message, it is vastly
+preferable to repair the issue using up too many connections and/or
+configure the limits appropriately, rather than allowing for unlimited
+overflow which does not actually solve the underlying issue.</p>
+</li>
+</ul>
+<p>What causes an application to use up all the connections that it has available?</p>
+<ul>
+<li><p><strong>The application is fielding too many concurrent requests to do work based
+on the configured value for the pool</strong> - This is the most straightforward
+cause.  If you have
+an application that runs in a thread pool that allows for 30 concurrent
+threads, with one connection in use per thread, if your pool is not configured
+to allow at least 30 connections checked out at once, you will get this
+error once your application receives enough concurrent requests. Solution
+is to raise the limits on the pool or lower the number of concurrent threads.</p></li>
+<li><p><strong>The application is not returning connections to the pool</strong> - This is the
+next most common reason, which is that the application is making use of the
+connection pool, but the program is failing to <a class="reference internal" href="glossary.html#term-release"><span class="xref std std-term">release</span></a> these
+connections and is instead leaving them open.   The connection pool as well
+as the ORM <a class="reference internal" href="orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> do have logic such that when the session and/or
+connection object is garbage collected, it results in the underlying
+connection resources being released, however this behavior cannot be relied
+upon to release resources in a timely manner.</p>
+<p>A common reason this can occur is that the application uses ORM sessions and
+does not call <a class="reference internal" href="orm/session_api.html#sqlalchemy.orm.Session.close" title="sqlalchemy.orm.Session.close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.close()</span></code></a> upon them one the work involving that
+session is complete. Solution is to make sure ORM sessions if using the ORM,
+or engine-bound <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> objects if using Core, are explicitly
+closed at the end of the work being done, either via the appropriate
+<code class="docutils literal notranslate"><span class="pre">.close()</span></code> method, or by using one of the available context managers (e.g.
+“with:” statement) to properly release the resource.</p>
+</li>
+<li><p><strong>The application is attempting to run long-running transactions</strong> - A
+database transaction is a very expensive resource, and should <strong>never be
+left idle waiting for some event to occur</strong>.  If an application is waiting
+for a user to push a button, or a result to come off of a long running job
+queue, or is holding a persistent connection open to a browser, <strong>don’t
+keep a database transaction open for the whole time</strong>.  As the application
+needs to work with the database and interact with an event, open a short-lived
+transaction at that point and then close it.</p></li>
+<li><p><strong>The application is deadlocking</strong> - Also a common cause of this error and
+more difficult to grasp, if an application is not able to complete its use
+of a connection either due to an application-side or database-side deadlock,
+the application can use up all the available connections which then leads to
+additional requests receiving this error.   Reasons for deadlocks include:</p>
+<ul class="simple">
+<li><p>Using an implicit async system such as gevent or eventlet without
+properly monkeypatching all socket libraries and drivers, or which
+has bugs in not fully covering for all monkeypatched driver methods,
+or less commonly when the async system is being used against CPU-bound
+workloads and greenlets making use of database resources are simply waiting
+too long to attend to them.  Neither implicit nor explicit async
+programming frameworks are typically
+necessary or appropriate for the vast majority of relational database
+operations; if an application must use an async system for some area
+of functionality, it’s best that database-oriented business methods
+run within traditional threads that pass messages to the async part
+of the application.</p></li>
+<li><p>A database side deadlock, e.g. rows are mutually deadlocked</p></li>
+<li><p>Threading errors, such as mutexes in a mutual deadlock, or calling
+upon an already locked mutex in the same thread</p></li>
+</ul>
+</li>
+</ul>
+<p>Keep in mind an alternative to using pooling is to turn off pooling entirely.
+See the section <a class="reference internal" href="core/pooling.html#pool-switching"><span class="std std-ref">Switching Pool Implementations</span></a> for background on this.  However, note
+that when this error message is occurring, it is <strong>always</strong> due to a bigger
+problem in the application itself; the pool just helps to reveal the problem
+sooner.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="core/pooling.html"><span class="std std-ref">Connection Pooling</span></a></p>
+<p><a class="reference internal" href="core/connections.html"><span class="std std-ref">Working with Engines and Connections</span></a></p>
+</div>
+</section>
+<section id="can-t-reconnect-until-invalid-transaction-is-rolled-back">
+<span id="error-8s2b"></span><h3>Can’t reconnect until invalid transaction is rolled back<a class="headerlink" href="#can-t-reconnect-until-invalid-transaction-is-rolled-back" title="Permalink to this headline">¶</a></h3>
+<p>This error condition refers to the case where a <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> was
+invalidated, either due to a database disconnect detection or due to an
+explicit call to <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Connection.invalidate" title="sqlalchemy.engine.Connection.invalidate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.invalidate()</span></code></a>, but there is still a
+transaction present that was initiated by the <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Connection.begin" title="sqlalchemy.engine.Connection.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.begin()</span></code></a>
+method.  When a connection is invalidated, any <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Transaction" title="sqlalchemy.engine.Transaction"><code class="xref py py-class docutils literal notranslate"><span class="pre">Transaction</span></code></a>
+that was in progress is now in an invalid state, and must be explicitly rolled
+back in order to remove it from the <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>.</p>
+</section>
+<section id="this-connection-is-on-an-inactive-transaction-please-rollback-fully-before-proceeding">
+<span id="error-8s2a"></span><h3>This connection is on an inactive transaction.  Please rollback() fully before proceeding<a class="headerlink" href="#this-connection-is-on-an-inactive-transaction-please-rollback-fully-before-proceeding" title="Permalink to this headline">¶</a></h3>
+<p>This error condition was added to SQLAlchemy as of version 1.4.    The error
+refers to the state where a <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> is placed into a
+transaction using a method like <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Connection.begin" title="sqlalchemy.engine.Connection.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.begin()</span></code></a>, and then a
+further “marker” transaction is created within that scope; the “marker”
+transaction is then rolled back using <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Transaction.rollback" title="sqlalchemy.engine.Transaction.rollback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Transaction.rollback()</span></code></a> or closed
+using <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Transaction.close" title="sqlalchemy.engine.Transaction.close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Transaction.close()</span></code></a>, however the outer transaction is still
+present in an “inactive” state and must be rolled back.</p>
+<p>The pattern looks like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+
+<span class="n">connection</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+<span class="n">transaction1</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span>
+
+<span class="c1"># this is a &quot;sub&quot; or &quot;marker&quot; transaction, a logical nesting</span>
+<span class="c1"># structure based on &quot;real&quot; transaction transaction1</span>
+<span class="n">transaction2</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span>
+<span class="n">transaction2</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
+
+<span class="c1"># transaction1 is still present and needs explicit rollback,</span>
+<span class="c1"># so this will raise</span>
+<span class="n">connection</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;select 1&quot;</span><span class="p">))</span></pre></div>
+</div>
+<p>Above, <code class="docutils literal notranslate"><span class="pre">transaction2</span></code> is a “marker” transaction, which indicates a logical
+nesting of transactions within an outer one; while the inner transaction
+can roll back the whole transaction via its rollback() method, its commit()
+method has no effect except to close the scope of the “marker” transaction
+itself.   The call to <code class="docutils literal notranslate"><span class="pre">transaction2.rollback()</span></code> has the effect of
+<strong>deactivating</strong> transaction1 which means it is essentially rolled back
+at the database level, however is still present in order to accommodate
+a consistent nesting pattern of transactions.</p>
+<p>The correct resolution is to ensure the outer transaction is also
+rolled back:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">transaction1</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span></pre></div>
+</div>
+<p>This pattern is not commonly used in Core.  Within the ORM, a similar issue can
+occur which is the product of the ORM’s “logical” transaction structure; this
+is described in the FAQ entry at <a class="reference internal" href="faq/sessions.html#faq-session-rollback"><span class="std std-ref">“This Session’s transaction has been rolled back due to a previous exception during flush.” (or similar)</span></a>.</p>
+<p>The “subtransaction” pattern is to be removed in SQLAlchemy 2.0 so that this
+particular programming pattern will no longer be available and this
+error message will no longer occur in Core.</p>
+</section>
+</section>
+<section id="dbapi-errors">
+<span id="error-dbapi"></span><h2>DBAPI Errors<a class="headerlink" href="#dbapi-errors" title="Permalink to this headline">¶</a></h2>
+<p>The Python database API, or DBAPI, is a specification for database drivers
+which can be located at <a class="reference external" href="https://www.python.org/dev/peps/pep-0249/">Pep-249</a>.
+This API specifies a set of exception classes that accommodate the full range
+of failure modes of the database.</p>
+<p>SQLAlchemy does not generate these exceptions directly.  Instead, they are
+intercepted from the database driver and wrapped by the SQLAlchemy-provided
+exception <a class="reference internal" href="core/exceptions.html#sqlalchemy.exc.DBAPIError" title="sqlalchemy.exc.DBAPIError"><code class="xref py py-class docutils literal notranslate"><span class="pre">DBAPIError</span></code></a>, however the messaging within the exception is
+<strong>generated by the driver, not SQLAlchemy</strong>.</p>
+<section id="interfaceerror">
+<span id="error-rvf5"></span><h3>InterfaceError<a class="headerlink" href="#interfaceerror" title="Permalink to this headline">¶</a></h3>
+<p>Exception raised for errors that are related to the database interface rather
+than the database itself.</p>
+<p>This error is a <a class="reference internal" href="#error-dbapi"><span class="std std-ref">DBAPI Error</span></a> and originates from
+the database driver (DBAPI), not SQLAlchemy itself.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">InterfaceError</span></code> is sometimes raised by drivers in the context
+of the database connection being dropped, or not being able to connect
+to the database.   For tips on how to deal with this, see the section
+<a class="reference internal" href="core/pooling.html#pool-disconnects"><span class="std std-ref">Dealing with Disconnects</span></a>.</p>
+</section>
+<section id="databaseerror">
+<span id="error-4xp6"></span><h3>DatabaseError<a class="headerlink" href="#databaseerror" title="Permalink to this headline">¶</a></h3>
+<p>Exception raised for errors that are related to the database itself, and not
+the interface or data being passed.</p>
+<p>This error is a <a class="reference internal" href="#error-dbapi"><span class="std std-ref">DBAPI Error</span></a> and originates from
+the database driver (DBAPI), not SQLAlchemy itself.</p>
+</section>
+<section id="dataerror">
+<span id="error-9h9h"></span><h3>DataError<a class="headerlink" href="#dataerror" title="Permalink to this headline">¶</a></h3>
+<p>Exception raised for errors that are due to problems with the processed data
+like division by zero, numeric value out of range, etc.</p>
+<p>This error is a <a class="reference internal" href="#error-dbapi"><span class="std std-ref">DBAPI Error</span></a> and originates from
+the database driver (DBAPI), not SQLAlchemy itself.</p>
+</section>
+<section id="operationalerror">
+<span id="error-e3q8"></span><h3>OperationalError<a class="headerlink" href="#operationalerror" title="Permalink to this headline">¶</a></h3>
+<p>Exception raised for errors that are related to the database’s operation and
+not necessarily under the control of the programmer, e.g. an unexpected
+disconnect occurs, the data source name is not found, a transaction could not
+be processed, a memory allocation error occurred during processing, etc.</p>
+<p>This error is a <a class="reference internal" href="#error-dbapi"><span class="std std-ref">DBAPI Error</span></a> and originates from
+the database driver (DBAPI), not SQLAlchemy itself.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">OperationalError</span></code> is the most common (but not the only) error class used
+by drivers in the context of the database connection being dropped, or not
+being able to connect to the database.   For tips on how to deal with this, see
+the section <a class="reference internal" href="core/pooling.html#pool-disconnects"><span class="std std-ref">Dealing with Disconnects</span></a>.</p>
+</section>
+<section id="integrityerror">
+<span id="error-gkpj"></span><h3>IntegrityError<a class="headerlink" href="#integrityerror" title="Permalink to this headline">¶</a></h3>
+<p>Exception raised when the relational integrity of the database is affected,
+e.g. a foreign key check fails.</p>
+<p>This error is a <a class="reference internal" href="#error-dbapi"><span class="std std-ref">DBAPI Error</span></a> and originates from
+the database driver (DBAPI), not SQLAlchemy itself.</p>
+</section>
+<section id="internalerror">
+<span id="error-2j85"></span><h3>InternalError<a class="headerlink" href="#internalerror" title="Permalink to this headline">¶</a></h3>
+<p>Exception raised when the database encounters an internal error, e.g. the
+cursor is not valid anymore, the transaction is out of sync, etc.</p>
+<p>This error is a <a class="reference internal" href="#error-dbapi"><span class="std std-ref">DBAPI Error</span></a> and originates from
+the database driver (DBAPI), not SQLAlchemy itself.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">InternalError</span></code> is sometimes raised by drivers in the context
+of the database connection being dropped, or not being able to connect
+to the database.   For tips on how to deal with this, see the section
+<a class="reference internal" href="core/pooling.html#pool-disconnects"><span class="std std-ref">Dealing with Disconnects</span></a>.</p>
+</section>
+<section id="programmingerror">
+<span id="error-f405"></span><h3>ProgrammingError<a class="headerlink" href="#programmingerror" title="Permalink to this headline">¶</a></h3>
+<p>Exception raised for programming errors, e.g. table not found or already
+exists, syntax error in the SQL statement, wrong number of parameters
+specified, etc.</p>
+<p>This error is a <a class="reference internal" href="#error-dbapi"><span class="std std-ref">DBAPI Error</span></a> and originates from
+the database driver (DBAPI), not SQLAlchemy itself.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">ProgrammingError</span></code> is sometimes raised by drivers in the context
+of the database connection being dropped, or not being able to connect
+to the database.   For tips on how to deal with this, see the section
+<a class="reference internal" href="core/pooling.html#pool-disconnects"><span class="std std-ref">Dealing with Disconnects</span></a>.</p>
+</section>
+<section id="notsupportederror">
+<span id="error-tw8g"></span><h3>NotSupportedError<a class="headerlink" href="#notsupportederror" title="Permalink to this headline">¶</a></h3>
+<p>Exception raised in case a method or database API was used which is not
+supported by the database, e.g. requesting a .rollback() on a connection that
+does not support transaction or has transactions turned off.</p>
+<p>This error is a <a class="reference internal" href="#error-dbapi"><span class="std std-ref">DBAPI Error</span></a> and originates from
+the database driver (DBAPI), not SQLAlchemy itself.</p>
+</section>
+</section>
+<section id="sql-expression-language">
+<h2>SQL Expression Language<a class="headerlink" href="#sql-expression-language" title="Permalink to this headline">¶</a></h2>
+<section id="compiler-strsqlcompiler-can-t-render-element-of-type-element-type">
+<span id="error-l7de"></span><h3>Compiler StrSQLCompiler can’t render element of type &lt;element type&gt;<a class="headerlink" href="#compiler-strsqlcompiler-can-t-render-element-of-type-element-type" title="Permalink to this headline">¶</a></h3>
+<p>This error usually occurs when attempting to stringify a SQL expression
+construct that includes elements which are not part of the default compilation;
+in this case, the error will be against the <a class="reference internal" href="core/internals.html#sqlalchemy.sql.compiler.StrSQLCompiler" title="sqlalchemy.sql.compiler.StrSQLCompiler"><code class="xref py py-class docutils literal notranslate"><span class="pre">StrSQLCompiler</span></code></a> class.
+In less common cases, it can also occur when the wrong kind of SQL expression
+is used with a particular type of database backend; in those cases, other
+kinds of SQL compiler classes will be named, such as <code class="docutils literal notranslate"><span class="pre">SQLCompiler</span></code> or
+<code class="docutils literal notranslate"><span class="pre">sqlalchemy.dialects.postgresql.PGCompiler</span></code>.  The guidance below is
+more specific to the “stringification” use case but describes the general
+background as well.</p>
+<p>Normally, a Core SQL construct or ORM <a class="reference internal" href="orm/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> object can be stringified
+directly, such as when we use <code class="docutils literal notranslate"><span class="pre">print()</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">column</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span><span class="p">)</span>
+<span class="go">x = :x_1</span></pre></div>
+</div>
+<p>When the above SQL expression is stringified, the <a class="reference internal" href="core/internals.html#sqlalchemy.sql.compiler.StrSQLCompiler" title="sqlalchemy.sql.compiler.StrSQLCompiler"><code class="xref py py-class docutils literal notranslate"><span class="pre">StrSQLCompiler</span></code></a>
+compiler class is used, which is a special statement compiler that is invoked
+when a construct is stringified without any dialect-specific information.</p>
+<p>However, there are many constructs that are specific to some particular kind
+of database dialect, for which the <a class="reference internal" href="core/internals.html#sqlalchemy.sql.compiler.StrSQLCompiler" title="sqlalchemy.sql.compiler.StrSQLCompiler"><code class="xref py py-class docutils literal notranslate"><span class="pre">StrSQLCompiler</span></code></a> doesn’t know how
+to turn into a string, such as the PostgreSQL
+<a class="reference external" href="postgresql_insert_on_conflict">“insert on conflict”</a> construct:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.dialects.postgresql</span> <span class="kn">import</span> <span class="n">insert</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">table</span><span class="p">,</span> <span class="n">column</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_table</span> <span class="o">=</span> <span class="n">table</span><span class="p">(</span><span class="s1">&#39;my_table&#39;</span><span class="p">,</span> <span class="n">column</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">),</span> <span class="n">column</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">insert_stmt</span> <span class="o">=</span> <span class="n">insert</span><span class="p">(</span><span class="n">my_table</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">insert_stmt</span> <span class="o">=</span> <span class="n">insert_stmt</span><span class="o">.</span><span class="n">on_conflict_do_nothing</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">index_elements</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">insert_stmt</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+
+<span class="gp">...</span>
+
+<span class="go">sqlalchemy.exc.UnsupportedCompilationError:</span>
+<span class="go">Compiler &lt;sqlalchemy.sql.compiler.StrSQLCompiler object at 0x7f04fc17e320&gt;</span>
+<span class="go">can&#39;t render element of type</span>
+<span class="go">&lt;class &#39;sqlalchemy.dialects.postgresql.dml.OnConflictDoNothing&#39;&gt;</span></pre></div>
+</div>
+<p>In order to stringify constructs that are specific to particular backend,
+the <a class="reference internal" href="core/sqlelement.html#sqlalchemy.sql.expression.ClauseElement.compile" title="sqlalchemy.sql.expression.ClauseElement.compile"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ClauseElement.compile()</span></code></a> method must be used, passing either an
+<a class="reference internal" href="core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> or a <a class="reference internal" href="core/internals.html#sqlalchemy.engine.Dialect" title="sqlalchemy.engine.Dialect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dialect</span></code></a> object which will invoke the correct
+compiler.   Below we use a PostgreSQL dialect:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.dialects</span> <span class="kn">import</span> <span class="n">postgresql</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">insert_stmt</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">dialect</span><span class="o">=</span><span class="n">postgresql</span><span class="o">.</span><span class="n">dialect</span><span class="p">()))</span>
+<span class="go">INSERT INTO my_table (x) VALUES (%(x)s) ON CONFLICT (y) DO NOTHING</span></pre></div>
+</div>
+<p>For an ORM <a class="reference internal" href="orm/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> object, the statement can be accessed using the
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">Query.statement</span></code> accessor:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">statement</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">statement</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">statement</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">dialect</span><span class="o">=</span><span class="n">postgresql</span><span class="o">.</span><span class="n">dialect</span><span class="p">()))</span></pre></div>
+</div>
+<p>See the FAQ link below for additional detail on direct stringification /
+compilation of SQL elements.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="faq/sqlexpressions.html#faq-sql-expression-string"><span class="std std-ref">How do I render SQL expressions as strings, possibly with bound parameters inlined?</span></a></p>
+</div>
+</section>
+<section id="typeerror-operator-not-supported-between-instances-of-columnproperty-and-something">
+<h3>TypeError: &lt;operator&gt; not supported between instances of ‘ColumnProperty’ and &lt;something&gt;<a class="headerlink" href="#typeerror-operator-not-supported-between-instances-of-columnproperty-and-something" title="Permalink to this headline">¶</a></h3>
+<p>This often occurs when attempting to use a <a class="reference internal" href="orm/mapping_columns.html#sqlalchemy.orm.column_property" title="sqlalchemy.orm.column_property"><code class="xref py py-func docutils literal notranslate"><span class="pre">column_property()</span></code></a> or
+<a class="reference internal" href="orm/loading_columns.html#sqlalchemy.orm.deferred" title="sqlalchemy.orm.deferred"><code class="xref py py-func docutils literal notranslate"><span class="pre">deferred()</span></code></a> object in the context of a SQL expression, usually within
+declarative such as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Bar</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;bar&#39;</span>
+
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">cprop</span> <span class="o">=</span> <span class="n">deferred</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">))</span>
+
+    <span class="n">__table_args__</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">CheckConstraint</span><span class="p">(</span><span class="n">cprop</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">),</span>
+    <span class="p">)</span></pre></div>
+</div>
+<p>Above, the <code class="docutils literal notranslate"><span class="pre">cprop</span></code> attribute is used inline before it has been mapped,
+however this <code class="docutils literal notranslate"><span class="pre">cprop</span></code> attribute is not a <a class="reference internal" href="core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>,
+it’s a <a class="reference internal" href="orm/internals.html#sqlalchemy.orm.ColumnProperty" title="sqlalchemy.orm.ColumnProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColumnProperty</span></code></a>, which is an interim object and therefore
+does not have the full functionality of either the <a class="reference internal" href="core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> object
+or the <a class="reference internal" href="orm/internals.html#sqlalchemy.orm.InstrumentedAttribute" title="sqlalchemy.orm.InstrumentedAttribute"><code class="xref py py-class docutils literal notranslate"><span class="pre">InstrumentedAttribute</span></code></a> object that will be mapped onto the
+<code class="docutils literal notranslate"><span class="pre">Bar</span></code> class once the declarative process is complete.</p>
+<p>While the <a class="reference internal" href="orm/internals.html#sqlalchemy.orm.ColumnProperty" title="sqlalchemy.orm.ColumnProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColumnProperty</span></code></a> does have a <code class="docutils literal notranslate"><span class="pre">__clause_element__()</span></code> method,
+which allows it to work in some column-oriented contexts, it can’t work in an
+open-ended comparison context as illustrated above, since it has no Python
+<code class="docutils literal notranslate"><span class="pre">__eq__()</span></code> method that would allow it to interpret the comparison to the
+number “5” as a SQL expression and not a regular Python comparison.</p>
+<p>The solution is to access the <a class="reference internal" href="core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> directly using the
+<a class="reference internal" href="orm/internals.html#sqlalchemy.orm.ColumnProperty.expression" title="sqlalchemy.orm.ColumnProperty.expression"><code class="xref py py-attr docutils literal notranslate"><span class="pre">ColumnProperty.expression</span></code></a> attribute:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Bar</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;bar&#39;</span>
+
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">cprop</span> <span class="o">=</span> <span class="n">deferred</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">))</span>
+
+    <span class="n">__table_args__</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">CheckConstraint</span><span class="p">(</span><span class="n">cprop</span><span class="o">.</span><span class="n">expression</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">),</span>
+    <span class="p">)</span></pre></div>
+</div>
+</section>
+<section id="this-compiled-object-is-not-bound-to-any-engine-or-connection">
+<span id="error-2afi"></span><h3>This Compiled object is not bound to any Engine or Connection<a class="headerlink" href="#this-compiled-object-is-not-bound-to-any-engine-or-connection" title="Permalink to this headline">¶</a></h3>
+<p>This error refers to the concept of “bound metadata”, described at
+<a class="reference internal" href="core/connections.html#dbengine-implicit"><span class="std std-ref">Connectionless Execution, Implicit Execution</span></a>.   The issue occurs when one invokes the
+<a class="reference internal" href="core/selectable.html#sqlalchemy.sql.expression.Executable.execute" title="sqlalchemy.sql.expression.Executable.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Executable.execute()</span></code></a> method directly off of a Core expression object
+that is not associated with any <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">metadata</span> <span class="o">=</span> <span class="n">MetaData</span><span class="p">()</span>
+<span class="n">table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="n">metadata</span><span class="p">,</span> <span class="n">Column</span><span class="p">(</span><span class="s1">&#39;q&#39;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">))</span>
+
+<span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">stmt</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>   <span class="c1"># &lt;--- raises</span></pre></div>
+</div>
+<p>What the logic is expecting is that the <a class="reference internal" href="core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> object has
+been <strong>bound</strong> to a <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;mysql+pymysql://user:pass@host/db&quot;</span><span class="p">)</span>
+<span class="n">metadata</span> <span class="o">=</span> <span class="n">MetaData</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span></pre></div>
+</div>
+<p>Where above, any statement that derives from a <a class="reference internal" href="core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> which
+in turn derives from that <a class="reference internal" href="core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> will implicitly make use of
+the given <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> in order to invoke the statement.</p>
+<p>Note that the concept of bound metadata is a <strong>legacy pattern</strong> and in most
+cases is <strong>highly discouraged</strong>.   The best way to invoke the statement is
+to pass it to the <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Connection.execute" title="sqlalchemy.engine.Connection.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code></a> method of a <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+  <span class="n">result</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span></pre></div>
+</div>
+<p>When using the ORM, a similar facility is available via the <a class="reference internal" href="orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span></pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="core/connections.html#dbengine-implicit"><span class="std std-ref">Connectionless Execution, Implicit Execution</span></a></p>
+</div>
+</section>
+<section id="a-value-is-required-for-bind-parameter-x-in-parameter-group-y">
+<span id="error-cd3x"></span><h3>A value is required for bind parameter &lt;x&gt; (in parameter group &lt;y&gt;)<a class="headerlink" href="#a-value-is-required-for-bind-parameter-x-in-parameter-group-y" title="Permalink to this headline">¶</a></h3>
+<p>This error occurs when a statement makes use of <a class="reference internal" href="core/sqlelement.html#sqlalchemy.sql.expression.bindparam" title="sqlalchemy.sql.expression.bindparam"><code class="xref py py-func docutils literal notranslate"><span class="pre">bindparam()</span></code></a> either
+implicitly or explicitly and does not provide a value when the statement
+is executed:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">column</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">bindparam</span><span class="p">(</span><span class="s1">&#39;my_param&#39;</span><span class="p">))</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span></pre></div>
+</div>
+<p>Above, no value has been provided for the parameter “my_param”.  The correct
+approach is to provide a value:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">stmt</span><span class="p">,</span> <span class="n">my_param</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span></pre></div>
+</div>
+<p>When the message takes the form “a value is required for bind parameter &lt;x&gt;
+in parameter group &lt;y&gt;”, the message is referring to the “executemany” style
+of execution.  In this case, the statement is typically an INSERT, UPDATE,
+or DELETE and a list of parameters is being passed.   In this format, the
+statement may be generated dynamically to include parameter positions for
+every parameter given in the argument list, where it will use the
+<strong>first set of parameters</strong> to determine what these should be.</p>
+<p>For example, the statement below is calculated based on the first parameter
+set to require the parameters, “a”, “b”, and “c” - these names determine
+the final string format of the statement which will be used for each
+set of parameters in the list.  As the second entry does not contain “b”,
+this error is generated:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">=</span> <span class="n">MetaData</span><span class="p">()</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span>
+    <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span>
+    <span class="n">Column</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">),</span>
+    <span class="n">Column</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">),</span>
+    <span class="n">Column</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">e</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">insert</span><span class="p">(),</span> <span class="p">[</span>
+        <span class="p">{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">},</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">sqlalchemy</span><span class="o">.</span><span class="n">exc</span><span class="o">.</span><span class="n">StatementError</span><span class="p">:</span> <span class="p">(</span><span class="n">sqlalchemy</span><span class="o">.</span><span class="n">exc</span><span class="o">.</span><span class="n">InvalidRequestError</span><span class="p">)</span>
+<span class="n">A</span> <span class="n">value</span> <span class="ow">is</span> <span class="n">required</span> <span class="k">for</span> <span class="n">bind</span> <span class="n">parameter</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="ow">in</span> <span class="n">parameter</span> <span class="n">group</span> <span class="mi">1</span>
+<span class="p">[</span><span class="n">SQL</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;INSERT INTO t (a, b, c) VALUES (?, ?, ?)&#39;</span><span class="p">]</span>
+<span class="p">[</span><span class="n">parameters</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">}]]</span></pre></div>
+</div>
+<p>Since “b” is required, pass it as <code class="docutils literal notranslate"><span class="pre">None</span></code> so that the INSERT may proceed:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">e</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">insert</span><span class="p">(),</span> <span class="p">[</span>
+        <span class="p">{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">},</span>
+    <span class="p">]</span>
+<span class="p">)</span></pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="core/tutorial.html#coretutorial-bind-param"><span class="std std-ref">Bind Parameter Objects</span></a></p>
+<p><a class="reference internal" href="core/tutorial.html#execute-multiple"><span class="std std-ref">Executing Multiple Statements</span></a></p>
+</div>
+</section>
+<section id="expected-from-clause-got-select-to-create-a-from-clause-use-the-subquery-method">
+<span id="error-89ve"></span><h3>Expected FROM clause, got Select.  To create a FROM clause, use the .subquery() method<a class="headerlink" href="#expected-from-clause-got-select-to-create-a-from-clause-use-the-subquery-method" title="Permalink to this headline">¶</a></h3>
+<p>This refers to a change made as of SQLAlchemy 1.4 where a SELECT statement as generated
+by a function such as <a class="reference internal" href="core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a>, but also including things like unions and textual
+SELECT expressions are no longer considered to be <a class="reference internal" href="core/selectable.html#sqlalchemy.sql.expression.FromClause" title="sqlalchemy.sql.expression.FromClause"><code class="xref py py-class docutils literal notranslate"><span class="pre">FromClause</span></code></a> objects and
+can’t be placed directly in the FROM clause of another SELECT statement without them
+being wrapped in a <a class="reference internal" href="core/selectable.html#sqlalchemy.sql.expression.Subquery" title="sqlalchemy.sql.expression.Subquery"><code class="xref py py-class docutils literal notranslate"><span class="pre">Subquery</span></code></a> first.   This is a major conceptual change in the
+Core and the full rationale is discussed at <a class="reference internal" href="changelog/migration_14.html#change-4617"><span class="std std-ref">A SELECT statement is no longer implicitly considered to be a FROM clause</span></a>.</p>
+<p>Given an example as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">=</span> <span class="n">MetaData</span><span class="p">()</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span>
+   <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span>
+   <span class="n">Column</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">),</span>
+   <span class="n">Column</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">),</span>
+   <span class="n">Column</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">t</span><span class="p">)</span></pre></div>
+</div>
+<p>Above, <code class="docutils literal notranslate"><span class="pre">stmt</span></code> represents a SELECT statement.  The error is produced when we want
+to use <code class="docutils literal notranslate"><span class="pre">stmt</span></code> directly as a FROM clause in another SELECT, such as if we
+attempted to select from it:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">new_stmt_1</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span></pre></div>
+</div>
+<p>Or if we wanted to use it in a FROM clause such as in a JOIN:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">new_stmt_2</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">some_table</span><span class="p">)</span><span class="o">.</span><span class="n">select_from</span><span class="p">(</span><span class="n">some_table</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">stmt</span><span class="p">))</span></pre></div>
+</div>
+<p>In previous versions of SQLAlchemy, using a SELECT inside of another SELECT
+would produce a parenthesized, unnamed subquery.   In most cases, this form of
+SQL is not very useful as databases like MySQL and PostgreSQL require that
+subqueries in FROM clauses have named aliases, which means using the
+<a class="reference internal" href="core/selectable.html#sqlalchemy.sql.expression.SelectBase.alias" title="sqlalchemy.sql.expression.SelectBase.alias"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SelectBase.alias()</span></code></a> method or as of 1.4 using the
+<a class="reference internal" href="core/selectable.html#sqlalchemy.sql.expression.SelectBase.subquery" title="sqlalchemy.sql.expression.SelectBase.subquery"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SelectBase.subquery()</span></code></a> method to produce this.   On other databases, it
+is still much clearer for the subquery to have a name to resolve any ambiguity
+on future references to column  names inside the subquery.</p>
+<p>Beyond the above practical reasons, there are a lot of other SQLAlchemy-oriented
+reasons the change is being made.  The correct form of the above two statements
+therefore requires that <a class="reference internal" href="core/selectable.html#sqlalchemy.sql.expression.SelectBase.subquery" title="sqlalchemy.sql.expression.SelectBase.subquery"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SelectBase.subquery()</span></code></a> is used:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">subq</span> <span class="o">=</span> <span class="n">stmt</span><span class="o">.</span><span class="n">subquery</span><span class="p">()</span>
+
+<span class="n">new_stmt_1</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">subq</span><span class="p">)</span>
+
+<span class="n">new_stmt_2</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">some_table</span><span class="p">)</span><span class="o">.</span><span class="n">select_from</span><span class="p">(</span><span class="n">some_table</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">subq</span><span class="p">))</span></pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="changelog/migration_14.html#change-4617"><span class="std std-ref">A SELECT statement is no longer implicitly considered to be a FROM clause</span></a></p>
+</div>
+</section>
+</section>
+<section id="object-relational-mapping">
+<h2>Object Relational Mapping<a class="headerlink" href="#object-relational-mapping" title="Permalink to this headline">¶</a></h2>
+<section id="parent-instance-x-is-not-bound-to-a-session-lazy-load-deferred-load-refresh-etc-operation-cannot-proceed">
+<span id="error-bhk3"></span><h3>Parent instance &lt;x&gt; is not bound to a Session; (lazy load/deferred load/refresh/etc.) operation cannot proceed<a class="headerlink" href="#parent-instance-x-is-not-bound-to-a-session-lazy-load-deferred-load-refresh-etc-operation-cannot-proceed" title="Permalink to this headline">¶</a></h3>
+<p>This is likely the most common error message when dealing with the ORM, and it
+occurs as a result of the nature of a technique the ORM makes wide use of known
+as <a class="reference internal" href="glossary.html#term-lazy-loading"><span class="xref std std-term">lazy loading</span></a>.   Lazy loading is a common object-relational pattern
+whereby an object that’s persisted by the ORM maintains a proxy to the database
+itself, such that when various attributes upon the object are accessed, their
+value may be retrieved from the database <em>lazily</em>.   The advantage to this
+approach is that objects can be retrieved from the database without having
+to load all of their attributes or related data at once, and instead only that
+data which is requested can be delivered at that time.   The major disadvantage
+is basically a mirror image of the advantage, which is that if lots of objects
+are being loaded which are known to require a certain set of data in all cases,
+it is wasteful to load that additional data piecemeal.</p>
+<p>Another caveat of lazy loading beyond the usual efficiency concerns is that
+in order for lazy loading to proceed, the object has to <strong>remain associated
+with a Session</strong> in order to be able to retrieve its state.  This error message
+means that an object has become de-associated with its <a class="reference internal" href="orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> and
+is being asked to lazy load data from the database.</p>
+<p>The most common reason that objects become detached from their <a class="reference internal" href="orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>
+is that the session itself was closed, typically via the <a class="reference internal" href="orm/session_api.html#sqlalchemy.orm.Session.close" title="sqlalchemy.orm.Session.close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.close()</span></code></a>
+method.   The objects will then live on to be accessed further, very often
+within web applications where they are delivered to a server-side templating
+engine and are asked for further attributes which they cannot load.</p>
+<p>Mitigation of this error is via two general techniques:</p>
+<ul>
+<li><p><strong>Don’t close the session prematurely</strong> - Often, applications will close
+out a transaction before passing off related objects to some other system
+which then fails due to this error.   Sometimes the transaction doesn’t need
+to be closed so soon; an example is the web application closes out
+the transaction before the view is rendered.  This is often done in the name
+of “correctness”, but may be seen as a mis-application of “encapsulation”,
+as this term refers to code organization, not actual actions. The template that
+uses an ORM object is making use of the <a class="reference external" href="https://en.wikipedia.org/wiki/Proxy_pattern">proxy pattern</a>
+which keeps database logic encapsulated from the caller.   If the
+<a class="reference internal" href="orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> can be held open until the lifespan of the objects are done,
+this is the best approach.</p></li>
+<li><p><strong>Load everything that’s needed up front</strong> - It is very often impossible to
+keep the transaction open, especially in more complex applications that need
+to pass objects off to other systems that can’t run in the same context
+even though they’re in the same process.  In this case, the application
+should try to make appropriate use of <a class="reference internal" href="glossary.html#term-eager-loading"><span class="xref std std-term">eager loading</span></a> to ensure
+that objects have what they need up front.</p>
+<p>When using this approach, it is usually necessary that the
+<a class="reference internal" href="orm/session_api.html#sqlalchemy.orm.Session.params.expire_on_commit" title="sqlalchemy.orm.Session"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.expire_on_commit</span></code></a> parameter be set to <code class="docutils literal notranslate"><span class="pre">False</span></code>, so
+that after a <a class="reference internal" href="orm/session_api.html#sqlalchemy.orm.Session.commit" title="sqlalchemy.orm.Session.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code></a> operation, the objects within the
+session aren’t <a class="reference internal" href="glossary.html#term-expired"><span class="xref std std-term">expired</span></a>, which would incur a lazy load if their
+attributes were subsequently accessed.  Additionally, the
+<a class="reference internal" href="orm/session_api.html#sqlalchemy.orm.Session.rollback" title="sqlalchemy.orm.Session.rollback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code></a> method unconditionally expires all contents in
+the <a class="reference internal" href="orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> and should also be avoided in non-error scenarios.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="orm/loading_relationships.html"><span class="std std-ref">Relationship Loading Techniques</span></a> - detailed documentation on eager loading and other
+relationship-oriented loading techniques</p>
+<p><a class="reference internal" href="orm/session_basics.html#session-committing"><span class="std std-ref">Committing</span></a> - background on session commit</p>
+<p><a class="reference internal" href="orm/session_state_management.html#session-expire"><span class="std std-ref">Refreshing / Expiring</span></a> - background on attribute expiry</p>
+</div>
+</li>
+</ul>
+</section>
+<section id="this-session-s-transaction-has-been-rolled-back-due-to-a-previous-exception-during-flush">
+<span id="error-7s2a"></span><h3>This Session’s transaction has been rolled back due to a previous exception during flush<a class="headerlink" href="#this-session-s-transaction-has-been-rolled-back-due-to-a-previous-exception-during-flush" title="Permalink to this headline">¶</a></h3>
+<p>The flush process of the <a class="reference internal" href="orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>, described at
+<a class="reference internal" href="orm/session_basics.html#session-flushing"><span class="std std-ref">Flushing</span></a>, will roll back the database transaction if an error is
+encountered, in order to maintain internal consistency.  However, once this
+occurs, the session’s transaction is now “inactive” and must be explicitly
+rolled back by the calling application, in the same way that it would otherwise
+need to be explicitly committed if a failure had not occurred.</p>
+<p>This is a common error when using the ORM and typically applies to an
+application that doesn’t yet have correct “framing” around its
+<a class="reference internal" href="orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> operations. Further detail is described in the FAQ at
+<a class="reference internal" href="faq/sessions.html#faq-session-rollback"><span class="std std-ref">“This Session’s transaction has been rolled back due to a previous exception during flush.” (or similar)</span></a>.</p>
+</section>
+<section id="for-relationship-relationship-delete-orphan-cascade-is-normally-configured-only-on-the-one-side-of-a-one-to-many-relationship-and-not-on-the-many-side-of-a-many-to-one-or-many-to-many-relationship">
+<span id="error-bbf0"></span><h3>For relationship &lt;relationship&gt;, delete-orphan cascade is normally configured only on the “one” side of a one-to-many relationship, and not on the “many” side of a many-to-one or many-to-many relationship.<a class="headerlink" href="#for-relationship-relationship-delete-orphan-cascade-is-normally-configured-only-on-the-one-side-of-a-one-to-many-relationship-and-not-on-the-many-side-of-a-many-to-one-or-many-to-many-relationship" title="Permalink to this headline">¶</a></h3>
+<p>This error arises when the “delete-orphan” <a class="reference internal" href="orm/cascades.html#unitofwork-cascades"><span class="std std-ref">cascade</span></a>
+is set on a many-to-one or many-to-many relationship, such as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">A</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;a&quot;</span>
+
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">bs</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;a&quot;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">B</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;b&quot;</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">a_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;a.id&quot;</span><span class="p">))</span>
+
+    <span class="c1"># this will emit the error message when the mapper</span>
+    <span class="c1"># configuration step occurs</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;bs&quot;</span><span class="p">,</span> <span class="n">cascade</span><span class="o">=</span><span class="s2">&quot;all, delete-orphan&quot;</span><span class="p">)</span>
+
+<span class="n">configure_mappers</span><span class="p">()</span></pre></div>
+</div>
+<p>Above, the “delete-orphan” setting on <code class="docutils literal notranslate"><span class="pre">B.a</span></code> indicates the intent that
+when every <code class="docutils literal notranslate"><span class="pre">B</span></code> object that refers to a particular <code class="docutils literal notranslate"><span class="pre">A</span></code> is deleted, that the
+<code class="docutils literal notranslate"><span class="pre">A</span></code> should then be deleted as well.   That is, it expresses that the “orphan”
+which is being deleted would be an <code class="docutils literal notranslate"><span class="pre">A</span></code> object, and it becomes an “orphan”
+when every <code class="docutils literal notranslate"><span class="pre">B</span></code> that refers to it is deleted.</p>
+<p>The “delete-orphan” cascade model does not support this functionality.   The
+“orphan” consideration is only made in terms of the deletion of a single object
+which would then refer to zero or more objects that are now “orphaned” by
+this single deletion, which would result in those objects being deleted as
+well.  In other words, it is designed only to track the creation of “orphans”
+based on the removal of one and only one “parent” object per orphan,  which is
+the natural case in a one-to-many relationship where a deletion of the
+object on the “one” side results in the subsequent deletion of the related
+items on the “many” side.</p>
+<p>The above mapping in support of this functionality would instead place the
+cascade setting on the one-to-many side, which looks like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">A</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;a&quot;</span>
+
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">bs</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">cascade</span><span class="o">=</span><span class="s2">&quot;all, delete-orphan&quot;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">B</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;b&quot;</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">a_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;a.id&quot;</span><span class="p">))</span>
+
+    <span class="n">a</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;bs&quot;</span><span class="p">)</span></pre></div>
+</div>
+<p>Where the intent is expressed that when an <code class="docutils literal notranslate"><span class="pre">A</span></code> is deleted, all of the
+<code class="docutils literal notranslate"><span class="pre">B</span></code> objects to which it refers are also deleted.</p>
+<p>The error message then goes on to suggest the usage of the
+<a class="reference internal" href="orm/relationship_api.html#sqlalchemy.orm.relationship.params.single_parent" title="sqlalchemy.orm.relationship"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.single_parent</span></code></a> flag.    This flag may be used
+to enforce that a relationship which is capable of having many objects
+refer to a particular object will in fact have only <strong>one</strong> object referring
+to it at a time.   It is used for legacy or other less ideal
+database schemas where the foreign key relationships suggest a “many”
+collection, however in practice only one object would actually refer
+to a given target object at at time.  This uncommon scenario
+can be demonstrated in terms of the above example as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">A</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;a&quot;</span>
+
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">bs</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;a&quot;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">B</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;b&quot;</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">a_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;a.id&quot;</span><span class="p">))</span>
+
+    <span class="n">a</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span>
+        <span class="s2">&quot;A&quot;</span><span class="p">,</span>
+        <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;bs&quot;</span><span class="p">,</span>
+        <span class="n">single_parent</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">cascade</span><span class="o">=</span><span class="s2">&quot;all, delete-orphan&quot;</span><span class="p">,</span>
+    <span class="p">)</span></pre></div>
+</div>
+<p>The above configuration will then install a validator which will enforce
+that only one <code class="docutils literal notranslate"><span class="pre">B</span></code> may be associated with an <code class="docutils literal notranslate"><span class="pre">A</span></code> at at time, within
+the scope of the <code class="docutils literal notranslate"><span class="pre">B.a</span></code> relationship:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">b1</span> <span class="o">=</span> <span class="n">B</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b2</span> <span class="o">=</span> <span class="n">B</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a1</span> <span class="o">=</span> <span class="n">A</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b1</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="n">a1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b2</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="n">a1</span>
+<span class="go">sqlalchemy.exc.InvalidRequestError: Instance &lt;A at 0x7eff44359350&gt; is</span>
+<span class="go">already associated with an instance of &lt;class &#39;__main__.B&#39;&gt; via its</span>
+<span class="go">B.a attribute, and is only allowed a single parent.</span></pre></div>
+</div>
+<p>Note that this validator is of limited scope and will not prevent multiple
+“parents” from being created via the other direction.  For example, it will
+not detect the same setting in terms of <code class="docutils literal notranslate"><span class="pre">A.bs</span></code>:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a1</span><span class="o">.</span><span class="n">bs</span> <span class="o">=</span> <span class="p">[</span><span class="n">b1</span><span class="p">,</span> <span class="n">b2</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">add_all</span><span class="p">([</span><span class="n">a1</span><span class="p">,</span> <span class="n">b1</span><span class="p">,</span> <span class="n">b2</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+<div class='show_sql'><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">a</span> <span class="k">DEFAULT</span> <span class="k">VALUES</span>
+<span class="p">()</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">b</span> <span class="p">(</span><span class="n">a_id</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="o">?</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">b</span> <span class="p">(</span><span class="n">a_id</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="o">?</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
+</div></pre></div>
+</div>
+<p>However, things will not go as expected later on, as the “delete-orphan” cascade
+will continue to work in terms of a <strong>single</strong> lead object, meaning if we
+delete <strong>either</strong> of the <code class="docutils literal notranslate"><span class="pre">B</span></code> objects, the <code class="docutils literal notranslate"><span class="pre">A</span></code> is deleted.   The other <code class="docutils literal notranslate"><span class="pre">B</span></code> stays
+around, where the ORM will usually be smart enough to set the foreign key attribute
+to NULL, but this is usually not what’s desired:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">b1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+<div class='show_sql'><span class="k">UPDATE</span> <span class="n">b</span> <span class="k">SET</span> <span class="n">a_id</span><span class="o">=?</span> <span class="k">WHERE</span> <span class="n">b</span><span class="p">.</span><span class="n">id</span> <span class="o">=</span> <span class="o">?</span>
+<span class="p">(</span><span class="k">None</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="k">DELETE</span> <span class="k">FROM</span> <span class="n">b</span> <span class="k">WHERE</span> <span class="n">b</span><span class="p">.</span><span class="n">id</span> <span class="o">=</span> <span class="o">?</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
+<span class="k">DELETE</span> <span class="k">FROM</span> <span class="n">a</span> <span class="k">WHERE</span> <span class="n">a</span><span class="p">.</span><span class="n">id</span> <span class="o">=</span> <span class="o">?</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
+<span class="k">COMMIT</span>
+</div></pre></div>
+</div>
+<p>For all the above examples, similar logic applies to the calculus of a
+many-to-many relationship; if a many-to-many relationship sets single_parent=True
+on one side, that side can use the “delete-orphan” cascade, however this is
+very unlikely to be what someone actually wants as the point of a many-to-many
+relationship is so that there can be many objects referring to an object
+in either direction.</p>
+<p>Overall, “delete-orphan” cascade is usually applied
+on the “one” side of a one-to-many relationship so that it deletes objects
+in the “many” side, and not the other way around.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.3.18: </span>The text of the “delete-orphan” error message
+when used on a many-to-one or many-to-many relationship has been updated
+to be more descriptive.</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="orm/cascades.html#unitofwork-cascades"><span class="std std-ref">Cascades</span></a></p>
+<p><a class="reference internal" href="orm/cascades.html#cascade-delete-orphan"><span class="std std-ref">delete-orphan</span></a></p>
+<p><a class="reference internal" href="#error-bbf1"><span class="std std-ref">Instance &lt;instance&gt; is already associated with an instance of &lt;instance&gt; via its &lt;attribute&gt; attribute, and is only allowed a single parent.</span></a></p>
+</div>
+</section>
+<section id="instance-instance-is-already-associated-with-an-instance-of-instance-via-its-attribute-attribute-and-is-only-allowed-a-single-parent">
+<span id="error-bbf1"></span><h3>Instance &lt;instance&gt; is already associated with an instance of &lt;instance&gt; via its &lt;attribute&gt; attribute, and is only allowed a single parent.<a class="headerlink" href="#instance-instance-is-already-associated-with-an-instance-of-instance-via-its-attribute-attribute-and-is-only-allowed-a-single-parent" title="Permalink to this headline">¶</a></h3>
+<p>This error is emitted when the <a class="reference internal" href="orm/relationship_api.html#sqlalchemy.orm.relationship.params.single_parent" title="sqlalchemy.orm.relationship"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.single_parent</span></code></a> flag
+is used, and more than one object is assigned as the “parent” of an object at
+once.</p>
+<p>Given the following mapping:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">A</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;a&quot;</span>
+
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">B</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;b&quot;</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">a_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;a.id&quot;</span><span class="p">))</span>
+
+    <span class="n">a</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span>
+        <span class="s2">&quot;A&quot;</span><span class="p">,</span>
+        <span class="n">single_parent</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">cascade</span><span class="o">=</span><span class="s2">&quot;all, delete-orphan&quot;</span><span class="p">,</span>
+    <span class="p">)</span></pre></div>
+</div>
+<p>The intent indicates that no more than a single <code class="docutils literal notranslate"><span class="pre">B</span></code> object may refer
+to a particular <code class="docutils literal notranslate"><span class="pre">A</span></code> object at once:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">b1</span> <span class="o">=</span> <span class="n">B</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b2</span> <span class="o">=</span> <span class="n">B</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a1</span> <span class="o">=</span> <span class="n">A</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b1</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="n">a1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b2</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="n">a1</span>
+<span class="go">sqlalchemy.exc.InvalidRequestError: Instance &lt;A at 0x7eff44359350&gt; is</span>
+<span class="go">already associated with an instance of &lt;class &#39;__main__.B&#39;&gt; via its</span>
+<span class="go">B.a attribute, and is only allowed a single parent.</span></pre></div>
+</div>
+<p>When this error occurs unexpectedly, it is usually because the
+<a class="reference internal" href="orm/relationship_api.html#sqlalchemy.orm.relationship.params.single_parent" title="sqlalchemy.orm.relationship"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.single_parent</span></code></a> flag was applied in response
+to the error message described at <a class="reference internal" href="#error-bbf0"><span class="std std-ref">For relationship &lt;relationship&gt;, delete-orphan cascade is normally configured only on the “one” side of a one-to-many relationship, and not on the “many” side of a many-to-one or many-to-many relationship.</span></a>, and the issue is in
+fact a misunderstanding of the “delete-orphan” cascade setting.  See that
+message for details.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#error-bbf0"><span class="std std-ref">For relationship &lt;relationship&gt;, delete-orphan cascade is normally configured only on the “one” side of a one-to-many relationship, and not on the “many” side of a many-to-one or many-to-many relationship.</span></a></p>
+</div>
+</section>
+<section id="relationship-x-will-copy-column-q-to-column-p-which-conflicts-with-relationship-s-y">
+<span id="error-qzyx"></span><h3>relationship X will copy column Q to column P, which conflicts with relationship(s): ‘Y’<a class="headerlink" href="#relationship-x-will-copy-column-q-to-column-p-which-conflicts-with-relationship-s-y" title="Permalink to this headline">¶</a></h3>
+<p>This warning refers to the case when two or more relationships will write data
+to the same columns on flush, but the ORM does not have any means of
+coordinating these relationships together. Depending on specifics, the solution
+may be that two relationships need to be referred towards one another using
+<a class="reference internal" href="orm/relationship_api.html#sqlalchemy.orm.relationship.params.back_populates" title="sqlalchemy.orm.relationship"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.back_populates</span></code></a>, or that one or more of the
+relationships should be configured with <a class="reference internal" href="orm/relationship_api.html#sqlalchemy.orm.relationship.params.viewonly" title="sqlalchemy.orm.relationship"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.viewonly</span></code></a>
+to prevent conflicting writes, or sometimes that the configuration is fully
+intentional and should configure <a class="reference internal" href="orm/relationship_api.html#sqlalchemy.orm.relationship.params.overlaps" title="sqlalchemy.orm.relationship"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.overlaps</span></code></a> to
+silence each warning.</p>
+<p>For the typical example that’s missing
+<a class="reference internal" href="orm/relationship_api.html#sqlalchemy.orm.relationship.params.back_populates" title="sqlalchemy.orm.relationship"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.back_populates</span></code></a>, given the following mapping:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Parent</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;parent&quot;</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">children</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Child&quot;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;child&quot;</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">parent_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;parent.id&quot;</span><span class="p">))</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Parent&quot;</span><span class="p">)</span></pre></div>
+</div>
+<p>The above mapping will generate warnings:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SAWarning</span><span class="p">:</span> <span class="n">relationship</span> <span class="s1">&#39;Child.parent&#39;</span> <span class="n">will</span> <span class="n">copy</span> <span class="n">column</span> <span class="n">parent</span><span class="o">.</span><span class="n">id</span> <span class="n">to</span> <span class="n">column</span> <span class="n">child</span><span class="o">.</span><span class="n">parent_id</span><span class="p">,</span>
+<span class="n">which</span> <span class="n">conflicts</span> <span class="k">with</span> <span class="n">relationship</span><span class="p">(</span><span class="n">s</span><span class="p">):</span> <span class="s1">&#39;Parent.children&#39;</span> <span class="p">(</span><span class="n">copies</span> <span class="n">parent</span><span class="o">.</span><span class="n">id</span> <span class="n">to</span> <span class="n">child</span><span class="o">.</span><span class="n">parent_id</span><span class="p">)</span><span class="o">.</span></pre></div>
+</div>
+<p>The relationships <code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> and <code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> appear to be in conflict.
+The solution is to apply <a class="reference internal" href="orm/relationship_api.html#sqlalchemy.orm.relationship.params.back_populates" title="sqlalchemy.orm.relationship"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.back_populates</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Parent</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;parent&quot;</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">children</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Child&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;parent&quot;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;child&quot;</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">parent_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;parent.id&quot;</span><span class="p">))</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Parent&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;children&quot;</span><span class="p">)</span></pre></div>
+</div>
+<p>For more customized relationships where an “overlap” situation may be
+intentional and cannot be resolved, the <a class="reference internal" href="orm/relationship_api.html#sqlalchemy.orm.relationship.params.overlaps" title="sqlalchemy.orm.relationship"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.overlaps</span></code></a>
+parameter may specify the names of relationships for which the warning should
+not take effect. This typically occurs for two or more relationships to the
+same underlying table that include custom
+<a class="reference internal" href="orm/relationship_api.html#sqlalchemy.orm.relationship.params.primaryjoin" title="sqlalchemy.orm.relationship"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.primaryjoin</span></code></a> conditions that limit the related
+items in each case:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Parent</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;parent&quot;</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">c1</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span>
+        <span class="s2">&quot;Child&quot;</span><span class="p">,</span>
+        <span class="n">primaryjoin</span><span class="o">=</span><span class="s2">&quot;and_(Parent.id == Child.parent_id, Child.flag == 0)&quot;</span><span class="p">,</span>
+        <span class="n">backref</span><span class="o">=</span><span class="s2">&quot;parent&quot;</span><span class="p">,</span>
+        <span class="n">overlaps</span><span class="o">=</span><span class="s2">&quot;c2, parent&quot;</span>
+    <span class="p">)</span>
+    <span class="n">c2</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span>
+        <span class="s2">&quot;Child&quot;</span><span class="p">,</span>
+        <span class="n">primaryjoin</span><span class="o">=</span><span class="s2">&quot;and_(Parent.id == Child.parent_id, Child.flag == 1)&quot;</span><span class="p">,</span>
+        <span class="n">overlaps</span><span class="o">=</span><span class="s2">&quot;c1, parent&quot;</span>
+    <span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;child&quot;</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">parent_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;parent.id&quot;</span><span class="p">))</span>
+
+    <span class="n">flag</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">)</span></pre></div>
+</div>
+<p>Above, the ORM will know that the overlap between <code class="docutils literal notranslate"><span class="pre">Parent.c1</span></code>,
+<code class="docutils literal notranslate"><span class="pre">Parent.c2</span></code> and <code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is intentional.</p>
+</section>
+</section>
+<section id="asyncio-exceptions">
+<h2>AsyncIO Exceptions<a class="headerlink" href="#asyncio-exceptions" title="Permalink to this headline">¶</a></h2>
+<section id="awaitrequired">
+<span id="error-xd1r"></span><h3>AwaitRequired<a class="headerlink" href="#awaitrequired" title="Permalink to this headline">¶</a></h3>
+<p>The SQLAlchemy async mode requires an async driver to be used to connect to the db.
+This error is usually raised when trying to use the async version of SQLAlchemy
+with a non compatible <a class="reference internal" href="glossary.html#term-DBAPI"><span class="xref std std-term">DBAPI</span></a>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="orm/extensions/asyncio.html"><span class="std std-ref">Asynchronous I/O (asyncio)</span></a></p>
+</div>
+</section>
+<section id="missinggreenlet">
+<span id="error-xd2s"></span><h3>MissingGreenlet<a class="headerlink" href="#missinggreenlet" title="Permalink to this headline">¶</a></h3>
+<p>A call to the async <a class="reference internal" href="glossary.html#term-DBAPI"><span class="xref std std-term">DBAPI</span></a> was initiated outside the greenlet spawn
+context usually setup by the SQLAlchemy AsyncIO proxy classes. Usually this
+error happens when an IO was attempted in an unexpected place, without using
+the provided async api. When using the ORM this may be due to a lazy loading
+attempt, which is unsupported when using SQLAlchemy with AsyncIO dialects.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="orm/extensions/asyncio.html#asyncio-orm-avoid-lazyloads"><span class="std std-ref">Preventing Implicit IO when Using AsyncSession</span></a> - covers most ORM scenarios where
+this problem can occur and how to mitigate.</p>
+</div>
+</section>
+</section>
+<section id="core-exception-classes">
+<h2>Core Exception Classes<a class="headerlink" href="#core-exception-classes" title="Permalink to this headline">¶</a></h2>
+<p>See <a class="reference internal" href="core/exceptions.html"><span class="std std-ref">Core Exceptions</span></a> for Core exception classes.</p>
+</section>
+<section id="orm-exception-classes">
+<h2>ORM Exception Classes<a class="headerlink" href="#orm-exception-classes" title="Permalink to this headline">¶</a></h2>
+<p>See <a class="reference internal" href="orm/exceptions.html"><span class="std std-ref">ORM Exceptions</span></a> for ORM exception classes.</p>
+</section>
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="faq/thirdparty.html" title="previous chapter">Third Party Integration Issues</a>
+        Next:
+        <a href="changelog/index.html" title="next chapter">Changes and Migration</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="copyright.html">Copyright</a> 2007-2021, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.1.2.
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    './',
+          VERSION:     '1.4.23',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="_static/detectmobile.js"></script>
+    <script type="text/javascript" src="_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

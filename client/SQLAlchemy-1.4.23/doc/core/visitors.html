@@ -1,0 +1,768 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+        <title>
+            
+    
+    Visitor and Traversal Utilities
+ &mdash;
+    SQLAlchemy 1.4 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/changelog.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 1.4 Documentation" href="../index.html" />
+        <link rel="up" title="SQL Statements and Expressions API" href="expression_api.html" />
+        <link rel="next" title="Schema Definition Language" href="schema.html" />
+        <link rel="prev" title="Expression Serializer Extension" href="serializer.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">1.4.23</span>
+
+
+        | Release Date: August 18, 2021
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 1.4 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 1.4 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../contents.html">Contents</a> |
+                <a href="../genindex.html">Index</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="SQLAlchemy Core">SQLAlchemy Core</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="tutorial.html">SQL Expression Language Tutorial (1.x API)</a></span></li>
+<li><span class="link-container"><a class="reference external" href="expression_api.html">SQL Statements and Expressions API</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="sqlelement.html">Column Elements and Expressions</a></span></li>
+<li><span class="link-container"><a class="reference external" href="operators.html">Operator Reference</a></span></li>
+<li><span class="link-container"><a class="reference external" href="selectable.html">Selectables, Tables, FROM objects</a></span></li>
+<li><span class="link-container"><a class="reference external" href="dml.html">Insert, Updates, Deletes</a></span></li>
+<li><span class="link-container"><a class="reference external" href="functions.html">SQL and Generic Functions</a></span></li>
+<li><span class="link-container"><a class="reference external" href="compiler.html">Custom SQL Constructs and Compilation Extension</a></span></li>
+<li><span class="link-container"><a class="reference external" href="serializer.html">Expression Serializer Extension</a></span></li>
+<li class="selected"><span class="link-container"><strong>Visitor and Traversal Utilities</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="schema.html">Schema Definition Language</a></span></li>
+<li><span class="link-container"><a class="reference external" href="types.html">Column and Data Types</a></span></li>
+<li><span class="link-container"><a class="reference external" href="engines_connections.html">Engine and Connection Use</a></span></li>
+<li><span class="link-container"><a class="reference external" href="api_basics.html">Core API Basics</a></span></li>
+<li><span class="link-container"><a class="reference external" href="future.html">SQLAlchemy 2.0 Future (Core)</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    
+
+    <div id="docs-body" class="withsidebar core-visitors" >
+        
+<section id="visitor-and-traversal-utilities">
+<h1>Visitor and Traversal Utilities<a class="headerlink" href="#visitor-and-traversal-utilities" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference internal" href="#module-sqlalchemy.sql.visitors" title="sqlalchemy.sql.visitors"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors</span></code></a> module consists of classes and functions
+that serve the purpose of generically <strong>traversing</strong> a Core SQL expression
+structure.   This is not unlike the Python <code class="docutils literal notranslate"><span class="pre">ast</span></code> module in that is presents
+a system by which a program can operate upon each component of a SQL
+expression.   Common purposes this serves are locating various kinds of
+elements such as <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> or <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.BindParameter" title="sqlalchemy.sql.expression.BindParameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BindParameter</span></code></a> objects,
+as well as altering the state of the structure such as replacing certain FROM
+clauses with others.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>the <a class="reference internal" href="#module-sqlalchemy.sql.visitors" title="sqlalchemy.sql.visitors"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors</span></code></a> module is an internal API and
+is not fully public.    It is subject to change and may additionally not
+function as expected for use patterns that aren’t considered within
+SQLAlchemy’s own internals.</p>
+</div>
+<p>The <a class="reference internal" href="#module-sqlalchemy.sql.visitors" title="sqlalchemy.sql.visitors"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors</span></code></a> module is part of the <strong>internals</strong> of
+SQLAlchemy and it is not usually used by calling application code.  It is
+however used in certain edge cases such as when constructing caching routines
+as well as when building out custom SQL expressions using the
+<a class="reference internal" href="compiler.html"><span class="std std-ref">Custom SQL Constructs and Compilation Extension</span></a>.</p>
+<span class="target" id="module-sqlalchemy.sql.visitors"></span><p>Visitor/traversal interface and library functions.</p>
+<p>SQLAlchemy schema and expression constructs rely on a Python-centric
+version of the classic “visitor” pattern as the primary way in which
+they apply functionality.  The most common use of this pattern
+is statement compilation, where individual expression classes match
+up to rendering methods that produce a string result.   Beyond this,
+the visitor system is also used to inspect expressions for various
+information and patterns, as well as for the purposes of applying
+transformations to expressions.</p>
+<p>Examples of how the visit system is used can be seen in the source code
+of for example the <code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.util</span></code> and the <code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.compiler</span></code>
+modules.  Some background on clause adaption is also at
+<a class="reference external" href="https://techspot.zzzeek.org/2008/01/23/expression-transformations/">https://techspot.zzzeek.org/2008/01/23/expression-transformations/</a> .</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head">Object Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.visitors.cloned_traverse"><span class="sig-name descname">cloned_traverse</span></a>(obj, opts, visitors)</p></td>
+<td><p>Clone the given expression structure, allowing modifications by
+visitors.</p></td>
+</tr>
+<tr class="row-odd"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.visitors.ExternalTraversal"><span class="sig-name descname">ExternalTraversal</span></a></p></td>
+<td><p>Base class for visitor objects which can traverse externally using
+the <a class="reference internal" href="#sqlalchemy.sql.visitors.traverse" title="sqlalchemy.sql.visitors.traverse"><code class="xref py py-func docutils literal notranslate"><span class="pre">traverse()</span></code></a> function.</p></td>
+</tr>
+<tr class="row-even"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.visitors.InternalTraversal"><span class="sig-name descname">InternalTraversal</span></a></p></td>
+<td><p>Defines visitor symbols used for internal traversal.</p></td>
+</tr>
+<tr class="row-odd"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.visitors.iterate"><span class="sig-name descname">iterate</span></a>(obj[, opts])</p></td>
+<td><p>Traverse the given expression structure, returning an iterator.</p></td>
+</tr>
+<tr class="row-even"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.visitors.replacement_traverse"><span class="sig-name descname">replacement_traverse</span></a>(obj, opts, replace)</p></td>
+<td><p>Clone the given expression structure, allowing element
+replacement by a given replacement function.</p></td>
+</tr>
+<tr class="row-odd"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.visitors.traverse"><span class="sig-name descname">traverse</span></a>(obj, opts, visitors)</p></td>
+<td><p>Traverse and visit the given expression structure using the default
+iterator.</p></td>
+</tr>
+<tr class="row-even"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.visitors.traverse_using"><span class="sig-name descname">traverse_using</span></a>(iterator, obj, visitors)</p></td>
+<td><p>Visit the given expression structure using the given iterator of
+objects.</p></td>
+</tr>
+<tr class="row-odd"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.visitors.Traversible"><span class="sig-name descname">Traversible</span></a></p></td>
+<td><p>Base class for visitable objects, applies the
+<a class="reference internal" href="#sqlalchemy.sql.visitors.TraversibleType" title="sqlalchemy.sql.visitors.TraversibleType"><code class="xref py py-class docutils literal notranslate"><span class="pre">TraversibleType</span></code></a> metaclass.</p></td>
+</tr>
+<tr class="row-even"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.visitors.TraversibleType"><span class="sig-name descname">TraversibleType</span></a></p></td>
+<td><p>Metaclass which assigns dispatch attributes to various kinds of
+“visitable” classes.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.ExternalTraversal">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.visitors.</span></span><span class="sig-name descname"><span class="pre">ExternalTraversal</span></span><a class="headerlink" href="#sqlalchemy.sql.visitors.ExternalTraversal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for visitor objects which can traverse externally using
+the <a class="reference internal" href="#sqlalchemy.sql.visitors.traverse" title="sqlalchemy.sql.visitors.traverse"><code class="xref py py-func docutils literal notranslate"><span class="pre">traverse()</span></code></a> function.</p>
+<p>Direct usage of the <a class="reference internal" href="#sqlalchemy.sql.visitors.traverse" title="sqlalchemy.sql.visitors.traverse"><code class="xref py py-func docutils literal notranslate"><span class="pre">traverse()</span></code></a> function is usually
+preferred.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.ExternalTraversal.chain">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.sql.visitors.ExternalTraversal"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors.ExternalTraversal.</span></code></a><span class="sig-name descname"><span class="pre">chain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">visitor</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.visitors.ExternalTraversal.chain" title="Permalink to this definition">¶</a></dt>
+<dd><p>‘Chain’ an additional ClauseVisitor onto this ClauseVisitor.</p>
+<p>The chained visitor will receive all visit events after this one.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.ExternalTraversal.iterate">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.sql.visitors.ExternalTraversal"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors.ExternalTraversal.</span></code></a><span class="sig-name descname"><span class="pre">iterate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.visitors.ExternalTraversal.iterate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Traverse the given expression structure, returning an iterator
+of all elements.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.ExternalTraversal.traverse">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.sql.visitors.ExternalTraversal"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors.ExternalTraversal.</span></code></a><span class="sig-name descname"><span class="pre">traverse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.visitors.ExternalTraversal.traverse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Traverse and visit the given expression structure.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.ExternalTraversal.visitor_iterator">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.visitors.ExternalTraversal"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors.ExternalTraversal.</span></code></a><span class="sig-name descname"><span class="pre">visitor_iterator</span></span><a class="headerlink" href="#sqlalchemy.sql.visitors.ExternalTraversal.visitor_iterator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterate through this visitor and each ‘chained’ visitor.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.InternalTraversal">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.visitors.</span></span><span class="sig-name descname"><span class="pre">InternalTraversal</span></span><a class="headerlink" href="#sqlalchemy.sql.visitors.InternalTraversal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines visitor symbols used for internal traversal.</p>
+<p>The <a class="reference internal" href="#sqlalchemy.sql.visitors.InternalTraversal" title="sqlalchemy.sql.visitors.InternalTraversal"><code class="xref py py-class docutils literal notranslate"><span class="pre">InternalTraversal</span></code></a> class is used in two ways.  One is that
+it can serve as the superclass for an object that implements the
+various visit methods of the class.   The other is that the symbols
+themselves of <a class="reference internal" href="#sqlalchemy.sql.visitors.InternalTraversal" title="sqlalchemy.sql.visitors.InternalTraversal"><code class="xref py py-class docutils literal notranslate"><span class="pre">InternalTraversal</span></code></a> are used within
+the <code class="docutils literal notranslate"><span class="pre">_traverse_internals</span></code> collection.   Such as, the <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.Case" title="sqlalchemy.sql.expression.Case"><code class="xref py py-class docutils literal notranslate"><span class="pre">Case</span></code></a>
+object defines <code class="docutils literal notranslate"><span class="pre">_traverse_internals</span></code> as</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">_traverse_internals</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">InternalTraversal</span><span class="o">.</span><span class="n">dp_clauseelement</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;whens&quot;</span><span class="p">,</span> <span class="n">InternalTraversal</span><span class="o">.</span><span class="n">dp_clauseelement_tuples</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;else_&quot;</span><span class="p">,</span> <span class="n">InternalTraversal</span><span class="o">.</span><span class="n">dp_clauseelement</span><span class="p">),</span>
+<span class="p">]</span></pre></div>
+</div>
+<p>Above, the <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.Case" title="sqlalchemy.sql.expression.Case"><code class="xref py py-class docutils literal notranslate"><span class="pre">Case</span></code></a> class indicates its internal state as the
+attributes named <code class="docutils literal notranslate"><span class="pre">value</span></code>, <code class="docutils literal notranslate"><span class="pre">whens</span></code>, and <code class="docutils literal notranslate"><span class="pre">else_</span></code>.    They each
+link to an <a class="reference internal" href="#sqlalchemy.sql.visitors.InternalTraversal" title="sqlalchemy.sql.visitors.InternalTraversal"><code class="xref py py-class docutils literal notranslate"><span class="pre">InternalTraversal</span></code></a> method which indicates the type
+of datastructure referred towards.</p>
+<p>Using the <code class="docutils literal notranslate"><span class="pre">_traverse_internals</span></code> structure, objects of type
+<code class="xref py py-class docutils literal notranslate"><span class="pre">InternalTraversible</span></code> will have the following methods automatically
+implemented:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#sqlalchemy.sql.visitors.Traversible.get_children" title="sqlalchemy.sql.visitors.Traversible.get_children"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Traversible.get_children()</span></code></a></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Traversible._copy_internals()</span></code></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Traversible._gen_cache_key()</span></code></p></li>
+</ul>
+<p>Subclasses can also implement these methods directly, particularly for the
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">Traversible._copy_internals()</span></code> method, when special steps
+are needed.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.4.</span></p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.InternalTraversal.dispatch">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.sql.visitors.InternalTraversal"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors.InternalTraversal.</span></code></a><span class="sig-name descname"><span class="pre">dispatch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">visit_symbol</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.visitors.InternalTraversal.dispatch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a method from <a class="reference internal" href="#sqlalchemy.sql.visitors.InternalTraversal" title="sqlalchemy.sql.visitors.InternalTraversal"><code class="xref py py-class docutils literal notranslate"><span class="pre">InternalTraversal</span></code></a>, return the
+corresponding method on a subclass.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.InternalTraversal.dp_annotations_key">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.visitors.InternalTraversal"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors.InternalTraversal.</span></code></a><span class="sig-name descname"><span class="pre">dp_annotations_key</span></span><em class="property"> <span class="pre">=</span> <span class="pre">symbol('AK')</span></em><a class="headerlink" href="#sqlalchemy.sql.visitors.InternalTraversal.dp_annotations_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visit the _annotations_cache_key element.</p>
+<p>This is a dictionary of additional information about a ClauseElement
+that modifies its role.  It should be included when comparing or caching
+objects, however generating this key is relatively expensive.   Visitors
+should check the “_annotations” dict for non-None first before creating
+this key.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.InternalTraversal.dp_anon_name">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.visitors.InternalTraversal"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors.InternalTraversal.</span></code></a><span class="sig-name descname"><span class="pre">dp_anon_name</span></span><em class="property"> <span class="pre">=</span> <span class="pre">symbol('AN')</span></em><a class="headerlink" href="#sqlalchemy.sql.visitors.InternalTraversal.dp_anon_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visit a potentially “anonymized” string value.</p>
+<p>The string value is considered to be significant for cache key
+generation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.InternalTraversal.dp_boolean">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.visitors.InternalTraversal"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors.InternalTraversal.</span></code></a><span class="sig-name descname"><span class="pre">dp_boolean</span></span><em class="property"> <span class="pre">=</span> <span class="pre">symbol('B')</span></em><a class="headerlink" href="#sqlalchemy.sql.visitors.InternalTraversal.dp_boolean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visit a boolean value.</p>
+<p>The boolean value is considered to be significant for cache key
+generation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.InternalTraversal.dp_clauseelement">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.visitors.InternalTraversal"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors.InternalTraversal.</span></code></a><span class="sig-name descname"><span class="pre">dp_clauseelement</span></span><em class="property"> <span class="pre">=</span> <span class="pre">symbol('CE')</span></em><a class="headerlink" href="#sqlalchemy.sql.visitors.InternalTraversal.dp_clauseelement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visit a <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.ClauseElement" title="sqlalchemy.sql.expression.ClauseElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClauseElement</span></code></a> object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.InternalTraversal.dp_clauseelement_list">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.visitors.InternalTraversal"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors.InternalTraversal.</span></code></a><span class="sig-name descname"><span class="pre">dp_clauseelement_list</span></span><em class="property"> <span class="pre">=</span> <span class="pre">symbol('CL')</span></em><a class="headerlink" href="#sqlalchemy.sql.visitors.InternalTraversal.dp_clauseelement_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visit a list of <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.ClauseElement" title="sqlalchemy.sql.expression.ClauseElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClauseElement</span></code></a> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.InternalTraversal.dp_clauseelement_tuple">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.visitors.InternalTraversal"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors.InternalTraversal.</span></code></a><span class="sig-name descname"><span class="pre">dp_clauseelement_tuple</span></span><em class="property"> <span class="pre">=</span> <span class="pre">symbol('CT')</span></em><a class="headerlink" href="#sqlalchemy.sql.visitors.InternalTraversal.dp_clauseelement_tuple" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visit a tuple of <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.ClauseElement" title="sqlalchemy.sql.expression.ClauseElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClauseElement</span></code></a> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.InternalTraversal.dp_clauseelement_tuples">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.visitors.InternalTraversal"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors.InternalTraversal.</span></code></a><span class="sig-name descname"><span class="pre">dp_clauseelement_tuples</span></span><em class="property"> <span class="pre">=</span> <span class="pre">symbol('CTS')</span></em><a class="headerlink" href="#sqlalchemy.sql.visitors.InternalTraversal.dp_clauseelement_tuples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visit a list of tuples which contain <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.ClauseElement" title="sqlalchemy.sql.expression.ClauseElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClauseElement</span></code></a>
+objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.InternalTraversal.dp_dialect_options">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.visitors.InternalTraversal"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors.InternalTraversal.</span></code></a><span class="sig-name descname"><span class="pre">dp_dialect_options</span></span><em class="property"> <span class="pre">=</span> <span class="pre">symbol('DO')</span></em><a class="headerlink" href="#sqlalchemy.sql.visitors.InternalTraversal.dp_dialect_options" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visit a dialect options structure.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.InternalTraversal.dp_dml_multi_values">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.visitors.InternalTraversal"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors.InternalTraversal.</span></code></a><span class="sig-name descname"><span class="pre">dp_dml_multi_values</span></span><em class="property"> <span class="pre">=</span> <span class="pre">symbol('DML_MV')</span></em><a class="headerlink" href="#sqlalchemy.sql.visitors.InternalTraversal.dp_dml_multi_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visit the values() multi-valued list of dictionaries of an
+<a class="reference internal" href="dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a> object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.InternalTraversal.dp_dml_ordered_values">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.visitors.InternalTraversal"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors.InternalTraversal.</span></code></a><span class="sig-name descname"><span class="pre">dp_dml_ordered_values</span></span><em class="property"> <span class="pre">=</span> <span class="pre">symbol('DML_OV')</span></em><a class="headerlink" href="#sqlalchemy.sql.visitors.InternalTraversal.dp_dml_ordered_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visit the values() ordered tuple list of an
+<a class="reference internal" href="dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></a> object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.InternalTraversal.dp_dml_values">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.visitors.InternalTraversal"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors.InternalTraversal.</span></code></a><span class="sig-name descname"><span class="pre">dp_dml_values</span></span><em class="property"> <span class="pre">=</span> <span class="pre">symbol('DML_V')</span></em><a class="headerlink" href="#sqlalchemy.sql.visitors.InternalTraversal.dp_dml_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visit the values() dictionary of a <a class="reference internal" href="dml.html#sqlalchemy.sql.expression.ValuesBase" title="sqlalchemy.sql.expression.ValuesBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValuesBase</span></code></a>
+(e.g. Insert or Update) object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.InternalTraversal.dp_fromclause_canonical_column_collection">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.visitors.InternalTraversal"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors.InternalTraversal.</span></code></a><span class="sig-name descname"><span class="pre">dp_fromclause_canonical_column_collection</span></span><em class="property"> <span class="pre">=</span> <span class="pre">symbol('FC')</span></em><a class="headerlink" href="#sqlalchemy.sql.visitors.InternalTraversal.dp_fromclause_canonical_column_collection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visit a <a class="reference internal" href="selectable.html#sqlalchemy.sql.expression.FromClause" title="sqlalchemy.sql.expression.FromClause"><code class="xref py py-class docutils literal notranslate"><span class="pre">FromClause</span></code></a> object in the context of the
+<code class="docutils literal notranslate"><span class="pre">columns</span></code> attribute.</p>
+<p>The column collection is “canonical”, meaning it is the originally
+defined location of the <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.ColumnClause" title="sqlalchemy.sql.expression.ColumnClause"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColumnClause</span></code></a> objects.   Right now
+this means that the object being visited is a
+<a class="reference internal" href="selectable.html#sqlalchemy.sql.expression.TableClause" title="sqlalchemy.sql.expression.TableClause"><code class="xref py py-class docutils literal notranslate"><span class="pre">TableClause</span></code></a>
+or <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> object only.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.InternalTraversal.dp_fromclause_ordered_set">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.visitors.InternalTraversal"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors.InternalTraversal.</span></code></a><span class="sig-name descname"><span class="pre">dp_fromclause_ordered_set</span></span><em class="property"> <span class="pre">=</span> <span class="pre">symbol('CO')</span></em><a class="headerlink" href="#sqlalchemy.sql.visitors.InternalTraversal.dp_fromclause_ordered_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visit an ordered set of <a class="reference internal" href="selectable.html#sqlalchemy.sql.expression.FromClause" title="sqlalchemy.sql.expression.FromClause"><code class="xref py py-class docutils literal notranslate"><span class="pre">FromClause</span></code></a> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.InternalTraversal.dp_has_cache_key">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.visitors.InternalTraversal"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors.InternalTraversal.</span></code></a><span class="sig-name descname"><span class="pre">dp_has_cache_key</span></span><em class="property"> <span class="pre">=</span> <span class="pre">symbol('HC')</span></em><a class="headerlink" href="#sqlalchemy.sql.visitors.InternalTraversal.dp_has_cache_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visit a <code class="xref py py-class docutils literal notranslate"><span class="pre">HasCacheKey</span></code> object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.InternalTraversal.dp_has_cache_key_list">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.visitors.InternalTraversal"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors.InternalTraversal.</span></code></a><span class="sig-name descname"><span class="pre">dp_has_cache_key_list</span></span><em class="property"> <span class="pre">=</span> <span class="pre">symbol('HL')</span></em><a class="headerlink" href="#sqlalchemy.sql.visitors.InternalTraversal.dp_has_cache_key_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visit a list of <code class="xref py py-class docutils literal notranslate"><span class="pre">HasCacheKey</span></code> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.InternalTraversal.dp_named_ddl_element">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.visitors.InternalTraversal"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors.InternalTraversal.</span></code></a><span class="sig-name descname"><span class="pre">dp_named_ddl_element</span></span><em class="property"> <span class="pre">=</span> <span class="pre">symbol('DD')</span></em><a class="headerlink" href="#sqlalchemy.sql.visitors.InternalTraversal.dp_named_ddl_element" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visit a simple named DDL element.</p>
+<p>The current object used by this method is the <a class="reference internal" href="defaults.html#sqlalchemy.schema.Sequence" title="sqlalchemy.schema.Sequence"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>.</p>
+<p>The object is only considered to be important for cache key generation
+as far as its name, but not any other aspects of it.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.InternalTraversal.dp_operator">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.visitors.InternalTraversal"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors.InternalTraversal.</span></code></a><span class="sig-name descname"><span class="pre">dp_operator</span></span><em class="property"> <span class="pre">=</span> <span class="pre">symbol('O')</span></em><a class="headerlink" href="#sqlalchemy.sql.visitors.InternalTraversal.dp_operator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visit an operator.</p>
+<p>The operator is a function from the <code class="xref py py-mod docutils literal notranslate"><span class="pre">sqlalchemy.sql.operators</span></code>
+module.</p>
+<p>The operator value is considered to be significant for cache key
+generation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.InternalTraversal.dp_plain_dict">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.visitors.InternalTraversal"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors.InternalTraversal.</span></code></a><span class="sig-name descname"><span class="pre">dp_plain_dict</span></span><em class="property"> <span class="pre">=</span> <span class="pre">symbol('PD')</span></em><a class="headerlink" href="#sqlalchemy.sql.visitors.InternalTraversal.dp_plain_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visit a dictionary with string keys.</p>
+<p>The keys of the dictionary should be strings, the values should
+be immutable and hashable.   The dictionary is considered to be
+significant for cache key generation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.InternalTraversal.dp_plain_obj">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.visitors.InternalTraversal"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors.InternalTraversal.</span></code></a><span class="sig-name descname"><span class="pre">dp_plain_obj</span></span><em class="property"> <span class="pre">=</span> <span class="pre">symbol('PO')</span></em><a class="headerlink" href="#sqlalchemy.sql.visitors.InternalTraversal.dp_plain_obj" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visit a plain python object.</p>
+<p>The value should be immutable and hashable, such as an integer.
+The value is considered to be significant for cache key generation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.InternalTraversal.dp_prefix_sequence">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.visitors.InternalTraversal"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors.InternalTraversal.</span></code></a><span class="sig-name descname"><span class="pre">dp_prefix_sequence</span></span><em class="property"> <span class="pre">=</span> <span class="pre">symbol('PS')</span></em><a class="headerlink" href="#sqlalchemy.sql.visitors.InternalTraversal.dp_prefix_sequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visit the sequence represented by <a class="reference internal" href="selectable.html#sqlalchemy.sql.expression.HasPrefixes" title="sqlalchemy.sql.expression.HasPrefixes"><code class="xref py py-class docutils literal notranslate"><span class="pre">HasPrefixes</span></code></a>
+or <a class="reference internal" href="selectable.html#sqlalchemy.sql.expression.HasSuffixes" title="sqlalchemy.sql.expression.HasSuffixes"><code class="xref py py-class docutils literal notranslate"><span class="pre">HasSuffixes</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.InternalTraversal.dp_propagate_attrs">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.visitors.InternalTraversal"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors.InternalTraversal.</span></code></a><span class="sig-name descname"><span class="pre">dp_propagate_attrs</span></span><em class="property"> <span class="pre">=</span> <span class="pre">symbol('PA')</span></em><a class="headerlink" href="#sqlalchemy.sql.visitors.InternalTraversal.dp_propagate_attrs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visit the propagate attrs dict.  This hardcodes to the particular
+elements we care about right now.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.InternalTraversal.dp_statement_hint_list">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.visitors.InternalTraversal"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors.InternalTraversal.</span></code></a><span class="sig-name descname"><span class="pre">dp_statement_hint_list</span></span><em class="property"> <span class="pre">=</span> <span class="pre">symbol('SH')</span></em><a class="headerlink" href="#sqlalchemy.sql.visitors.InternalTraversal.dp_statement_hint_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visit the <code class="docutils literal notranslate"><span class="pre">_statement_hints</span></code> collection of a
+<a class="reference internal" href="selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a>
+object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.InternalTraversal.dp_string">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.visitors.InternalTraversal"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors.InternalTraversal.</span></code></a><span class="sig-name descname"><span class="pre">dp_string</span></span><em class="property"> <span class="pre">=</span> <span class="pre">symbol('S')</span></em><a class="headerlink" href="#sqlalchemy.sql.visitors.InternalTraversal.dp_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visit a plain string value.</p>
+<p>Examples include table and column names, bound parameter keys, special
+keywords such as “UNION”, “UNION ALL”.</p>
+<p>The string value is considered to be significant for cache key
+generation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.InternalTraversal.dp_string_clauseelement_dict">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.visitors.InternalTraversal"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors.InternalTraversal.</span></code></a><span class="sig-name descname"><span class="pre">dp_string_clauseelement_dict</span></span><em class="property"> <span class="pre">=</span> <span class="pre">symbol('CD')</span></em><a class="headerlink" href="#sqlalchemy.sql.visitors.InternalTraversal.dp_string_clauseelement_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visit a dictionary of string keys to <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.ClauseElement" title="sqlalchemy.sql.expression.ClauseElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClauseElement</span></code></a>
+objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.InternalTraversal.dp_string_list">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.visitors.InternalTraversal"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors.InternalTraversal.</span></code></a><span class="sig-name descname"><span class="pre">dp_string_list</span></span><em class="property"> <span class="pre">=</span> <span class="pre">symbol('SL')</span></em><a class="headerlink" href="#sqlalchemy.sql.visitors.InternalTraversal.dp_string_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visit a list of strings.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.InternalTraversal.dp_string_multi_dict">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.visitors.InternalTraversal"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors.InternalTraversal.</span></code></a><span class="sig-name descname"><span class="pre">dp_string_multi_dict</span></span><em class="property"> <span class="pre">=</span> <span class="pre">symbol('MD')</span></em><a class="headerlink" href="#sqlalchemy.sql.visitors.InternalTraversal.dp_string_multi_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visit a dictionary of string keys to values which may either be
+plain immutable/hashable or <code class="xref py py-class docutils literal notranslate"><span class="pre">HasCacheKey</span></code> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.InternalTraversal.dp_table_hint_list">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.visitors.InternalTraversal"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors.InternalTraversal.</span></code></a><span class="sig-name descname"><span class="pre">dp_table_hint_list</span></span><em class="property"> <span class="pre">=</span> <span class="pre">symbol('TH')</span></em><a class="headerlink" href="#sqlalchemy.sql.visitors.InternalTraversal.dp_table_hint_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visit the <code class="docutils literal notranslate"><span class="pre">_hints</span></code> collection of a <a class="reference internal" href="selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a>
+object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.InternalTraversal.dp_type">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.visitors.InternalTraversal"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors.InternalTraversal.</span></code></a><span class="sig-name descname"><span class="pre">dp_type</span></span><em class="property"> <span class="pre">=</span> <span class="pre">symbol('T')</span></em><a class="headerlink" href="#sqlalchemy.sql.visitors.InternalTraversal.dp_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visit a <a class="reference internal" href="type_api.html#sqlalchemy.types.TypeEngine" title="sqlalchemy.types.TypeEngine"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeEngine</span></code></a> object</p>
+<p>The type object is considered to be significant for cache key
+generation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.InternalTraversal.dp_unknown_structure">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.visitors.InternalTraversal"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors.InternalTraversal.</span></code></a><span class="sig-name descname"><span class="pre">dp_unknown_structure</span></span><em class="property"> <span class="pre">=</span> <span class="pre">symbol('UK')</span></em><a class="headerlink" href="#sqlalchemy.sql.visitors.InternalTraversal.dp_unknown_structure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visit an unknown structure.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.Traversible">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.visitors.</span></span><span class="sig-name descname"><span class="pre">Traversible</span></span><a class="headerlink" href="#sqlalchemy.sql.visitors.Traversible" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for visitable objects, applies the
+<a class="reference internal" href="#sqlalchemy.sql.visitors.TraversibleType" title="sqlalchemy.sql.visitors.TraversibleType"><code class="xref py py-class docutils literal notranslate"><span class="pre">TraversibleType</span></code></a> metaclass.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.Traversible.get_children">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.sql.visitors.Traversible"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors.Traversible.</span></code></a><span class="sig-name descname"><span class="pre">get_children</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">omit_attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.visitors.Traversible.get_children" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return immediate child <a class="reference internal" href="#sqlalchemy.sql.visitors.Traversible" title="sqlalchemy.sql.visitors.Traversible"><code class="xref py py-class docutils literal notranslate"><span class="pre">Traversible</span></code></a>
+elements of this <a class="reference internal" href="#sqlalchemy.sql.visitors.Traversible" title="sqlalchemy.sql.visitors.Traversible"><code class="xref py py-class docutils literal notranslate"><span class="pre">Traversible</span></code></a>.</p>
+<p>This is used for visit traversal.</p>
+<p>**kw may contain flags that change the collection that is
+returned, for example to return a subset of items in order to
+cut down on larger traversals, or to return child items from a
+different context (such as schema-level collections instead of
+clause-level).</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.TraversibleType">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.visitors.</span></span><span class="sig-name descname"><span class="pre">TraversibleType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clsname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bases</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clsdict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.visitors.TraversibleType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Metaclass which assigns dispatch attributes to various kinds of
+“visitable” classes.</p>
+<p>Attributes include:</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">_compiler_dispatch</span></code> method, corresponding to <code class="docutils literal notranslate"><span class="pre">__visit_name__</span></code>.
+This is called “external traversal” because the caller of each visit()
+method is responsible for sub-traversing the inner elements of each
+object. This is appropriate for string compilers and other traversals
+that need to call upon the inner elements in a specific pattern.</p></li>
+<li><p>internal traversal collections <code class="docutils literal notranslate"><span class="pre">_children_traversal</span></code>,
+<code class="docutils literal notranslate"><span class="pre">_cache_key_traversal</span></code>, <code class="docutils literal notranslate"><span class="pre">_copy_internals_traversal</span></code>, generated from
+an optional <code class="docutils literal notranslate"><span class="pre">_traverse_internals</span></code> collection of symbols which comes
+from the <a class="reference internal" href="#sqlalchemy.sql.visitors.InternalTraversal" title="sqlalchemy.sql.visitors.InternalTraversal"><code class="xref py py-class docutils literal notranslate"><span class="pre">InternalTraversal</span></code></a> list of symbols.  This is called
+“internal traversal” MARKMARK</p></li>
+</ul>
+<div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.visitors.TraversibleType" title="sqlalchemy.sql.visitors.TraversibleType"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors.TraversibleType</span></code></a> (<code class="docutils literal notranslate"><span class="pre">builtins.type</span></code>)</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.cloned_traverse">
+<em class="property"><span class="pre">function</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.visitors.</span></span><span class="sig-name descname"><span class="pre">cloned_traverse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visitors</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.visitors.cloned_traverse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clone the given expression structure, allowing modifications by
+visitors.</p>
+<p>Traversal usage is the same as that of <a class="reference internal" href="#sqlalchemy.sql.visitors.traverse" title="sqlalchemy.sql.visitors.traverse"><code class="xref py py-func docutils literal notranslate"><span class="pre">traverse()</span></code></a>.
+The visitor functions present in the <code class="docutils literal notranslate"><span class="pre">visitors</span></code> dictionary may also
+modify the internals of the given structure as the traversal proceeds.</p>
+<p>The central API feature used by the <a class="reference internal" href="#sqlalchemy.sql.visitors.cloned_traverse" title="sqlalchemy.sql.visitors.cloned_traverse"><code class="xref py py-func docutils literal notranslate"><span class="pre">cloned_traverse()</span></code></a>
+and <a class="reference internal" href="#sqlalchemy.sql.visitors.replacement_traverse" title="sqlalchemy.sql.visitors.replacement_traverse"><code class="xref py py-func docutils literal notranslate"><span class="pre">replacement_traverse()</span></code></a> functions, in addition to the
+<a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.ClauseElement.get_children" title="sqlalchemy.sql.expression.ClauseElement.get_children"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ClauseElement.get_children()</span></code></a>
+function that is used to achieve
+the iteration, is the <code class="xref py py-meth docutils literal notranslate"><span class="pre">ClauseElement._copy_internals()</span></code>
+method.
+For a <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.ClauseElement" title="sqlalchemy.sql.expression.ClauseElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClauseElement</span></code></a>
+structure to support cloning and replacement
+traversals correctly, it needs to be able to pass a cloning function into
+its internal members in order to make copies of them.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#sqlalchemy.sql.visitors.traverse" title="sqlalchemy.sql.visitors.traverse"><code class="xref py py-func docutils literal notranslate"><span class="pre">traverse()</span></code></a></p>
+<p><a class="reference internal" href="#sqlalchemy.sql.visitors.replacement_traverse" title="sqlalchemy.sql.visitors.replacement_traverse"><code class="xref py py-func docutils literal notranslate"><span class="pre">replacement_traverse()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.iterate">
+<em class="property"><span class="pre">function</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.visitors.</span></span><span class="sig-name descname"><span class="pre">iterate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.visitors.iterate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Traverse the given expression structure, returning an iterator.</p>
+<p>Traversal is configured to be breadth-first.</p>
+<p>The central API feature used by the <a class="reference internal" href="#sqlalchemy.sql.visitors.iterate" title="sqlalchemy.sql.visitors.iterate"><code class="xref py py-func docutils literal notranslate"><span class="pre">iterate()</span></code></a>
+function is the
+<a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.ClauseElement.get_children" title="sqlalchemy.sql.expression.ClauseElement.get_children"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ClauseElement.get_children()</span></code></a> method of
+<a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.ClauseElement" title="sqlalchemy.sql.expression.ClauseElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClauseElement</span></code></a> objects.  This method should return all
+the <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.ClauseElement" title="sqlalchemy.sql.expression.ClauseElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClauseElement</span></code></a> objects which are associated with a
+particular <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.ClauseElement" title="sqlalchemy.sql.expression.ClauseElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClauseElement</span></code></a> object. For example, a
+<a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.Case" title="sqlalchemy.sql.expression.Case"><code class="xref py py-class docutils literal notranslate"><span class="pre">Case</span></code></a> structure will refer to a series of
+<a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.ColumnElement" title="sqlalchemy.sql.expression.ColumnElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColumnElement</span></code></a> objects within its “whens” and “else_”
+member variables.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="sqlalchemy.sql.visitors.iterate.params.obj"></span><strong>obj</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.sql.visitors.iterate.params.obj">¶</a> – <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.ClauseElement" title="sqlalchemy.sql.expression.ClauseElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClauseElement</span></code></a> structure to be traversed</p></li>
+<li><p><span class="target" id="sqlalchemy.sql.visitors.iterate.params.opts"></span><strong>opts</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.sql.visitors.iterate.params.opts">¶</a> – dictionary of iteration options.   This dictionary is usually
+empty in modern usage.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.replacement_traverse">
+<em class="property"><span class="pre">function</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.visitors.</span></span><span class="sig-name descname"><span class="pre">replacement_traverse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">replace</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.visitors.replacement_traverse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clone the given expression structure, allowing element
+replacement by a given replacement function.</p>
+<p>This function is very similar to the <a class="reference internal" href="#sqlalchemy.sql.visitors.cloned_traverse" title="sqlalchemy.sql.visitors.cloned_traverse"><code class="xref py py-func docutils literal notranslate"><span class="pre">cloned_traverse()</span></code></a>
+function, except instead of being passed a dictionary of visitors, all
+elements are unconditionally passed into the given replace function.
+The replace function then has the option to return an entirely new object
+which will replace the one given.  If it returns <code class="docutils literal notranslate"><span class="pre">None</span></code>, then the object
+is kept in place.</p>
+<p>The difference in usage between <a class="reference internal" href="#sqlalchemy.sql.visitors.cloned_traverse" title="sqlalchemy.sql.visitors.cloned_traverse"><code class="xref py py-func docutils literal notranslate"><span class="pre">cloned_traverse()</span></code></a> and
+<a class="reference internal" href="#sqlalchemy.sql.visitors.replacement_traverse" title="sqlalchemy.sql.visitors.replacement_traverse"><code class="xref py py-func docutils literal notranslate"><span class="pre">replacement_traverse()</span></code></a> is that in the former case, an
+already-cloned object is passed to the visitor function, and the visitor
+function can then manipulate the internal state of the object.
+In the case of the latter, the visitor function should only return an
+entirely different object, or do nothing.</p>
+<p>The use case for <a class="reference internal" href="#sqlalchemy.sql.visitors.replacement_traverse" title="sqlalchemy.sql.visitors.replacement_traverse"><code class="xref py py-func docutils literal notranslate"><span class="pre">replacement_traverse()</span></code></a> is that of
+replacing a FROM clause inside of a SQL structure with a different one,
+as is a common use case within the ORM.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.traverse">
+<em class="property"><span class="pre">function</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.visitors.</span></span><span class="sig-name descname"><span class="pre">traverse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visitors</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.visitors.traverse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Traverse and visit the given expression structure using the default
+iterator.</p>
+<blockquote>
+<div><p>e.g.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.sql</span> <span class="kn">import</span> <span class="n">visitors</span>
+
+<span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">some_table</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">some_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">foo</span> <span class="o">==</span> <span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">visit_bindparam</span><span class="p">(</span><span class="n">bind_param</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;found bound value: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">bind_param</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+<span class="n">visitors</span><span class="o">.</span><span class="n">traverse</span><span class="p">(</span><span class="n">stmt</span><span class="p">,</span> <span class="p">{},</span> <span class="p">{</span><span class="s2">&quot;bindparam&quot;</span><span class="p">:</span> <span class="n">visit_bindparam</span><span class="p">})</span></pre></div>
+</div>
+</div></blockquote>
+<p>The iteration of objects uses the <a class="reference internal" href="#sqlalchemy.sql.visitors.iterate" title="sqlalchemy.sql.visitors.iterate"><code class="xref py py-func docutils literal notranslate"><span class="pre">iterate()</span></code></a> function,
+which does a breadth-first traversal using a stack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="sqlalchemy.sql.visitors.traverse.params.obj"></span><strong>obj</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.sql.visitors.traverse.params.obj">¶</a> – <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.ClauseElement" title="sqlalchemy.sql.expression.ClauseElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClauseElement</span></code></a> structure to be traversed</p></li>
+<li><p><span class="target" id="sqlalchemy.sql.visitors.traverse.params.opts"></span><strong>opts</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.sql.visitors.traverse.params.opts">¶</a> – dictionary of iteration options.   This dictionary is usually
+empty in modern usage.</p></li>
+<li><p><span class="target" id="sqlalchemy.sql.visitors.traverse.params.visitors"></span><strong>visitors</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.sql.visitors.traverse.params.visitors">¶</a> – dictionary of visit functions.   The dictionary should
+have strings as keys, each of which would correspond to the
+<code class="docutils literal notranslate"><span class="pre">__visit_name__</span></code> of a particular kind of SQL expression object, and
+callable functions  as values, each of which represents a visitor function
+for that kind of object.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sqlalchemy.sql.visitors.traverse_using">
+<em class="property"><span class="pre">function</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.visitors.</span></span><span class="sig-name descname"><span class="pre">traverse_using</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visitors</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.visitors.traverse_using" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visit the given expression structure using the given iterator of
+objects.</p>
+<p><a class="reference internal" href="#sqlalchemy.sql.visitors.traverse_using" title="sqlalchemy.sql.visitors.traverse_using"><code class="xref py py-func docutils literal notranslate"><span class="pre">traverse_using()</span></code></a> is usually called internally as the result
+of the <a class="reference internal" href="#sqlalchemy.sql.visitors.traverse" title="sqlalchemy.sql.visitors.traverse"><code class="xref py py-func docutils literal notranslate"><span class="pre">traverse()</span></code></a> function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="sqlalchemy.sql.visitors.traverse_using.params.iterator"></span><strong>iterator</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.sql.visitors.traverse_using.params.iterator">¶</a> – an iterable or sequence which will yield
+<a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.ClauseElement" title="sqlalchemy.sql.expression.ClauseElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClauseElement</span></code></a>
+structures; the iterator is assumed to be the
+product of the <a class="reference internal" href="#sqlalchemy.sql.visitors.iterate" title="sqlalchemy.sql.visitors.iterate"><code class="xref py py-func docutils literal notranslate"><span class="pre">iterate()</span></code></a> function.</p></li>
+<li><p><span class="target" id="sqlalchemy.sql.visitors.traverse_using.params.obj"></span><strong>obj</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.sql.visitors.traverse_using.params.obj">¶</a> – the <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.ClauseElement" title="sqlalchemy.sql.expression.ClauseElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClauseElement</span></code></a>
+that was used as the target of the
+<a class="reference internal" href="#sqlalchemy.sql.visitors.iterate" title="sqlalchemy.sql.visitors.iterate"><code class="xref py py-func docutils literal notranslate"><span class="pre">iterate()</span></code></a> function.</p></li>
+<li><p><span class="target" id="sqlalchemy.sql.visitors.traverse_using.params.visitors"></span><strong>visitors</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.sql.visitors.traverse_using.params.visitors">¶</a> – dictionary of visit functions.  See <a class="reference internal" href="#sqlalchemy.sql.visitors.traverse" title="sqlalchemy.sql.visitors.traverse"><code class="xref py py-func docutils literal notranslate"><span class="pre">traverse()</span></code></a>
+for details on this dictionary.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#sqlalchemy.sql.visitors.traverse" title="sqlalchemy.sql.visitors.traverse"><code class="xref py py-func docutils literal notranslate"><span class="pre">traverse()</span></code></a></p>
+</div>
+</dd></dl>
+
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="serializer.html" title="previous chapter">Expression Serializer Extension</a>
+        Next:
+        <a href="schema.html" title="next chapter">Schema Definition Language</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2021, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.1.2.
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '1.4.23',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/detectmobile.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

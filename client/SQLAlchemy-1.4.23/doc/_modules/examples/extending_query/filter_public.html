@@ -1,0 +1,363 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        
+        <title>
+            
+    
+    examples.extending_query.filter_public
+ &mdash;
+    SQLAlchemy 1.4 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../../../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../../../_static/changelog.css" type="text/css" />
+                <link rel="stylesheet" href="../../../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+        <link rel="copyright" title="Copyright" href="../../../copyright.html" />
+    <link rel="top" title="SQLAlchemy 1.4 Documentation" href="../../../index.html" />
+        <link rel="up" title="Module code" href="../../index.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">1.4.23</span>
+
+
+        | Release Date: August 18, 2021
+
+    </div>
+
+    <h1><a href="../../../index.html">SQLAlchemy 1.4 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="">
+
+        <div id="index-nav">
+            <form class="search" action="../../../search.html" method="get">
+              <label>
+                 Search terms:
+              <input type="text" placeholder="search..." name="q" size="12" />
+              </label>
+              <input type="submit" value="Search" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+
+            <p>
+            <a href="../../../contents.html">Contents</a> |
+            <a href="../../../genindex.html">Index</a>
+            </p>
+
+        </div>
+
+
+    </div>
+
+    
+
+    <div id="docs-body" class=" _modules-examples-extending_query-filter_public" >
+        
+<h1>Source code for examples.extending_query.filter_public</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Illustrates a global criteria applied to entities of a particular type.</span>
+
+<span class="sd">The example here is the &quot;public&quot; flag, a simple boolean that indicates</span>
+<span class="sd">the rows are part of a publicly viewable subcategory.  Rows that do not</span>
+<span class="sd">include this flag are not shown unless a special option is passed to the</span>
+<span class="sd">query.</span>
+
+<span class="sd">Uses for this kind of recipe include tables that have &quot;soft deleted&quot; rows</span>
+<span class="sd">marked as &quot;deleted&quot; that should be skipped, rows that have access control rules</span>
+<span class="sd">that should be applied on a per-request basis, etc.</span>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Boolean</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Column</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">event</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">orm</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">true</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">Session</span>
+
+
+<span class="nd">@event</span><span class="o">.</span><span class="n">listens_for</span><span class="p">(</span><span class="n">Session</span><span class="p">,</span> <span class="s2">&quot;do_orm_execute&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_add_filtering_criteria</span><span class="p">(</span><span class="n">execute_state</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Intercept all ORM queries.   Add a with_loader_criteria option to all</span>
+<span class="sd">    of them.</span>
+
+<span class="sd">    This option applies to SELECT queries and adds a global WHERE criteria</span>
+<span class="sd">    (or as appropriate ON CLAUSE criteria for join targets)</span>
+<span class="sd">    to all objects of a certain class or superclass.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># the with_loader_criteria automatically applies itself to</span>
+    <span class="c1"># relationship loads as well including lazy loads.   So if this is</span>
+    <span class="c1"># a relationship load, assume the option was set up from the top level</span>
+    <span class="c1"># query.</span>
+
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="ow">not</span> <span class="n">execute_state</span><span class="o">.</span><span class="n">is_column_load</span>
+        <span class="ow">and</span> <span class="ow">not</span> <span class="n">execute_state</span><span class="o">.</span><span class="n">is_relationship_load</span>
+        <span class="ow">and</span> <span class="ow">not</span> <span class="n">execute_state</span><span class="o">.</span><span class="n">execution_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;include_private&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="p">):</span>
+        <span class="n">execute_state</span><span class="o">.</span><span class="n">statement</span> <span class="o">=</span> <span class="n">execute_state</span><span class="o">.</span><span class="n">statement</span><span class="o">.</span><span class="n">options</span><span class="p">(</span>
+            <span class="n">orm</span><span class="o">.</span><span class="n">with_loader_criteria</span><span class="p">(</span>
+                <span class="n">HasPrivate</span><span class="p">,</span>
+                <span class="k">lambda</span> <span class="bp">cls</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">public</span> <span class="o">==</span> <span class="n">true</span><span class="p">(),</span>
+                <span class="n">include_aliases</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">HasPrivate</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Mixin that identifies a class as having private entities&quot;&quot;&quot;</span>
+
+    <span class="n">public</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Boolean</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+
+    <span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">Column</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">,</span> <span class="n">Boolean</span>
+    <span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">select</span>
+    <span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+    <span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">relationship</span><span class="p">,</span> <span class="n">sessionmaker</span>
+    <span class="kn">from</span> <span class="nn">sqlalchemy.ext.declarative</span> <span class="kn">import</span> <span class="n">declarative_base</span>
+
+    <span class="n">Base</span> <span class="o">=</span> <span class="n">declarative_base</span><span class="p">()</span>
+
+    <span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">HasPrivate</span><span class="p">,</span> <span class="n">Base</span><span class="p">):</span>
+        <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;user&quot;</span>
+
+        <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+        <span class="n">addresses</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Address&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">Address</span><span class="p">(</span><span class="n">HasPrivate</span><span class="p">,</span> <span class="n">Base</span><span class="p">):</span>
+        <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;address&quot;</span>
+
+        <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">email</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+        <span class="n">user_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;user.id&quot;</span><span class="p">))</span>
+
+        <span class="n">user</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;User&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;addresses&quot;</span><span class="p">)</span>
+
+    <span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;sqlite://&quot;</span><span class="p">,</span> <span class="n">echo</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">Base</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">create_all</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+
+    <span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">,</span> <span class="n">future</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">sess</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+
+    <span class="n">sess</span><span class="o">.</span><span class="n">add_all</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="n">User</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;u1&quot;</span><span class="p">,</span>
+                <span class="n">public</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">addresses</span><span class="o">=</span><span class="p">[</span>
+                    <span class="n">Address</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="s2">&quot;u1a1&quot;</span><span class="p">,</span> <span class="n">public</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+                    <span class="n">Address</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="s2">&quot;u1a2&quot;</span><span class="p">,</span> <span class="n">public</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+                <span class="p">],</span>
+            <span class="p">),</span>
+            <span class="n">User</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;u2&quot;</span><span class="p">,</span>
+                <span class="n">public</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">addresses</span><span class="o">=</span><span class="p">[</span>
+                    <span class="n">Address</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="s2">&quot;u2a1&quot;</span><span class="p">,</span> <span class="n">public</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+                    <span class="n">Address</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="s2">&quot;u2a2&quot;</span><span class="p">,</span> <span class="n">public</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+                <span class="p">],</span>
+            <span class="p">),</span>
+            <span class="n">User</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;u3&quot;</span><span class="p">,</span>
+                <span class="n">public</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">addresses</span><span class="o">=</span><span class="p">[</span>
+                    <span class="n">Address</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="s2">&quot;u3a1&quot;</span><span class="p">,</span> <span class="n">public</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+                    <span class="n">Address</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="s2">&quot;u3a2&quot;</span><span class="p">,</span> <span class="n">public</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+                <span class="p">],</span>
+            <span class="p">),</span>
+            <span class="n">User</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;u4&quot;</span><span class="p">,</span>
+                <span class="n">public</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">addresses</span><span class="o">=</span><span class="p">[</span>
+                    <span class="n">Address</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="s2">&quot;u4a1&quot;</span><span class="p">,</span> <span class="n">public</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+                    <span class="n">Address</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="s2">&quot;u4a2&quot;</span><span class="p">,</span> <span class="n">public</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+                <span class="p">],</span>
+            <span class="p">),</span>
+            <span class="n">User</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;u5&quot;</span><span class="p">,</span>
+                <span class="n">public</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">addresses</span><span class="o">=</span><span class="p">[</span>
+                    <span class="n">Address</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="s2">&quot;u5a1&quot;</span><span class="p">,</span> <span class="n">public</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+                    <span class="n">Address</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="s2">&quot;u5a2&quot;</span><span class="p">,</span> <span class="n">public</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+                <span class="p">],</span>
+            <span class="p">),</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="n">sess</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+    <span class="c1"># now querying Address or User objects only gives us the public ones</span>
+    <span class="k">for</span> <span class="n">u1</span> <span class="ow">in</span> <span class="n">sess</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">orm</span><span class="o">.</span><span class="n">selectinload</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">addresses</span><span class="p">)):</span>
+        <span class="k">assert</span> <span class="n">u1</span><span class="o">.</span><span class="n">public</span>
+
+        <span class="c1"># the addresses collection will also be &quot;public only&quot;, which works</span>
+        <span class="c1"># for all relationship loaders including joinedload</span>
+        <span class="k">for</span> <span class="n">address</span> <span class="ow">in</span> <span class="n">u1</span><span class="o">.</span><span class="n">addresses</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">address</span><span class="o">.</span><span class="n">public</span>
+
+    <span class="c1"># works for columns too</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">sess</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">Address</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">addresses</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">Address</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="p">)</span>
+    <span class="k">assert</span> <span class="n">cols</span> <span class="o">==</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">)]</span>
+
+    <span class="n">cols</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">sess</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">Address</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">addresses</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">Address</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">execution_options</span><span class="p">(</span><span class="n">include_private</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="p">)</span>
+    <span class="k">assert</span> <span class="n">cols</span> <span class="o">==</span> <span class="p">[</span>
+        <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+    <span class="p">]</span>
+
+    <span class="c1"># count all public addresses</span>
+    <span class="k">assert</span> <span class="n">sess</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Address</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">5</span>
+
+    <span class="c1"># count all addresses public and private</span>
+    <span class="k">assert</span> <span class="p">(</span>
+        <span class="n">sess</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Address</span><span class="p">)</span><span class="o">.</span><span class="n">execution_options</span><span class="p">(</span><span class="n">include_private</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+        <span class="o">==</span> <span class="mi">10</span>
+    <span class="p">)</span>
+
+    <span class="c1"># load an Address that is public, but its parent User is private</span>
+    <span class="c1"># (2.0 style query)</span>
+    <span class="n">a1</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">Address</span><span class="p">)</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="s2">&quot;u4a2&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">scalar</span><span class="p">()</span>
+
+    <span class="c1"># assuming the User isn&#39;t already in the Session, it returns None</span>
+    <span class="k">assert</span> <span class="n">a1</span><span class="o">.</span><span class="n">user</span> <span class="ow">is</span> <span class="kc">None</span>
+
+    <span class="c1"># however, if that user is present in the session, then a many-to-one</span>
+    <span class="c1"># does a simple get() and it will be present</span>
+    <span class="n">sess</span><span class="o">.</span><span class="n">expire</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;user&quot;</span><span class="p">])</span>
+    <span class="n">u1</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+        <span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;u4&quot;</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">execution_options</span><span class="p">(</span><span class="n">include_private</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">scalar</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">a1</span><span class="o">.</span><span class="n">user</span> <span class="ow">is</span> <span class="n">u1</span></pre></div>
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links">
+
+    <div id="docs-copyright">
+        &copy; <a href="../../../copyright.html">Copyright</a> 2007-2021, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.1.2.
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../../../',
+          VERSION:     '1.4.23',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../../../_static/detectmobile.js"></script>
+    <script type="text/javascript" src="../../../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

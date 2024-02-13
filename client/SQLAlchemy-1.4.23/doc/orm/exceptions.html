@@ -1,0 +1,333 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+        <title>
+            
+    
+    ORM Exceptions
+ &mdash;
+    SQLAlchemy 1.4 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/changelog.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 1.4 Documentation" href="../index.html" />
+        <link rel="up" title="Events and Internals" href="extending.html" />
+        <link rel="next" title="ORM Extensions" href="extensions/index.html" />
+        <link rel="prev" title="ORM Internals" href="internals.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">1.4.23</span>
+
+
+        | Release Date: August 18, 2021
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 1.4 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 1.4 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../contents.html">Contents</a> |
+                <a href="../genindex.html">Index</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="tutorial.html">Object Relational Tutorial (1.x API)</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mapper_config.html">Mapper Configuration</a></span></li>
+<li><span class="link-container"><a class="reference external" href="relationships.html">Relationship Configuration</a></span></li>
+<li><span class="link-container"><a class="reference external" href="loading_objects.html">Querying Data, Loading Objects</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session.html">Using the Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extending.html">Events and Internals</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="events.html">ORM Events</a></span></li>
+<li><span class="link-container"><a class="reference external" href="internals.html">ORM Internals</a></span></li>
+<li class="selected"><span class="link-container"><strong>ORM Exceptions</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="extensions/index.html">ORM Extensions</a></span></li>
+<li><span class="link-container"><a class="reference external" href="examples.html">ORM Examples</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    
+
+    <div id="docs-body" class="withsidebar orm-exceptions" >
+        
+<section id="module-sqlalchemy.orm.exc">
+<span id="orm-exceptions"></span><span id="orm-exceptions-toplevel"></span><h1>ORM Exceptions<a class="headerlink" href="#module-sqlalchemy.orm.exc" title="Permalink to this headline">¶</a></h1>
+<p>SQLAlchemy ORM exceptions.</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head">Object Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.orm.exc.ConcurrentModificationError"><span class="sig-name descname">ConcurrentModificationError</span></a></p></td>
+<td><p>alias of <a class="reference internal" href="#sqlalchemy.orm.exc.StaleDataError" title="sqlalchemy.orm.exc.StaleDataError"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.orm.exc.StaleDataError</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.orm.exc.NO_STATE"><span class="sig-name descname">NO_STATE</span></a></p></td>
+<td><p>Exception types that may be raised by instrumentation implementations.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.orm.exc.ConcurrentModificationError">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.orm.exc."><code class="docutils literal notranslate"><span class="pre">sqlalchemy.orm.exc..</span></code></a><span class="sig-prename descclassname"><span class="pre">sqlalchemy.orm.exc.</span></span><span class="sig-name descname"><span class="pre">ConcurrentModificationError</span></span><a class="headerlink" href="#sqlalchemy.orm.exc.ConcurrentModificationError" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#sqlalchemy.orm.exc.StaleDataError" title="sqlalchemy.orm.exc.StaleDataError"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.orm.exc.StaleDataError</span></code></a></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="sqlalchemy.orm.exc.DetachedInstanceError">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.orm.exc.</span></span><span class="sig-name descname"><span class="pre">DetachedInstanceError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">arg</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.orm.exc.DetachedInstanceError" title="Permalink to this definition">¶</a></dt>
+<dd><p>An attempt to access unloaded attributes on a
+mapped instance that is detached.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="sqlalchemy.orm.exc.FlushError">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.orm.exc.</span></span><span class="sig-name descname"><span class="pre">FlushError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">arg</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.orm.exc.FlushError" title="Permalink to this definition">¶</a></dt>
+<dd><p>A invalid condition was detected during flush().</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="sqlalchemy.orm.exc.LoaderStrategyException">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.orm.exc.</span></span><span class="sig-name descname"><span class="pre">LoaderStrategyException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">applied_to_property_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">requesting_property</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">applies_to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">actual_strategy_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy_key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.orm.exc.LoaderStrategyException" title="Permalink to this definition">¶</a></dt>
+<dd><p>A loader strategy for an attribute does not exist.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="sqlalchemy.orm.exc.NO_STATE">
+<span class="sig-prename descclassname"><span class="pre">sqlalchemy.orm.exc.</span></span><span class="sig-name descname"><span class="pre">NO_STATE</span></span><em class="property"> <span class="pre">=</span> <span class="pre">(&lt;class</span> <span class="pre">'AttributeError'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'KeyError'&gt;)</span></em><a class="headerlink" href="#sqlalchemy.orm.exc.NO_STATE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exception types that may be raised by instrumentation implementations.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="sqlalchemy.orm.exc.ObjectDeletedError">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.orm.exc.</span></span><span class="sig-name descname"><span class="pre">ObjectDeletedError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.orm.exc.ObjectDeletedError" title="Permalink to this definition">¶</a></dt>
+<dd><p>A refresh operation failed to retrieve the database
+row corresponding to an object’s known primary key identity.</p>
+<p>A refresh operation proceeds when an expired attribute is
+accessed on an object, or when <a class="reference internal" href="query.html#sqlalchemy.orm.Query.get" title="sqlalchemy.orm.Query.get"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.get()</span></code></a> is
+used to retrieve an object which is, upon retrieval, detected
+as expired.   A SELECT is emitted for the target row
+based on primary key; if no row is returned, this
+exception is raised.</p>
+<p>The true meaning of this exception is simply that
+no row exists for the primary key identifier associated
+with a persistent object.   The row may have been
+deleted, or in some cases the primary key updated
+to a new value, outside of the ORM’s management of the target
+object.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="sqlalchemy.orm.exc.ObjectDereferencedError">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.orm.exc.</span></span><span class="sig-name descname"><span class="pre">ObjectDereferencedError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">arg</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.orm.exc.ObjectDereferencedError" title="Permalink to this definition">¶</a></dt>
+<dd><p>An operation cannot complete due to an object being garbage
+collected.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="sqlalchemy.orm.exc.StaleDataError">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.orm.exc.</span></span><span class="sig-name descname"><span class="pre">StaleDataError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">arg</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.orm.exc.StaleDataError" title="Permalink to this definition">¶</a></dt>
+<dd><p>An operation encountered database state that is unaccounted for.</p>
+<p>Conditions which cause this to happen include:</p>
+<ul class="simple">
+<li><p>A flush may have attempted to update or delete rows
+and an unexpected number of rows were matched during
+the UPDATE or DELETE statement.   Note that when
+version_id_col is used, rows in UPDATE or DELETE statements
+are also matched against the current known version
+identifier.</p></li>
+<li><p>A mapped object with version_id_col was refreshed,
+and the version number coming back from the database does
+not match that of the object itself.</p></li>
+<li><p>A object is detached from its parent object, however
+the object was previously attached to a different parent
+identity which was garbage collected, and a decision
+cannot be made if the new parent was really the most
+recent “parent”.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="sqlalchemy.orm.exc.UnmappedClassError">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.orm.exc.</span></span><span class="sig-name descname"><span class="pre">UnmappedClassError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.orm.exc.UnmappedClassError" title="Permalink to this definition">¶</a></dt>
+<dd><p>An mapping operation was requested for an unknown class.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="sqlalchemy.orm.exc.UnmappedColumnError">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.orm.exc.</span></span><span class="sig-name descname"><span class="pre">UnmappedColumnError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">arg</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.orm.exc.UnmappedColumnError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mapping operation was requested on an unknown column.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="sqlalchemy.orm.exc.UnmappedError">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.orm.exc.</span></span><span class="sig-name descname"><span class="pre">UnmappedError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">arg</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.orm.exc.UnmappedError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base for exceptions that involve expected mappings not present.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="sqlalchemy.orm.exc.UnmappedInstanceError">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.orm.exc.</span></span><span class="sig-name descname"><span class="pre">UnmappedInstanceError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.orm.exc.UnmappedInstanceError" title="Permalink to this definition">¶</a></dt>
+<dd><p>An mapping operation was requested for an unknown instance.</p>
+</dd></dl>
+
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="internals.html" title="previous chapter">ORM Internals</a>
+        Next:
+        <a href="extensions/index.html" title="next chapter">ORM Extensions</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2021, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.1.2.
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '1.4.23',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/detectmobile.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

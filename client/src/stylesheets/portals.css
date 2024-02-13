@@ -7,3 +7,32 @@
     gap: 10px;
     padding: 20px;
 }
+
+.flexGrid {
+    padding: 20px;
+    background-color: #A6BDD0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gridContainer {
+    display: grid;
+    gap: 20px; /* Space between grid items */
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Creates as many columns as can fit, each at least 150px wide */
+}
+
+.gridItem {
+    background-color: #fff; /* Example background color for grid items */
+    padding: 20px;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;; /* Example shadow for depth */
+}
+
+  /* Media query for larger screens */
+@media (min-width: 768px) {
+    .flexGrid {
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adjusts the minimum column width for larger screens */
+}
+}

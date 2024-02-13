@@ -1,0 +1,328 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+        <title>
+            
+    
+    SQLAlchemy 1.4 / 2.0 Tutorial
+ &mdash;
+    SQLAlchemy 1.4 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/changelog.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 1.4 Documentation" href="../index.html" />
+        <link rel="next" title="Establishing Connectivity - the Engine" href="engine.html" />
+        <link rel="prev" title="Overview" href="../intro.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">1.4.23</span>
+
+
+        | Release Date: August 18, 2021
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 1.4 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 1.4 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../contents.html">Contents</a> |
+                <a href="../genindex.html">Index</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="../index.html" title="SQLAlchemy 1.4 Documentation">SQLAlchemy 1.4 Documentation</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="../intro.html">Overview</a></span></li>
+<li class="selected"><span class="link-container"><strong>SQLAlchemy 1.4 / 2.0 Tutorial</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#tutorial-overview">Tutorial Overview</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#version-check">Version Check</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#a-note-on-the-future">A Note on the Future</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="engine.html">Establishing Connectivity - the Engine</a></span></li>
+<li><span class="link-container"><a class="reference external" href="dbapi_transactions.html">Working with Transactions and the DBAPI</a></span></li>
+<li><span class="link-container"><a class="reference external" href="metadata.html">Working with Database Metadata</a></span></li>
+<li><span class="link-container"><a class="reference external" href="data.html">Working with Data</a></span></li>
+<li><span class="link-container"><a class="reference external" href="orm_data_manipulation.html">Data Manipulation with the ORM</a></span></li>
+<li><span class="link-container"><a class="reference external" href="orm_related_objects.html">Working with Related Objects</a></span></li>
+<li><span class="link-container"><a class="reference external" href="further_reading.html">Further Reading</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="../orm/index.html">SQLAlchemy ORM</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../core/index.html">SQLAlchemy Core</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../dialects/index.html">Dialects</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../faq/index.html">Frequently Asked Questions</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../errors.html">Error Messages</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../changelog/index.html">Changes and Migration</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    
+
+    <div id="docs-body" class="withsidebar tutorial-index" >
+        
+<section class="orm-core" id="sqlalchemy-1-4-2-0-tutorial">
+<span id="unified-tutorial"></span><h1>SQLAlchemy 1.4 / 2.0 Tutorial<a class="headerlink" href="#sqlalchemy-1-4-2-0-tutorial" title="Permalink to this headline">¶</a></h1>
+<div class="admonition-about-this-document admonition">
+<p class="admonition-title">About this document</p>
+<p>The new SQLAlchemy Tutorial is now integrated between Core and ORM and
+serves as a unified introduction to SQLAlchemy as a whole.   In the new
+<a class="reference internal" href="../glossary.html#term-2.0-style"><span class="xref std std-term">2.0 style</span></a> of working, fully available in the <a class="reference internal" href="../changelog/migration_14.html"><span class="std std-ref">1.4 release</span></a>, the ORM now uses Core-style querying with the
+<a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> construct, and transactional semantics between Core
+connections and ORM sessions are equivalent.   Take note of the blue
+border styles for each section, that will tell you how “ORM-ish” a
+particular topic is!</p>
+<p>Users who are already familiar with SQLAlchemy, and especially those
+looking to migrate existing applications to work under SQLAlchemy 2.0
+within the 1.4 transitional phase should check out the
+<a class="reference internal" href="../changelog/migration_20.html"><span class="std std-ref">Migrating to SQLAlchemy 2.0</span></a> document as well.</p>
+<p>For the newcomer, this document has a <strong>lot</strong> of detail, however by the
+end they will be considered an <strong>Alchemist</strong>.</p>
+</div>
+<p>SQLAlchemy is presented as two distinct APIs, one building on top of the other.
+These APIs are known as <strong>Core</strong> and <strong>ORM</strong>.</p>
+<div class="core-header docutils container">
+<p><strong>SQLAlchemy Core</strong> is the foundational architecture for SQLAlchemy as a
+“database toolkit”.  The library provides tools for managing connectivity
+to a database, interacting with database queries and results, and
+programmatic construction of SQL statements.</p>
+<p>Sections that have a <strong>dark blue border on the right</strong> will discuss
+concepts that are <strong>primarily Core-only</strong>; when using the ORM, these
+concepts are still in play but are less often explicit in user code.</p>
+</div>
+<div class="orm-header docutils container">
+<p><strong>SQLAlchemy ORM</strong> builds upon the Core to provide optional <strong>object
+relational mapping</strong> capabilities.   The ORM provides an additional
+configuration layer allowing user-defined Python classes to be <strong>mapped</strong>
+to database tables and other constructs, as well as an object persistence
+mechanism known as the <strong>Session</strong>.   It then extends the Core-level
+SQL Expression Language to allow SQL queries to be composed and invoked
+in terms of user-defined objects.</p>
+<p>Sections that have a <strong>light blue border on the left</strong> will discuss
+concepts that are <strong>primarily ORM-only</strong>.  Core-only users
+can skip these.</p>
+</div>
+<div class="core-header orm-dependency docutils container">
+<p>A section that has <strong>both light and dark borders on both sides</strong> will
+discuss a <strong>Core concept that is also used explicitly with the ORM</strong>.</p>
+</div>
+<section id="tutorial-overview">
+<h2>Tutorial Overview<a class="headerlink" href="#tutorial-overview" title="Permalink to this headline">¶</a></h2>
+<p>The tutorial will present both concepts in the natural order that they
+should be learned, first with a mostly-Core-centric approach and then
+spanning out into more ORM-centric concepts.</p>
+<p>The major sections of this tutorial are as follows:</p>
+<div class="toctree-wrapper compound">
+</div>
+<ul class="simple">
+<li><p><a class="reference internal" href="engine.html#tutorial-engine"><span class="std std-ref">Establishing Connectivity - the Engine</span></a> - all SQLAlchemy applications start with an
+<a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> object; here’s how to create one.</p></li>
+<li><p><a class="reference internal" href="dbapi_transactions.html#tutorial-working-with-transactions"><span class="std std-ref">Working with Transactions and the DBAPI</span></a> - the usage API of the
+<a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> and it’s related objects <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>
+and <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a> are presented here. This content is Core-centric
+however ORM users will want to be familiar with at least the
+<a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a> object.</p></li>
+<li><p><a class="reference internal" href="metadata.html#tutorial-working-with-metadata"><span class="std std-ref">Working with Database Metadata</span></a> - SQLAlchemy’s SQL abstractions as well
+as the ORM rely upon a system of defining database schema constructs as
+Python objects.   This section introduces how to do that from both a Core and
+an ORM perspective.</p></li>
+<li><p><a class="reference internal" href="data.html#tutorial-working-with-data"><span class="std std-ref">Working with Data</span></a> - here we learn how to create, select,
+update and delete data in the database.   The so-called <a class="reference internal" href="../glossary.html#term-CRUD"><span class="xref std std-term">CRUD</span></a>
+operations here are given in terms of SQLAlchemy Core with links out towards
+their ORM counterparts.  The SELECT operation that is introduced in detail at
+<a class="reference internal" href="data_select.html#tutorial-selecting-data"><span class="std std-ref">Selecting Rows with Core or ORM</span></a> applies equally well to Core and ORM.</p></li>
+<li><p><a class="reference internal" href="orm_data_manipulation.html#tutorial-orm-data-manipulation"><span class="std std-ref">Data Manipulation with the ORM</span></a> covers the persistence framework of the
+ORM; basically the ORM-centric ways to insert, update and delete, as well as
+how to handle transactions.</p></li>
+<li><p><a class="reference internal" href="orm_related_objects.html#tutorial-orm-related-objects"><span class="std std-ref">Working with Related Objects</span></a> introduces the concept of the
+<a class="reference internal" href="../orm/relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code></a> construct and provides a brief overview
+of how it’s used, with links to deeper documentation.</p></li>
+<li><p><a class="reference internal" href="further_reading.html#tutorial-further-reading"><span class="std std-ref">Further Reading</span></a> lists a series of major top-level
+documentation sections which fully document the concepts introduced in this
+tutorial.</p></li>
+</ul>
+<section class="core-header orm-dependency" id="version-check">
+<h3>Version Check<a class="headerlink" href="#version-check" title="Permalink to this headline">¶</a></h3>
+<p>This tutorial is written using a system called <a class="reference external" href="https://docs.python.org/3/library/doctest.html">doctest</a>. All of the code excerpts
+written with a <code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;</span></code> are actually run as part of SQLAlchemy’s test suite, and
+the reader is invited to work with the code examples given in real time with
+their own Python interpreter.</p>
+<p>If running the examples, it is advised that the reader performs a quick check to
+verify that we are on  <strong>version 1.4</strong> of SQLAlchemy:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sqlalchemy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sqlalchemy</span><span class="o">.</span><span class="n">__version__</span>  
+<span class="go">1.4.0</span></pre></div>
+</div>
+</section>
+<section class="core-header orm-dependency" id="a-note-on-the-future">
+<h3>A Note on the Future<a class="headerlink" href="#a-note-on-the-future" title="Permalink to this headline">¶</a></h3>
+<p>This tutorial describes a new API that’s released in SQLAlchemy 1.4 known
+as <a class="reference internal" href="../glossary.html#term-2.0-style"><span class="xref std std-term">2.0 style</span></a>.   The purpose of the 2.0-style API is to provide forwards
+compatibility with <a class="reference internal" href="../changelog/migration_20.html"><span class="std std-ref">SQLAlchemy 2.0</span></a>, which is
+planned as the next generation of SQLAlchemy.</p>
+<p>In order to provide the full 2.0 API, a new flag called <code class="docutils literal notranslate"><span class="pre">future</span></code> will be
+used, which will be seen as the tutorial describes the <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>
+and <a class="reference internal" href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> objects.   These flags fully enable 2.0-compatibility
+mode and allow the code in the tutorial to proceed fully.  When using the
+<code class="docutils literal notranslate"><span class="pre">future</span></code> flag with the <a class="reference internal" href="../core/engines.html#sqlalchemy.create_engine" title="sqlalchemy.create_engine"><code class="xref py py-func docutils literal notranslate"><span class="pre">create_engine()</span></code></a> function, the object
+returned is a sublass of <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.engine.Engine</span></code></a> described as
+<a class="reference internal" href="../core/future.html#sqlalchemy.future.Engine" title="sqlalchemy.future.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.future.Engine</span></code></a>. This tutorial will be referring to
+<a class="reference internal" href="../core/future.html#sqlalchemy.future.Engine" title="sqlalchemy.future.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.future.Engine</span></code></a>.</p>
+</section>
+</section>
+</section>
+<div class="topic">
+<p class="topic-title">SQLAlchemy 1.4 / 2.0 Tutorial</p>
+<p>Next Section: <a class="reference internal" href="engine.html"><span class="doc">Establishing Connectivity - the Engine</span></a></p>
+</div>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="../intro.html" title="previous chapter">Overview</a>
+        Next:
+        <a href="engine.html" title="next chapter">Establishing Connectivity - the Engine</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2021, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.1.2.
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '1.4.23',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/detectmobile.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

@@ -1,0 +1,1546 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+        <title>
+            
+    
+    SQL and Generic Functions
+ &mdash;
+    SQLAlchemy 1.4 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/changelog.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 1.4 Documentation" href="../index.html" />
+        <link rel="up" title="SQL Statements and Expressions API" href="expression_api.html" />
+        <link rel="next" title="Custom SQL Constructs and Compilation Extension" href="compiler.html" />
+        <link rel="prev" title="Insert, Updates, Deletes" href="dml.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">1.4.23</span>
+
+
+        | Release Date: August 18, 2021
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 1.4 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 1.4 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../contents.html">Contents</a> |
+                <a href="../genindex.html">Index</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="SQLAlchemy Core">SQLAlchemy Core</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="tutorial.html">SQL Expression Language Tutorial (1.x API)</a></span></li>
+<li><span class="link-container"><a class="reference external" href="expression_api.html">SQL Statements and Expressions API</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="sqlelement.html">Column Elements and Expressions</a></span></li>
+<li><span class="link-container"><a class="reference external" href="operators.html">Operator Reference</a></span></li>
+<li><span class="link-container"><a class="reference external" href="selectable.html">Selectables, Tables, FROM objects</a></span></li>
+<li><span class="link-container"><a class="reference external" href="dml.html">Insert, Updates, Deletes</a></span></li>
+<li class="selected"><span class="link-container"><strong>SQL and Generic Functions</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span></li>
+<li><span class="link-container"><a class="reference external" href="compiler.html">Custom SQL Constructs and Compilation Extension</a></span></li>
+<li><span class="link-container"><a class="reference external" href="serializer.html">Expression Serializer Extension</a></span></li>
+<li><span class="link-container"><a class="reference external" href="visitors.html">Visitor and Traversal Utilities</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="schema.html">Schema Definition Language</a></span></li>
+<li><span class="link-container"><a class="reference external" href="types.html">Column and Data Types</a></span></li>
+<li><span class="link-container"><a class="reference external" href="engines_connections.html">Engine and Connection Use</a></span></li>
+<li><span class="link-container"><a class="reference external" href="api_basics.html">Core API Basics</a></span></li>
+<li><span class="link-container"><a class="reference external" href="future.html">SQLAlchemy 2.0 Future (Core)</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    
+
+    <div id="docs-body" class="withsidebar core-functions" >
+        
+<section id="sql-and-generic-functions">
+<span id="generic-functions"></span><span id="functions-toplevel"></span><h1>SQL and Generic Functions<a class="headerlink" href="#sql-and-generic-functions" title="Permalink to this headline">¶</a></h1>
+<p>SQL functions which are known to SQLAlchemy with regards to database-specific
+rendering, return types and argument behavior. Generic functions are invoked
+like all SQL functions, using the <code class="xref py py-attr docutils literal notranslate"><span class="pre">func</span></code> attribute:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">count</span><span class="p">())</span><span class="o">.</span><span class="n">select_from</span><span class="p">(</span><span class="n">sometable</span><span class="p">)</span></pre></div>
+</div>
+<p>Note that any name not known to <code class="xref py py-attr docutils literal notranslate"><span class="pre">func</span></code> generates the function name as is
+- there is no restriction on what SQL functions can be called, known or
+unknown to SQLAlchemy, built-in or user defined. The section here only
+describes those functions where SQLAlchemy already knows what argument and
+return types are in use.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../tutorial/data_select.html#tutorial-functions"><span class="std std-ref">Working with SQL Functions</span></a> - in the <a class="reference internal" href="../tutorial/index.html#unified-tutorial"><span class="std std-ref">SQLAlchemy 1.4 / 2.0 Tutorial</span></a></p>
+</div>
+<span class="target" id="module-sqlalchemy.sql.functions"></span><p>SQL function API, factories, and built-in functions.</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head">Object Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.AnsiFunction"><span class="sig-name descname">AnsiFunction</span></a></p></td>
+<td><p>Define a function in “ansi” format, which doesn’t render parenthesis.</p></td>
+</tr>
+<tr class="row-odd"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.array_agg"><span class="sig-name descname">array_agg</span></a></p></td>
+<td><p>Support for the ARRAY_AGG function.</p></td>
+</tr>
+<tr class="row-even"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.char_length"><span class="sig-name descname">char_length</span></a></p></td>
+<td><p>The CHAR_LENGTH() SQL function.</p></td>
+</tr>
+<tr class="row-odd"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.coalesce"><span class="sig-name descname">coalesce</span></a></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.concat"><span class="sig-name descname">concat</span></a></p></td>
+<td><p>The SQL CONCAT() function, which concatenates strings.</p></td>
+</tr>
+<tr class="row-odd"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.count"><span class="sig-name descname">count</span></a></p></td>
+<td><p>The ANSI COUNT aggregate function.  With no arguments,
+emits COUNT *.</p></td>
+</tr>
+<tr class="row-even"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.cube"><span class="sig-name descname">cube</span></a></p></td>
+<td><p>Implement the <code class="docutils literal notranslate"><span class="pre">CUBE</span></code> grouping operation.</p></td>
+</tr>
+<tr class="row-odd"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.cume_dist"><span class="sig-name descname">cume_dist</span></a></p></td>
+<td><p>Implement the <code class="docutils literal notranslate"><span class="pre">cume_dist</span></code> hypothetical-set aggregate function.</p></td>
+</tr>
+<tr class="row-even"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.current_date"><span class="sig-name descname">current_date</span></a></p></td>
+<td><p>The CURRENT_DATE() SQL function.</p></td>
+</tr>
+<tr class="row-odd"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.current_time"><span class="sig-name descname">current_time</span></a></p></td>
+<td><p>The CURRENT_TIME() SQL function.</p></td>
+</tr>
+<tr class="row-even"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.current_timestamp"><span class="sig-name descname">current_timestamp</span></a></p></td>
+<td><p>The CURRENT_TIMESTAMP() SQL function.</p></td>
+</tr>
+<tr class="row-odd"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.current_user"><span class="sig-name descname">current_user</span></a></p></td>
+<td><p>The CURRENT_USER() SQL function.</p></td>
+</tr>
+<tr class="row-even"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.dense_rank"><span class="sig-name descname">dense_rank</span></a></p></td>
+<td><p>Implement the <code class="docutils literal notranslate"><span class="pre">dense_rank</span></code> hypothetical-set aggregate function.</p></td>
+</tr>
+<tr class="row-odd"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.Function"><span class="sig-name descname">Function</span></a></p></td>
+<td><p>Describe a named SQL function.</p></td>
+</tr>
+<tr class="row-even"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.FunctionAsBinary"><span class="sig-name descname">FunctionAsBinary</span></a></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement"><span class="sig-name descname">FunctionElement</span></a></p></td>
+<td><p>Base for SQL function-oriented constructs.</p></td>
+</tr>
+<tr class="row-even"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.GenericFunction"><span class="sig-name descname">GenericFunction</span></a></p></td>
+<td><p>Define a ‘generic’ function.</p></td>
+</tr>
+<tr class="row-odd"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.grouping_sets"><span class="sig-name descname">grouping_sets</span></a></p></td>
+<td><p>Implement the <code class="docutils literal notranslate"><span class="pre">GROUPING</span> <span class="pre">SETS</span></code> grouping operation.</p></td>
+</tr>
+<tr class="row-even"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.localtime"><span class="sig-name descname">localtime</span></a></p></td>
+<td><p>The localtime() SQL function.</p></td>
+</tr>
+<tr class="row-odd"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.localtimestamp"><span class="sig-name descname">localtimestamp</span></a></p></td>
+<td><p>The localtimestamp() SQL function.</p></td>
+</tr>
+<tr class="row-even"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.max"><span class="sig-name descname">max</span></a></p></td>
+<td><p>The SQL MAX() aggregate function.</p></td>
+</tr>
+<tr class="row-odd"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.min"><span class="sig-name descname">min</span></a></p></td>
+<td><p>The SQL MIN() aggregate function.</p></td>
+</tr>
+<tr class="row-even"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.mode"><span class="sig-name descname">mode</span></a></p></td>
+<td><p>Implement the <code class="docutils literal notranslate"><span class="pre">mode</span></code> ordered-set aggregate function.</p></td>
+</tr>
+<tr class="row-odd"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.next_value"><span class="sig-name descname">next_value</span></a></p></td>
+<td><p>Represent the ‘next value’, given a <a class="reference internal" href="defaults.html#sqlalchemy.schema.Sequence" title="sqlalchemy.schema.Sequence"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>
+as its single argument.</p></td>
+</tr>
+<tr class="row-even"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.now"><span class="sig-name descname">now</span></a></p></td>
+<td><p>The SQL now() datetime function.</p></td>
+</tr>
+<tr class="row-odd"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.OrderedSetAgg"><span class="sig-name descname">OrderedSetAgg</span></a></p></td>
+<td><p>Define a function where the return type is based on the sort
+expression type as defined by the expression passed to the
+<a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement.within_group" title="sqlalchemy.sql.functions.FunctionElement.within_group"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.within_group()</span></code></a> method.</p></td>
+</tr>
+<tr class="row-even"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.percent_rank"><span class="sig-name descname">percent_rank</span></a></p></td>
+<td><p>Implement the <code class="docutils literal notranslate"><span class="pre">percent_rank</span></code> hypothetical-set aggregate function.</p></td>
+</tr>
+<tr class="row-odd"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.percentile_cont"><span class="sig-name descname">percentile_cont</span></a></p></td>
+<td><p>Implement the <code class="docutils literal notranslate"><span class="pre">percentile_cont</span></code> ordered-set aggregate function.</p></td>
+</tr>
+<tr class="row-even"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.percentile_disc"><span class="sig-name descname">percentile_disc</span></a></p></td>
+<td><p>Implement the <code class="docutils literal notranslate"><span class="pre">percentile_disc</span></code> ordered-set aggregate function.</p></td>
+</tr>
+<tr class="row-odd"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.random"><span class="sig-name descname">random</span></a></p></td>
+<td><p>The RANDOM() SQL function.</p></td>
+</tr>
+<tr class="row-even"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.rank"><span class="sig-name descname">rank</span></a></p></td>
+<td><p>Implement the <code class="docutils literal notranslate"><span class="pre">rank</span></code> hypothetical-set aggregate function.</p></td>
+</tr>
+<tr class="row-odd"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.register_function"><span class="sig-name descname">register_function</span></a>(identifier, fn[, package])</p></td>
+<td><p>Associate a callable with a particular func. name.</p></td>
+</tr>
+<tr class="row-even"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.ReturnTypeFromArgs"><span class="sig-name descname">ReturnTypeFromArgs</span></a></p></td>
+<td><p>Define a function whose return type is the same as its arguments.</p></td>
+</tr>
+<tr class="row-odd"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.rollup"><span class="sig-name descname">rollup</span></a></p></td>
+<td><p>Implement the <code class="docutils literal notranslate"><span class="pre">ROLLUP</span></code> grouping operation.</p></td>
+</tr>
+<tr class="row-even"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.ScalarFunctionColumn"><span class="sig-name descname">ScalarFunctionColumn</span></a></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.session_user"><span class="sig-name descname">session_user</span></a></p></td>
+<td><p>The SESSION_USER() SQL function.</p></td>
+</tr>
+<tr class="row-even"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.sum"><span class="sig-name descname">sum</span></a></p></td>
+<td><p>The SQL SUM() aggregate function.</p></td>
+</tr>
+<tr class="row-odd"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.sysdate"><span class="sig-name descname">sysdate</span></a></p></td>
+<td><p>The SYSDATE() SQL function.</p></td>
+</tr>
+<tr class="row-even"><td class="nowrap"><p><a class="reference internal" href="#sqlalchemy.sql.functions.user"><span class="sig-name descname">user</span></a></p></td>
+<td><p>The USER() SQL function.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.AnsiFunction">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">AnsiFunction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.AnsiFunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define a function in “ansi” format, which doesn’t render parenthesis.</p>
+<div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.functions.AnsiFunction" title="sqlalchemy.sql.functions.AnsiFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.AnsiFunction</span></code></a> (<a class="reference internal" href="#sqlalchemy.sql.functions.GenericFunction" title="sqlalchemy.sql.functions.GenericFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.GenericFunction</span></code></a>)</p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.Function">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">Function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">clauses</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.Function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Describe a named SQL function.</p>
+<p>The <a class="reference internal" href="#sqlalchemy.sql.functions.Function" title="sqlalchemy.sql.functions.Function"><code class="xref py py-class docutils literal notranslate"><span class="pre">Function</span></code></a> object is typically generated from the
+<a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.func" title="sqlalchemy.sql.expression.func"><code class="xref py py-data docutils literal notranslate"><span class="pre">func</span></code></a> generation object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="sqlalchemy.sql.functions.Function.params.*clauses"></span><strong>*clauses</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.sql.functions.Function.params.*clauses">¶</a> – list of column expressions that form the arguments
+of the SQL function call.</p></li>
+<li><p><span class="target" id="sqlalchemy.sql.functions.Function.params.type_"></span><strong>type_</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.sql.functions.Function.params.type_">¶</a> – optional <a class="reference internal" href="type_api.html#sqlalchemy.types.TypeEngine" title="sqlalchemy.types.TypeEngine"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeEngine</span></code></a> datatype object that will be
+used as the return value of the column expression generated by this
+function call.</p></li>
+<li><p><span class="target" id="sqlalchemy.sql.functions.Function.params.packagenames"></span><strong>packagenames</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.sql.functions.Function.params.packagenames">¶</a> – <p>a string which indicates package prefix names
+to be prepended to the function name when the SQL is generated.
+The <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.func" title="sqlalchemy.sql.expression.func"><code class="xref py py-data docutils literal notranslate"><span class="pre">func</span></code></a> generator creates these when it is called using
+dotted format, e.g.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func</span><span class="o">.</span><span class="n">mypackage</span><span class="o">.</span><span class="n">some_function</span><span class="p">(</span><span class="n">col1</span><span class="p">,</span> <span class="n">col2</span><span class="p">)</span></pre></div>
+</div>
+</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../tutorial/data_select.html#tutorial-functions"><span class="std std-ref">Working with SQL Functions</span></a> - in the <a class="reference internal" href="../tutorial/index.html#unified-tutorial"><span class="std std-ref">SQLAlchemy 1.4 / 2.0 Tutorial</span></a></p>
+<p><a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.func" title="sqlalchemy.sql.expression.func"><code class="xref py py-data docutils literal notranslate"><span class="pre">func</span></code></a> - namespace which produces registered or ad-hoc
+<a class="reference internal" href="#sqlalchemy.sql.functions.Function" title="sqlalchemy.sql.functions.Function"><code class="xref py py-class docutils literal notranslate"><span class="pre">Function</span></code></a> instances.</p>
+<p><a class="reference internal" href="#sqlalchemy.sql.functions.GenericFunction" title="sqlalchemy.sql.functions.GenericFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericFunction</span></code></a> - allows creation of registered function
+types.</p>
+</div>
+<div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.functions.Function" title="sqlalchemy.sql.functions.Function"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.Function</span></code></a> (<a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement" title="sqlalchemy.sql.functions.FunctionElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.FunctionElement</span></code></a>)</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.Function.__init__">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.sql.functions.Function"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.Function.</span></code></a><span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">clauses</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.Function.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a <a class="reference internal" href="#sqlalchemy.sql.functions.Function" title="sqlalchemy.sql.functions.Function"><code class="xref py py-class docutils literal notranslate"><span class="pre">Function</span></code></a>.</p>
+<p>The <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.func" title="sqlalchemy.sql.expression.func"><code class="xref py py-data docutils literal notranslate"><span class="pre">func</span></code></a> construct is normally used to construct
+new <a class="reference internal" href="#sqlalchemy.sql.functions.Function" title="sqlalchemy.sql.functions.Function"><code class="xref py py-class docutils literal notranslate"><span class="pre">Function</span></code></a> instances.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.Function.type">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.functions.Function"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.Function.</span></code></a><span class="sig-name descname"><span class="pre">type</span></span><em class="property"> <span class="pre">=</span> <span class="pre">NullType()</span></em><a class="headerlink" href="#sqlalchemy.sql.functions.Function.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <a class="reference internal" href="type_api.html#sqlalchemy.types.TypeEngine" title="sqlalchemy.types.TypeEngine"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeEngine</span></code></a> object which refers to the SQL return
+type represented by this SQL function.</p>
+<p>This datatype may be configured when generating a
+<a class="reference internal" href="#sqlalchemy.sql.functions.Function" title="sqlalchemy.sql.functions.Function"><code class="xref py py-class docutils literal notranslate"><span class="pre">Function</span></code></a> object by passing the
+<a class="reference internal" href="#sqlalchemy.sql.functions.Function.params.type_" title="sqlalchemy.sql.functions.Function"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Function.type_</span></code></a> parameter, e.g.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">select</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">lower</span><span class="p">(</span><span class="s2">&quot;some VALUE&quot;</span><span class="p">,</span> <span class="n">type_</span><span class="o">=</span><span class="n">String</span><span class="p">))</span></pre></div>
+</div>
+<p>The small number of built-in classes of <a class="reference internal" href="#sqlalchemy.sql.functions.Function" title="sqlalchemy.sql.functions.Function"><code class="xref py py-class docutils literal notranslate"><span class="pre">Function</span></code></a> come
+with a built-in datatype that’s appropriate to the class of function and
+its arguments. For functions that aren’t known, the type defaults to the
+“null type”.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.FunctionAsBinary">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">FunctionAsBinary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right_index</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.FunctionAsBinary" title="Permalink to this definition">¶</a></dt>
+<dd><div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.functions.FunctionAsBinary" title="sqlalchemy.sql.functions.FunctionAsBinary"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.FunctionAsBinary</span></code></a> (<a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.BinaryExpression" title="sqlalchemy.sql.expression.BinaryExpression"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.expression.BinaryExpression</span></code></a>)</p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.FunctionElement">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">FunctionElement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">clauses</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.FunctionElement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base for SQL function-oriented constructs.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="tutorial.html#coretutorial-functions"><span class="std std-ref">Functions</span></a> - in the Core tutorial</p>
+<p><a class="reference internal" href="#sqlalchemy.sql.functions.Function" title="sqlalchemy.sql.functions.Function"><code class="xref py py-class docutils literal notranslate"><span class="pre">Function</span></code></a> - named SQL function.</p>
+<p><a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.func" title="sqlalchemy.sql.expression.func"><code class="xref py py-data docutils literal notranslate"><span class="pre">func</span></code></a> - namespace which produces registered or ad-hoc
+<a class="reference internal" href="#sqlalchemy.sql.functions.Function" title="sqlalchemy.sql.functions.Function"><code class="xref py py-class docutils literal notranslate"><span class="pre">Function</span></code></a> instances.</p>
+<p><a class="reference internal" href="#sqlalchemy.sql.functions.GenericFunction" title="sqlalchemy.sql.functions.GenericFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericFunction</span></code></a> - allows creation of registered function
+types.</p>
+</div>
+<div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement" title="sqlalchemy.sql.functions.FunctionElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.FunctionElement</span></code></a> (<a class="reference internal" href="selectable.html#sqlalchemy.sql.expression.Executable" title="sqlalchemy.sql.expression.Executable"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.expression.Executable</span></code></a>, <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.ColumnElement" title="sqlalchemy.sql.expression.ColumnElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.expression.ColumnElement</span></code></a>, <a class="reference internal" href="selectable.html#sqlalchemy.sql.expression.FromClause" title="sqlalchemy.sql.expression.FromClause"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.expression.FromClause</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.expression.Generative</span></code>)</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.FunctionElement.__init__">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.FunctionElement.</span></code></a><span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">clauses</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.FunctionElement.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a <a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement" title="sqlalchemy.sql.functions.FunctionElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">FunctionElement</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="sqlalchemy.sql.functions.FunctionElement.params.*clauses"></span><strong>*clauses</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.sql.functions.FunctionElement.params.*clauses">¶</a> – list of column expressions that form the arguments
+of the SQL function call.</p></li>
+<li><p><span class="target" id="sqlalchemy.sql.functions.FunctionElement.params.**kwargs"></span><strong>**kwargs</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.sql.functions.FunctionElement.params.**kwargs">¶</a> – additional kwargs are typically consumed by
+subclasses.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.func" title="sqlalchemy.sql.expression.func"><code class="xref py py-data docutils literal notranslate"><span class="pre">func</span></code></a></p>
+<p><a class="reference internal" href="#sqlalchemy.sql.functions.Function" title="sqlalchemy.sql.functions.Function"><code class="xref py py-class docutils literal notranslate"><span class="pre">Function</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.FunctionElement.alias">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.FunctionElement.</span></code></a><span class="sig-name descname"><span class="pre">alias</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.FunctionElement.alias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a <a class="reference internal" href="selectable.html#sqlalchemy.sql.expression.Alias" title="sqlalchemy.sql.expression.Alias"><code class="xref py py-class docutils literal notranslate"><span class="pre">Alias</span></code></a> construct against this
+<a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement" title="sqlalchemy.sql.functions.FunctionElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">FunctionElement</span></code></a>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The <a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement.alias" title="sqlalchemy.sql.functions.FunctionElement.alias"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.alias()</span></code></a> method is part of the
+mechanism by which “table valued” SQL functions are created.
+However, most use cases are covered by higher level methods on
+<a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement" title="sqlalchemy.sql.functions.FunctionElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">FunctionElement</span></code></a> including
+<a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement.table_valued" title="sqlalchemy.sql.functions.FunctionElement.table_valued"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.table_valued()</span></code></a>, and
+<a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement.column_valued" title="sqlalchemy.sql.functions.FunctionElement.column_valued"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.column_valued()</span></code></a>.</p>
+</div>
+<p>This construct wraps the function in a named alias which
+is suitable for the FROM clause, in the style accepted for example
+by PostgreSQL.  A column expression is also provided using the
+special <code class="docutils literal notranslate"><span class="pre">.column</span></code> attribute, which may
+be used to refer to the output of the function as a scalar value
+in the columns or where clause, for a backend such as PostgreSQL.</p>
+<p>For a full table-valued expression, use the
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.table_valued()</span></code> method first to
+establish named columns.</p>
+<p>e.g.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">func</span><span class="p">,</span> <span class="n">select</span><span class="p">,</span> <span class="n">column</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data_view</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="n">unnest</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">&quot;data_view&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">data_view</span><span class="o">.</span><span class="n">column</span><span class="p">))</span>
+<span class="go">SELECT data_view</span>
+<span class="go">FROM unnest(:unnest_1) AS data_view</span></pre></div>
+</div>
+<p>The <a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement.column_valued" title="sqlalchemy.sql.functions.FunctionElement.column_valued"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.column_valued()</span></code></a> method provides
+a shortcut for the above pattern:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data_view</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="n">unnest</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">column_valued</span><span class="p">(</span><span class="s2">&quot;data_view&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">data_view</span><span class="p">))</span>
+<span class="go">SELECT data_view</span>
+<span class="go">FROM unnest(:unnest_1) AS data_view</span></pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.4.0b2: </span>Added the <code class="docutils literal notranslate"><span class="pre">.column</span></code> accessor</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../tutorial/data_select.html#tutorial-functions-table-valued"><span class="std std-ref">Table-Valued Functions</span></a> -
+in the <a class="reference internal" href="../tutorial/index.html#unified-tutorial"><span class="std std-ref">SQLAlchemy 1.4 / 2.0 Tutorial</span></a></p>
+<p><a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement.table_valued" title="sqlalchemy.sql.functions.FunctionElement.table_valued"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.table_valued()</span></code></a></p>
+<p><a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement.scalar_table_valued" title="sqlalchemy.sql.functions.FunctionElement.scalar_table_valued"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.scalar_table_valued()</span></code></a></p>
+<p><a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement.column_valued" title="sqlalchemy.sql.functions.FunctionElement.column_valued"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.column_valued()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.FunctionElement.as_comparison">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.FunctionElement.</span></code></a><span class="sig-name descname"><span class="pre">as_comparison</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">left_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right_index</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.FunctionElement.as_comparison" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interpret this expression as a boolean comparison between two values.</p>
+<p>This method is used for an ORM use case described at
+<a class="reference internal" href="../orm/join_conditions.html#relationship-custom-operator-sql-function"><span class="std std-ref">Custom operators based on SQL functions</span></a>.</p>
+<p>A hypothetical SQL function “is_equal()” which compares to values
+for equality would be written in the Core expression language as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">expr</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="n">is_equal</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">)</span></pre></div>
+</div>
+<p>If “is_equal()” above is comparing “a” and “b” for equality, the
+<a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement.as_comparison" title="sqlalchemy.sql.functions.FunctionElement.as_comparison"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.as_comparison()</span></code></a> method would be invoked as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">expr</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="n">is_equal</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">as_comparison</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span></pre></div>
+</div>
+<p>Where above, the integer value “1” refers to the first argument of the
+“is_equal()” function and the integer value “2” refers to the second.</p>
+<p>This would create a <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.BinaryExpression" title="sqlalchemy.sql.expression.BinaryExpression"><code class="xref py py-class docutils literal notranslate"><span class="pre">BinaryExpression</span></code></a> that is equivalent to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">BinaryExpression</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">operator</span><span class="o">=</span><span class="n">op</span><span class="o">.</span><span class="n">eq</span><span class="p">)</span></pre></div>
+</div>
+<p>However, at the SQL level it would still render as
+“is_equal(‘a’, ‘b’)”.</p>
+<p>The ORM, when it loads a related object or collection, needs to be able
+to manipulate the “left” and “right” sides of the ON clause of a JOIN
+expression. The purpose of this method is to provide a SQL function
+construct that can also supply this information to the ORM, when used
+with the <a class="reference internal" href="../orm/relationship_api.html#sqlalchemy.orm.relationship.params.primaryjoin" title="sqlalchemy.orm.relationship"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.primaryjoin</span></code></a> parameter. The
+return value is a containment object called <a class="reference internal" href="#sqlalchemy.sql.functions.FunctionAsBinary" title="sqlalchemy.sql.functions.FunctionAsBinary"><code class="xref py py-class docutils literal notranslate"><span class="pre">FunctionAsBinary</span></code></a>.</p>
+<p>An ORM example is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Venue</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;venue&#39;</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+
+    <span class="n">descendants</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span>
+        <span class="s2">&quot;Venue&quot;</span><span class="p">,</span>
+        <span class="n">primaryjoin</span><span class="o">=</span><span class="n">func</span><span class="o">.</span><span class="n">instr</span><span class="p">(</span>
+            <span class="n">remote</span><span class="p">(</span><span class="n">foreign</span><span class="p">(</span><span class="n">name</span><span class="p">)),</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">as_comparison</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">viewonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">order_by</span><span class="o">=</span><span class="n">name</span>
+    <span class="p">)</span></pre></div>
+</div>
+<p>Above, the “Venue” class can load descendant “Venue” objects by
+determining if the name of the parent Venue is contained within the
+start of the hypothetical descendant value’s name, e.g. “parent1” would
+match up to “parent1/child1”, but not to “parent2/child1”.</p>
+<p>Possible use cases include the “materialized path” example given above,
+as well as making use of special SQL functions such as geometric
+functions to create join conditions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="sqlalchemy.sql.functions.FunctionElement.as_comparison.params.left_index"></span><strong>left_index</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.sql.functions.FunctionElement.as_comparison.params.left_index">¶</a> – the integer 1-based index of the function argument
+that serves as the “left” side of the expression.</p></li>
+<li><p><span class="target" id="sqlalchemy.sql.functions.FunctionElement.as_comparison.params.right_index"></span><strong>right_index</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.sql.functions.FunctionElement.as_comparison.params.right_index">¶</a> – the integer 1-based index of the function argument
+that serves as the “right” side of the expression.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.3.</span></p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../orm/join_conditions.html#relationship-custom-operator-sql-function"><span class="std std-ref">Custom operators based on SQL functions</span></a> -
+example use within the ORM</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.FunctionElement.clauses">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.FunctionElement.</span></code></a><span class="sig-name descname"><span class="pre">clauses</span></span><a class="headerlink" href="#sqlalchemy.sql.functions.FunctionElement.clauses" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the underlying <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.ClauseList" title="sqlalchemy.sql.expression.ClauseList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClauseList</span></code></a> which contains
+the arguments for this <a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement" title="sqlalchemy.sql.functions.FunctionElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">FunctionElement</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.FunctionElement.column_valued">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.FunctionElement.</span></code></a><span class="sig-name descname"><span class="pre">column_valued</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.FunctionElement.column_valued" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return this <a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement" title="sqlalchemy.sql.functions.FunctionElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">FunctionElement</span></code></a> as a column expression that
+selects from itself as a FROM clause.</p>
+<p>E.g.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">select</span><span class="p">,</span> <span class="n">func</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gs</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="n">generate_series</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">column_valued</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">gs</span><span class="p">))</span>
+<span class="go">SELECT anon_1</span>
+<span class="go">FROM generate_series(:generate_series_1, :generate_series_2, :generate_series_3) AS anon_1</span></pre></div>
+</div>
+<p>This is shorthand for:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gs</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="n">generate_series</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">()</span><span class="o">.</span><span class="n">column</span></pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../tutorial/data_select.html#tutorial-functions-column-valued"><span class="std std-ref">Column Valued Functions - Table Valued Function as a Scalar Column</span></a> - in the <a class="reference internal" href="../tutorial/index.html#unified-tutorial"><span class="std std-ref">SQLAlchemy 1.4 / 2.0 Tutorial</span></a></p>
+<p><a class="reference internal" href="../dialects/postgresql.html#postgresql-column-valued"><span class="std std-ref">Column Valued Functions</span></a> - in the <a class="reference internal" href="../dialects/postgresql.html"><span class="std std-ref">PostgreSQL</span></a> documentation</p>
+<p><a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement.table_valued" title="sqlalchemy.sql.functions.FunctionElement.table_valued"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.table_valued()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.FunctionElement.columns">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.FunctionElement.</span></code></a><span class="sig-name descname"><span class="pre">columns</span></span><a class="headerlink" href="#sqlalchemy.sql.functions.FunctionElement.columns" title="Permalink to this definition">¶</a></dt>
+<dd><p>The set of columns exported by this <a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement" title="sqlalchemy.sql.functions.FunctionElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">FunctionElement</span></code></a>.</p>
+<p>This is a placeholder collection that allows the function to be
+placed in the FROM clause of a statement:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">column</span><span class="p">,</span> <span class="n">select</span><span class="p">,</span> <span class="n">func</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">),</span> <span class="n">column</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">select_from</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">myfunction</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span>
+<span class="go">SELECT x, y FROM myfunction()</span></pre></div>
+</div>
+<p>The above form is a legacy feature that is now superseded by the
+fully capable <a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement.table_valued" title="sqlalchemy.sql.functions.FunctionElement.table_valued"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.table_valued()</span></code></a>
+method; see that method for details.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement.table_valued" title="sqlalchemy.sql.functions.FunctionElement.table_valued"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.table_valued()</span></code></a> - generates table-valued
+SQL function expressions.</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.FunctionElement.entity_namespace">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.FunctionElement.</span></code></a><span class="sig-name descname"><span class="pre">entity_namespace</span></span><a class="headerlink" href="#sqlalchemy.sql.functions.FunctionElement.entity_namespace" title="Permalink to this definition">¶</a></dt>
+<dd><p>overrides FromClause.entity_namespace as functions are generally
+column expressions and not FromClauses.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.FunctionElement.execute">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.FunctionElement.</span></code></a><span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.FunctionElement.execute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute this <a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement" title="sqlalchemy.sql.functions.FunctionElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">FunctionElement</span></code></a> against an embedded
+‘bind’.</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 1.4: </span>The <a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement.execute" title="sqlalchemy.sql.functions.FunctionElement.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.execute()</span></code></a> method is considered legacy as of the 1.x series of SQLAlchemy and will be removed in 2.0. All statement execution in SQLAlchemy 2.0 is performed by the <a class="reference internal" href="connections.html#sqlalchemy.engine.Connection.execute" title="sqlalchemy.engine.Connection.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code></a> method of <a class="reference internal" href="connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>, or in the ORM by the <a class="reference internal" href="../orm/session_api.html#sqlalchemy.orm.Session.execute" title="sqlalchemy.orm.Session.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code></a> method of <a class="reference internal" href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>. (Background on SQLAlchemy 2.0 at: <a class="reference internal" href="../changelog/migration_20.html"><span class="std std-ref">Migrating to SQLAlchemy 2.0</span></a>)</p>
+</div>
+<p>This first calls <a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement.select" title="sqlalchemy.sql.functions.FunctionElement.select"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.select()</span></code></a> to
+produce a SELECT construct.</p>
+<p>Note that <a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement" title="sqlalchemy.sql.functions.FunctionElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">FunctionElement</span></code></a> can be passed to
+the <code class="xref py py-meth docutils literal notranslate"><span class="pre">Connectable.execute()</span></code> method of <a class="reference internal" href="connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>
+or <a class="reference internal" href="connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.FunctionElement.filter">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.FunctionElement.</span></code></a><span class="sig-name descname"><span class="pre">filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">criterion</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.FunctionElement.filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a FILTER clause against this function.</p>
+<p>Used against aggregate and window functions,
+for database backends that support the “FILTER” clause.</p>
+<p>The expression:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span></pre></div>
+</div>
+<p>is shorthand for:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">funcfilter</span>
+<span class="n">funcfilter</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="kc">True</span><span class="p">)</span></pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.0.0.</span></p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../tutorial/data_select.html#tutorial-functions-within-group"><span class="std std-ref">Special Modifiers WITHIN GROUP, FILTER</span></a> -
+in the <a class="reference internal" href="../tutorial/index.html#unified-tutorial"><span class="std std-ref">SQLAlchemy 1.4 / 2.0 Tutorial</span></a></p>
+<p><a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.FunctionFilter" title="sqlalchemy.sql.expression.FunctionFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">FunctionFilter</span></code></a></p>
+<p><a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.funcfilter" title="sqlalchemy.sql.expression.funcfilter"><code class="xref py py-func docutils literal notranslate"><span class="pre">funcfilter()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.FunctionElement.over">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.FunctionElement.</span></code></a><span class="sig-name descname"><span class="pre">over</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">partition_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">range_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.FunctionElement.over" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce an OVER clause against this function.</p>
+<p>Used against aggregate or so-called “window” functions,
+for database backends that support window functions.</p>
+<p>The expression:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func</span><span class="o">.</span><span class="n">row_number</span><span class="p">()</span><span class="o">.</span><span class="n">over</span><span class="p">(</span><span class="n">order_by</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">)</span></pre></div>
+</div>
+<p>is shorthand for:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">over</span>
+<span class="n">over</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">row_number</span><span class="p">(),</span> <span class="n">order_by</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">)</span></pre></div>
+</div>
+<p>See <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.over" title="sqlalchemy.sql.expression.over"><code class="xref py py-func docutils literal notranslate"><span class="pre">over()</span></code></a> for a full description.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.over" title="sqlalchemy.sql.expression.over"><code class="xref py py-func docutils literal notranslate"><span class="pre">over()</span></code></a></p>
+<p><a class="reference internal" href="../tutorial/data_select.html#tutorial-window-functions"><span class="std std-ref">Using Window Functions</span></a> - in the <a class="reference internal" href="../tutorial/index.html#unified-tutorial"><span class="std std-ref">SQLAlchemy 1.4 / 2.0 Tutorial</span></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.FunctionElement.scalar">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.FunctionElement.</span></code></a><span class="sig-name descname"><span class="pre">scalar</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.FunctionElement.scalar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute this <a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement" title="sqlalchemy.sql.functions.FunctionElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">FunctionElement</span></code></a> against an embedded
+‘bind’ and return a scalar value.</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 1.4: </span>The <a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement.scalar" title="sqlalchemy.sql.functions.FunctionElement.scalar"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.scalar()</span></code></a> method is considered legacy as of the 1.x series of SQLAlchemy and will be removed in 2.0. Scalar execution in SQLAlchemy 2.0 is performed by the <a class="reference internal" href="connections.html#sqlalchemy.engine.Connection.scalar" title="sqlalchemy.engine.Connection.scalar"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.scalar()</span></code></a> method of <a class="reference internal" href="connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>, or in the ORM by the <a class="reference internal" href="../orm/session_api.html#sqlalchemy.orm.Session.scalar" title="sqlalchemy.orm.Session.scalar"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.scalar()</span></code></a> method of <a class="reference internal" href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>. (Background on SQLAlchemy 2.0 at: <a class="reference internal" href="../changelog/migration_20.html"><span class="std std-ref">Migrating to SQLAlchemy 2.0</span></a>)</p>
+</div>
+<p>This first calls <a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement.select" title="sqlalchemy.sql.functions.FunctionElement.select"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.select()</span></code></a> to
+produce a SELECT construct.</p>
+<p>Note that <a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement" title="sqlalchemy.sql.functions.FunctionElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">FunctionElement</span></code></a> can be passed to
+the <code class="xref py py-meth docutils literal notranslate"><span class="pre">Connectable.scalar()</span></code> method of <a class="reference internal" href="connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>
+or <a class="reference internal" href="connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.FunctionElement.scalar_table_valued">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.FunctionElement.</span></code></a><span class="sig-name descname"><span class="pre">scalar_table_valued</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.FunctionElement.scalar_table_valued" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a column expression that’s against this
+<a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement" title="sqlalchemy.sql.functions.FunctionElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">FunctionElement</span></code></a> as a scalar
+table-valued expression.</p>
+<p>The returned expression is similar to that returned by a single column
+accessed off of a <a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement.table_valued" title="sqlalchemy.sql.functions.FunctionElement.table_valued"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.table_valued()</span></code></a>
+construct, except no FROM clause is generated; the function is rendered
+in the similar way as a scalar subquery.</p>
+<p>E.g.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">func</span><span class="p">,</span> <span class="n">select</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fn</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="n">jsonb_each</span><span class="p">(</span><span class="s2">&quot;{&#39;k&#39;, &#39;v&#39;}&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">scalar_table_valued</span><span class="p">(</span><span class="s2">&quot;key&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">fn</span><span class="p">))</span>
+<span class="go">SELECT (jsonb_each(:jsonb_each_1)).key</span></pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.4.0b2.</span></p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement.table_valued" title="sqlalchemy.sql.functions.FunctionElement.table_valued"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.table_valued()</span></code></a></p>
+<p><a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement.alias" title="sqlalchemy.sql.functions.FunctionElement.alias"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.alias()</span></code></a></p>
+<p><a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement.column_valued" title="sqlalchemy.sql.functions.FunctionElement.column_valued"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.column_valued()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.FunctionElement.select">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.FunctionElement.</span></code></a><span class="sig-name descname"><span class="pre">select</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.FunctionElement.select" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a <a class="reference internal" href="selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> construct
+against this <a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement" title="sqlalchemy.sql.functions.FunctionElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">FunctionElement</span></code></a>.</p>
+<p>This is shorthand for:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">function_element</span><span class="p">)</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.FunctionElement.self_group">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.FunctionElement.</span></code></a><span class="sig-name descname"><span class="pre">self_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">against</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.FunctionElement.self_group" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply a ‘grouping’ to this <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.ClauseElement" title="sqlalchemy.sql.expression.ClauseElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClauseElement</span></code></a>.</p>
+<p>This method is overridden by subclasses to return a “grouping”
+construct, i.e. parenthesis.   In particular it’s used by “binary”
+expressions to provide a grouping around themselves when placed into a
+larger expression, as well as by <a class="reference internal" href="selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a>
+constructs when placed into the FROM clause of another
+<a class="reference internal" href="selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a>.  (Note that subqueries should be
+normally created using the <a class="reference internal" href="selectable.html#sqlalchemy.sql.expression.Select.alias" title="sqlalchemy.sql.expression.Select.alias"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.alias()</span></code></a> method,
+as many
+platforms require nested SELECT statements to be named).</p>
+<p>As expressions are composed together, the application of
+<a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement.self_group" title="sqlalchemy.sql.functions.FunctionElement.self_group"><code class="xref py py-meth docutils literal notranslate"><span class="pre">self_group()</span></code></a> is automatic - end-user code should never
+need to use this method directly.  Note that SQLAlchemy’s
+clause constructs take operator precedence into account -
+so parenthesis might not be needed, for example, in
+an expression like <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">OR</span> <span class="pre">(y</span> <span class="pre">AND</span> <span class="pre">z)</span></code> - AND takes precedence
+over OR.</p>
+<p>The base <a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement.self_group" title="sqlalchemy.sql.functions.FunctionElement.self_group"><code class="xref py py-meth docutils literal notranslate"><span class="pre">self_group()</span></code></a> method of
+<a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.ClauseElement" title="sqlalchemy.sql.expression.ClauseElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClauseElement</span></code></a>
+just returns self.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.FunctionElement.table_valued">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.FunctionElement.</span></code></a><span class="sig-name descname"><span class="pre">table_valued</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">expr</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.FunctionElement.table_valued" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a <a class="reference internal" href="selectable.html#sqlalchemy.sql.expression.TableValuedAlias" title="sqlalchemy.sql.expression.TableValuedAlias"><code class="xref py py-class docutils literal notranslate"><span class="pre">TableValuedAlias</span></code></a> representation of this
+<a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement" title="sqlalchemy.sql.functions.FunctionElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">FunctionElement</span></code></a> with table-valued expressions added.</p>
+<p>e.g.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fn</span> <span class="o">=</span> <span class="p">(</span>
+<span class="gp">... </span>    <span class="n">func</span><span class="o">.</span><span class="n">generate_series</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span><span class="o">.</span>
+<span class="gp">... </span>    <span class="n">table_valued</span><span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="s2">&quot;start&quot;</span><span class="p">,</span> <span class="s2">&quot;stop&quot;</span><span class="p">,</span> <span class="s2">&quot;step&quot;</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">fn</span><span class="p">))</span>
+<span class="go">SELECT anon_1.value, anon_1.start, anon_1.stop, anon_1.step</span>
+<span class="go">FROM generate_series(:generate_series_1, :generate_series_2) AS anon_1</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">fn</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">fn</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">stop</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">fn</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">value</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">))</span>
+<span class="go">SELECT anon_1.value, anon_1.stop</span>
+<span class="go">FROM generate_series(:generate_series_1, :generate_series_2) AS anon_1</span>
+<span class="go">WHERE anon_1.value &gt; :value_1</span></pre></div>
+</div>
+<p>A WITH ORDINALITY expression may be generated by passing the keyword
+argument “with_ordinality”:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fn</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="n">generate_series</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">table_valued</span><span class="p">(</span><span class="s2">&quot;gen&quot;</span><span class="p">,</span> <span class="n">with_ordinality</span><span class="o">=</span><span class="s2">&quot;ordinality&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">fn</span><span class="p">))</span>
+<span class="go">SELECT anon_1.gen, anon_1.ordinality</span>
+<span class="go">FROM generate_series(:generate_series_1, :generate_series_2, :generate_series_3) WITH ORDINALITY AS anon_1</span></pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="sqlalchemy.sql.functions.FunctionElement.table_valued.params.*expr"></span><strong>*expr</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.sql.functions.FunctionElement.table_valued.params.*expr">¶</a> – A series of string column names that will be added to the
+<code class="docutils literal notranslate"><span class="pre">.c</span></code> collection of the resulting <a class="reference internal" href="selectable.html#sqlalchemy.sql.expression.TableValuedAlias" title="sqlalchemy.sql.expression.TableValuedAlias"><code class="xref py py-class docutils literal notranslate"><span class="pre">TableValuedAlias</span></code></a>
+construct as columns.  <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.column" title="sqlalchemy.sql.expression.column"><code class="xref py py-func docutils literal notranslate"><span class="pre">column()</span></code></a> objects with or without
+datatypes may also be used.</p></li>
+<li><p><span class="target" id="sqlalchemy.sql.functions.FunctionElement.table_valued.params.name"></span><strong>name</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.sql.functions.FunctionElement.table_valued.params.name">¶</a> – optional name to assign to the alias name that’s generated.
+If omitted, a unique anonymizing name is used.</p></li>
+<li><p><span class="target" id="sqlalchemy.sql.functions.FunctionElement.table_valued.params.with_ordinality"></span><strong>with_ordinality</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.sql.functions.FunctionElement.table_valued.params.with_ordinality">¶</a> – string name that when present results in the
+<code class="docutils literal notranslate"><span class="pre">WITH</span> <span class="pre">ORDINALITY</span></code> clause being added to the alias, and the given
+string name will be added as a column to the .c collection
+of the resulting <a class="reference internal" href="selectable.html#sqlalchemy.sql.expression.TableValuedAlias" title="sqlalchemy.sql.expression.TableValuedAlias"><code class="xref py py-class docutils literal notranslate"><span class="pre">TableValuedAlias</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.4.0b2.</span></p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../tutorial/data_select.html#tutorial-functions-table-valued"><span class="std std-ref">Table-Valued Functions</span></a> - in the <a class="reference internal" href="../tutorial/index.html#unified-tutorial"><span class="std std-ref">SQLAlchemy 1.4 / 2.0 Tutorial</span></a></p>
+<p><a class="reference internal" href="../dialects/postgresql.html#postgresql-table-valued"><span class="std std-ref">Table-Valued Functions</span></a> - in the <a class="reference internal" href="../dialects/postgresql.html"><span class="std std-ref">PostgreSQL</span></a> documentation</p>
+<p><a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement.scalar_table_valued" title="sqlalchemy.sql.functions.FunctionElement.scalar_table_valued"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.scalar_table_valued()</span></code></a> - variant of
+<a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement.table_valued" title="sqlalchemy.sql.functions.FunctionElement.table_valued"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.table_valued()</span></code></a> which delivers the
+complete table valued expression as a scalar column expression</p>
+<p><a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement.column_valued" title="sqlalchemy.sql.functions.FunctionElement.column_valued"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.column_valued()</span></code></a></p>
+<p><a class="reference internal" href="selectable.html#sqlalchemy.sql.expression.TableValuedAlias.render_derived" title="sqlalchemy.sql.expression.TableValuedAlias.render_derived"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TableValuedAlias.render_derived()</span></code></a> - renders the alias
+using a derived column clause, e.g. <code class="docutils literal notranslate"><span class="pre">AS</span> <span class="pre">name(col1,</span> <span class="pre">col2,</span> <span class="pre">...)</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.FunctionElement.within_group">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.FunctionElement.</span></code></a><span class="sig-name descname"><span class="pre">within_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">order_by</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.FunctionElement.within_group" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a WITHIN GROUP (ORDER BY expr) clause against this function.</p>
+<p>Used against so-called “ordered set aggregate” and “hypothetical
+set aggregate” functions, including <a class="reference internal" href="#sqlalchemy.sql.functions.percentile_cont" title="sqlalchemy.sql.functions.percentile_cont"><code class="xref py py-class docutils literal notranslate"><span class="pre">percentile_cont</span></code></a>,
+<a class="reference internal" href="#sqlalchemy.sql.functions.rank" title="sqlalchemy.sql.functions.rank"><code class="xref py py-class docutils literal notranslate"><span class="pre">rank</span></code></a>, <a class="reference internal" href="#sqlalchemy.sql.functions.dense_rank" title="sqlalchemy.sql.functions.dense_rank"><code class="xref py py-class docutils literal notranslate"><span class="pre">dense_rank</span></code></a>, etc.</p>
+<p>See <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.within_group" title="sqlalchemy.sql.expression.within_group"><code class="xref py py-func docutils literal notranslate"><span class="pre">within_group()</span></code></a> for a full description.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.1.</span></p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../tutorial/data_select.html#tutorial-functions-within-group"><span class="std std-ref">Special Modifiers WITHIN GROUP, FILTER</span></a> -
+in the <a class="reference internal" href="../tutorial/index.html#unified-tutorial"><span class="std std-ref">SQLAlchemy 1.4 / 2.0 Tutorial</span></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.FunctionElement.within_group_type">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.FunctionElement.</span></code></a><span class="sig-name descname"><span class="pre">within_group_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">within_group</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.FunctionElement.within_group_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>For types that define their return type as based on the criteria
+within a WITHIN GROUP (ORDER BY) expression, called by the
+<a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.WithinGroup" title="sqlalchemy.sql.expression.WithinGroup"><code class="xref py py-class docutils literal notranslate"><span class="pre">WithinGroup</span></code></a> construct.</p>
+<p>Returns None by default, in which case the function’s normal <code class="docutils literal notranslate"><span class="pre">.type</span></code>
+is used.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.GenericFunction">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">GenericFunction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.GenericFunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define a ‘generic’ function.</p>
+<p>A generic function is a pre-established <a class="reference internal" href="#sqlalchemy.sql.functions.Function" title="sqlalchemy.sql.functions.Function"><code class="xref py py-class docutils literal notranslate"><span class="pre">Function</span></code></a>
+class that is instantiated automatically when called
+by name from the <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.func" title="sqlalchemy.sql.expression.func"><code class="xref py py-data docutils literal notranslate"><span class="pre">func</span></code></a> attribute.    Note that
+calling any name from <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.func" title="sqlalchemy.sql.expression.func"><code class="xref py py-data docutils literal notranslate"><span class="pre">func</span></code></a> has the effect that
+a new <a class="reference internal" href="#sqlalchemy.sql.functions.Function" title="sqlalchemy.sql.functions.Function"><code class="xref py py-class docutils literal notranslate"><span class="pre">Function</span></code></a> instance is created automatically,
+given that name.  The primary use case for defining
+a <a class="reference internal" href="#sqlalchemy.sql.functions.GenericFunction" title="sqlalchemy.sql.functions.GenericFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericFunction</span></code></a> class is so that a function
+of a particular name may be given a fixed return type.
+It can also include custom argument parsing schemes as well
+as additional methods.</p>
+<p>Subclasses of <a class="reference internal" href="#sqlalchemy.sql.functions.GenericFunction" title="sqlalchemy.sql.functions.GenericFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericFunction</span></code></a> are automatically
+registered under the name of the class.  For
+example, a user-defined function <code class="docutils literal notranslate"><span class="pre">as_utc()</span></code> would
+be available immediately:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.sql.functions</span> <span class="kn">import</span> <span class="n">GenericFunction</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.types</span> <span class="kn">import</span> <span class="n">DateTime</span>
+
+<span class="k">class</span> <span class="nc">as_utc</span><span class="p">(</span><span class="n">GenericFunction</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="n">DateTime</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">as_utc</span><span class="p">()))</span></pre></div>
+</div>
+<p>User-defined generic functions can be organized into
+packages by specifying the “package” attribute when defining
+<a class="reference internal" href="#sqlalchemy.sql.functions.GenericFunction" title="sqlalchemy.sql.functions.GenericFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericFunction</span></code></a>.   Third party libraries
+containing many functions may want to use this in order
+to avoid name conflicts with other systems.   For example,
+if our <code class="docutils literal notranslate"><span class="pre">as_utc()</span></code> function were part of a package
+“time”:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">as_utc</span><span class="p">(</span><span class="n">GenericFunction</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="n">DateTime</span>
+    <span class="n">package</span> <span class="o">=</span> <span class="s2">&quot;time&quot;</span></pre></div>
+</div>
+<p>The above function would be available from <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.func" title="sqlalchemy.sql.expression.func"><code class="xref py py-data docutils literal notranslate"><span class="pre">func</span></code></a>
+using the package name <code class="docutils literal notranslate"><span class="pre">time</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">as_utc</span><span class="p">()))</span></pre></div>
+</div>
+<p>A final option is to allow the function to be accessed
+from one name in <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.func" title="sqlalchemy.sql.expression.func"><code class="xref py py-data docutils literal notranslate"><span class="pre">func</span></code></a> but to render as a different name.
+The <code class="docutils literal notranslate"><span class="pre">identifier</span></code> attribute will override the name used to
+access the function as loaded from <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.func" title="sqlalchemy.sql.expression.func"><code class="xref py py-data docutils literal notranslate"><span class="pre">func</span></code></a>, but will retain
+the usage of <code class="docutils literal notranslate"><span class="pre">name</span></code> as the rendered name:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">GeoBuffer</span><span class="p">(</span><span class="n">GenericFunction</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="n">Geometry</span>
+    <span class="n">package</span> <span class="o">=</span> <span class="s2">&quot;geo&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;ST_Buffer&quot;</span>
+    <span class="n">identifier</span> <span class="o">=</span> <span class="s2">&quot;buffer&quot;</span></pre></div>
+</div>
+<p>The above function will render as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">geo</span><span class="o">.</span><span class="n">buffer</span><span class="p">())</span>
+<span class="go">ST_Buffer()</span></pre></div>
+</div>
+<p>The name will be rendered as is, however without quoting unless the name
+contains special characters that require quoting.  To force quoting
+on or off for the name, use the <code class="xref py py-class docutils literal notranslate"><span class="pre">quoted_name</span></code>
+construct:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.sql</span> <span class="kn">import</span> <span class="n">quoted_name</span>
+
+<span class="k">class</span> <span class="nc">GeoBuffer</span><span class="p">(</span><span class="n">GenericFunction</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="n">Geometry</span>
+    <span class="n">package</span> <span class="o">=</span> <span class="s2">&quot;geo&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">quoted_name</span><span class="p">(</span><span class="s2">&quot;ST_Buffer&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="n">identifier</span> <span class="o">=</span> <span class="s2">&quot;buffer&quot;</span></pre></div>
+</div>
+<p>The above function will render as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">geo</span><span class="o">.</span><span class="n">buffer</span><span class="p">())</span>
+<span class="go">&quot;ST_Buffer&quot;()</span></pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.3.13: </span>The <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.quoted_name" title="sqlalchemy.sql.expression.quoted_name"><code class="xref py py-class docutils literal notranslate"><span class="pre">quoted_name</span></code></a> construct is now
+recognized for quoting when used with the “name” attribute of the
+object, so that quoting can be forced on or off for the function
+name.</p>
+</div>
+<div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.functions.GenericFunction" title="sqlalchemy.sql.functions.GenericFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.GenericFunction</span></code></a> (<a class="reference internal" href="#sqlalchemy.sql.functions.Function" title="sqlalchemy.sql.functions.Function"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.Function</span></code></a>)</p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.OrderedSetAgg">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">OrderedSetAgg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.OrderedSetAgg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define a function where the return type is based on the sort
+expression type as defined by the expression passed to the
+<a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement.within_group" title="sqlalchemy.sql.functions.FunctionElement.within_group"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.within_group()</span></code></a> method.</p>
+<div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.functions.OrderedSetAgg" title="sqlalchemy.sql.functions.OrderedSetAgg"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.OrderedSetAgg</span></code></a> (<a class="reference internal" href="#sqlalchemy.sql.functions.GenericFunction" title="sqlalchemy.sql.functions.GenericFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.GenericFunction</span></code></a>)</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.OrderedSetAgg.within_group_type">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.sql.functions.OrderedSetAgg"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.OrderedSetAgg.</span></code></a><span class="sig-name descname"><span class="pre">within_group_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">within_group</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.OrderedSetAgg.within_group_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>For types that define their return type as based on the criteria
+within a WITHIN GROUP (ORDER BY) expression, called by the
+<a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.WithinGroup" title="sqlalchemy.sql.expression.WithinGroup"><code class="xref py py-class docutils literal notranslate"><span class="pre">WithinGroup</span></code></a> construct.</p>
+<p>Returns None by default, in which case the function’s normal <code class="docutils literal notranslate"><span class="pre">.type</span></code>
+is used.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.ReturnTypeFromArgs">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">ReturnTypeFromArgs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.ReturnTypeFromArgs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define a function whose return type is the same as its arguments.</p>
+<div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.functions.ReturnTypeFromArgs" title="sqlalchemy.sql.functions.ReturnTypeFromArgs"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.ReturnTypeFromArgs</span></code></a> (<a class="reference internal" href="#sqlalchemy.sql.functions.GenericFunction" title="sqlalchemy.sql.functions.GenericFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.GenericFunction</span></code></a>)</p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.ScalarFunctionColumn">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">ScalarFunctionColumn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.ScalarFunctionColumn" title="Permalink to this definition">¶</a></dt>
+<dd><div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.functions.ScalarFunctionColumn" title="sqlalchemy.sql.functions.ScalarFunctionColumn"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.ScalarFunctionColumn</span></code></a> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.expression.NamedColumn</span></code>)</p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.array_agg">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">array_agg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.array_agg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Support for the ARRAY_AGG function.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">func.array_agg(expr)</span></code> construct returns an expression of
+type <a class="reference internal" href="type_basics.html#sqlalchemy.types.ARRAY" title="sqlalchemy.types.ARRAY"><code class="xref py py-class docutils literal notranslate"><span class="pre">ARRAY</span></code></a>.</p>
+<p>e.g.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">array_agg</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">values</span><span class="p">)[</span><span class="mi">2</span><span class="p">:</span><span class="mi">5</span><span class="p">])</span></pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.1.</span></p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../dialects/postgresql.html#sqlalchemy.dialects.postgresql.array_agg" title="sqlalchemy.dialects.postgresql.array_agg"><code class="xref py py-func docutils literal notranslate"><span class="pre">array_agg()</span></code></a> - PostgreSQL-specific version that
+returns <a class="reference internal" href="../dialects/postgresql.html#sqlalchemy.dialects.postgresql.ARRAY" title="sqlalchemy.dialects.postgresql.ARRAY"><code class="xref py py-class docutils literal notranslate"><span class="pre">ARRAY</span></code></a>, which has PG-specific operators
+added.</p>
+</div>
+<div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.functions.array_agg" title="sqlalchemy.sql.functions.array_agg"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.array_agg</span></code></a> (<a class="reference internal" href="#sqlalchemy.sql.functions.GenericFunction" title="sqlalchemy.sql.functions.GenericFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.GenericFunction</span></code></a>)</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.array_agg.type">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.functions.array_agg"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.array_agg.</span></code></a><span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#sqlalchemy.sql.functions.array_agg.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="type_basics.html#sqlalchemy.types.ARRAY" title="sqlalchemy.sql.sqltypes.ARRAY"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.sqltypes.ARRAY</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.char_length">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">char_length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.char_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>The CHAR_LENGTH() SQL function.</p>
+<div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.functions.char_length" title="sqlalchemy.sql.functions.char_length"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.char_length</span></code></a> (<a class="reference internal" href="#sqlalchemy.sql.functions.GenericFunction" title="sqlalchemy.sql.functions.GenericFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.GenericFunction</span></code></a>)</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.char_length.type">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.functions.char_length"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.char_length.</span></code></a><span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#sqlalchemy.sql.functions.char_length.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="type_basics.html#sqlalchemy.types.Integer" title="sqlalchemy.sql.sqltypes.Integer"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.sqltypes.Integer</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.coalesce">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">coalesce</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.coalesce" title="Permalink to this definition">¶</a></dt>
+<dd><div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.functions.coalesce" title="sqlalchemy.sql.functions.coalesce"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.coalesce</span></code></a> (<a class="reference internal" href="#sqlalchemy.sql.functions.ReturnTypeFromArgs" title="sqlalchemy.sql.functions.ReturnTypeFromArgs"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.ReturnTypeFromArgs</span></code></a>)</p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.concat">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">concat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.concat" title="Permalink to this definition">¶</a></dt>
+<dd><p>The SQL CONCAT() function, which concatenates strings.</p>
+<p>E.g.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">)))</span>
+<span class="go">SELECT concat(:concat_2, :concat_3) AS concat_1</span></pre></div>
+</div>
+<p>String concatenation in SQLAlchemy is more commonly available using the
+Python <code class="docutils literal notranslate"><span class="pre">+</span></code> operator with string datatypes, which will render a
+backend-specific concatenation operator, such as</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">literal</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;b&quot;</span><span class="p">))</span>
+<span class="go">SELECT :param_1 || :param_2 AS anon_1</span></pre></div>
+</div>
+<div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.functions.concat" title="sqlalchemy.sql.functions.concat"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.concat</span></code></a> (<a class="reference internal" href="#sqlalchemy.sql.functions.GenericFunction" title="sqlalchemy.sql.functions.GenericFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.GenericFunction</span></code></a>)</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.concat.type">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.functions.concat"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.concat.</span></code></a><span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#sqlalchemy.sql.functions.concat.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="type_basics.html#sqlalchemy.types.String" title="sqlalchemy.sql.sqltypes.String"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.sqltypes.String</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.count">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expression</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.count" title="Permalink to this definition">¶</a></dt>
+<dd><p>The ANSI COUNT aggregate function.  With no arguments,
+emits COUNT *.</p>
+<p>E.g.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">func</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">select</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">table</span><span class="p">,</span> <span class="n">column</span>
+
+<span class="n">my_table</span> <span class="o">=</span> <span class="n">table</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">,</span> <span class="n">column</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">))</span>
+
+<span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">count</span><span class="p">())</span><span class="o">.</span><span class="n">select_from</span><span class="p">(</span><span class="n">my_table</span><span class="p">)</span></pre></div>
+</div>
+<p>Executing <code class="docutils literal notranslate"><span class="pre">stmt</span></code> would emit:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="n">AS</span> <span class="n">count_1</span>
+<span class="n">FROM</span> <span class="n">some_table</span></pre></div>
+</div>
+<div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.functions.count" title="sqlalchemy.sql.functions.count"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.count</span></code></a> (<a class="reference internal" href="#sqlalchemy.sql.functions.GenericFunction" title="sqlalchemy.sql.functions.GenericFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.GenericFunction</span></code></a>)</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.count.type">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.functions.count"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.count.</span></code></a><span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#sqlalchemy.sql.functions.count.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="type_basics.html#sqlalchemy.types.Integer" title="sqlalchemy.sql.sqltypes.Integer"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.sqltypes.Integer</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.cube">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">cube</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.cube" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement the <code class="docutils literal notranslate"><span class="pre">CUBE</span></code> grouping operation.</p>
+<p>This function is used as part of the GROUP BY of a statement,
+e.g. <a class="reference internal" href="selectable.html#sqlalchemy.sql.expression.Select.group_by" title="sqlalchemy.sql.expression.Select.group_by"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.group_by()</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span>
+    <span class="n">func</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">value</span><span class="p">),</span> <span class="n">table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">col_1</span><span class="p">,</span> <span class="n">table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">col_2</span>
+<span class="p">)</span><span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">cube</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">col_1</span><span class="p">,</span> <span class="n">table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">col_2</span><span class="p">))</span></pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.2.</span></p>
+</div>
+<div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.functions.cube" title="sqlalchemy.sql.functions.cube"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.cube</span></code></a> (<a class="reference internal" href="#sqlalchemy.sql.functions.GenericFunction" title="sqlalchemy.sql.functions.GenericFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.GenericFunction</span></code></a>)</p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.cume_dist">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">cume_dist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.cume_dist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement the <code class="docutils literal notranslate"><span class="pre">cume_dist</span></code> hypothetical-set aggregate function.</p>
+<p>This function must be used with the <a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement.within_group" title="sqlalchemy.sql.functions.FunctionElement.within_group"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.within_group()</span></code></a>
+modifier to supply a sort expression to operate upon.</p>
+<p>The return type of this function is <a class="reference internal" href="type_basics.html#sqlalchemy.types.Numeric" title="sqlalchemy.types.Numeric"><code class="xref py py-class docutils literal notranslate"><span class="pre">Numeric</span></code></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.1.</span></p>
+</div>
+<div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.functions.cume_dist" title="sqlalchemy.sql.functions.cume_dist"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.cume_dist</span></code></a> (<a class="reference internal" href="#sqlalchemy.sql.functions.GenericFunction" title="sqlalchemy.sql.functions.GenericFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.GenericFunction</span></code></a>)</p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.current_date">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">current_date</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.current_date" title="Permalink to this definition">¶</a></dt>
+<dd><p>The CURRENT_DATE() SQL function.</p>
+<div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.functions.current_date" title="sqlalchemy.sql.functions.current_date"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.current_date</span></code></a> (<a class="reference internal" href="#sqlalchemy.sql.functions.AnsiFunction" title="sqlalchemy.sql.functions.AnsiFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.AnsiFunction</span></code></a>)</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.current_date.type">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.functions.current_date"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.current_date.</span></code></a><span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#sqlalchemy.sql.functions.current_date.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="type_basics.html#sqlalchemy.types.Date" title="sqlalchemy.sql.sqltypes.Date"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.sqltypes.Date</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.current_time">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">current_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.current_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>The CURRENT_TIME() SQL function.</p>
+<div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.functions.current_time" title="sqlalchemy.sql.functions.current_time"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.current_time</span></code></a> (<a class="reference internal" href="#sqlalchemy.sql.functions.AnsiFunction" title="sqlalchemy.sql.functions.AnsiFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.AnsiFunction</span></code></a>)</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.current_time.type">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.functions.current_time"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.current_time.</span></code></a><span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#sqlalchemy.sql.functions.current_time.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="type_basics.html#sqlalchemy.types.Time" title="sqlalchemy.sql.sqltypes.Time"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.sqltypes.Time</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.current_timestamp">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">current_timestamp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.current_timestamp" title="Permalink to this definition">¶</a></dt>
+<dd><p>The CURRENT_TIMESTAMP() SQL function.</p>
+<div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.functions.current_timestamp" title="sqlalchemy.sql.functions.current_timestamp"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.current_timestamp</span></code></a> (<a class="reference internal" href="#sqlalchemy.sql.functions.AnsiFunction" title="sqlalchemy.sql.functions.AnsiFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.AnsiFunction</span></code></a>)</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.current_timestamp.type">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.functions.current_timestamp"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.current_timestamp.</span></code></a><span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#sqlalchemy.sql.functions.current_timestamp.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="type_basics.html#sqlalchemy.types.DateTime" title="sqlalchemy.sql.sqltypes.DateTime"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.sqltypes.DateTime</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.current_user">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">current_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.current_user" title="Permalink to this definition">¶</a></dt>
+<dd><p>The CURRENT_USER() SQL function.</p>
+<div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.functions.current_user" title="sqlalchemy.sql.functions.current_user"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.current_user</span></code></a> (<a class="reference internal" href="#sqlalchemy.sql.functions.AnsiFunction" title="sqlalchemy.sql.functions.AnsiFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.AnsiFunction</span></code></a>)</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.current_user.type">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.functions.current_user"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.current_user.</span></code></a><span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#sqlalchemy.sql.functions.current_user.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="type_basics.html#sqlalchemy.types.String" title="sqlalchemy.sql.sqltypes.String"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.sqltypes.String</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.dense_rank">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">dense_rank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.dense_rank" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement the <code class="docutils literal notranslate"><span class="pre">dense_rank</span></code> hypothetical-set aggregate function.</p>
+<p>This function must be used with the <a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement.within_group" title="sqlalchemy.sql.functions.FunctionElement.within_group"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.within_group()</span></code></a>
+modifier to supply a sort expression to operate upon.</p>
+<p>The return type of this function is <a class="reference internal" href="type_basics.html#sqlalchemy.types.Integer" title="sqlalchemy.types.Integer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Integer</span></code></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.1.</span></p>
+</div>
+<div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.functions.dense_rank" title="sqlalchemy.sql.functions.dense_rank"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.dense_rank</span></code></a> (<a class="reference internal" href="#sqlalchemy.sql.functions.GenericFunction" title="sqlalchemy.sql.functions.GenericFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.GenericFunction</span></code></a>)</p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.grouping_sets">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">grouping_sets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.grouping_sets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement the <code class="docutils literal notranslate"><span class="pre">GROUPING</span> <span class="pre">SETS</span></code> grouping operation.</p>
+<p>This function is used as part of the GROUP BY of a statement,
+e.g. <a class="reference internal" href="selectable.html#sqlalchemy.sql.expression.Select.group_by" title="sqlalchemy.sql.expression.Select.group_by"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.group_by()</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span>
+    <span class="n">func</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">value</span><span class="p">),</span> <span class="n">table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">col_1</span><span class="p">,</span> <span class="n">table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">col_2</span>
+<span class="p">)</span><span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">grouping_sets</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">col_1</span><span class="p">,</span> <span class="n">table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">col_2</span><span class="p">))</span></pre></div>
+</div>
+<p>In order to group by multiple sets, use the <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.tuple_" title="sqlalchemy.sql.expression.tuple_"><code class="xref py py-func docutils literal notranslate"><span class="pre">tuple_()</span></code></a> construct:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">tuple_</span>
+
+<span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span>
+    <span class="n">func</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">value</span><span class="p">),</span>
+    <span class="n">table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">col_1</span><span class="p">,</span> <span class="n">table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">col_2</span><span class="p">,</span>
+    <span class="n">table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">col_3</span>
+<span class="p">)</span><span class="o">.</span><span class="n">group_by</span><span class="p">(</span>
+    <span class="n">func</span><span class="o">.</span><span class="n">grouping_sets</span><span class="p">(</span>
+        <span class="n">tuple_</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">col_1</span><span class="p">,</span> <span class="n">table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">col_2</span><span class="p">),</span>
+        <span class="n">tuple_</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">col_3</span><span class="p">),</span>
+    <span class="p">)</span>
+<span class="p">)</span></pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.2.</span></p>
+</div>
+<div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.functions.grouping_sets" title="sqlalchemy.sql.functions.grouping_sets"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.grouping_sets</span></code></a> (<a class="reference internal" href="#sqlalchemy.sql.functions.GenericFunction" title="sqlalchemy.sql.functions.GenericFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.GenericFunction</span></code></a>)</p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.localtime">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">localtime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.localtime" title="Permalink to this definition">¶</a></dt>
+<dd><p>The localtime() SQL function.</p>
+<div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.functions.localtime" title="sqlalchemy.sql.functions.localtime"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.localtime</span></code></a> (<a class="reference internal" href="#sqlalchemy.sql.functions.AnsiFunction" title="sqlalchemy.sql.functions.AnsiFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.AnsiFunction</span></code></a>)</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.localtime.type">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.functions.localtime"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.localtime.</span></code></a><span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#sqlalchemy.sql.functions.localtime.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="type_basics.html#sqlalchemy.types.DateTime" title="sqlalchemy.sql.sqltypes.DateTime"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.sqltypes.DateTime</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.localtimestamp">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">localtimestamp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.localtimestamp" title="Permalink to this definition">¶</a></dt>
+<dd><p>The localtimestamp() SQL function.</p>
+<div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.functions.localtimestamp" title="sqlalchemy.sql.functions.localtimestamp"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.localtimestamp</span></code></a> (<a class="reference internal" href="#sqlalchemy.sql.functions.AnsiFunction" title="sqlalchemy.sql.functions.AnsiFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.AnsiFunction</span></code></a>)</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.localtimestamp.type">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.functions.localtimestamp"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.localtimestamp.</span></code></a><span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#sqlalchemy.sql.functions.localtimestamp.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="type_basics.html#sqlalchemy.types.DateTime" title="sqlalchemy.sql.sqltypes.DateTime"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.sqltypes.DateTime</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.max">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">max</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.max" title="Permalink to this definition">¶</a></dt>
+<dd><p>The SQL MAX() aggregate function.</p>
+<div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.functions.max" title="sqlalchemy.sql.functions.max"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.max</span></code></a> (<a class="reference internal" href="#sqlalchemy.sql.functions.ReturnTypeFromArgs" title="sqlalchemy.sql.functions.ReturnTypeFromArgs"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.ReturnTypeFromArgs</span></code></a>)</p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.min">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">min</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.min" title="Permalink to this definition">¶</a></dt>
+<dd><p>The SQL MIN() aggregate function.</p>
+<div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.functions.min" title="sqlalchemy.sql.functions.min"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.min</span></code></a> (<a class="reference internal" href="#sqlalchemy.sql.functions.ReturnTypeFromArgs" title="sqlalchemy.sql.functions.ReturnTypeFromArgs"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.ReturnTypeFromArgs</span></code></a>)</p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.mode">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">mode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement the <code class="docutils literal notranslate"><span class="pre">mode</span></code> ordered-set aggregate function.</p>
+<p>This function must be used with the <a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement.within_group" title="sqlalchemy.sql.functions.FunctionElement.within_group"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.within_group()</span></code></a>
+modifier to supply a sort expression to operate upon.</p>
+<p>The return type of this function is the same as the sort expression.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.1.</span></p>
+</div>
+<div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.functions.mode" title="sqlalchemy.sql.functions.mode"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.mode</span></code></a> (<a class="reference internal" href="#sqlalchemy.sql.functions.OrderedSetAgg" title="sqlalchemy.sql.functions.OrderedSetAgg"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.OrderedSetAgg</span></code></a>)</p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.next_value">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">next_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.next_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represent the ‘next value’, given a <a class="reference internal" href="defaults.html#sqlalchemy.schema.Sequence" title="sqlalchemy.schema.Sequence"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>
+as its single argument.</p>
+<p>Compiles into the appropriate function on each backend,
+or will raise NotImplementedError if used on a backend
+that does not provide support for sequences.</p>
+<div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.functions.next_value" title="sqlalchemy.sql.functions.next_value"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.next_value</span></code></a> (<a class="reference internal" href="#sqlalchemy.sql.functions.GenericFunction" title="sqlalchemy.sql.functions.GenericFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.GenericFunction</span></code></a>)</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.next_value.compare">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.sql.functions.next_value"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.next_value.</span></code></a><span class="sig-name descname"><span class="pre">compare</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.next_value.compare" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compare this <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.ClauseElement" title="sqlalchemy.sql.expression.ClauseElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClauseElement</span></code></a> to
+the given <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.ClauseElement" title="sqlalchemy.sql.expression.ClauseElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClauseElement</span></code></a>.</p>
+<p>Subclasses should override the default behavior, which is a
+straight identity comparison.</p>
+<p>**kw are arguments consumed by subclass <code class="docutils literal notranslate"><span class="pre">compare()</span></code> methods and
+may be used to modify the criteria for comparison
+(see <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.ColumnElement" title="sqlalchemy.sql.expression.ColumnElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColumnElement</span></code></a>).</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.now">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">now</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.now" title="Permalink to this definition">¶</a></dt>
+<dd><p>The SQL now() datetime function.</p>
+<p>SQLAlchemy dialects will usually render this particular function
+in a backend-specific way, such as rendering it as <code class="docutils literal notranslate"><span class="pre">CURRENT_TIMESTAMP</span></code>.</p>
+<div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.functions.now" title="sqlalchemy.sql.functions.now"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.now</span></code></a> (<a class="reference internal" href="#sqlalchemy.sql.functions.GenericFunction" title="sqlalchemy.sql.functions.GenericFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.GenericFunction</span></code></a>)</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.now.type">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.functions.now"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.now.</span></code></a><span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#sqlalchemy.sql.functions.now.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="type_basics.html#sqlalchemy.types.DateTime" title="sqlalchemy.sql.sqltypes.DateTime"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.sqltypes.DateTime</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.percent_rank">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">percent_rank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.percent_rank" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement the <code class="docutils literal notranslate"><span class="pre">percent_rank</span></code> hypothetical-set aggregate function.</p>
+<p>This function must be used with the <a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement.within_group" title="sqlalchemy.sql.functions.FunctionElement.within_group"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.within_group()</span></code></a>
+modifier to supply a sort expression to operate upon.</p>
+<p>The return type of this function is <a class="reference internal" href="type_basics.html#sqlalchemy.types.Numeric" title="sqlalchemy.types.Numeric"><code class="xref py py-class docutils literal notranslate"><span class="pre">Numeric</span></code></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.1.</span></p>
+</div>
+<div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.functions.percent_rank" title="sqlalchemy.sql.functions.percent_rank"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.percent_rank</span></code></a> (<a class="reference internal" href="#sqlalchemy.sql.functions.GenericFunction" title="sqlalchemy.sql.functions.GenericFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.GenericFunction</span></code></a>)</p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.percentile_cont">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">percentile_cont</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.percentile_cont" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement the <code class="docutils literal notranslate"><span class="pre">percentile_cont</span></code> ordered-set aggregate function.</p>
+<p>This function must be used with the <a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement.within_group" title="sqlalchemy.sql.functions.FunctionElement.within_group"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.within_group()</span></code></a>
+modifier to supply a sort expression to operate upon.</p>
+<p>The return type of this function is the same as the sort expression,
+or if the arguments are an array, an <a class="reference internal" href="type_basics.html#sqlalchemy.types.ARRAY" title="sqlalchemy.types.ARRAY"><code class="xref py py-class docutils literal notranslate"><span class="pre">ARRAY</span></code></a> of the sort
+expression’s type.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.1.</span></p>
+</div>
+<div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.functions.percentile_cont" title="sqlalchemy.sql.functions.percentile_cont"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.percentile_cont</span></code></a> (<a class="reference internal" href="#sqlalchemy.sql.functions.OrderedSetAgg" title="sqlalchemy.sql.functions.OrderedSetAgg"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.OrderedSetAgg</span></code></a>)</p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.percentile_disc">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">percentile_disc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.percentile_disc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement the <code class="docutils literal notranslate"><span class="pre">percentile_disc</span></code> ordered-set aggregate function.</p>
+<p>This function must be used with the <a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement.within_group" title="sqlalchemy.sql.functions.FunctionElement.within_group"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.within_group()</span></code></a>
+modifier to supply a sort expression to operate upon.</p>
+<p>The return type of this function is the same as the sort expression,
+or if the arguments are an array, an <a class="reference internal" href="type_basics.html#sqlalchemy.types.ARRAY" title="sqlalchemy.types.ARRAY"><code class="xref py py-class docutils literal notranslate"><span class="pre">ARRAY</span></code></a> of the sort
+expression’s type.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.1.</span></p>
+</div>
+<div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.functions.percentile_disc" title="sqlalchemy.sql.functions.percentile_disc"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.percentile_disc</span></code></a> (<a class="reference internal" href="#sqlalchemy.sql.functions.OrderedSetAgg" title="sqlalchemy.sql.functions.OrderedSetAgg"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.OrderedSetAgg</span></code></a>)</p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.random">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">random</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.random" title="Permalink to this definition">¶</a></dt>
+<dd><p>The RANDOM() SQL function.</p>
+<div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.functions.random" title="sqlalchemy.sql.functions.random"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.random</span></code></a> (<a class="reference internal" href="#sqlalchemy.sql.functions.GenericFunction" title="sqlalchemy.sql.functions.GenericFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.GenericFunction</span></code></a>)</p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.rank">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">rank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.rank" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement the <code class="docutils literal notranslate"><span class="pre">rank</span></code> hypothetical-set aggregate function.</p>
+<p>This function must be used with the <a class="reference internal" href="#sqlalchemy.sql.functions.FunctionElement.within_group" title="sqlalchemy.sql.functions.FunctionElement.within_group"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.within_group()</span></code></a>
+modifier to supply a sort expression to operate upon.</p>
+<p>The return type of this function is <a class="reference internal" href="type_basics.html#sqlalchemy.types.Integer" title="sqlalchemy.types.Integer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Integer</span></code></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.1.</span></p>
+</div>
+<div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.functions.rank" title="sqlalchemy.sql.functions.rank"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.rank</span></code></a> (<a class="reference internal" href="#sqlalchemy.sql.functions.GenericFunction" title="sqlalchemy.sql.functions.GenericFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.GenericFunction</span></code></a>)</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.register_function">
+<em class="property"><span class="pre">function</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">register_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identifier</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'_default'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.register_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Associate a callable with a particular func. name.</p>
+<p>This is normally called by _GenericMeta, but is also
+available by itself so that a non-Function construct
+can be associated with the <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.func" title="sqlalchemy.sql.expression.func"><code class="xref py py-data docutils literal notranslate"><span class="pre">func</span></code></a> accessor (i.e.
+CAST, EXTRACT).</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.rollup">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">rollup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.rollup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement the <code class="docutils literal notranslate"><span class="pre">ROLLUP</span></code> grouping operation.</p>
+<p>This function is used as part of the GROUP BY of a statement,
+e.g. <a class="reference internal" href="selectable.html#sqlalchemy.sql.expression.Select.group_by" title="sqlalchemy.sql.expression.Select.group_by"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.group_by()</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span>
+    <span class="n">func</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">value</span><span class="p">),</span> <span class="n">table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">col_1</span><span class="p">,</span> <span class="n">table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">col_2</span>
+<span class="p">)</span><span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">rollup</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">col_1</span><span class="p">,</span> <span class="n">table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">col_2</span><span class="p">))</span></pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.2.</span></p>
+</div>
+<div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.functions.rollup" title="sqlalchemy.sql.functions.rollup"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.rollup</span></code></a> (<a class="reference internal" href="#sqlalchemy.sql.functions.GenericFunction" title="sqlalchemy.sql.functions.GenericFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.GenericFunction</span></code></a>)</p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.session_user">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">session_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.session_user" title="Permalink to this definition">¶</a></dt>
+<dd><p>The SESSION_USER() SQL function.</p>
+<div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.functions.session_user" title="sqlalchemy.sql.functions.session_user"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.session_user</span></code></a> (<a class="reference internal" href="#sqlalchemy.sql.functions.AnsiFunction" title="sqlalchemy.sql.functions.AnsiFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.AnsiFunction</span></code></a>)</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.session_user.type">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.functions.session_user"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.session_user.</span></code></a><span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#sqlalchemy.sql.functions.session_user.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="type_basics.html#sqlalchemy.types.String" title="sqlalchemy.sql.sqltypes.String"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.sqltypes.String</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.sum">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">sum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.sum" title="Permalink to this definition">¶</a></dt>
+<dd><p>The SQL SUM() aggregate function.</p>
+<div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.functions.sum" title="sqlalchemy.sql.functions.sum"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.sum</span></code></a> (<a class="reference internal" href="#sqlalchemy.sql.functions.ReturnTypeFromArgs" title="sqlalchemy.sql.functions.ReturnTypeFromArgs"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.ReturnTypeFromArgs</span></code></a>)</p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.sysdate">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">sysdate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.sysdate" title="Permalink to this definition">¶</a></dt>
+<dd><p>The SYSDATE() SQL function.</p>
+<div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.functions.sysdate" title="sqlalchemy.sql.functions.sysdate"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.sysdate</span></code></a> (<a class="reference internal" href="#sqlalchemy.sql.functions.AnsiFunction" title="sqlalchemy.sql.functions.AnsiFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.AnsiFunction</span></code></a>)</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.sysdate.type">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.functions.sysdate"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.sysdate.</span></code></a><span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#sqlalchemy.sql.functions.sysdate.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="type_basics.html#sqlalchemy.types.DateTime" title="sqlalchemy.sql.sqltypes.DateTime"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.sqltypes.DateTime</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.user">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.sql.functions.</span></span><span class="sig-name descname"><span class="pre">user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.sql.functions.user" title="Permalink to this definition">¶</a></dt>
+<dd><p>The USER() SQL function.</p>
+<div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.sql.functions.user" title="sqlalchemy.sql.functions.user"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.user</span></code></a> (<a class="reference internal" href="#sqlalchemy.sql.functions.AnsiFunction" title="sqlalchemy.sql.functions.AnsiFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.AnsiFunction</span></code></a>)</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.sql.functions.user.type">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.sql.functions.user"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.user.</span></code></a><span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#sqlalchemy.sql.functions.user.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="type_basics.html#sqlalchemy.types.String" title="sqlalchemy.sql.sqltypes.String"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.sqltypes.String</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="dml.html" title="previous chapter">Insert, Updates, Deletes</a>
+        Next:
+        <a href="compiler.html" title="next chapter">Custom SQL Constructs and Compilation Extension</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2021, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.1.2.
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '1.4.23',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/detectmobile.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

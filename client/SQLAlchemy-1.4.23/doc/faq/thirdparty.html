@@ -1,0 +1,270 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+        <title>
+            
+    
+    Third Party Integration Issues
+ &mdash;
+    SQLAlchemy 1.4 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/changelog.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 1.4 Documentation" href="../index.html" />
+        <link rel="up" title="Frequently Asked Questions" href="index.html" />
+        <link rel="next" title="Error Messages" href="../errors.html" />
+        <link rel="prev" title="Sessions / Queries" href="sessions.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">1.4.23</span>
+
+
+        | Release Date: August 18, 2021
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 1.4 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 1.4 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../contents.html">Contents</a> |
+                <a href="../genindex.html">Index</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="Frequently Asked Questions">Frequently Asked Questions</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="connections.html">Connections / Engines</a></span></li>
+<li><span class="link-container"><a class="reference external" href="metadata_schema.html">MetaData / Schema</a></span></li>
+<li><span class="link-container"><a class="reference external" href="sqlexpressions.html">SQL Expressions</a></span></li>
+<li><span class="link-container"><a class="reference external" href="ormconfiguration.html">ORM Configuration</a></span></li>
+<li><span class="link-container"><a class="reference external" href="performance.html">Performance</a></span></li>
+<li><span class="link-container"><a class="reference external" href="sessions.html">Sessions / Queries</a></span></li>
+<li class="selected"><span class="link-container"><strong>Third Party Integration Issues</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#i-m-getting-errors-related-to-numpy-int64-numpy-bool-etc">I’m getting errors related to “<code class="docutils literal notranslate"><span class="pre">numpy.int64</span></code>”, “<code class="docutils literal notranslate"><span class="pre">numpy.bool_</span></code>”, etc.</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#sql-expression-for-where-having-role-expected-got-true">SQL expression for WHERE/HAVING role expected, got True</a></span></li>
+</ul>
+</li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    
+
+    <div id="docs-body" class="withsidebar faq-thirdparty" >
+        
+<section id="third-party-integration-issues">
+<h1>Third Party Integration Issues<a class="headerlink" href="#third-party-integration-issues" title="Permalink to this headline">¶</a></h1>
+<div class="contents faq local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#i-m-getting-errors-related-to-numpy-int64-numpy-bool-etc" id="id1">I’m getting errors related to “<code class="docutils literal notranslate"><span class="pre">numpy.int64</span></code>”, “<code class="docutils literal notranslate"><span class="pre">numpy.bool_</span></code>”, etc.</a></p></li>
+<li><p><a class="reference internal" href="#sql-expression-for-where-having-role-expected-got-true" id="id2">SQL expression for WHERE/HAVING role expected, got True</a></p></li>
+</ul>
+</div>
+<section id="i-m-getting-errors-related-to-numpy-int64-numpy-bool-etc">
+<span id="numpy-int64"></span><h2>I’m getting errors related to “<code class="docutils literal notranslate"><span class="pre">numpy.int64</span></code>”, “<code class="docutils literal notranslate"><span class="pre">numpy.bool_</span></code>”, etc.<a class="headerlink" href="#i-m-getting-errors-related-to-numpy-int64-numpy-bool-etc" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference external" href="https://numpy.org">numpy</a> package has its own numeric datatypes that extend from Python’s
+numeric types, but contain some behaviors that in some cases make them impossible
+to reconcile with some of SQLAlchemy’s behaviors, as well as in some cases
+with those of the underlying DBAPI driver in use.</p>
+<p>Two errors which can occur are <code class="docutils literal notranslate"><span class="pre">ProgrammingError:</span> <span class="pre">can't</span> <span class="pre">adapt</span> <span class="pre">type</span> <span class="pre">'numpy.int64'</span></code>
+on a backend such as psycopg2, and <code class="docutils literal notranslate"><span class="pre">ArgumentError:</span> <span class="pre">SQL</span> <span class="pre">expression</span> <span class="pre">object</span>
+<span class="pre">expected,</span> <span class="pre">got</span> <span class="pre">object</span> <span class="pre">of</span> <span class="pre">type</span> <span class="pre">&lt;class</span> <span class="pre">'numpy.bool_'&gt;</span> <span class="pre">instead</span></code>; in
+more recent versions of SQLAlchemy this may be <code class="docutils literal notranslate"><span class="pre">ArgumentError:</span> <span class="pre">SQL</span> <span class="pre">expression</span>
+<span class="pre">for</span> <span class="pre">WHERE/HAVING</span> <span class="pre">role</span> <span class="pre">expected,</span> <span class="pre">got</span> <span class="pre">True</span></code>.</p>
+<p>In the first case, the issue is due to psycopg2 not having an appropriate
+lookup entry for the <code class="docutils literal notranslate"><span class="pre">int64</span></code> datatype such that it is not accepted directly
+by queries.   This may be illustrated from code based on the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span>
+
+<span class="k">class</span> <span class="nc">A</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;a&quot;</span>
+
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">)</span>
+
+<span class="c1"># .. later</span>
+<span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">A</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">int64</span><span class="p">(</span><span class="mi">10</span><span class="p">)))</span>
+<span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></pre></div>
+</div>
+<p>In the latter case, the issue is due to the <code class="docutils literal notranslate"><span class="pre">numpy.int64</span></code> datatype overriding
+the <code class="docutils literal notranslate"><span class="pre">__eq__()</span></code> method and enforcing that the return type of an expression is
+<code class="docutils literal notranslate"><span class="pre">numpy.True</span></code> or <code class="docutils literal notranslate"><span class="pre">numpy.False</span></code>, which breaks SQLAlchemy’s expression
+language behavior that expects to return <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.ColumnElement" title="sqlalchemy.sql.expression.ColumnElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColumnElement</span></code></a>
+expressions from Python equality comparisons:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">column</span><span class="p">,</span> <span class="n">Integer</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">)</span> <span class="o">==</span> <span class="n">numpy</span><span class="o">.</span><span class="n">int64</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>  <span class="c1"># works</span>
+<span class="go">x = :x_1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">int64</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">==</span> <span class="n">column</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">))</span>  <span class="c1"># breaks</span>
+<span class="go">False</span></pre></div>
+</div>
+<p>These errors are both solved in the same way, which is that special numpy
+datatypes need to be replaced with regular Python values.  Examples include
+applying the Python <code class="docutils literal notranslate"><span class="pre">int()</span></code> function to types like <code class="docutils literal notranslate"><span class="pre">numpy.int32</span></code> and
+<code class="docutils literal notranslate"><span class="pre">numpy.int64</span></code> and the Python <code class="docutils literal notranslate"><span class="pre">float()</span></code> function to <code class="docutils literal notranslate"><span class="pre">numpy.float32</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">int64</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">A</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">data</span><span class="p">)))</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+    <span class="n">select</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="n">A</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></pre></div>
+</div>
+</section>
+<section id="sql-expression-for-where-having-role-expected-got-true">
+<h2>SQL expression for WHERE/HAVING role expected, got True<a class="headerlink" href="#sql-expression-for-where-having-role-expected-got-true" title="Permalink to this headline">¶</a></h2>
+<p>See <a class="reference internal" href="#numpy-int64"><span class="std std-ref">I’m getting errors related to “numpy.int64”, “numpy.bool_”, etc.</span></a>.</p>
+</section>
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="sessions.html" title="previous chapter">Sessions / Queries</a>
+        Next:
+        <a href="../errors.html" title="next chapter">Error Messages</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2021, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.1.2.
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '1.4.23',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/detectmobile.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

@@ -1,0 +1,269 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+        <title>
+            
+    
+    Mapping Classes with Declarative
+ &mdash;
+    SQLAlchemy 1.4 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/changelog.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 1.4 Documentation" href="../index.html" />
+        <link rel="up" title="Mapper Configuration" href="mapper_config.html" />
+        <link rel="next" title="Table Configuration with Declarative" href="declarative_tables.html" />
+        <link rel="prev" title="Mapping Python Classes" href="mapping_styles.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">1.4.23</span>
+
+
+        | Release Date: August 18, 2021
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 1.4 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 1.4 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../contents.html">Contents</a> |
+                <a href="../genindex.html">Index</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="tutorial.html">Object Relational Tutorial (1.x API)</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mapper_config.html">Mapper Configuration</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="mapping_styles.html">Mapping Python Classes</a></span></li>
+<li class="selected"><span class="link-container"><strong>Mapping Classes with Declarative</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="declarative_tables.html">Table Configuration with Declarative</a></span></li>
+<li><span class="link-container"><a class="reference external" href="declarative_config.html">Mapper Configuration with Declarative</a></span></li>
+<li><span class="link-container"><a class="reference external" href="declarative_mixins.html">Composing Mapped Hierarchies with Mixins</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="scalar_mapping.html">Mapping Columns and Expressions</a></span></li>
+<li><span class="link-container"><a class="reference external" href="inheritance.html">Mapping Class Inheritance Hierarchies</a></span></li>
+<li><span class="link-container"><a class="reference external" href="nonstandard_mappings.html">Non-Traditional Mappings</a></span></li>
+<li><span class="link-container"><a class="reference external" href="versioning.html">Configuring a Version Counter</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mapping_api.html">Class Mapping API</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="relationships.html">Relationship Configuration</a></span></li>
+<li><span class="link-container"><a class="reference external" href="loading_objects.html">Querying Data, Loading Objects</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session.html">Using the Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extending.html">Events and Internals</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extensions/index.html">ORM Extensions</a></span></li>
+<li><span class="link-container"><a class="reference external" href="examples.html">ORM Examples</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    
+
+    <div id="docs-body" class="withsidebar orm-declarative_mapping" >
+        
+<section id="mapping-classes-with-declarative">
+<span id="declarative-config-toplevel"></span><h1>Mapping Classes with Declarative<a class="headerlink" href="#mapping-classes-with-declarative" title="Permalink to this headline">¶</a></h1>
+<p>The Declarative mapping style is the primary style of mapping that is used
+with SQLAlchemy.   See the section <a class="reference internal" href="mapping_styles.html#orm-declarative-mapping"><span class="std std-ref">Declarative Mapping</span></a> for the
+top level introduction.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="declarative_tables.html">Table Configuration with Declarative</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="declarative_tables.html#declarative-table">Declarative Table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#accessing-table-and-metadata">Accessing Table and Metadata</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#declarative-table-configuration">Declarative Table Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#explicit-schema-name-with-declarative-table">Explicit Schema Name with Declarative Table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#adding-new-columns">Adding New Columns</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="declarative_tables.html#declarative-with-imperative-table-a-k-a-hybrid-declarative">Declarative with Imperative Table (a.k.a. Hybrid Declarative)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="declarative_tables.html#mapping-declaratively-with-reflected-tables">Mapping Declaratively with Reflected Tables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#using-deferredreflection">Using DeferredReflection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#using-automap">Using Automap</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="declarative_config.html">Mapper Configuration with Declarative</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="declarative_config.html#defining-mapped-properties-with-declarative">Defining Mapped Properties with Declarative</a></li>
+<li class="toctree-l2"><a class="reference internal" href="declarative_config.html#mapper-configuration-options-with-declarative">Mapper Configuration Options with Declarative</a></li>
+<li class="toctree-l2"><a class="reference internal" href="declarative_config.html#other-declarative-mapping-directives">Other Declarative Mapping Directives</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="declarative_config.html#declare-last"><code class="docutils literal notranslate"><span class="pre">__declare_last__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative_config.html#declare-first"><code class="docutils literal notranslate"><span class="pre">__declare_first__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative_config.html#metadata"><code class="docutils literal notranslate"><span class="pre">metadata</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative_config.html#abstract"><code class="docutils literal notranslate"><span class="pre">__abstract__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative_config.html#table-cls"><code class="docutils literal notranslate"><span class="pre">__table_cls__</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="declarative_mixins.html">Composing Mapped Hierarchies with Mixins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="declarative_mixins.html#augmenting-the-base">Augmenting the Base</a></li>
+<li class="toctree-l2"><a class="reference internal" href="declarative_mixins.html#mixing-in-columns">Mixing in Columns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="declarative_mixins.html#mixing-in-relationships">Mixing in Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="declarative_mixins.html#using-advanced-relationship-arguments-e-g-primaryjoin-etc">Using Advanced Relationship Arguments (e.g. <code class="docutils literal notranslate"><span class="pre">primaryjoin</span></code>, etc.)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="declarative_mixins.html#mixing-in-deferred-column-property-and-other-mapperproperty-classes">Mixing in deferred(), column_property(), and other MapperProperty classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="declarative_mixins.html#mixing-in-association-proxy-and-other-attributes">Mixing in Association Proxy and Other Attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="declarative_mixins.html#controlling-table-inheritance-with-mixins">Controlling table inheritance with mixins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="declarative_mixins.html#mixing-in-columns-in-inheritance-scenarios">Mixing in Columns in Inheritance Scenarios</a></li>
+<li class="toctree-l2"><a class="reference internal" href="declarative_mixins.html#combining-table-mapper-arguments-from-multiple-mixins">Combining Table/Mapper Arguments from Multiple Mixins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="declarative_mixins.html#creating-indexes-with-mixins">Creating Indexes with Mixins</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="mapping_styles.html" title="previous chapter">Mapping Python Classes</a>
+        Next:
+        <a href="declarative_tables.html" title="next chapter">Table Configuration with Declarative</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2021, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.1.2.
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '1.4.23',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/detectmobile.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

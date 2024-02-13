@@ -1,0 +1,314 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+        <title>
+            
+    
+    Querying Data, Loading Objects
+ &mdash;
+    SQLAlchemy 1.4 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/changelog.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 1.4 Documentation" href="../index.html" />
+        <link rel="up" title="SQLAlchemy ORM" href="index.html" />
+        <link rel="next" title="ORM Querying Guide" href="queryguide.html" />
+        <link rel="prev" title="Relationships API" href="relationship_api.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">1.4.23</span>
+
+
+        | Release Date: August 18, 2021
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 1.4 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 1.4 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../contents.html">Contents</a> |
+                <a href="../genindex.html">Index</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="tutorial.html">Object Relational Tutorial (1.x API)</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mapper_config.html">Mapper Configuration</a></span></li>
+<li><span class="link-container"><a class="reference external" href="relationships.html">Relationship Configuration</a></span></li>
+<li class="selected"><span class="link-container"><strong>Querying Data, Loading Objects</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="queryguide.html">ORM Querying Guide</a></span></li>
+<li><span class="link-container"><a class="reference external" href="loading_columns.html">Loading Columns</a></span></li>
+<li><span class="link-container"><a class="reference external" href="loading_relationships.html">Relationship Loading Techniques</a></span></li>
+<li><span class="link-container"><a class="reference external" href="inheritance_loading.html">Loading Inheritance Hierarchies</a></span></li>
+<li><span class="link-container"><a class="reference external" href="constructors.html">Constructors and Object Initialization</a></span></li>
+<li><span class="link-container"><a class="reference external" href="query.html">Query API</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="session.html">Using the Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extending.html">Events and Internals</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extensions/index.html">ORM Extensions</a></span></li>
+<li><span class="link-container"><a class="reference external" href="examples.html">ORM Examples</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    
+
+    <div id="docs-body" class="withsidebar orm-loading_objects" >
+        
+<section id="querying-data-loading-objects">
+<h1>Querying Data, Loading Objects<a class="headerlink" href="#querying-data-loading-objects" title="Permalink to this headline">¶</a></h1>
+<p>The following sections refer to techniques for emitting SELECT statements within
+an ORM context.  This involves primarily statements that return instances of
+ORM mapped objects, but also involves calling forms that deliver individual
+column or groups of columns as well.</p>
+<p>For an introduction to querying with the SQLAlchemy ORM, one of the
+following tutorials shoud be consulted:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../tutorial/index.html"><span class="doc">SQLAlchemy 1.4 / 2.0 Tutorial</span></a> - for <a class="reference internal" href="../glossary.html#term-2.0-style"><span class="xref std std-term">2.0 style</span></a> usage</p></li>
+<li><p><a class="reference internal" href="tutorial.html"><span class="doc">Object Relational Tutorial (1.x API)</span></a> - for <a class="reference internal" href="../glossary.html#term-1.x-style"><span class="xref std std-term">1.x style</span></a> usage.</p></li>
+</ul>
+<p>As SQLAlchemy 1.4 represents a transition from 1.x to 2.0 style, the below
+sections are currently mixed as far as which style they are using.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="queryguide.html">ORM Querying Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="queryguide.html#select-statements">SELECT statements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="queryguide.html#selecting-orm-entities-and-attributes">Selecting ORM Entities and Attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="queryguide.html#joins">Joins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="queryguide.html#special-relationship-operators">Special Relationship Operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="queryguide.html#orm-loader-options">ORM Loader Options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="queryguide.html#orm-execution-options">ORM Execution Options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="queryguide.html#orm-update-delete-with-arbitrary-where-clause">ORM Update / Delete with Arbitrary WHERE clause</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="loading_columns.html">Loading Columns</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="loading_columns.html#deferred-column-loading">Deferred Column Loading</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="loading_columns.html#deferred-column-loader-query-options">Deferred Column Loader Query Options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="loading_columns.html#deferred-loading-across-multiple-entities">Deferred Loading across Multiple Entities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="loading_columns.html#load-only-and-wildcard-options">Load Only and Wildcard Options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="loading_columns.html#raiseload-for-deferred-columns">Raiseload for Deferred Columns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="loading_columns.html#column-deferral-api">Column Deferral API</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="loading_columns.html#column-bundles">Column Bundles</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="loading_relationships.html">Relationship Loading Techniques</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="loading_relationships.html#configuring-loader-strategies-at-mapping-time">Configuring Loader Strategies at Mapping Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="loading_relationships.html#relationship-loading-with-loader-options">Relationship Loading with Loader Options</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="loading_relationships.html#adding-criteria-to-loader-options">Adding Criteria to loader options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="loading_relationships.html#specifying-sub-options-with-load-options">Specifying Sub-Options with Load.options()</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="loading_relationships.html#lazy-loading">Lazy Loading</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="loading_relationships.html#preventing-unwanted-lazy-loads-using-raiseload">Preventing unwanted lazy loads using raiseload</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="loading_relationships.html#joined-eager-loading">Joined Eager Loading</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="loading_relationships.html#joined-eager-loading-and-result-set-batching">Joined eager loading and result set batching</a></li>
+<li class="toctree-l3"><a class="reference internal" href="loading_relationships.html#the-zen-of-joined-eager-loading">The Zen of Joined Eager Loading</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="loading_relationships.html#subquery-eager-loading">Subquery Eager Loading</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="loading_relationships.html#the-importance-of-ordering">The Importance of Ordering</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="loading_relationships.html#select-in-loading">Select IN loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="loading_relationships.html#what-kind-of-loading-to-use">What Kind of Loading to Use ?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="loading_relationships.html#polymorphic-eager-loading">Polymorphic Eager Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="loading_relationships.html#wildcard-loading-strategies">Wildcard Loading Strategies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="loading_relationships.html#per-entity-wildcard-loading-strategies">Per-Entity Wildcard Loading Strategies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="loading_relationships.html#routing-explicit-joins-statements-into-eagerly-loaded-collections">Routing Explicit Joins/Statements into Eagerly Loaded Collections</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="loading_relationships.html#using-contains-eager-to-load-a-custom-filtered-collection-result">Using contains_eager() to load a custom-filtered collection result</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="loading_relationships.html#creating-custom-load-rules">Creating Custom Load Rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="loading_relationships.html#relationship-loader-api">Relationship Loader API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="inheritance_loading.html">Loading Inheritance Hierarchies</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="inheritance_loading.html#using-with-polymorphic">Using with_polymorphic</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="inheritance_loading.html#using-aliasing-with-with-polymorphic">Using aliasing with with_polymorphic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inheritance_loading.html#referring-to-specific-subclass-attributes">Referring to Specific Subclass Attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inheritance_loading.html#setting-with-polymorphic-at-mapper-configuration-time">Setting with_polymorphic at mapper configuration time</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inheritance_loading.html#setting-with-polymorphic-against-a-query">Setting with_polymorphic against a query</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="inheritance_loading.html#polymorphic-selectin-loading">Polymorphic Selectin Loading</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="inheritance_loading.html#combining-selectin-and-with-polymorphic">Combining selectin and with_polymorphic</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="inheritance_loading.html#referring-to-specific-subtypes-on-relationships">Referring to specific subtypes on relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="inheritance_loading.html#eager-loading-of-specific-or-polymorphic-subtypes">Eager Loading of Specific or Polymorphic Subtypes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="inheritance_loading.html#loading-objects-with-joined-table-inheritance">Loading objects with joined table inheritance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inheritance_loading.html#loading-objects-with-single-table-inheritance">Loading objects with single table inheritance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inheritance_loading.html#inheritance-loading-api">Inheritance Loading API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="constructors.html">Constructors and Object Initialization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="query.html">Query API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="query.html#the-query-object">The Query Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="query.html#orm-specific-query-constructs">ORM-Specific Query Constructs</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="relationship_api.html" title="previous chapter">Relationships API</a>
+        Next:
+        <a href="queryguide.html" title="next chapter">ORM Querying Guide</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2021, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.1.2.
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '1.4.23',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/detectmobile.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

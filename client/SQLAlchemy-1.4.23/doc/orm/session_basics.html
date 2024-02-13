@@ -1,0 +1,1265 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+        <title>
+            
+    
+    Session Basics
+ &mdash;
+    SQLAlchemy 1.4 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/changelog.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 1.4 Documentation" href="../index.html" />
+        <link rel="up" title="Using the Session" href="session.html" />
+        <link rel="next" title="State Management" href="session_state_management.html" />
+        <link rel="prev" title="Using the Session" href="session.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">1.4.23</span>
+
+
+        | Release Date: August 18, 2021
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 1.4 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 1.4 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../contents.html">Contents</a> |
+                <a href="../genindex.html">Index</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="tutorial.html">Object Relational Tutorial (1.x API)</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mapper_config.html">Mapper Configuration</a></span></li>
+<li><span class="link-container"><a class="reference external" href="relationships.html">Relationship Configuration</a></span></li>
+<li><span class="link-container"><a class="reference external" href="loading_objects.html">Querying Data, Loading Objects</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session.html">Using the Session</a></span><ul>
+<li class="selected"><span class="link-container"><strong>Session Basics</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#what-does-the-session-do">What does the Session do ?</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#basics-of-using-a-session">Basics of Using a Session</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#opening-and-closing-a-session">Opening and Closing a Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#framing-out-a-begin-commit-rollback-block">Framing out a begin / commit / rollback block</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#using-a-sessionmaker">Using a sessionmaker</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#querying-1-x-style">Querying (1.x Style)</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#querying-2-0-style">Querying (2.0 style)</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#adding-new-or-existing-items">Adding New or Existing Items</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#deleting">Deleting</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#flushing">Flushing</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#expiring-refreshing">Expiring / Refreshing</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#update-and-delete-with-arbitrary-where-clause">UPDATE and DELETE with arbitrary WHERE clause</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#selecting-a-synchronization-strategy">Selecting a Synchronization Strategy</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#selecting-orm-objects-inline-with-update-returning-or-insert-returning">Selecting ORM Objects Inline with UPDATE.. RETURNING or INSERT..RETURNING</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#auto-begin">Auto Begin</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#committing">Committing</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#rolling-back">Rolling Back</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#closing">Closing</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#session-frequently-asked-questions">Session Frequently Asked Questions</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#when-do-i-make-a-sessionmaker">When do I make a <code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code>?</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#when-do-i-construct-a-session-when-do-i-commit-it-and-when-do-i-close-it">When do I construct a <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>, when do I commit it, and when do I close it?</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#is-the-session-a-cache">Is the Session a cache?</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#how-can-i-get-the-session-for-a-certain-object">How can I get the <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> for a certain object?</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#is-the-session-thread-safe">Is the session thread-safe?</a></span></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="session_state_management.html">State Management</a></span></li>
+<li><span class="link-container"><a class="reference external" href="cascades.html">Cascades</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session_transaction.html">Transactions and Connection Management</a></span></li>
+<li><span class="link-container"><a class="reference external" href="persistence_techniques.html">Additional Persistence Techniques</a></span></li>
+<li><span class="link-container"><a class="reference external" href="contextual.html">Contextual/Thread-local Sessions</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session_events.html">Tracking queries, object and Session Changes with Events</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session_api.html">Session API</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="extending.html">Events and Internals</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extensions/index.html">ORM Extensions</a></span></li>
+<li><span class="link-container"><a class="reference external" href="examples.html">ORM Examples</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    
+
+    <div id="docs-body" class="withsidebar orm-session_basics" >
+        
+<section id="session-basics">
+<h1>Session Basics<a class="headerlink" href="#session-basics" title="Permalink to this headline">¶</a></h1>
+<section id="what-does-the-session-do">
+<h2>What does the Session do ?<a class="headerlink" href="#what-does-the-session-do" title="Permalink to this headline">¶</a></h2>
+<p>In the most general sense, the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> establishes all conversations
+with the database and represents a “holding zone” for all the objects which
+you’ve loaded or associated with it during its lifespan. It provides the
+interface where SELECT and other queries are made that will return and modify
+ORM-mapped objects.  The ORM objects themselves are maintained inside the
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>, inside a structure called the <a class="reference internal" href="../glossary.html#term-identity-map"><span class="xref std std-term">identity map</span></a> - a data
+structure that maintains unique copies of each object, where “unique” means
+“only one object with a particular primary key”.</p>
+<p>The <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> begins in a mostly stateless form. Once queries are
+issued or other objects are persisted with it, it requests a connection
+resource from an <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> that is associated with the
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>, and then establishes a transaction on that connection. This
+transaction remains in effect until the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> is instructed to
+commit or roll back the transaction.</p>
+<p>The ORM objects maintained by a <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> are <a class="reference internal" href="../glossary.html#term-instrumented"><span class="xref std std-term">instrumented</span></a>
+such that whenever an attribute or a collection is modified in the Python
+program, a change event is generated which is recorded by the
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>.  Whenever the database is about to be queried, or when
+the transaction is about to be committed, the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> first
+<strong>flushes</strong> all pending changes stored in memory to the database. This is
+known as the <a class="reference internal" href="../glossary.html#term-unit-of-work"><span class="xref std std-term">unit of work</span></a> pattern.</p>
+<p>When using a <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>, it’s useful to consider the ORM mapped objects
+that it maintains as <strong>proxy objects</strong> to database rows, which are local to the
+transaction being held by the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>.    In order to maintain the
+state on the objects as matching what’s actually in the database, there are a
+variety of events that will cause objects to re-access the database in order to
+keep synchronized.   It is possible to “detach” objects from a
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>, and to continue using them, though this practice has its
+caveats.  It’s intended that usually, you’d re-associate detached objects with
+another <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> when you want to work with them again, so that they
+can resume their normal task of representing database state.</p>
+</section>
+<section id="basics-of-using-a-session">
+<h2>Basics of Using a Session<a class="headerlink" href="#basics-of-using-a-session" title="Permalink to this headline">¶</a></h2>
+<p>The most basic <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> use patterns are presented here.</p>
+<section id="opening-and-closing-a-session">
+<span id="session-getting"></span><h3>Opening and Closing a Session<a class="headerlink" href="#opening-and-closing-a-session" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> may be constructed on its own or by using the
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.sessionmaker" title="sqlalchemy.orm.sessionmaker"><code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code></a> class.    It typically is passed a single
+<a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> as a source of connectivity up front.  A typical use
+may look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">Session</span>
+
+<span class="c1"># an Engine, which the Session will use for connection</span>
+<span class="c1"># resources</span>
+<span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s1">&#39;postgresql://scott:tiger@localhost/&#39;</span><span class="p">)</span>
+
+<span class="c1"># create session and add objects</span>
+<span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">some_object</span><span class="p">)</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">some_other_object</span><span class="p">)</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></pre></div>
+</div>
+<p>Above, the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> is instantiated with an <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>
+associated with a particular database URL.   It is then used in a Python
+context manager (i.e. <code class="docutils literal notranslate"><span class="pre">with:</span></code> statement) so that it is automatically
+closed at the end of the block; this is equivalent
+to calling the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.close" title="sqlalchemy.orm.Session.close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.close()</span></code></a> method.</p>
+<p>The call to <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.commit" title="sqlalchemy.orm.Session.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code></a> is optional, and is only needed if the
+work we’ve done with the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> includes new data to be
+persisted to the database.  If we were only issuing SELECT calls and did not
+need to write any changes, then the call to <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.commit" title="sqlalchemy.orm.Session.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code></a> would
+be unnecessary.</p>
+</section>
+<section id="framing-out-a-begin-commit-rollback-block">
+<span id="session-begin-commit-rollback-block"></span><h3>Framing out a begin / commit / rollback block<a class="headerlink" href="#framing-out-a-begin-commit-rollback-block" title="Permalink to this headline">¶</a></h3>
+<p>We may also enclose the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.commit" title="sqlalchemy.orm.Session.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code></a> call and the overall
+“framing” of the transaction within a context manager for those cases where
+we will be committing data to the database.  By “framing” we mean that if all
+operations succeed, the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.commit" title="sqlalchemy.orm.Session.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code></a> method will be called,
+but if any exceptions are raised, the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.rollback" title="sqlalchemy.orm.Session.rollback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code></a> method
+will be called so that the transaction is rolled back immediately, before
+propagating the exception outward.   In Python this is most fundamentally
+expressed using a <code class="docutils literal notranslate"><span class="pre">try:</span> <span class="pre">/</span> <span class="pre">except:</span> <span class="pre">/</span> <span class="pre">else:</span></code> block such as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># verbose version of what a context manager will do</span>
+<span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">some_object</span><span class="p">)</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">some_other_object</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
+        <span class="k">raise</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></pre></div>
+</div>
+<p>The long-form sequence of operations illustrated above can be
+achieved more succinctly by making use of the
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.SessionTransaction" title="sqlalchemy.orm.SessionTransaction"><code class="xref py py-class docutils literal notranslate"><span class="pre">SessionTransaction</span></code></a> object returned by the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.begin" title="sqlalchemy.orm.Session.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin()</span></code></a>
+method, which provides a context manager interface for the same sequence of
+operations:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># create session and add objects</span>
+<span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">begin</span><span class="p">():</span>
+      <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">some_object</span><span class="p">)</span>
+      <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">some_other_object</span><span class="p">)</span>
+    <span class="c1"># inner context calls session.commit(), if there were no exceptions</span>
+<span class="c1"># outer context calls session.close()</span></pre></div>
+</div>
+<p>More succinctly, the two contexts may be combined:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># create session and add objects</span>
+<span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">,</span> <span class="n">session</span><span class="o">.</span><span class="n">begin</span><span class="p">():</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">some_object</span><span class="p">)</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">some_other_object</span><span class="p">)</span>
+<span class="c1"># inner context calls session.commit(), if there were no exceptions</span>
+<span class="c1"># outer context calls session.close()</span></pre></div>
+</div>
+</section>
+<section id="using-a-sessionmaker">
+<h3>Using a sessionmaker<a class="headerlink" href="#using-a-sessionmaker" title="Permalink to this headline">¶</a></h3>
+<p>The purpose of <a class="reference internal" href="session_api.html#sqlalchemy.orm.sessionmaker" title="sqlalchemy.orm.sessionmaker"><code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code></a> is to provide a factory for
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> objects with a fixed configuration.   As it is typical
+that an application will have an <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> object in module
+scope, the <a class="reference internal" href="session_api.html#sqlalchemy.orm.sessionmaker" title="sqlalchemy.orm.sessionmaker"><code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code></a> can provide a factory for
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> objects that are against this engine:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">sessionmaker</span>
+
+<span class="c1"># an Engine, which the Session will use for connection</span>
+<span class="c1"># resources, typically in module scope</span>
+<span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s1">&#39;postgresql://scott:tiger@localhost/&#39;</span><span class="p">)</span>
+
+<span class="c1"># a sessionmaker(), also in the same scope as the engine</span>
+<span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+
+<span class="c1"># we can now construct a Session() without needing to pass the</span>
+<span class="c1"># engine each time</span>
+<span class="k">with</span> <span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">some_object</span><span class="p">)</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">some_other_object</span><span class="p">)</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+<span class="c1"># closes the session</span></pre></div>
+</div>
+<p>The <a class="reference internal" href="session_api.html#sqlalchemy.orm.sessionmaker" title="sqlalchemy.orm.sessionmaker"><code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code></a> is analogous to the <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>
+as a module-level factory for function-level sessions / connections.   As such
+it also has its own <a class="reference internal" href="session_api.html#sqlalchemy.orm.sessionmaker.begin" title="sqlalchemy.orm.sessionmaker.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sessionmaker.begin()</span></code></a> method, analogous
+to <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine.begin" title="sqlalchemy.engine.Engine.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Engine.begin()</span></code></a>, which returns a <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> object
+and also maintains a begin/commit/rollback block:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">sessionmaker</span>
+
+<span class="c1"># an Engine, which the Session will use for connection</span>
+<span class="c1"># resources</span>
+<span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s1">&#39;postgresql://scott:tiger@localhost/&#39;</span><span class="p">)</span>
+
+<span class="c1"># a sessionmaker(), also in the same scope as the engine</span>
+<span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+
+<span class="c1"># we can now construct a Session() and include begin()/commit()/rollback()</span>
+<span class="c1"># at once</span>
+<span class="k">with</span> <span class="n">Session</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">some_object</span><span class="p">)</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">some_other_object</span><span class="p">)</span>
+<span class="c1"># commits the transaction, closes the session</span></pre></div>
+</div>
+<p>Where above, the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> will both have its transaction committed
+as well as that the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> will be closed, when the above
+<code class="docutils literal notranslate"><span class="pre">with:</span></code> block ends.</p>
+<p>When you write your application, the
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.sessionmaker" title="sqlalchemy.orm.sessionmaker"><code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code></a> factory should be scoped the same as the
+<a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> object created by <a class="reference internal" href="../core/engines.html#sqlalchemy.create_engine" title="sqlalchemy.create_engine"><code class="xref py py-func docutils literal notranslate"><span class="pre">create_engine()</span></code></a>, which
+is typically at module-level or global scope.  As these objects are both
+factories, they can be used by any number of functions and threads
+simultaneously.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="session_api.html#sqlalchemy.orm.sessionmaker" title="sqlalchemy.orm.sessionmaker"><code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code></a></p>
+<p><a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a></p>
+</div>
+</section>
+<section id="querying-1-x-style">
+<span id="session-querying-1x"></span><h3>Querying (1.x Style)<a class="headerlink" href="#querying-1-x-style" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.query" title="sqlalchemy.orm.Session.query"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.query()</span></code></a> function takes one or more
+<strong>entities</strong> and returns a new <a class="reference internal" href="query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.query.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> object which
+will issue mapper queries within the context of this Session.   By
+“entity” we refer to a mapped class, an attribute of a mapped class, or
+other ORM constructs such as an <a class="reference internal" href="query.html#sqlalchemy.orm.aliased" title="sqlalchemy.orm.aliased"><code class="xref py py-func docutils literal notranslate"><span class="pre">aliased()</span></code></a> construct:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># query from a class</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;ed&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+<span class="c1"># query with multiple classes, returns tuples</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">Address</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;addresses&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;ed&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+<span class="c1"># query using orm-columns, also returns tuples</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">User</span><span class="o">.</span><span class="n">fullname</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span></pre></div>
+</div>
+<p>When ORM objects are returned in results, they are also stored in the identity
+map.  When an incoming database row has a primary key that matches an object
+which is already present, the same object is returned, and those attributes
+of the object which already have a value are not re-populated.</p>
+<p>The <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> automatically expires all instances along transaction
+boundaries (i.e. when the current transaction is committed or rolled back) so
+that with a normally isolated transaction, data will refresh itself when a new
+transaction begins.</p>
+<p>The <a class="reference internal" href="query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> object is introduced in great detail in
+<a class="reference internal" href="tutorial.html"><span class="std std-ref">Object Relational Tutorial (1.x API)</span></a>, and further documented in
+<a class="reference internal" href="query.html"><span class="std std-ref">Query API</span></a>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="tutorial.html"><span class="std std-ref">Object Relational Tutorial (1.x API)</span></a></p>
+<p><a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.query" title="sqlalchemy.orm.Session.query"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.query()</span></code></a></p>
+<p><a class="reference internal" href="query.html"><span class="std std-ref">Query API</span></a></p>
+</div>
+</section>
+<section id="querying-2-0-style">
+<span id="session-querying-20"></span><h3>Querying (2.0 style)<a class="headerlink" href="#querying-2-0-style" title="Permalink to this headline">¶</a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.4.</span></p>
+</div>
+<p>SQLAlchemy 2.0 will standardize the production of SELECT statements across both
+Core and ORM by making direct use of the <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a> object within the
+ORM, removing the need for there to be a separate <a class="reference internal" href="query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>
+object.    This mode of operation is available in SQLAlchemy 1.4 right now to
+support applications that will be migrating to 2.0.   The <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>
+must be instantiated with the
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.params.future" title="sqlalchemy.orm.Session"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.future</span></code></a> flag set to <code class="docutils literal notranslate"><span class="pre">True</span></code>; from that point on the
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.execute" title="sqlalchemy.orm.Session.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code></a> method will return ORM results via the
+standard <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a> object when invoking <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a>
+statements that use ORM entities:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">select</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">Session</span>
+
+<span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="n">future</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># query from a class</span>
+<span class="n">statement</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;ed&quot;</span><span class="p">)</span>
+
+<span class="c1"># list of first element of each row (i.e. User objects)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">statement</span><span class="p">)</span><span class="o">.</span><span class="n">scalars</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+<span class="c1"># query with multiple classes</span>
+<span class="n">statement</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">Address</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;addresses&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;ed&#39;</span><span class="p">)</span>
+
+<span class="c1"># list of tuples</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">statement</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+<span class="c1"># query with ORM columns</span>
+<span class="n">statement</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">User</span><span class="o">.</span><span class="n">fullname</span><span class="p">)</span>
+
+<span class="c1"># list of tuples</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">statement</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span></pre></div>
+</div>
+<p>It’s important to note that while methods of <a class="reference internal" href="query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> such as
+<a class="reference internal" href="query.html#sqlalchemy.orm.Query.all" title="sqlalchemy.orm.Query.all"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.all()</span></code></a> and <a class="reference internal" href="query.html#sqlalchemy.orm.Query.one" title="sqlalchemy.orm.Query.one"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.one()</span></code></a> will return instances
+of ORM mapped objects directly in the case that only a single complete
+entity were requested, the <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a> object returned
+by <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.execute" title="sqlalchemy.orm.Session.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code></a> will always deliver rows (named tuples)
+by default; this is so that results against single or multiple ORM objects,
+columns, tables, etc. may all be handled identically.</p>
+<p>If only one ORM entity was queried, the rows returned will have exactly one
+column, consisting of the ORM-mapped object instance for each row.  To convert
+these rows into object instances without the tuples, the
+<a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Result.scalars" title="sqlalchemy.engine.Result.scalars"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.scalars()</span></code></a> method is used to first apply a “scalars” filter
+to the result; then the <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a> can be iterated or deliver rows
+via standard methods such as <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Result.all" title="sqlalchemy.engine.Result.all"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.all()</span></code></a>,
+<a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Result.first" title="sqlalchemy.engine.Result.first"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.first()</span></code></a>, etc.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../changelog/migration_20.html"><span class="std std-ref">Migrating to SQLAlchemy 2.0</span></a></p>
+</div>
+</section>
+<section id="adding-new-or-existing-items">
+<h3>Adding New or Existing Items<a class="headerlink" href="#adding-new-or-existing-items" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.add" title="sqlalchemy.orm.Session.add"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.add()</span></code></a> is used to place instances in the
+session. For <a class="reference internal" href="../glossary.html#term-transient"><span class="xref std std-term">transient</span></a> (i.e. brand new) instances, this will have the effect
+of an INSERT taking place for those instances upon the next flush. For
+instances which are <a class="reference internal" href="../glossary.html#term-persistent"><span class="xref std std-term">persistent</span></a> (i.e. were loaded by this session), they are
+already present and do not need to be added. Instances which are <a class="reference internal" href="../glossary.html#term-detached"><span class="xref std std-term">detached</span></a>
+(i.e. have been removed from a session) may be re-associated with a session
+using this method:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">user1</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;user1&#39;</span><span class="p">)</span>
+<span class="n">user2</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;user2&#39;</span><span class="p">)</span>
+<span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">user1</span><span class="p">)</span>
+<span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">user2</span><span class="p">)</span>
+
+<span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>     <span class="c1"># write changes to the database</span></pre></div>
+</div>
+<p>To add a list of items to the session at once, use
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.add_all" title="sqlalchemy.orm.Session.add_all"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.add_all()</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">add_all</span><span class="p">([</span><span class="n">item1</span><span class="p">,</span> <span class="n">item2</span><span class="p">,</span> <span class="n">item3</span><span class="p">])</span></pre></div>
+</div>
+<p>The <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.add" title="sqlalchemy.orm.Session.add"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.add()</span></code></a> operation <strong>cascades</strong> along
+the <code class="docutils literal notranslate"><span class="pre">save-update</span></code> cascade. For more details see the section
+<a class="reference internal" href="cascades.html#unitofwork-cascades"><span class="std std-ref">Cascades</span></a>.</p>
+</section>
+<section id="deleting">
+<h3>Deleting<a class="headerlink" href="#deleting" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.delete" title="sqlalchemy.orm.Session.delete"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.delete()</span></code></a> method places an instance
+into the Session’s list of objects to be marked as deleted:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># mark two objects to be deleted</span>
+<span class="n">session</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">obj1</span><span class="p">)</span>
+<span class="n">session</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">obj2</span><span class="p">)</span>
+
+<span class="c1"># commit (or flush)</span>
+<span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></pre></div>
+</div>
+<p><a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.delete" title="sqlalchemy.orm.Session.delete"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.delete()</span></code></a> marks an object for deletion, which will
+result in a DELETE statement emitted for each primary key affected.
+Before the pending deletes are flushed, objects marked by “delete” are present
+in the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.deleted" title="sqlalchemy.orm.Session.deleted"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Session.deleted</span></code></a> collection.  After the DELETE, they
+are expunged from the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>, which becomes permanent after
+the transaction is committed.</p>
+<p>There are various important behaviors related to the
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.delete" title="sqlalchemy.orm.Session.delete"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.delete()</span></code></a> operation, particularly in how relationships to
+other objects and collections are handled.    There’s more information on how
+this works in the section <a class="reference internal" href="cascades.html#unitofwork-cascades"><span class="std std-ref">Cascades</span></a>, but in general
+the rules are:</p>
+<ul class="simple">
+<li><p>Rows that correspond to mapped objects that are related to a deleted
+object via the <a class="reference internal" href="relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code></a> directive are <strong>not
+deleted by default</strong>.  If those objects have a foreign key constraint back
+to the row being deleted, those columns are set to NULL.   This will
+cause a constraint violation if the columns are non-nullable.</p></li>
+<li><p>To change the “SET NULL” into a DELETE of a related object’s row, use the
+<a class="reference internal" href="cascades.html#cascade-delete"><span class="std std-ref">delete</span></a> cascade on the <a class="reference internal" href="relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code></a>.</p></li>
+<li><p>Rows that are in tables linked as “many-to-many” tables, via the
+<a class="reference internal" href="relationship_api.html#sqlalchemy.orm.relationship.params.secondary" title="sqlalchemy.orm.relationship"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.secondary</span></code></a> parameter, <strong>are</strong> deleted in all
+cases when the object they refer to is deleted.</p></li>
+<li><p>When related objects include a foreign key constraint back to the object
+being deleted, and the related collections to which they belong are not
+currently loaded into memory, the unit of work will emit a SELECT to fetch
+all related rows, so that their primary key values can be used to emit either
+UPDATE or DELETE statements on those related rows.  In this way, the ORM
+without further instruction will perform the function of ON DELETE CASCADE,
+even if this is configured on Core <a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.ForeignKeyConstraint" title="sqlalchemy.schema.ForeignKeyConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKeyConstraint</span></code></a>
+objects.</p></li>
+<li><p>The <a class="reference internal" href="relationship_api.html#sqlalchemy.orm.relationship.params.passive_deletes" title="sqlalchemy.orm.relationship"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.passive_deletes</span></code></a> parameter can be used
+to tune this behavior and rely upon “ON DELETE CASCADE” more naturally;
+when set to True, this SELECT operation will no longer take place, however
+rows that are locally present will still be subject to explicit SET NULL
+or DELETE.   Setting <a class="reference internal" href="relationship_api.html#sqlalchemy.orm.relationship.params.passive_deletes" title="sqlalchemy.orm.relationship"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.passive_deletes</span></code></a> to
+the string <code class="docutils literal notranslate"><span class="pre">&quot;all&quot;</span></code> will disable <strong>all</strong> related object update/delete.</p></li>
+<li><p>When the DELETE occurs for an object marked for deletion, the object
+is not automatically removed from collections or object references that
+refer to it.   When the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> is expired, these collections
+may be loaded again so that the object is no longer present.  However,
+it is preferable that instead of using <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.delete" title="sqlalchemy.orm.Session.delete"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.delete()</span></code></a> for
+these objects, the object should instead be removed from its collection
+and then <a class="reference internal" href="cascades.html#cascade-delete-orphan"><span class="std std-ref">delete-orphan</span></a> should be used so that it is
+deleted as a secondary effect of that collection removal.   See the
+section <a class="reference internal" href="cascades.html#session-deleting-from-collections"><span class="std std-ref">Notes on Delete - Deleting Objects Referenced from Collections and Scalar Relationships</span></a> for an example of this.</p></li>
+</ul>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="cascades.html#cascade-delete"><span class="std std-ref">delete</span></a> - describes “delete cascade”, which marks related
+objects for deletion when a lead object is deleted.</p>
+<p><a class="reference internal" href="cascades.html#cascade-delete-orphan"><span class="std std-ref">delete-orphan</span></a> - describes “delete orphan cascade”, which
+marks related objects for deletion when they are de-associated from their
+lead object.</p>
+<p><a class="reference internal" href="cascades.html#session-deleting-from-collections"><span class="std std-ref">Notes on Delete - Deleting Objects Referenced from Collections and Scalar Relationships</span></a> - important background on
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.delete" title="sqlalchemy.orm.Session.delete"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.delete()</span></code></a> as involves relationships being refreshed
+in memory.</p>
+</div>
+</section>
+<section id="flushing">
+<span id="session-flushing"></span><h3>Flushing<a class="headerlink" href="#flushing" title="Permalink to this headline">¶</a></h3>
+<p>When the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.session.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> is used with its default
+configuration, the flush step is nearly always done transparently.
+Specifically, the flush occurs before any individual
+SQL statement is issued as a result of a <a class="reference internal" href="query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> or
+a <a class="reference internal" href="../glossary.html#term-1"><span class="xref std std-term">2.0-style</span></a> <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.execute" title="sqlalchemy.orm.Session.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code></a> call, as well as within the
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.commit" title="sqlalchemy.orm.Session.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code></a> call before the transaction is
+committed. It also occurs before a SAVEPOINT is issued when
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.begin_nested" title="sqlalchemy.orm.Session.begin_nested"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin_nested()</span></code></a> is used.</p>
+<p>Regardless of the autoflush setting, a flush can always be forced by issuing
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.flush" title="sqlalchemy.orm.Session.flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.flush()</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span></pre></div>
+</div>
+<p>The “flush-on-Query” aspect of the behavior can be disabled by constructing
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.sessionmaker" title="sqlalchemy.orm.sessionmaker"><code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code></a> with the flag <code class="docutils literal notranslate"><span class="pre">autoflush=False</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">autoflush</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></pre></div>
+</div>
+<p>Additionally, autoflush can be temporarily disabled by setting the
+<code class="docutils literal notranslate"><span class="pre">autoflush</span></code> flag at any time:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysession</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+<span class="n">mysession</span><span class="o">.</span><span class="n">autoflush</span> <span class="o">=</span> <span class="kc">False</span></pre></div>
+</div>
+<p>More conveniently, it can be turned off within a context managed block using <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.no_autoflush" title="sqlalchemy.orm.Session.no_autoflush"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Session.no_autoflush</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">mysession</span><span class="o">.</span><span class="n">no_autoflush</span><span class="p">:</span>
+    <span class="n">mysession</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">some_object</span><span class="p">)</span>
+    <span class="n">mysession</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span></pre></div>
+</div>
+<p>The flush process <em>always</em> occurs within a transaction, even if the
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.session.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> has been configured with
+<code class="docutils literal notranslate"><span class="pre">autocommit=True</span></code>, a setting that disables the session’s persistent
+transactional state. If no transaction is present,
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.flush" title="sqlalchemy.orm.Session.flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.flush()</span></code></a> creates its own transaction and
+commits it. Any failures during flush will always result in a rollback of
+whatever transaction is present. If the Session is not in <code class="docutils literal notranslate"><span class="pre">autocommit=True</span></code>
+mode, an explicit call to <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.rollback" title="sqlalchemy.orm.Session.rollback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code></a> is
+required after a flush fails, even though the underlying transaction will have
+been rolled back already - this is so that the overall nesting pattern of
+so-called “subtransactions” is consistently maintained.</p>
+</section>
+<section id="expiring-refreshing">
+<h3>Expiring / Refreshing<a class="headerlink" href="#expiring-refreshing" title="Permalink to this headline">¶</a></h3>
+<p>An important consideration that will often come up when using the
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> is that of dealing with the state that is present on
+objects that have been loaded from the database, in terms of keeping them
+synchronized with the current state of the transaction.   The SQLAlchemy
+ORM is based around the concept of an <a class="reference internal" href="../glossary.html#term-identity-map"><span class="xref std std-term">identity map</span></a> such that when
+an object is “loaded” from a SQL query, there will be a unique Python
+object instance maintained corresponding to a particular database identity.
+This means if we emit two separate queries, each for the same row, and get
+a mapped object back, the two queries will have returned the same Python
+object:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">u1</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">u2</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">u1</span> <span class="ow">is</span> <span class="n">u2</span>
+<span class="go">True</span></pre></div>
+</div>
+<p>Following from this, when the ORM gets rows back from a query, it will
+<strong>skip the population of attributes</strong> for an object that’s already loaded.
+The design assumption here is to assume a transaction that’s perfectly
+isolated, and then to the degree that the transaction isn’t isolated, the
+application can take steps on an as-needed basis to refresh objects
+from the database transaction.  The FAQ entry at <a class="reference internal" href="../faq/sessions.html#faq-session-identity"><span class="std std-ref">I’m re-loading data with my Session but it isn’t seeing changes that I committed elsewhere</span></a>
+discusses this concept in more detail.</p>
+<p>When an ORM mapped object is loaded into memory, there are three general
+ways to refresh its contents with new data from the current transaction:</p>
+<ul>
+<li><p><strong>the expire() method</strong> - the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.expire" title="sqlalchemy.orm.Session.expire"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.expire()</span></code></a> method will
+erase the contents of selected or all attributes of an object, such that they
+will be loaded from the database when they are next accessed, e.g. using
+a <a class="reference internal" href="../glossary.html#term-lazy-loading"><span class="xref std std-term">lazy loading</span></a> pattern:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">expire</span><span class="p">(</span><span class="n">u1</span><span class="p">)</span>
+<span class="n">u1</span><span class="o">.</span><span class="n">some_attribute</span>  <span class="c1"># &lt;-- lazy loads from the transaction</span></pre></div>
+</div>
+</li>
+<li><p><strong>the refresh() method</strong> - closely related is the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.refresh" title="sqlalchemy.orm.Session.refresh"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.refresh()</span></code></a>
+method, which does everything the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.expire" title="sqlalchemy.orm.Session.expire"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.expire()</span></code></a> method does
+but also emits one or more SQL queries immediately to actually refresh
+the contents of the object:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">refresh</span><span class="p">(</span><span class="n">u1</span><span class="p">)</span>  <span class="c1"># &lt;-- emits a SQL query</span>
+<span class="n">u1</span><span class="o">.</span><span class="n">some_attribute</span>  <span class="c1"># &lt;-- is refreshed from the transaction</span></pre></div>
+</div>
+</li>
+<li><p><strong>the populate_existing() method</strong> - this method is actually on the
+<a class="reference internal" href="query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> object as <a class="reference internal" href="query.html#sqlalchemy.orm.Query.populate_existing" title="sqlalchemy.orm.Query.populate_existing"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.populate_existing()</span></code></a>
+and indicates that it should return objects that are unconditionally
+re-populated from their contents in the database:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">u2</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">populate_existing</span><span class="p">()</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span></pre></div>
+</div>
+</li>
+</ul>
+<p>Further discussion on the refresh / expire concept can be found at
+<a class="reference internal" href="session_state_management.html#session-expire"><span class="std std-ref">Refreshing / Expiring</span></a>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="session_state_management.html#session-expire"><span class="std std-ref">Refreshing / Expiring</span></a></p>
+<p><a class="reference internal" href="../faq/sessions.html#faq-session-identity"><span class="std std-ref">I’m re-loading data with my Session but it isn’t seeing changes that I committed elsewhere</span></a></p>
+</div>
+</section>
+<section id="update-and-delete-with-arbitrary-where-clause">
+<span id="orm-expression-update-delete"></span><h3>UPDATE and DELETE with arbitrary WHERE clause<a class="headerlink" href="#update-and-delete-with-arbitrary-where-clause" title="Permalink to this headline">¶</a></h3>
+<p>The sections above on <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.flush" title="sqlalchemy.orm.Session.flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.flush()</span></code></a> and <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.delete" title="sqlalchemy.orm.Session.delete"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.delete()</span></code></a>
+detail how rows can be inserted, updated and deleted in the database,
+based on primary key identities that are referred towards by mapped Python
+objets in the application.   The <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> can also emit UPDATE
+and DELETE statements with arbitrary WHERE clauses as well, and at the same
+time refresh locally present objects which match those rows.</p>
+<p>To emit an ORM-enabled UPDATE in <a class="reference internal" href="../glossary.html#term-1.x-style"><span class="xref std std-term">1.x style</span></a>, the <a class="reference internal" href="query.html#sqlalchemy.orm.Query.update" title="sqlalchemy.orm.Query.update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.update()</span></code></a> method
+may be used:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;squidward&quot;</span><span class="p">)</span><span class="o">.</span>\
+    <span class="n">update</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;spongebob&quot;</span><span class="p">},</span> <span class="n">synchronize_session</span><span class="o">=</span><span class="s2">&quot;fetch&quot;</span><span class="p">)</span></pre></div>
+</div>
+<p>Above, an UPDATE will be emitted against all rows that match the name
+“squidward” and be updated to the name “spongebob”.  The
+<a class="reference internal" href="query.html#sqlalchemy.orm.Query.update.params.synchronize_session" title="sqlalchemy.orm.Query.update"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Query.update.synchronize_session</span></code></a> parameter referring to
+“fetch” indicates the list of affected primary keys should be fetched either
+via a separate SELECT statement or via RETURNING if the backend database supports it;
+objects locally present in memory will be updated in memory based on these
+primary key identities.</p>
+<p>For ORM-enabled UPDATEs in <a class="reference internal" href="../glossary.html#term-2.0-style"><span class="xref std std-term">2.0 style</span></a>, <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.execute" title="sqlalchemy.orm.Session.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code></a> is used with the
+Core <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></a> construct:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">update</span>
+
+<span class="n">stmt</span> <span class="o">=</span> <span class="n">update</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;squidward&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;spongebob&quot;</span><span class="p">)</span><span class="o">.</span>\
+    <span class="n">execution_options</span><span class="p">(</span><span class="n">synchronize_session</span><span class="o">=</span><span class="s2">&quot;fetch&quot;</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span></pre></div>
+</div>
+<p>Above, the <code class="xref py py-meth docutils literal notranslate"><span class="pre">Update.execution_options()</span></code> method may be used to
+establish execution-time options such as “synchronize_session”.</p>
+<p>The result object returned is an instance of <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.CursorResult" title="sqlalchemy.engine.CursorResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">CursorResult</span></code></a>; to
+retrieve the number of rows matched by any UPDATE or DELETE statement, use
+<a class="reference internal" href="../core/connections.html#sqlalchemy.engine.CursorResult.rowcount" title="sqlalchemy.engine.CursorResult.rowcount"><code class="xref py py-attr docutils literal notranslate"><span class="pre">CursorResult.rowcount</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">num_rows_matched</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">rowcount</span></pre></div>
+</div>
+<p>DELETEs work in the same way as UPDATE except there is no “values / set”
+clause established.  When synchronize_session is used, matching objects
+within the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> will be marked as deleted and expunged.</p>
+<p>ORM-enabled delete, <a class="reference internal" href="../glossary.html#term-1.x-style"><span class="xref std std-term">1.x style</span></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;squidward&quot;</span><span class="p">)</span><span class="o">.</span>\
+    <span class="n">delete</span><span class="p">(</span><span class="n">synchronize_session</span><span class="o">=</span><span class="s2">&quot;fetch&quot;</span><span class="p">)</span></pre></div>
+</div>
+<p>ORM-enabled delete, <a class="reference internal" href="../glossary.html#term-2.0-style"><span class="xref std std-term">2.0 style</span></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">delete</span>
+
+<span class="n">stmt</span> <span class="o">=</span> <span class="n">delete</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;squidward&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">execution_options</span><span class="p">(</span><span class="n">synchronize_session</span><span class="o">=</span><span class="s2">&quot;fetch&quot;</span><span class="p">)</span>
+
+<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span></pre></div>
+</div>
+<section id="selecting-a-synchronization-strategy">
+<span id="orm-expression-update-delete-sync"></span><h4>Selecting a Synchronization Strategy<a class="headerlink" href="#selecting-a-synchronization-strategy" title="Permalink to this headline">¶</a></h4>
+<p>With both the 1.x and 2.0 form of ORM-enabled updates and deletes, the following
+values for <code class="docutils literal notranslate"><span class="pre">synchronize_session</span></code> are supported:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">False</span></code> - don’t synchronize the session. This option is the most
+efficient and is reliable once the session is expired, which
+typically occurs after a commit(), or explicitly using
+expire_all(). Before the expiration, objects that were updated or deleted
+in the database may still
+remain in the session with stale values, which
+can lead to confusing results.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'fetch'</span></code> - Retrieves the primary key identity of affected rows by either
+performing a SELECT before the UPDATE or DELETE, or by using RETURNING if the
+database supports it, so that in-memory objects which are affected by the
+operation can be refreshed with new values (updates) or expunged from the
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> (deletes). Note that this synchronization strategy is
+not available if the given <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.update" title="sqlalchemy.sql.expression.update"><code class="xref py py-func docutils literal notranslate"><span class="pre">update()</span></code></a> or <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.delete" title="sqlalchemy.sql.expression.delete"><code class="xref py py-func docutils literal notranslate"><span class="pre">delete()</span></code></a>
+construct specifies columns for <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.UpdateBase.returning" title="sqlalchemy.sql.expression.UpdateBase.returning"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateBase.returning()</span></code></a> explicitly.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'evaluate'</span></code> - Evaluate the WHERE criteria given in the UPDATE or DELETE
+statement in Python, to locate matching objects within the
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>.   This approach does not add any round trips and in
+the absense of RETURNING support is more efficient.  For UPDATE or DELETE
+statements with complex criteria, the <code class="docutils literal notranslate"><span class="pre">'evaluate'</span></code> strategy may not be
+able to evaluate the expression in Python and will raise an error.  If
+this occurs, use the <code class="docutils literal notranslate"><span class="pre">'fetch'</span></code> strategy for the operation instead.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">&quot;evaluate&quot;</span></code> strategy should be avoided if an UPDATE operation is
+to run on a <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> that has many objects which have
+been expired, because it will necessarily need to refresh those objects
+as they are located which will emit a SELECT for each one.   The
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> may have expired objects if it is being used
+across multiple <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.commit" title="sqlalchemy.orm.Session.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code></a> calls and the
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.params.expire_on_commit" title="sqlalchemy.orm.Session"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.expire_on_commit</span></code></a> flag is at its default
+value of <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+</div>
+</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>Additional Caveats for ORM-enabled updates and deletes</strong></p>
+<p>The ORM-enabled UPDATE and DELETE features bypass ORM unit-of-work
+automation in favor being able to emit a single UPDATE or DELETE statement
+that matches multiple rows at once without complexity.</p>
+<ul>
+<li><p>The operations do not offer in-Python cascading of
+relationships - it is assumed that ON UPDATE CASCADE and/or
+ON DELETE CASCADE is
+configured for any foreign key references which require
+it, otherwise the database may emit an integrity
+violation if foreign key references are being enforced.</p></li>
+<li><p>After the UPDATE or DELETE, dependent objects in the
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> which were impacted by an ON UPDATE CASCADE or ON
+DELETE CASCADE on related tables may not contain the current state;
+this issue is resolved once the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> is expired, which
+normally occurs upon <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.commit" title="sqlalchemy.orm.Session.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code></a> or can be forced by
+using
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.expire_all" title="sqlalchemy.orm.Session.expire_all"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.expire_all()</span></code></a>.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">'fetch'</span></code> strategy, when run on a database that does not support
+RETURNING such as MySQL or SQLite, results in an additional SELECT
+statement emitted which may reduce performance.   Use SQL echoing when
+developing to evaluate the impact of SQL emitted.</p></li>
+<li><p>ORM-enabled UPDATEs and DELETEs do not handle joined table inheritance
+automatically.   If the operation is against multiple tables, typically
+individual UPDATE / DELETE statements against the individual tables
+should be used.   Some databases support multiple table UPDATEs.
+Similar guidelines as those detailed at <a class="reference internal" href="../core/tutorial.html#multi-table-updates"><span class="std std-ref">Multiple Table Updates</span></a>
+may be applied.</p></li>
+<li><p>The WHERE criteria needed in order to limit the polymorphic identity to
+specific subclasses for single-table-inheritance mappings <strong>is included
+automatically</strong> .   This only applies to a subclass mapper that has no
+table of its own.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.4: </span>ORM updates/deletes now automatically
+accommodate for the WHERE criteria added for single-inheritance
+mappings.</p>
+</div>
+</li>
+<li><p>The <a class="reference internal" href="query.html#sqlalchemy.orm.with_loader_criteria" title="sqlalchemy.orm.with_loader_criteria"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_loader_criteria()</span></code></a> option <strong>is supported</strong> by ORM
+update and delete operations; criteria here will be added to that of the
+UPDATE or DELETE statement being emitted, as well as taken into account
+during the “synchronize” process.</p></li>
+<li><p>In order to intercept ORM-enabled UPDATE and DELETE operations with event
+handlers, use the <a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.do_orm_execute" title="sqlalchemy.orm.SessionEvents.do_orm_execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.do_orm_execute()</span></code></a> event.</p></li>
+</ul>
+</div>
+</section>
+<section id="selecting-orm-objects-inline-with-update-returning-or-insert-returning">
+<span id="orm-dml-returning-objects"></span><h4>Selecting ORM Objects Inline with UPDATE.. RETURNING or INSERT..RETURNING<a class="headerlink" href="#selecting-orm-objects-inline-with-update-returning-or-insert-returning" title="Permalink to this headline">¶</a></h4>
+<div class="admonition deepalchemy">
+<p class="admonition-title">Deep Alchemy</p>
+<p>The feature of linking ORM objects to RETURNING is a new and
+experimental feature.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.4.0b3.</span></p>
+</div>
+<p>The <a class="reference internal" href="../glossary.html#term-DML"><span class="xref std std-term">DML</span></a> constructs <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.insert" title="sqlalchemy.sql.expression.insert"><code class="xref py py-func docutils literal notranslate"><span class="pre">insert()</span></code></a>, <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.update" title="sqlalchemy.sql.expression.update"><code class="xref py py-func docutils literal notranslate"><span class="pre">update()</span></code></a>, and
+<a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.delete" title="sqlalchemy.sql.expression.delete"><code class="xref py py-func docutils literal notranslate"><span class="pre">delete()</span></code></a> feature a method <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.UpdateBase.returning" title="sqlalchemy.sql.expression.UpdateBase.returning"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateBase.returning()</span></code></a> which on
+database backends that support RETURNING (PostgreSQL, SQL Server, some MariaDB
+versions) may be used to return database rows generated or matched by
+the statement as though they were SELECTed. The ORM-enabled UPDATE and DELETE
+statements may be combined with this feature, so that they return rows
+corresponding to all the rows which were matched by the criteria:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">update</span>
+
+<span class="n">stmt</span> <span class="o">=</span> <span class="n">update</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;squidward&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;spongebob&quot;</span><span class="p">)</span><span class="o">.</span>\
+    <span class="n">returning</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">stmt</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;id: </span><span class="si">{</span><span class="n">row</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></pre></div>
+</div>
+<p>The above example returns the <code class="docutils literal notranslate"><span class="pre">User.id</span></code> attribute for each row matched.
+Provided that each row contains at least a primary key value, we may opt to
+receive these rows as ORM objects, allowing ORM objects to be loaded from the
+database corresponding atomically to an UPDATE statement against those rows. To
+achieve this, we may combine the <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></a> construct which returns
+<code class="docutils literal notranslate"><span class="pre">User</span></code> rows with a <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> that’s adapted to run this UPDATE
+statement in an ORM context using the <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.from_statement" title="sqlalchemy.sql.expression.Select.from_statement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.from_statement()</span></code></a>
+method:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stmt</span> <span class="o">=</span> <span class="n">update</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;squidward&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;spongebob&quot;</span><span class="p">)</span><span class="o">.</span>\
+    <span class="n">returning</span><span class="p">(</span><span class="n">User</span><span class="p">)</span>
+
+<span class="n">orm_stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">from_statement</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span><span class="o">.</span><span class="n">execution_options</span><span class="p">(</span><span class="n">populate_existing</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">orm_stmt</span><span class="p">)</span><span class="o">.</span><span class="n">scalars</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;updated user: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">user</span><span class="p">)</span></pre></div>
+</div>
+<p>Above, we produce an <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.update" title="sqlalchemy.sql.expression.update"><code class="xref py py-func docutils literal notranslate"><span class="pre">update()</span></code></a> construct that includes
+<a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Update.returning" title="sqlalchemy.sql.expression.Update.returning"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Update.returning()</span></code></a> given the full <code class="docutils literal notranslate"><span class="pre">User</span></code> entity, which will
+produce complete rows from the database table as it UPDATEs them; any arbitrary
+set of columns to load may be specified as long as the full primary key is
+included. Next, these rows are adapted to an ORM load by producing a
+<a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> for the desired entity, then adapting it to the UPDATE
+statement by passing the <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></a> construct to the
+<a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.from_statement" title="sqlalchemy.sql.expression.Select.from_statement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.from_statement()</span></code></a> method; this special ORM method, introduced
+at <a class="reference internal" href="queryguide.html#orm-queryguide-selecting-text"><span class="std std-ref">Getting ORM Results from Textual and Core Statements</span></a>, produces an ORM-specific adapter that
+allows the given statement to act as though it were the SELECT of rows that is
+first described.   No SELECT is actually emitted in the database, only the
+UPDATE..RETURNING we’ve constructed.</p>
+<p>Finally, we make use of <a class="reference internal" href="queryguide.html#orm-queryguide-populate-existing"><span class="std std-ref">Populate Existing</span></a> on the
+construct so that all the data returned by the UPDATE, including the columns
+we’ve updated, are populated into the returned objects, replacing any
+values which were there already.  This has the same effect as if we had
+used the <code class="docutils literal notranslate"><span class="pre">synchronize_session='fetch'</span></code> strategy described previously
+at <a class="reference internal" href="#orm-expression-update-delete-sync"><span class="std std-ref">Selecting a Synchronization Strategy</span></a>.</p>
+<p>The above approach can be used with INSERTs as well (and technically
+DELETEs too, though this makes less sense as the returned ORM objects
+by definition don’t exist in the database anymore), as both of these
+constructs support RETURNING as well.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="queryguide.html#orm-queryguide-selecting-text"><span class="std std-ref">Getting ORM Results from Textual and Core Statements</span></a> - introduces the
+<a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.from_statement" title="sqlalchemy.sql.expression.Select.from_statement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.from_statement()</span></code></a> method.</p>
+</div>
+</section>
+</section>
+<section id="auto-begin">
+<span id="session-autobegin"></span><h3>Auto Begin<a class="headerlink" href="#auto-begin" title="Permalink to this headline">¶</a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.4: </span>This section describes a behavior that is new in SQLAlchemy 1.4 and does
+not apply to previous versions.  Further details on the “autobegin”
+change are at <a class="reference internal" href="../changelog/migration_14.html#change-5074"><span class="std std-ref">Session features new “autobegin” behavior</span></a>.</p>
+</div>
+<p>The <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> object features a behavior known as <strong>autobegin</strong>.
+This indicates that the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> will internally consider itself
+to be in a “transactional” state as soon as any work is performed with the
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>, either involving modifications to the internal state of
+the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> with regards to object state changes, or with
+operations that require database connectivity.</p>
+<p>When the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> is first constructed, there’s no transactional
+state present.   The transactional state is begun automatically, when
+a method such as <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.add" title="sqlalchemy.orm.Session.add"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.add()</span></code></a> or <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.execute" title="sqlalchemy.orm.Session.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code></a>
+is invoked, or similarly if a <a class="reference internal" href="query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> is executed to return
+results (which ultimately uses <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.execute" title="sqlalchemy.orm.Session.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code></a>), or if
+an attribute is modified on a <a class="reference internal" href="../glossary.html#term-persistent"><span class="xref std std-term">persistent</span></a> object.</p>
+<p>The transactional state can be checked by accessing the
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.in_transaction" title="sqlalchemy.orm.Session.in_transaction"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.in_transaction()</span></code></a> method, which returns <code class="docutils literal notranslate"><span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">False</span></code>
+indicating if the “autobegin” step has proceeded. While not normally needed,
+the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.get_transaction" title="sqlalchemy.orm.Session.get_transaction"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.get_transaction()</span></code></a> method will return the actual
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.SessionTransaction" title="sqlalchemy.orm.SessionTransaction"><code class="xref py py-class docutils literal notranslate"><span class="pre">SessionTransaction</span></code></a> object that represents this transactional
+state.</p>
+<p>The transactional state of the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> may also be started
+explicitly, by invoking the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.begin" title="sqlalchemy.orm.Session.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin()</span></code></a> method.   When this
+method is called, the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> is placed into the “transactional”
+state unconditionally.   <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.begin" title="sqlalchemy.orm.Session.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin()</span></code></a> may be used as a context
+manager as described at <a class="reference internal" href="#session-begin-commit-rollback-block"><span class="std std-ref">Framing out a begin / commit / rollback block</span></a>.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.4.12: </span>- autobegin now correctly occurs if object
+attributes are modified; previously this was not occurring.</p>
+</div>
+</section>
+<section id="committing">
+<span id="session-committing"></span><h3>Committing<a class="headerlink" href="#committing" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.commit" title="sqlalchemy.orm.Session.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code></a> is used to commit the current
+transaction, if any.   When there is no transaction in place, the method
+passes silently.</p>
+<p>When <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.commit" title="sqlalchemy.orm.Session.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code></a> operates upon the current open transaction,
+it first always issues <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.flush" title="sqlalchemy.orm.Session.flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.flush()</span></code></a>
+beforehand to flush any remaining state to the database; this is independent
+of the “autoflush” setting.</p>
+<p>Subsequent to that, <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.commit" title="sqlalchemy.orm.Session.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code></a> will then COMMIT the actual
+database transaction or transactions, if any, that are in place.</p>
+<p>Finally, all objects within the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> are <a class="reference internal" href="../glossary.html#term-expired"><span class="xref std std-term">expired</span></a> as
+the transaction is closed out. This is so that when the instances are next
+accessed, either through attribute access or by them being present in the
+result of a SELECT, they receive the most recent state. This behavior may be
+controlled by the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.params.expire_on_commit" title="sqlalchemy.orm.Session"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.expire_on_commit</span></code></a> flag, which may be
+set to <code class="docutils literal notranslate"><span class="pre">False</span></code> when this behavior is undesirable.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.4: </span>The <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> object now features deferred “begin” behavior, as
+described in <a class="reference internal" href="#session-autobegin"><span class="std std-ref">autobegin</span></a>. If no transaction is
+begun, methods like <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.commit" title="sqlalchemy.orm.Session.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code></a> and
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.rollback" title="sqlalchemy.orm.Session.rollback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code></a> have no effect.  This behavior would not
+have been observed prior to 1.4 as under non-autocommit mode, a
+transaction would always be implicitly present.</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#session-autobegin"><span class="std std-ref">Auto Begin</span></a></p>
+</div>
+</section>
+<section id="rolling-back">
+<span id="session-rollback"></span><h3>Rolling Back<a class="headerlink" href="#rolling-back" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.rollback" title="sqlalchemy.orm.Session.rollback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code></a> rolls back the current transaction, if any.
+When there is no transaction in place, the method passes silently.</p>
+<p>With a default configured session, the
+post-rollback state of the session, subsequent to a transaction having
+been begun either via <a class="reference internal" href="#session-autobegin"><span class="std std-ref">autobegin</span></a>
+or by calling the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.begin" title="sqlalchemy.orm.Session.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin()</span></code></a>
+method explicitly, is as follows:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>All transactions are rolled back and all connections returned to the
+connection pool, unless the Session was bound directly to a Connection, in
+which case the connection is still maintained (but still rolled back).</p></li>
+<li><p>Objects which were initially in the <a class="reference internal" href="../glossary.html#term-pending"><span class="xref std std-term">pending</span></a> state when they were added
+to the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.session.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> within the lifespan of the
+transaction are expunged, corresponding to their INSERT statement being
+rolled back. The state of their attributes remains unchanged.</p></li>
+<li><p>Objects which were marked as <a class="reference internal" href="../glossary.html#term-deleted"><span class="xref std std-term">deleted</span></a> within the lifespan of the
+transaction are promoted back to the <a class="reference internal" href="../glossary.html#term-persistent"><span class="xref std std-term">persistent</span></a> state, corresponding to
+their DELETE statement being rolled back. Note that if those objects were
+first <a class="reference internal" href="../glossary.html#term-pending"><span class="xref std std-term">pending</span></a> within the transaction, that operation takes precedence
+instead.</p></li>
+<li><p>All objects not expunged are fully expired - this is regardless of the
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.params.expire_on_commit" title="sqlalchemy.orm.Session"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.expire_on_commit</span></code></a> setting.</p></li>
+</ul>
+</div></blockquote>
+<p>With that state understood, the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> may
+safely continue usage after a rollback occurs.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.4: </span>The <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> object now features deferred “begin” behavior, as
+described in <a class="reference internal" href="#session-autobegin"><span class="std std-ref">autobegin</span></a>. If no transaction is
+begun, methods like <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.commit" title="sqlalchemy.orm.Session.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code></a> and
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.rollback" title="sqlalchemy.orm.Session.rollback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code></a> have no effect.  This behavior would not
+have been observed prior to 1.4 as under non-autocommit mode, a
+transaction would always be implicitly present.</p>
+</div>
+<p>When a <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.flush" title="sqlalchemy.orm.Session.flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.flush()</span></code></a> fails, typically for reasons like primary
+key, foreign key, or “not nullable” constraint violations, a ROLLBACK is issued
+automatically (it’s currently not possible for a flush to continue after a
+partial failure). However, the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> goes into a state known as
+“inactive” at this point, and the calling application must always call the
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.rollback" title="sqlalchemy.orm.Session.rollback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code></a> method explicitly so that the
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> can go back into a useable state (it can also be simply
+closed and discarded). See the FAQ entry at <a class="reference internal" href="../faq/sessions.html#faq-session-rollback"><span class="std std-ref">“This Session’s transaction has been rolled back due to a previous exception during flush.” (or similar)</span></a> for
+further discussion.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#session-autobegin"><span class="std std-ref">Auto Begin</span></a></p>
+</div>
+</section>
+<section id="closing">
+<span id="session-closing"></span><h3>Closing<a class="headerlink" href="#closing" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.close" title="sqlalchemy.orm.Session.close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.close()</span></code></a> method issues a <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.expunge_all" title="sqlalchemy.orm.Session.expunge_all"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.expunge_all()</span></code></a> which
+removes all ORM-mapped objects from the session, and <a class="reference internal" href="../glossary.html#term-releases"><span class="xref std std-term">releases</span></a> any
+transactional/connection resources from the <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> object(s)
+to which it is bound.   When connections are returned to the connection pool,
+transactional state is rolled back as well.</p>
+<p>When the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> is closed, it is essentially in the
+original state as when it was first constructed, and <strong>may be used again</strong>.
+In this sense, the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.close" title="sqlalchemy.orm.Session.close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.close()</span></code></a> method is more like a “reset”
+back to the clean state and not as much like a “database close” method.</p>
+<p>It’s recommended that the scope of a <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> be limited by
+a call to <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.close" title="sqlalchemy.orm.Session.close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.close()</span></code></a> at the end, especially if the
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.commit" title="sqlalchemy.orm.Session.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code></a> or <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.rollback" title="sqlalchemy.orm.Session.rollback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code></a> methods are not
+used.    The <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> may be used as a context manager to ensure
+that <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.close" title="sqlalchemy.orm.Session.close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.close()</span></code></a> is called:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">))</span>
+
+<span class="c1"># closes session automatically</span></pre></div>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.4: </span>The <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> object features deferred “begin” behavior, as
+described in <a class="reference internal" href="#session-autobegin"><span class="std std-ref">autobegin</span></a>. no longer immediately
+begins a new transaction after the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.close" title="sqlalchemy.orm.Session.close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.close()</span></code></a> method is
+called.</p>
+</div>
+</section>
+</section>
+<section id="session-frequently-asked-questions">
+<span id="session-faq"></span><h2>Session Frequently Asked Questions<a class="headerlink" href="#session-frequently-asked-questions" title="Permalink to this headline">¶</a></h2>
+<p>By this point, many users already have questions about sessions.
+This section presents a mini-FAQ (note that we have also a <a class="reference internal" href="../faq/index.html"><span class="doc">real FAQ</span></a>)
+of the most basic issues one is presented with when using a <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>.</p>
+<section id="when-do-i-make-a-sessionmaker">
+<h3>When do I make a <a class="reference internal" href="session_api.html#sqlalchemy.orm.sessionmaker" title="sqlalchemy.orm.sessionmaker"><code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code></a>?<a class="headerlink" href="#when-do-i-make-a-sessionmaker" title="Permalink to this headline">¶</a></h3>
+<p>Just one time, somewhere in your application’s global scope. It should be
+looked upon as part of your application’s configuration. If your
+application has three .py files in a package, you could, for example,
+place the <a class="reference internal" href="session_api.html#sqlalchemy.orm.sessionmaker" title="sqlalchemy.orm.sessionmaker"><code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code></a> line in your <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code> file; from
+that point on your other modules say “from mypackage import Session”. That
+way, everyone else just uses <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session()</span></code></a>,
+and the configuration of that session is controlled by that central point.</p>
+<p>If your application starts up, does imports, but does not know what
+database it’s going to be connecting to, you can bind the
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> at the “class” level to the
+engine later on, using <a class="reference internal" href="session_api.html#sqlalchemy.orm.sessionmaker.configure" title="sqlalchemy.orm.sessionmaker.configure"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sessionmaker.configure()</span></code></a>.</p>
+<p>In the examples in this section, we will frequently show the
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.sessionmaker" title="sqlalchemy.orm.sessionmaker"><code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code></a> being created right above the line where we actually
+invoke <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>. But that’s just for
+example’s sake!  In reality, the <a class="reference internal" href="session_api.html#sqlalchemy.orm.sessionmaker" title="sqlalchemy.orm.sessionmaker"><code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code></a> would be somewhere
+at the module level.   The calls to instantiate <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>
+would then be placed at the point in the application where database
+conversations begin.</p>
+</section>
+<section id="when-do-i-construct-a-session-when-do-i-commit-it-and-when-do-i-close-it">
+<span id="session-faq-whentocreate"></span><h3>When do I construct a <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>, when do I commit it, and when do I close it?<a class="headerlink" href="#when-do-i-construct-a-session-when-do-i-commit-it-and-when-do-i-close-it" title="Permalink to this headline">¶</a></h3>
+<div class="topic">
+<p class="topic-title">tl;dr;</p>
+<ol class="arabic simple">
+<li><p>As a general rule, keep the lifecycle of the session <strong>separate and
+external</strong> from functions and objects that access and/or manipulate
+database data.  This will greatly help with achieving a predictable
+and consistent transactional scope.</p></li>
+<li><p>Make sure you have a clear notion of where transactions
+begin and end, and keep transactions <strong>short</strong>, meaning, they end
+at the series of a sequence of operations, instead of being held
+open indefinitely.</p></li>
+</ol>
+</div>
+<p>A <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> is typically constructed at the beginning of a logical
+operation where database access is potentially anticipated.</p>
+<p>The <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>, whenever it is used to talk to the database,
+begins a database transaction as soon as it starts communicating.
+This transaction remains in progress until the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>
+is rolled back, committed, or closed.   The <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> will
+begin a new transaction if it is used again, subsequent to the previous
+transaction ending; from this it follows that the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>
+is capable of having a lifespan across many transactions, though only
+one at a time.   We refer to these two concepts as <strong>transaction scope</strong>
+and <strong>session scope</strong>.</p>
+<p>It’s usually not very hard to determine the best points at which
+to begin and end the scope of a <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>, though the wide
+variety of application architectures possible can introduce
+challenging situations.</p>
+<p>Some sample scenarios include:</p>
+<ul class="simple">
+<li><p>Web applications.  In this case, it’s best to make use of the SQLAlchemy
+integrations provided by the web framework in use.  Or otherwise, the
+basic pattern is create a <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> at the start of a web
+request, call the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.commit" title="sqlalchemy.orm.Session.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code></a> method at the end of
+web requests that do POST, PUT, or DELETE, and then close the session
+at the end of web request.  It’s also usually a good idea to set
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.params.expire_on_commit" title="sqlalchemy.orm.Session"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.expire_on_commit</span></code></a> to False so that subsequent
+access to objects that came from a <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> within the
+view layer do not need to emit new SQL queries to refresh the objects,
+if the transaction has been committed already.</p></li>
+<li><p>A background daemon which spawns off child forks
+would want to create a <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> local to each child
+process, work with that <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> through the life of the “job”
+that the fork is handling, then tear it down when the job is completed.</p></li>
+<li><p>For a command-line script, the application would create a single, global
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> that is established when the program begins to do its
+work, and commits it right as the program is completing its task.</p></li>
+<li><p>For a GUI interface-driven application, the scope of the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>
+may best be within the scope of a user-generated event, such as a button
+push.  Or, the scope may correspond to explicit user interaction, such as
+the user “opening” a series of records, then “saving” them.</p></li>
+</ul>
+<p>As a general rule, the application should manage the lifecycle of the
+session <em>externally</em> to functions that deal with specific data.  This is a
+fundamental separation of concerns which keeps data-specific operations
+agnostic of the context in which they access and manipulate that data.</p>
+<p>E.g. <strong>don’t do this</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### this is the **wrong way to do it** ###</span>
+
+<span class="k">class</span> <span class="nc">ThingOne</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">go</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">FooBar</span><span class="p">)</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">})</span>
+            <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">session</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
+            <span class="k">raise</span>
+
+<span class="k">class</span> <span class="nc">ThingTwo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">go</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Widget</span><span class="p">)</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;q&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">})</span>
+            <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">session</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
+            <span class="k">raise</span>
+
+<span class="k">def</span> <span class="nf">run_my_program</span><span class="p">():</span>
+    <span class="n">ThingOne</span><span class="p">()</span><span class="o">.</span><span class="n">go</span><span class="p">()</span>
+    <span class="n">ThingTwo</span><span class="p">()</span><span class="o">.</span><span class="n">go</span><span class="p">()</span></pre></div>
+</div>
+<p>Keep the lifecycle of the session (and usually the transaction)
+<strong>separate and external</strong>.  The example below illustrates how this might look,
+and additionally makes use of a Python context manager (i.e. the <code class="docutils literal notranslate"><span class="pre">with:</span></code>
+keyword) in order to manage the scope of the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> and its
+transaction automatically:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### this is a **better** (but not the only) way to do it ###</span>
+
+<span class="k">class</span> <span class="nc">ThingOne</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">go</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">):</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">FooBar</span><span class="p">)</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">})</span>
+
+<span class="k">class</span> <span class="nc">ThingTwo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">go</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">):</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Widget</span><span class="p">)</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;q&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">})</span>
+
+<span class="k">def</span> <span class="nf">run_my_program</span><span class="p">():</span>
+    <span class="k">with</span> <span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">begin</span><span class="p">():</span>
+            <span class="n">ThingOne</span><span class="p">()</span><span class="o">.</span><span class="n">go</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
+            <span class="n">ThingTwo</span><span class="p">()</span><span class="o">.</span><span class="n">go</span><span class="p">(</span><span class="n">session</span><span class="p">)</span></pre></div>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.4: </span>The <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> may be used as a context
+manager without the use of external helper functions.</p>
+</div>
+</section>
+<section id="is-the-session-a-cache">
+<h3>Is the Session a cache?<a class="headerlink" href="#is-the-session-a-cache" title="Permalink to this headline">¶</a></h3>
+<p>Yeee…no. It’s somewhat used as a cache, in that it implements the
+<a class="reference internal" href="../glossary.html#term-identity-map"><span class="xref std std-term">identity map</span></a> pattern, and stores objects keyed to their primary key.
+However, it doesn’t do any kind of query caching. This means, if you say
+<code class="docutils literal notranslate"><span class="pre">session.query(Foo).filter_by(name='bar')</span></code>, even if <code class="docutils literal notranslate"><span class="pre">Foo(name='bar')</span></code>
+is right there, in the identity map, the session has no idea about that.
+It has to issue SQL to the database, get the rows back, and then when it
+sees the primary key in the row, <em>then</em> it can look in the local identity
+map and see that the object is already there. It’s only when you say
+<code class="docutils literal notranslate"><span class="pre">query.get({some</span> <span class="pre">primary</span> <span class="pre">key})</span></code> that the
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.session.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> doesn’t have to issue a query.</p>
+<p>Additionally, the Session stores object instances using a weak reference
+by default. This also defeats the purpose of using the Session as a cache.</p>
+<p>The <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> is not designed to be a
+global object from which everyone consults as a “registry” of objects.
+That’s more the job of a <strong>second level cache</strong>.   SQLAlchemy provides
+a pattern for implementing second level caching using <a class="reference external" href="https://dogpilecache.readthedocs.io/">dogpile.cache</a>,
+via the <a class="reference internal" href="examples.html#examples-caching"><span class="std std-ref">Dogpile Caching</span></a> example.</p>
+</section>
+<section id="how-can-i-get-the-session-for-a-certain-object">
+<h3>How can I get the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.session.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> for a certain object?<a class="headerlink" href="#how-can-i-get-the-session-for-a-certain-object" title="Permalink to this headline">¶</a></h3>
+<p>Use the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.object_session" title="sqlalchemy.orm.Session.object_session"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.object_session()</span></code></a> classmethod
+available on <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.session.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="o">.</span><span class="n">object_session</span><span class="p">(</span><span class="n">someobject</span><span class="p">)</span></pre></div>
+</div>
+<p>The newer <a class="reference internal" href="../core/inspection.html"><span class="std std-ref">Runtime Inspection API</span></a> system can also be used:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">inspect</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">inspect</span><span class="p">(</span><span class="n">someobject</span><span class="p">)</span><span class="o">.</span><span class="n">session</span></pre></div>
+</div>
+</section>
+<section id="is-the-session-thread-safe">
+<span id="session-faq-threadsafe"></span><h3>Is the session thread-safe?<a class="headerlink" href="#is-the-session-thread-safe" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> is very much intended to be used in a
+<strong>non-concurrent</strong> fashion, which usually means in only one thread at a
+time.</p>
+<p>The <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> should be used in such a way that one
+instance exists for a single series of operations within a single
+transaction.   One expedient way to get this effect is by associating
+a <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> with the current thread (see <a class="reference internal" href="contextual.html#unitofwork-contextual"><span class="std std-ref">Contextual/Thread-local Sessions</span></a>
+for background).  Another is to use a pattern
+where the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> is passed between functions and is otherwise
+not shared with other threads.</p>
+<p>The bigger point is that you should not <em>want</em> to use the session
+with multiple concurrent threads. That would be like having everyone at a
+restaurant all eat from the same plate. The session is a local “workspace”
+that you use for a specific set of tasks; you don’t want to, or need to,
+share that session with other threads who are doing some other task.</p>
+<p>Making sure the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> is only used in a single concurrent thread at a time
+is called a “share nothing” approach to concurrency.  But actually, not
+sharing the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> implies a more significant pattern; it
+means not just the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> object itself, but
+also <strong>all objects that are associated with that Session</strong>, must be kept within
+the scope of a single concurrent thread.   The set of mapped
+objects associated with a <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> are essentially proxies for data
+within database rows accessed over a database connection, and so just like
+the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> itself, the whole
+set of objects is really just a large-scale proxy for a database connection
+(or connections).  Ultimately, it’s mostly the DBAPI connection itself that
+we’re keeping away from concurrent access; but since the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>
+and all the objects associated with it are all proxies for that DBAPI connection,
+the entire graph is essentially not safe for concurrent access.</p>
+<p>If there are in fact multiple threads participating
+in the same task, then you may consider sharing the session and its objects between
+those threads; however, in this extremely unusual scenario the application would
+need to ensure that a proper locking scheme is implemented so that there isn’t
+<em>concurrent</em> access to the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> or its state.   A more common approach
+to this situation is to maintain a single <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> per concurrent thread,
+but to instead <em>copy</em> objects from one <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> to another, often
+using the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.merge" title="sqlalchemy.orm.Session.merge"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.merge()</span></code></a> method to copy the state of an object into
+a new object local to a different <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>.</p>
+</section>
+</section>
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="session.html" title="previous chapter">Using the Session</a>
+        Next:
+        <a href="session_state_management.html" title="next chapter">State Management</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2021, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.1.2.
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '1.4.23',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/detectmobile.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

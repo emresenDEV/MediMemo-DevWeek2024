@@ -1,0 +1,865 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+        <title>
+            
+    
+    Cascades
+ &mdash;
+    SQLAlchemy 1.4 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/changelog.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 1.4 Documentation" href="../index.html" />
+        <link rel="up" title="Using the Session" href="session.html" />
+        <link rel="next" title="Transactions and Connection Management" href="session_transaction.html" />
+        <link rel="prev" title="State Management" href="session_state_management.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">1.4.23</span>
+
+
+        | Release Date: August 18, 2021
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 1.4 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 1.4 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../contents.html">Contents</a> |
+                <a href="../genindex.html">Index</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="tutorial.html">Object Relational Tutorial (1.x API)</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mapper_config.html">Mapper Configuration</a></span></li>
+<li><span class="link-container"><a class="reference external" href="relationships.html">Relationship Configuration</a></span></li>
+<li><span class="link-container"><a class="reference external" href="loading_objects.html">Querying Data, Loading Objects</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session.html">Using the Session</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="session_basics.html">Session Basics</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session_state_management.html">State Management</a></span></li>
+<li class="selected"><span class="link-container"><strong>Cascades</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#save-update">save-update</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#delete">delete</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#using-delete-cascade-with-many-to-many-relationships">Using delete cascade with many-to-many relationships</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#using-foreign-key-on-delete-cascade-with-orm-relationships">Using foreign key ON DELETE cascade with ORM relationships</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#using-foreign-key-on-delete-with-many-to-many-relationships">Using foreign key ON DELETE with many-to-many relationships</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#delete-orphan">delete-orphan</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#merge">merge</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#refresh-expire">refresh-expire</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#expunge">expunge</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#controlling-cascade-on-backrefs">Controlling Cascade on Backrefs</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#notes-on-delete-deleting-objects-referenced-from-collections-and-scalar-relationships">Notes on Delete - Deleting Objects Referenced from Collections and Scalar Relationships</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="session_transaction.html">Transactions and Connection Management</a></span></li>
+<li><span class="link-container"><a class="reference external" href="persistence_techniques.html">Additional Persistence Techniques</a></span></li>
+<li><span class="link-container"><a class="reference external" href="contextual.html">Contextual/Thread-local Sessions</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session_events.html">Tracking queries, object and Session Changes with Events</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session_api.html">Session API</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="extending.html">Events and Internals</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extensions/index.html">ORM Extensions</a></span></li>
+<li><span class="link-container"><a class="reference external" href="examples.html">ORM Examples</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    
+
+    <div id="docs-body" class="withsidebar orm-cascades" >
+        
+<section id="cascades">
+<span id="unitofwork-cascades"></span><h1>Cascades<a class="headerlink" href="#cascades" title="Permalink to this headline">¶</a></h1>
+<p>Mappers support the concept of configurable <a class="reference internal" href="../glossary.html#term-cascade"><span class="xref std std-term">cascade</span></a> behavior on
+<a class="reference internal" href="relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code></a> constructs.  This refers
+to how operations performed on a “parent” object relative to a
+particular <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> should be propagated to items
+referred to by that relationship (e.g. “child” objects), and is
+affected by the <a class="reference internal" href="relationship_api.html#sqlalchemy.orm.relationship.params.cascade" title="sqlalchemy.orm.relationship"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.cascade</span></code></a> option.</p>
+<p>The default behavior of cascade is limited to cascades of the
+so-called <a class="reference internal" href="#cascade-save-update"><span class="std std-ref">save-update</span></a> and <a class="reference internal" href="#cascade-merge"><span class="std std-ref">merge</span></a> settings.
+The typical “alternative” setting for cascade is to add
+the <a class="reference internal" href="#cascade-delete"><span class="std std-ref">delete</span></a> and <a class="reference internal" href="#cascade-delete-orphan"><span class="std std-ref">delete-orphan</span></a> options;
+these settings are appropriate for related objects which only exist as
+long as they are attached to their parent, and are otherwise deleted.</p>
+<p>Cascade behavior is configured using the
+<a class="reference internal" href="relationship_api.html#sqlalchemy.orm.relationship.params.cascade" title="sqlalchemy.orm.relationship"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.cascade</span></code></a> option on
+<a class="reference internal" href="relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Order</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;order&#39;</span>
+
+    <span class="n">items</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Item&quot;</span><span class="p">,</span> <span class="n">cascade</span><span class="o">=</span><span class="s2">&quot;all, delete-orphan&quot;</span><span class="p">)</span>
+    <span class="n">customer</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;User&quot;</span><span class="p">,</span> <span class="n">cascade</span><span class="o">=</span><span class="s2">&quot;save-update&quot;</span><span class="p">)</span></pre></div>
+</div>
+<p>To set cascades on a backref, the same flag can be used with the
+<a class="reference internal" href="relationship_api.html#sqlalchemy.orm.backref" title="sqlalchemy.orm.backref"><code class="xref py py-func docutils literal notranslate"><span class="pre">backref()</span></code></a> function, which ultimately feeds
+its arguments back into <a class="reference internal" href="relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Item</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;item&#39;</span>
+
+    <span class="n">order</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Order&quot;</span><span class="p">,</span>
+                    <span class="n">backref</span><span class="o">=</span><span class="n">backref</span><span class="p">(</span><span class="s2">&quot;items&quot;</span><span class="p">,</span> <span class="n">cascade</span><span class="o">=</span><span class="s2">&quot;all, delete-orphan&quot;</span><span class="p">)</span>
+                <span class="p">)</span></pre></div>
+</div>
+<aside class="sidebar">
+<p class="sidebar-title">The Origins of Cascade</p>
+<p>SQLAlchemy’s notion of cascading behavior on relationships,
+as well as the options to configure them, are primarily derived
+from the similar feature in the Hibernate ORM; Hibernate refers
+to “cascade” in a few places such as in
+<a class="reference external" href="https://docs.jboss.org/hibernate/orm/3.3/reference/en-US/html/example-parentchild.html">Example: Parent/Child</a>.
+If cascades are confusing, we’ll refer to their conclusion,
+stating “The sections we have just covered can be a bit confusing.
+However, in practice, it all works out nicely.”</p>
+</aside>
+<p>The default value of <a class="reference internal" href="relationship_api.html#sqlalchemy.orm.relationship.params.cascade" title="sqlalchemy.orm.relationship"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.cascade</span></code></a> is <code class="docutils literal notranslate"><span class="pre">save-update,</span> <span class="pre">merge</span></code>.
+The typical alternative setting for this parameter is either
+<code class="docutils literal notranslate"><span class="pre">all</span></code> or more commonly <code class="docutils literal notranslate"><span class="pre">all,</span> <span class="pre">delete-orphan</span></code>.  The <code class="docutils literal notranslate"><span class="pre">all</span></code> symbol
+is a synonym for <code class="docutils literal notranslate"><span class="pre">save-update,</span> <span class="pre">merge,</span> <span class="pre">refresh-expire,</span> <span class="pre">expunge,</span> <span class="pre">delete</span></code>,
+and using it in conjunction with <code class="docutils literal notranslate"><span class="pre">delete-orphan</span></code> indicates that the child
+object should follow along with its parent in all cases, and be deleted once
+it is no longer associated with that parent.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">all</span></code> cascade option implies the
+<a class="reference internal" href="#cascade-refresh-expire"><span class="std std-ref">refresh-expire</span></a>
+cascade setting which may not be desirable when using the
+<a class="reference internal" href="extensions/asyncio.html"><span class="std std-ref">Asynchronous I/O (asyncio)</span></a> extension, as it will expire related objects
+more aggressively than is typically appropriate in an explicit IO context.
+See the notes at <a class="reference internal" href="extensions/asyncio.html#asyncio-orm-avoid-lazyloads"><span class="std std-ref">Preventing Implicit IO when Using AsyncSession</span></a> for further background.</p>
+</div>
+<p>The list of available values which can be specified for
+the <a class="reference internal" href="relationship_api.html#sqlalchemy.orm.relationship.params.cascade" title="sqlalchemy.orm.relationship"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.cascade</span></code></a> parameter are described in the following subsections.</p>
+<section id="save-update">
+<span id="cascade-save-update"></span><h2>save-update<a class="headerlink" href="#save-update" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">save-update</span></code> cascade indicates that when an object is placed into a
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> via <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.add" title="sqlalchemy.orm.Session.add"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.add()</span></code></a>, all the objects associated
+with it via this <a class="reference internal" href="relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code></a> should also be added to that
+same <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>.  Suppose we have an object <code class="docutils literal notranslate"><span class="pre">user1</span></code> with two
+related objects <code class="docutils literal notranslate"><span class="pre">address1</span></code>, <code class="docutils literal notranslate"><span class="pre">address2</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">user1</span> <span class="o">=</span> <span class="n">User</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">address1</span><span class="p">,</span> <span class="n">address2</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(),</span> <span class="n">Address</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">user1</span><span class="o">.</span><span class="n">addresses</span> <span class="o">=</span> <span class="p">[</span><span class="n">address1</span><span class="p">,</span> <span class="n">address2</span><span class="p">]</span></pre></div>
+</div>
+<p>If we add <code class="docutils literal notranslate"><span class="pre">user1</span></code> to a <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>, it will also add
+<code class="docutils literal notranslate"><span class="pre">address1</span></code>, <code class="docutils literal notranslate"><span class="pre">address2</span></code> implicitly:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sess</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sess</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">user1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">address1</span> <span class="ow">in</span> <span class="n">sess</span>
+<span class="go">True</span></pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">save-update</span></code> cascade also affects attribute operations for objects
+that are already present in a <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>.  If we add a third
+object, <code class="docutils literal notranslate"><span class="pre">address3</span></code> to the <code class="docutils literal notranslate"><span class="pre">user1.addresses</span></code> collection, it
+becomes part of the state of that <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">address3</span> <span class="o">=</span> <span class="n">Address</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">user1</span><span class="o">.</span><span class="n">addresses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">address3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">address3</span> <span class="ow">in</span> <span class="n">sess</span>
+<span class="go">True</span></pre></div>
+</div>
+<p>A <code class="docutils literal notranslate"><span class="pre">save-update</span></code> cascade can exhibit surprising behavior when removing an item from
+a collection or de-associating an object from a scalar attribute. In some cases, the
+orphaned objects may still be pulled into the ex-parent’s <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>; this is
+so that the flush process may handle that related object appropriately.
+This case usually only arises if an object is removed from one <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>
+and added to another:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">user1</span> <span class="o">=</span> <span class="n">sess1</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">address1</span> <span class="o">=</span> <span class="n">user1</span><span class="o">.</span><span class="n">addresses</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sess1</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>   <span class="c1"># user1, address1 no longer associated with sess1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">user1</span><span class="o">.</span><span class="n">addresses</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">address1</span><span class="p">)</span>  <span class="c1"># address1 no longer associated with user1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sess2</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sess2</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">user1</span><span class="p">)</span>   <span class="c1"># ... but it still gets added to the new session,</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">address1</span> <span class="ow">in</span> <span class="n">sess2</span>  <span class="c1"># because it&#39;s still &quot;pending&quot; for flush</span>
+<span class="go">True</span></pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">save-update</span></code> cascade is on by default, and is typically taken
+for granted; it simplifies code by allowing a single call to
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.add" title="sqlalchemy.orm.Session.add"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.add()</span></code></a> to register an entire structure of objects within
+that <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> at once.   While it can be disabled, there
+is usually not a need to do so.</p>
+<p>One case where <code class="docutils literal notranslate"><span class="pre">save-update</span></code> cascade does sometimes get in the way is in that
+it takes place in both directions for bi-directional relationships, e.g.
+backrefs, meaning that the association of a child object with a particular parent
+can have the effect of the parent object being implicitly associated with that
+child object’s <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>; this pattern, as well as how to modify its
+behavior using the <a class="reference internal" href="relationship_api.html#sqlalchemy.orm.relationship.params.cascade_backrefs" title="sqlalchemy.orm.relationship"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.cascade_backrefs</span></code></a> flag,
+is discussed in the section <a class="reference internal" href="#backref-cascade"><span class="std std-ref">Controlling Cascade on Backrefs</span></a>.</p>
+</section>
+<section id="delete">
+<span id="cascade-delete"></span><h2>delete<a class="headerlink" href="#delete" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">delete</span></code> cascade indicates that when a “parent” object
+is marked for deletion, its related “child” objects should also be marked
+for deletion.   If for example we have a relationship <code class="docutils literal notranslate"><span class="pre">User.addresses</span></code>
+with <code class="docutils literal notranslate"><span class="pre">delete</span></code> cascade configured:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="c1"># ...</span>
+
+    <span class="n">addresses</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Address&quot;</span><span class="p">,</span> <span class="n">cascade</span><span class="o">=</span><span class="s2">&quot;all, delete&quot;</span><span class="p">)</span></pre></div>
+</div>
+<p>If using the above mapping, we have a <code class="docutils literal notranslate"><span class="pre">User</span></code> object and two
+related <code class="docutils literal notranslate"><span class="pre">Address</span></code> objects:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">user1</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">address1</span><span class="p">,</span> <span class="n">address2</span> <span class="o">=</span> <span class="n">user1</span><span class="o">.</span><span class="n">addresses</span></pre></div>
+</div>
+<p>If we mark <code class="docutils literal notranslate"><span class="pre">user1</span></code> for deletion, after the flush operation proceeds,
+<code class="docutils literal notranslate"><span class="pre">address1</span></code> and <code class="docutils literal notranslate"><span class="pre">address2</span></code> will also be deleted:</p>
+<div class="highlight-python+sql notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">sess</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">user1</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">sess</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+<div class='show_sql'><span class="k">DELETE</span> <span class="k">FROM</span> <span class="n">address</span> <span class="k">WHERE</span> <span class="n">address</span><span class="p">.</span><span class="n">id</span> <span class="o">=</span> <span class="o">?</span>
+<span class="p">((</span><span class="mi">1</span><span class="p">,),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,))</span>
+<span class="k">DELETE</span> <span class="k">FROM</span> <span class="k">user</span> <span class="k">WHERE</span> <span class="k">user</span><span class="p">.</span><span class="n">id</span> <span class="o">=</span> <span class="o">?</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
+<span class="k">COMMIT</span>
+</div></pre></div>
+</div>
+<p>Alternatively, if our <code class="docutils literal notranslate"><span class="pre">User.addresses</span></code> relationship does <em>not</em> have
+<code class="docutils literal notranslate"><span class="pre">delete</span></code> cascade, SQLAlchemy’s default behavior is to instead de-associate
+<code class="docutils literal notranslate"><span class="pre">address1</span></code> and <code class="docutils literal notranslate"><span class="pre">address2</span></code> from <code class="docutils literal notranslate"><span class="pre">user1</span></code> by setting their foreign key
+reference to <code class="docutils literal notranslate"><span class="pre">NULL</span></code>.  Using a mapping as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="c1"># ...</span>
+
+    <span class="n">addresses</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Address&quot;</span><span class="p">)</span></pre></div>
+</div>
+<p>Upon deletion of a parent <code class="docutils literal notranslate"><span class="pre">User</span></code> object, the rows in <code class="docutils literal notranslate"><span class="pre">address</span></code> are not
+deleted, but are instead de-associated:</p>
+<div class="highlight-python+sql notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">sess</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">user1</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">sess</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+<div class='show_sql'><span class="k">UPDATE</span> <span class="n">address</span> <span class="k">SET</span> <span class="n">user_id</span><span class="o">=?</span> <span class="k">WHERE</span> <span class="n">address</span><span class="p">.</span><span class="n">id</span> <span class="o">=</span> <span class="o">?</span>
+<span class="p">(</span><span class="k">None</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">UPDATE</span> <span class="n">address</span> <span class="k">SET</span> <span class="n">user_id</span><span class="o">=?</span> <span class="k">WHERE</span> <span class="n">address</span><span class="p">.</span><span class="n">id</span> <span class="o">=</span> <span class="o">?</span>
+<span class="p">(</span><span class="k">None</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="k">DELETE</span> <span class="k">FROM</span> <span class="k">user</span> <span class="k">WHERE</span> <span class="k">user</span><span class="p">.</span><span class="n">id</span> <span class="o">=</span> <span class="o">?</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
+<span class="k">COMMIT</span>
+</div></pre></div>
+</div>
+<p><a class="reference internal" href="#cascade-delete"><span class="std std-ref">delete</span></a> cascade on one-to-many relationships is often combined
+with <a class="reference internal" href="#cascade-delete-orphan"><span class="std std-ref">delete-orphan</span></a> cascade, which will emit a DELETE for the
+related row if the “child” object is deassociated from the parent.  The
+combination of <code class="docutils literal notranslate"><span class="pre">delete</span></code> and <code class="docutils literal notranslate"><span class="pre">delete-orphan</span></code> cascade covers both
+situations where SQLAlchemy has to decide between setting a foreign key
+column to NULL versus deleting the row entirely.</p>
+<p>The feature by default works completely independently of database-configured
+<code class="docutils literal notranslate"><span class="pre">FOREIGN</span> <span class="pre">KEY</span></code> constraints that may themselves configure <code class="docutils literal notranslate"><span class="pre">CASCADE</span></code> behavior.
+In order to integrate more efficiently with this configuration, additional
+directives described at <a class="reference internal" href="#passive-deletes"><span class="std std-ref">Using foreign key ON DELETE cascade with ORM relationships</span></a> should be used.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#passive-deletes"><span class="std std-ref">Using foreign key ON DELETE cascade with ORM relationships</span></a></p>
+<p><a class="reference internal" href="#cascade-delete-many-to-many"><span class="std std-ref">Using delete cascade with many-to-many relationships</span></a></p>
+<p><a class="reference internal" href="#cascade-delete-orphan"><span class="std std-ref">delete-orphan</span></a></p>
+</div>
+<section id="using-delete-cascade-with-many-to-many-relationships">
+<span id="cascade-delete-many-to-many"></span><h3>Using delete cascade with many-to-many relationships<a class="headerlink" href="#using-delete-cascade-with-many-to-many-relationships" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">cascade=&quot;all,</span> <span class="pre">delete&quot;</span></code> option works equally well with a many-to-many
+relationship, one that uses <a class="reference internal" href="relationship_api.html#sqlalchemy.orm.relationship.params.secondary" title="sqlalchemy.orm.relationship"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.secondary</span></code></a> to
+indicate an association table.   When a parent object is deleted, and therefore
+de-associated with its related objects, the unit of work process will normally
+delete rows from the association table, but leave the related objects intact.
+When combined with <code class="docutils literal notranslate"><span class="pre">cascade=&quot;all,</span> <span class="pre">delete&quot;</span></code>, additional <code class="docutils literal notranslate"><span class="pre">DELETE</span></code> statements
+will take place for the child rows themselves.</p>
+<p>The following example adapts that of <a class="reference internal" href="basic_relationships.html#relationships-many-to-many"><span class="std std-ref">Many To Many</span></a> to
+illustrate the <code class="docutils literal notranslate"><span class="pre">cascade=&quot;all,</span> <span class="pre">delete&quot;</span></code> setting on <strong>one</strong> side of the
+association:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">association_table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="s1">&#39;association&#39;</span><span class="p">,</span> <span class="n">Base</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+    <span class="n">Column</span><span class="p">(</span><span class="s1">&#39;left_id&#39;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s1">&#39;left.id&#39;</span><span class="p">)),</span>
+    <span class="n">Column</span><span class="p">(</span><span class="s1">&#39;right_id&#39;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s1">&#39;right.id&#39;</span><span class="p">))</span>
+<span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Parent</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;left&#39;</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">children</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span>
+        <span class="s2">&quot;Child&quot;</span><span class="p">,</span>
+        <span class="n">secondary</span><span class="o">=</span><span class="n">association_table</span><span class="p">,</span>
+        <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;parents&quot;</span><span class="p">,</span>
+        <span class="n">cascade</span><span class="o">=</span><span class="s2">&quot;all, delete&quot;</span>
+    <span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;right&#39;</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">parents</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span>
+        <span class="s2">&quot;Parent&quot;</span><span class="p">,</span>
+        <span class="n">secondary</span><span class="o">=</span><span class="n">association_table</span><span class="p">,</span>
+        <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;children&quot;</span><span class="p">,</span>
+    <span class="p">)</span></pre></div>
+</div>
+<p>Above, when a <code class="docutils literal notranslate"><span class="pre">Parent</span></code> object is marked for deletion
+using <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.delete" title="sqlalchemy.orm.Session.delete"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.delete()</span></code></a>, the flush process will as usual delete
+the associated rows from the <code class="docutils literal notranslate"><span class="pre">association</span></code> table, however per cascade
+rules it will also delete all related <code class="docutils literal notranslate"><span class="pre">Child</span></code> rows.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If the above <code class="docutils literal notranslate"><span class="pre">cascade=&quot;all,</span> <span class="pre">delete&quot;</span></code> setting were configured on <strong>both</strong>
+relationships, then the cascade action would continue cascading through all
+<code class="docutils literal notranslate"><span class="pre">Parent</span></code> and <code class="docutils literal notranslate"><span class="pre">Child</span></code> objects, loading each <code class="docutils literal notranslate"><span class="pre">children</span></code> and <code class="docutils literal notranslate"><span class="pre">parents</span></code>
+collection encountered and deleting everything that’s connected.   It is
+typically not desireable for “delete” cascade to be configured
+bidirectionally.</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="basic_relationships.html#relationships-many-to-many-deletion"><span class="std std-ref">Deleting Rows from the Many to Many Table</span></a></p>
+<p><a class="reference internal" href="#passive-deletes-many-to-many"><span class="std std-ref">Using foreign key ON DELETE with many-to-many relationships</span></a></p>
+</div>
+</section>
+<section id="using-foreign-key-on-delete-cascade-with-orm-relationships">
+<span id="passive-deletes"></span><h3>Using foreign key ON DELETE cascade with ORM relationships<a class="headerlink" href="#using-foreign-key-on-delete-cascade-with-orm-relationships" title="Permalink to this headline">¶</a></h3>
+<p>The behavior of SQLAlchemy’s “delete” cascade overlaps with the
+<code class="docutils literal notranslate"><span class="pre">ON</span> <span class="pre">DELETE</span></code> feature of a database <code class="docutils literal notranslate"><span class="pre">FOREIGN</span> <span class="pre">KEY</span></code> constraint.
+SQLAlchemy allows configuration of these schema-level <a class="reference internal" href="../glossary.html#term-DDL"><span class="xref std std-term">DDL</span></a> behaviors
+using the <a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.ForeignKey" title="sqlalchemy.schema.ForeignKey"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKey</span></code></a> and <a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.ForeignKeyConstraint" title="sqlalchemy.schema.ForeignKeyConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKeyConstraint</span></code></a>
+constructs; usage of these objects in conjunction with <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>
+metadata is described at <a class="reference internal" href="../core/constraints.html#on-update-on-delete"><span class="std std-ref">ON UPDATE and ON DELETE</span></a>.</p>
+<p>In order to use <code class="docutils literal notranslate"><span class="pre">ON</span> <span class="pre">DELETE</span></code> foreign key cascades in conjunction with
+<a class="reference internal" href="relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code></a>, it’s important to note first and foremost that the
+<a class="reference internal" href="relationship_api.html#sqlalchemy.orm.relationship.params.cascade" title="sqlalchemy.orm.relationship"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.cascade</span></code></a> setting must still be configured to
+match the desired “delete” or “set null” behavior (using <code class="docutils literal notranslate"><span class="pre">delete</span></code> cascade
+or leaving it omitted), so that whether the ORM or the database
+level constraints will handle the task of actually modifying the data in the
+database, the ORM will still be able to appropriately track the state of
+locally present objects that may be affected.</p>
+<p>There is then an additional option on <a class="reference internal" href="relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code></a> which
+indicates the degree to which the ORM should try to run DELETE/UPDATE
+operations on related rows itself, vs. how much it should rely upon expecting
+the database-side FOREIGN KEY constraint cascade to handle the task; this is
+the <a class="reference internal" href="relationship_api.html#sqlalchemy.orm.relationship.params.passive_deletes" title="sqlalchemy.orm.relationship"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.passive_deletes</span></code></a> parameter and it accepts
+options <code class="docutils literal notranslate"><span class="pre">False</span></code> (the default), <code class="docutils literal notranslate"><span class="pre">True</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;all&quot;</span></code>.</p>
+<p>The most typical example is that where child rows are to be deleted when
+parent rows are deleted, and that <code class="docutils literal notranslate"><span class="pre">ON</span> <span class="pre">DELETE</span> <span class="pre">CASCADE</span></code> is configured
+on the relevant <code class="docutils literal notranslate"><span class="pre">FOREIGN</span> <span class="pre">KEY</span></code> constraint as well:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Parent</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;parent&#39;</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">children</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span>
+        <span class="s2">&quot;Child&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;parent&quot;</span><span class="p">,</span>
+        <span class="n">cascade</span><span class="o">=</span><span class="s2">&quot;all, delete&quot;</span><span class="p">,</span>
+        <span class="n">passive_deletes</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;child&#39;</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">parent_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s1">&#39;parent.id&#39;</span><span class="p">,</span> <span class="n">ondelete</span><span class="o">=</span><span class="s2">&quot;CASCADE&quot;</span><span class="p">))</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Parent&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;children&quot;</span><span class="p">)</span></pre></div>
+</div>
+<p>The behavior of the above configuration when a parent row is deleted
+is as follows:</p>
+<ol class="arabic simple">
+<li><p>The application calls <code class="docutils literal notranslate"><span class="pre">session.delete(my_parent)</span></code>, where <code class="docutils literal notranslate"><span class="pre">my_parent</span></code>
+is an instance of <code class="docutils literal notranslate"><span class="pre">Parent</span></code>.</p></li>
+<li><p>When the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> next flushes changes to the database,
+all of the <strong>currently loaded</strong> items within the <code class="docutils literal notranslate"><span class="pre">my_parent.children</span></code>
+collection are deleted by the ORM, meaning a <code class="docutils literal notranslate"><span class="pre">DELETE</span></code> statement is
+emitted for each record.</p></li>
+<li><p>If the <code class="docutils literal notranslate"><span class="pre">my_parent.children</span></code> collection is <strong>unloaded</strong>, then no <code class="docutils literal notranslate"><span class="pre">DELETE</span></code>
+statements are emitted.   If the <a class="reference internal" href="relationship_api.html#sqlalchemy.orm.relationship.params.passive_deletes" title="sqlalchemy.orm.relationship"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.passive_deletes</span></code></a>
+flag were <strong>not</strong> set on this <a class="reference internal" href="relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code></a>, then a <code class="docutils literal notranslate"><span class="pre">SELECT</span></code>
+statement for unloaded <code class="docutils literal notranslate"><span class="pre">Child</span></code> objects would have been emitted.</p></li>
+<li><p>A <code class="docutils literal notranslate"><span class="pre">DELETE</span></code> statement is then emitted for the <code class="docutils literal notranslate"><span class="pre">my_parent</span></code> row itself.</p></li>
+<li><p>The database-level <code class="docutils literal notranslate"><span class="pre">ON</span> <span class="pre">DELETE</span> <span class="pre">CASCADE</span></code> setting ensures that all rows in
+<code class="docutils literal notranslate"><span class="pre">child</span></code> which refer to the affected row in <code class="docutils literal notranslate"><span class="pre">parent</span></code> are also deleted.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">Parent</span></code> instance referred to by <code class="docutils literal notranslate"><span class="pre">my_parent</span></code>, as well as all
+instances of <code class="docutils literal notranslate"><span class="pre">Child</span></code> that were related to this object and were
+<strong>loaded</strong> (i.e. step 2 above took place), are de-associated from the
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>.</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To use “ON DELETE CASCADE”, the underlying database engine must
+support <code class="docutils literal notranslate"><span class="pre">FOREIGN</span> <span class="pre">KEY</span></code> constraints and they must be enforcing:</p>
+<ul class="simple">
+<li><p>When using MySQL, an appropriate storage engine must be
+selected.  See <a class="reference internal" href="../dialects/mysql.html#mysql-storage-engines"><span class="std std-ref">CREATE TABLE arguments including Storage Engines</span></a> for details.</p></li>
+<li><p>When using SQLite, foreign key support must be enabled explicitly.
+See <a class="reference internal" href="../dialects/sqlite.html#sqlite-foreign-keys"><span class="std std-ref">Foreign Key Support</span></a> for details.</p></li>
+</ul>
+</div>
+<div class="topic">
+<p class="topic-title">Notes on Passive Deletes</p>
+<p>It is important to note the differences between the ORM and the relational
+database’s notion of “cascade” as well as how they integrate:</p>
+<ul>
+<li><p>A database level <code class="docutils literal notranslate"><span class="pre">ON</span> <span class="pre">DELETE</span></code> cascade is configured effectively
+on the <strong>many-to-one</strong> side of the relationship; that is, we configure
+it relative to the <code class="docutils literal notranslate"><span class="pre">FOREIGN</span> <span class="pre">KEY</span></code> constraint that is the “many” side
+of a relationship.  At the ORM level, <strong>this direction is reversed</strong>.
+SQLAlchemy handles the deletion of “child” objects relative to a
+“parent” from the “parent” side, which means that <code class="docutils literal notranslate"><span class="pre">delete</span></code> and
+<code class="docutils literal notranslate"><span class="pre">delete-orphan</span></code> cascade are configured on the <strong>one-to-many</strong>
+side.</p></li>
+<li><p>Database level foreign keys with no <code class="docutils literal notranslate"><span class="pre">ON</span> <span class="pre">DELETE</span></code> setting are often used
+to <strong>prevent</strong> a parent row from being removed, as it would necessarily
+leave an unhandled related row present.  If this behavior is desired in a
+one-to-many relationship, SQLAlchemy’s default behavior of setting a
+foreign key to <code class="docutils literal notranslate"><span class="pre">NULL</span></code> can be caught in one of two ways:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The easiest and most common is just to set the foreign-key-holding
+column to <code class="docutils literal notranslate"><span class="pre">NOT</span> <span class="pre">NULL</span></code> at the database schema level.  An attempt by
+SQLAlchemy to set the column to NULL will fail with a simple NOT NULL
+constraint exception.</p></li>
+<li><p>The other, more special case way is to set the
+<a class="reference internal" href="relationship_api.html#sqlalchemy.orm.relationship.params.passive_deletes" title="sqlalchemy.orm.relationship"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.passive_deletes</span></code></a> flag to the string
+<code class="docutils literal notranslate"><span class="pre">&quot;all&quot;</span></code>.  This has the effect of entirely disabling
+SQLAlchemy’s behavior of setting the foreign key column to NULL,
+and a DELETE will be emitted for the parent row without any
+affect on the child row, even if the child row is present in
+memory. This may be desirable in the case when database-level
+foreign key triggers, either special <code class="docutils literal notranslate"><span class="pre">ON</span> <span class="pre">DELETE</span></code> settings or
+otherwise, need to be activated in all cases when a parent row is
+deleted.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Database level <code class="docutils literal notranslate"><span class="pre">ON</span> <span class="pre">DELETE</span></code> cascade is generally much more efficient
+than relying upon the “cascade” delete feature of SQLAlchemy.  The
+database can chain a series of cascade operations across many
+relationships at once; e.g. if row A is deleted, all the related rows in
+table B can be deleted, and all the C rows related to each of those B
+rows, and on and on, all within the scope of a single DELETE statement.
+SQLAlchemy on the other hand, in order to support the cascading delete
+operation fully, has to individually load each related collection in
+order to target all rows that then may have further related collections.
+That is, SQLAlchemy isn’t sophisticated enough to emit a DELETE for all
+those related rows at once within this context.</p></li>
+<li><p>SQLAlchemy doesn’t <strong>need</strong> to be this sophisticated, as we instead
+provide smooth integration with the database’s own <code class="docutils literal notranslate"><span class="pre">ON</span> <span class="pre">DELETE</span></code>
+functionality, by using the <a class="reference internal" href="relationship_api.html#sqlalchemy.orm.relationship.params.passive_deletes" title="sqlalchemy.orm.relationship"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.passive_deletes</span></code></a>
+option in conjunction with properly configured foreign key constraints.
+Under this behavior, SQLAlchemy only emits DELETE for those rows that are
+already locally present in the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>; for any collections
+that are unloaded, it leaves them to the database to handle, rather than
+emitting a SELECT for them.  The section <a class="reference internal" href="#passive-deletes"><span class="std std-ref">Using foreign key ON DELETE cascade with ORM relationships</span></a> provides
+an example of this use.</p></li>
+<li><p>While database-level <code class="docutils literal notranslate"><span class="pre">ON</span> <span class="pre">DELETE</span></code> functionality works only on the “many”
+side of a relationship, SQLAlchemy’s “delete” cascade has <strong>limited</strong>
+ability to operate in the <em>reverse</em> direction as well, meaning it can be
+configured on the “many” side to delete an object on the “one” side when
+the reference on the “many” side is deleted.  However this can easily
+result in constraint violations if there are other objects referring to
+this “one” side from the “many”, so it typically is only useful when a
+relationship is in fact a “one to one”.  The
+<a class="reference internal" href="relationship_api.html#sqlalchemy.orm.relationship.params.single_parent" title="sqlalchemy.orm.relationship"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.single_parent</span></code></a> flag should be used to
+establish an in-Python assertion for this case.</p></li>
+</ul>
+</div>
+</section>
+<section id="using-foreign-key-on-delete-with-many-to-many-relationships">
+<span id="passive-deletes-many-to-many"></span><h3>Using foreign key ON DELETE with many-to-many relationships<a class="headerlink" href="#using-foreign-key-on-delete-with-many-to-many-relationships" title="Permalink to this headline">¶</a></h3>
+<p>As described at <a class="reference internal" href="#cascade-delete-many-to-many"><span class="std std-ref">Using delete cascade with many-to-many relationships</span></a>, “delete” cascade works
+for many-to-many relationships as well.  To make use of <code class="docutils literal notranslate"><span class="pre">ON</span> <span class="pre">DELETE</span> <span class="pre">CASCADE</span></code>
+foreign keys in conjunction with many to many, <code class="docutils literal notranslate"><span class="pre">FOREIGN</span> <span class="pre">KEY</span></code> directives
+are configured on the association table.   These directives can handle
+the task of automatically deleting from the association table, but cannot
+accommodate the automatic deletion of the related objects themselves.</p>
+<p>In this case, the <a class="reference internal" href="relationship_api.html#sqlalchemy.orm.relationship.params.passive_deletes" title="sqlalchemy.orm.relationship"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.passive_deletes</span></code></a> directive can
+save us some additional <code class="docutils literal notranslate"><span class="pre">SELECT</span></code> statements during a delete operation but
+there are still some collections that the ORM will continue to load, in order
+to locate affected child objects and handle them correctly.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Hypothetical optimizations to this could include a single <code class="docutils literal notranslate"><span class="pre">DELETE</span></code>
+statement against all parent-associated rows of the association table at
+once, then use <code class="docutils literal notranslate"><span class="pre">RETURNING</span></code> to locate affected related child rows, however
+this is not currently part of the ORM unit of work implementation.</p>
+</div>
+<p>In this configuration, we configure <code class="docutils literal notranslate"><span class="pre">ON</span> <span class="pre">DELETE</span> <span class="pre">CASCADE</span></code> on both foreign key
+constraints of the association table.  We configure <code class="docutils literal notranslate"><span class="pre">cascade=&quot;all,</span> <span class="pre">delete&quot;</span></code>
+on the parent-&gt;child side of the relationship, and we can then configure
+<code class="docutils literal notranslate"><span class="pre">passive_deletes=True</span></code> on the <strong>other</strong> side of the bidirectional
+relationship as illustrated below:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">association_table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="s1">&#39;association&#39;</span><span class="p">,</span> <span class="n">Base</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+    <span class="n">Column</span><span class="p">(</span><span class="s1">&#39;left_id&#39;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s1">&#39;left.id&#39;</span><span class="p">,</span> <span class="n">ondelete</span><span class="o">=</span><span class="s2">&quot;CASCADE&quot;</span><span class="p">)),</span>
+    <span class="n">Column</span><span class="p">(</span><span class="s1">&#39;right_id&#39;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s1">&#39;right.id&#39;</span><span class="p">,</span> <span class="n">ondelete</span><span class="o">=</span><span class="s2">&quot;CASCADE&quot;</span><span class="p">))</span>
+<span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Parent</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;left&#39;</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">children</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span>
+        <span class="s2">&quot;Child&quot;</span><span class="p">,</span>
+        <span class="n">secondary</span><span class="o">=</span><span class="n">association_table</span><span class="p">,</span>
+        <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;parents&quot;</span><span class="p">,</span>
+        <span class="n">cascade</span><span class="o">=</span><span class="s2">&quot;all, delete&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;right&#39;</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">parents</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span>
+        <span class="s2">&quot;Parent&quot;</span><span class="p">,</span>
+        <span class="n">secondary</span><span class="o">=</span><span class="n">association_table</span><span class="p">,</span>
+        <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;children&quot;</span><span class="p">,</span>
+        <span class="n">passive_deletes</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span></pre></div>
+</div>
+<p>Using the above configuration, the deletion of a <code class="docutils literal notranslate"><span class="pre">Parent</span></code> object proceeds
+as follows:</p>
+<ol class="arabic simple">
+<li><p>A <code class="docutils literal notranslate"><span class="pre">Parent</span></code> object is marked for deletion using
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.delete" title="sqlalchemy.orm.Session.delete"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.delete()</span></code></a>.</p></li>
+<li><p>When the flush occurs, if the <code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> collection is not loaded,
+the ORM will first emit a SELECT statement in order to load the <code class="docutils literal notranslate"><span class="pre">Child</span></code>
+objects that correspond to <code class="docutils literal notranslate"><span class="pre">Parent.children</span></code>.</p></li>
+<li><p>It will then then emit <code class="docutils literal notranslate"><span class="pre">DELETE</span></code> statements for the rows in <code class="docutils literal notranslate"><span class="pre">association</span></code>
+which correspond to that parent row.</p></li>
+<li><p>for each <code class="docutils literal notranslate"><span class="pre">Child</span></code> object affected by this immediate deletion, because
+<code class="docutils literal notranslate"><span class="pre">passive_deletes=True</span></code> is configured, the unit of work will not need to
+try to emit SELECT statements for each <code class="docutils literal notranslate"><span class="pre">Child.parents</span></code> collection as it
+is assumed the corresponding rows in <code class="docutils literal notranslate"><span class="pre">association</span></code> will be deleted.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DELETE</span></code> statements are then emitted for each <code class="docutils literal notranslate"><span class="pre">Child</span></code> object that was
+loaded from <code class="docutils literal notranslate"><span class="pre">Parent.children</span></code>.</p></li>
+</ol>
+</section>
+</section>
+<section id="delete-orphan">
+<span id="cascade-delete-orphan"></span><h2>delete-orphan<a class="headerlink" href="#delete-orphan" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">delete-orphan</span></code> cascade adds behavior to the <code class="docutils literal notranslate"><span class="pre">delete</span></code> cascade,
+such that a child object will be marked for deletion when it is
+de-associated from the parent, not just when the parent is marked
+for deletion.   This is a common feature when dealing with a related
+object that is “owned” by its parent, with a NOT NULL foreign key,
+so that removal of the item from the parent collection results
+in its deletion.</p>
+<p><code class="docutils literal notranslate"><span class="pre">delete-orphan</span></code> cascade implies that each child object can only
+have one parent at a time, and in the <strong>vast majority of cases is configured
+only on a one-to-many relationship.</strong>   For the much less common
+case of setting it on a many-to-one or
+many-to-many relationship, the “many” side can be forced to allow only
+a single object at a time by configuring the <a class="reference internal" href="relationship_api.html#sqlalchemy.orm.relationship.params.single_parent" title="sqlalchemy.orm.relationship"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.single_parent</span></code></a> argument,
+which establishes Python-side validation that ensures the object
+is associated with only one parent at a time, however this greatly limits
+the functionality of the “many” relationship and is usually not what’s
+desired.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../errors.html#error-bbf0"><span class="std std-ref">For relationship &lt;relationship&gt;, delete-orphan cascade is normally configured only on the “one” side of a one-to-many relationship, and not on the “many” side of a many-to-one or many-to-many relationship.</span></a> - background on a common error scenario involving delete-orphan
+cascade.</p>
+</div>
+</section>
+<section id="merge">
+<span id="cascade-merge"></span><h2>merge<a class="headerlink" href="#merge" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">merge</span></code> cascade indicates that the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.merge" title="sqlalchemy.orm.Session.merge"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.merge()</span></code></a>
+operation should be propagated from a parent that’s the subject
+of the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.merge" title="sqlalchemy.orm.Session.merge"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.merge()</span></code></a> call down to referred objects.
+This cascade is also on by default.</p>
+</section>
+<section id="refresh-expire">
+<span id="cascade-refresh-expire"></span><h2>refresh-expire<a class="headerlink" href="#refresh-expire" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">refresh-expire</span></code> is an uncommon option, indicating that the
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.expire" title="sqlalchemy.orm.Session.expire"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.expire()</span></code></a> operation should be propagated from a parent
+down to referred objects.   When using <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.refresh" title="sqlalchemy.orm.Session.refresh"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.refresh()</span></code></a>,
+the referred objects are expired only, but not actually refreshed.</p>
+</section>
+<section id="expunge">
+<span id="cascade-expunge"></span><h2>expunge<a class="headerlink" href="#expunge" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">expunge</span></code> cascade indicates that when the parent object is removed
+from the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> using <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.expunge" title="sqlalchemy.orm.Session.expunge"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.expunge()</span></code></a>, the
+operation should be propagated down to referred objects.</p>
+</section>
+<section id="controlling-cascade-on-backrefs">
+<span id="backref-cascade"></span><h2>Controlling Cascade on Backrefs<a class="headerlink" href="#controlling-cascade-on-backrefs" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This section applies to a behavior that is removed in SQLAlchemy 2.0.
+By setting the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.params.future" title="sqlalchemy.orm.Session"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.future</span></code></a> flag on a given
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>, the 2.0 behavior will be achieved which is
+essentially that the <a class="reference internal" href="relationship_api.html#sqlalchemy.orm.relationship.params.cascade_backrefs" title="sqlalchemy.orm.relationship"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.cascade_backrefs</span></code></a> flag is
+ignored.   See the section <a class="reference internal" href="../changelog/migration_14.html#change-5150"><span class="std std-ref">cascade_backrefs behavior deprecated for removal in 2.0</span></a> for notes.</p>
+</div>
+<p>In <a class="reference internal" href="../glossary.html#term-1.x-style"><span class="xref std std-term">1.x style</span></a> ORM usage, the <a class="reference internal" href="#cascade-save-update"><span class="std std-ref">save-update</span></a> cascade by
+default takes place on attribute change events emitted from backrefs.  This is
+probably a confusing statement more easily described through demonstration; it
+means that, given a mapping such as this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mapper_registry</span><span class="o">.</span><span class="n">map_imperatively</span><span class="p">(</span><span class="n">Order</span><span class="p">,</span> <span class="n">order_table</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="p">{</span>
+    <span class="s1">&#39;items&#39;</span> <span class="p">:</span> <span class="n">relationship</span><span class="p">(</span><span class="n">Item</span><span class="p">,</span> <span class="n">backref</span><span class="o">=</span><span class="s1">&#39;order&#39;</span><span class="p">)</span>
+<span class="p">})</span></pre></div>
+</div>
+<p>If an <code class="docutils literal notranslate"><span class="pre">Order</span></code> is already in the session, and is assigned to the <code class="docutils literal notranslate"><span class="pre">order</span></code>
+attribute of an <code class="docutils literal notranslate"><span class="pre">Item</span></code>, the backref appends the <code class="docutils literal notranslate"><span class="pre">Item</span></code> to the <code class="docutils literal notranslate"><span class="pre">items</span></code>
+collection of that <code class="docutils literal notranslate"><span class="pre">Order</span></code>, resulting in the <code class="docutils literal notranslate"><span class="pre">save-update</span></code> cascade taking
+place:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">o1</span> <span class="o">=</span> <span class="n">Order</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">o1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">o1</span> <span class="ow">in</span> <span class="n">session</span>
+<span class="go">True</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">i1</span> <span class="o">=</span> <span class="n">Item</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">i1</span><span class="o">.</span><span class="n">order</span> <span class="o">=</span> <span class="n">o1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">i1</span> <span class="ow">in</span> <span class="n">o1</span><span class="o">.</span><span class="n">items</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">i1</span> <span class="ow">in</span> <span class="n">session</span>
+<span class="go">True</span></pre></div>
+</div>
+<p>This behavior can be disabled using the <a class="reference internal" href="relationship_api.html#sqlalchemy.orm.relationship.params.cascade_backrefs" title="sqlalchemy.orm.relationship"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.cascade_backrefs</span></code></a> flag:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mapper_registry</span><span class="o">.</span><span class="n">map_imperatively</span><span class="p">(</span><span class="n">Order</span><span class="p">,</span> <span class="n">order_table</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="p">{</span>
+    <span class="s1">&#39;items&#39;</span> <span class="p">:</span> <span class="n">relationship</span><span class="p">(</span><span class="n">Item</span><span class="p">,</span> <span class="n">backref</span><span class="o">=</span><span class="s1">&#39;order&#39;</span><span class="p">,</span> <span class="n">cascade_backrefs</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="p">})</span></pre></div>
+</div>
+<p>So above, the assignment of <code class="docutils literal notranslate"><span class="pre">i1.order</span> <span class="pre">=</span> <span class="pre">o1</span></code> will append <code class="docutils literal notranslate"><span class="pre">i1</span></code> to the <code class="docutils literal notranslate"><span class="pre">items</span></code>
+collection of <code class="docutils literal notranslate"><span class="pre">o1</span></code>, but will not add <code class="docutils literal notranslate"><span class="pre">i1</span></code> to the session.   You can, of
+course, <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.add" title="sqlalchemy.orm.Session.add"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.add()</span></code></a> <code class="docutils literal notranslate"><span class="pre">i1</span></code> to the session at a later point.   This
+option may be helpful for situations where an object needs to be kept out of a
+session until it’s construction is completed, but still needs to be given
+associations to objects which are already persistent in the target session.</p>
+<p>When relationships are created by the <a class="reference internal" href="relationship_api.html#sqlalchemy.orm.relationship.params.backref" title="sqlalchemy.orm.relationship"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.backref</span></code></a>
+parameter on <a class="reference internal" href="relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code></a>, the <code class="xref py py-paramref docutils literal notranslate"><span class="pre">sqlalchemy.orm.cascade_backrefs</span></code>
+parameter may be set to <code class="docutils literal notranslate"><span class="pre">False</span></code> on the backref side by using the
+<a class="reference internal" href="relationship_api.html#sqlalchemy.orm.backref" title="sqlalchemy.orm.backref"><code class="xref py py-func docutils literal notranslate"><span class="pre">backref()</span></code></a> function instead of a string. For example, the above relationship
+could be declared:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mapper_registry</span><span class="o">.</span><span class="n">map_imperatively</span><span class="p">(</span><span class="n">Order</span><span class="p">,</span> <span class="n">order_table</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="p">{</span>
+    <span class="s1">&#39;items&#39;</span> <span class="p">:</span> <span class="n">relationship</span><span class="p">(</span>
+        <span class="n">Item</span><span class="p">,</span> <span class="n">backref</span><span class="o">=</span><span class="n">backref</span><span class="p">(</span><span class="s1">&#39;order&#39;</span><span class="p">,</span> <span class="n">cascade_backrefs</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span> <span class="n">cascade_backrefs</span><span class="o">=</span><span class="kc">False</span>
+    <span class="p">)</span>
+<span class="p">})</span></pre></div>
+</div>
+<p>This sets the <code class="docutils literal notranslate"><span class="pre">cascade_backrefs=False</span></code> behavior on both relationships.</p>
+</section>
+<section id="notes-on-delete-deleting-objects-referenced-from-collections-and-scalar-relationships">
+<span id="session-deleting-from-collections"></span><h2>Notes on Delete - Deleting Objects Referenced from Collections and Scalar Relationships<a class="headerlink" href="#notes-on-delete-deleting-objects-referenced-from-collections-and-scalar-relationships" title="Permalink to this headline">¶</a></h2>
+<p>The ORM in general never modifies the contents of a collection or scalar
+relationship during the flush process.  This means, if your class has a
+<a class="reference internal" href="relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code></a> that refers to a collection of objects, or a reference
+to a single object such as many-to-one, the contents of this attribute will
+not be modified when the flush process occurs.  Instead, it is expected
+that the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> would eventually be expired, either through the expire-on-commit behavior of
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.commit" title="sqlalchemy.orm.Session.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code></a> or through explicit use of <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.expire" title="sqlalchemy.orm.Session.expire"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.expire()</span></code></a>.
+At that point, any referenced object or collection associated with that
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> will be cleared and will re-load itself upon next access.</p>
+<p>A common confusion that arises regarding this behavior involves the use of the
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.delete" title="sqlalchemy.orm.Session.delete"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.delete()</span></code></a> method.   When <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.delete" title="sqlalchemy.orm.Session.delete"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.delete()</span></code></a> is invoked upon
+an object and the <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> is flushed, the row is deleted from the
+database.  Rows that refer to the target row via  foreign key, assuming they
+are tracked using a <a class="reference internal" href="relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code></a> between the two mapped object types,
+will also see their foreign key attributes UPDATED to null, or if delete
+cascade is set up, the related rows will be deleted as well. However, even
+though rows related to the deleted object might be themselves modified as well,
+<strong>no changes occur to relationship-bound collections or object references on
+the objects</strong> involved in the operation within the scope of the flush
+itself.   This means if the object was a
+member of a related collection, it will still be present on the Python side
+until that collection is expired.  Similarly, if the object were
+referenced via many-to-one or one-to-one from another object, that reference
+will remain present on that object until the object is expired as well.</p>
+<p>Below, we illustrate that after an <code class="docutils literal notranslate"><span class="pre">Address</span></code> object is marked
+for deletion, it’s still present in the collection associated with the
+parent <code class="docutils literal notranslate"><span class="pre">User</span></code>, even after a flush:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">address</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">addresses</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">address</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">address</span> <span class="ow">in</span> <span class="n">user</span><span class="o">.</span><span class="n">addresses</span>
+<span class="go">True</span></pre></div>
+</div>
+<p>When the above session is committed, all attributes are expired.  The next
+access of <code class="docutils literal notranslate"><span class="pre">user.addresses</span></code> will re-load the collection, revealing the
+desired state:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">address</span> <span class="ow">in</span> <span class="n">user</span><span class="o">.</span><span class="n">addresses</span>
+<span class="go">False</span></pre></div>
+</div>
+<p>There is a recipe for intercepting <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.delete" title="sqlalchemy.orm.Session.delete"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.delete()</span></code></a> and invoking this
+expiration automatically; see <a class="reference external" href="https://www.sqlalchemy.org/trac/wiki/UsageRecipes/ExpireRelationshipOnFKChange">ExpireRelationshipOnFKChange</a> for this.  However, the usual practice of
+deleting items within collections is to forego the usage of
+<a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.delete" title="sqlalchemy.orm.Session.delete"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.delete()</span></code></a> directly, and instead use cascade behavior to
+automatically invoke the deletion as a result of removing the object from the
+parent collection.  The <code class="docutils literal notranslate"><span class="pre">delete-orphan</span></code> cascade accomplishes this, as
+illustrated in the example below:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;user&#39;</span>
+
+    <span class="c1"># ...</span>
+
+    <span class="n">addresses</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span>
+        <span class="s2">&quot;Address&quot;</span><span class="p">,</span> <span class="n">cascade</span><span class="o">=</span><span class="s2">&quot;all, delete-orphan&quot;</span><span class="p">)</span>
+
+<span class="c1"># ...</span>
+
+<span class="k">del</span> <span class="n">user</span><span class="o">.</span><span class="n">addresses</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">session</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span></pre></div>
+</div>
+<p>Where above, upon removing the <code class="docutils literal notranslate"><span class="pre">Address</span></code> object from the <code class="docutils literal notranslate"><span class="pre">User.addresses</span></code>
+collection, the <code class="docutils literal notranslate"><span class="pre">delete-orphan</span></code> cascade has the effect of marking the <code class="docutils literal notranslate"><span class="pre">Address</span></code>
+object for deletion in the same way as passing it to <a class="reference internal" href="session_api.html#sqlalchemy.orm.Session.delete" title="sqlalchemy.orm.Session.delete"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.delete()</span></code></a>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">delete-orphan</span></code> cascade can also be applied to a many-to-one
+or one-to-one relationship, so that when an object is de-associated from its
+parent, it is also automatically marked for deletion.   Using <code class="docutils literal notranslate"><span class="pre">delete-orphan</span></code>
+cascade on a many-to-one or one-to-one requires an additional flag
+<a class="reference internal" href="relationship_api.html#sqlalchemy.orm.relationship.params.single_parent" title="sqlalchemy.orm.relationship"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.single_parent</span></code></a> which invokes an assertion
+that this related object is not to shared with any other parent simultaneously:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="c1"># ...</span>
+
+    <span class="n">preference</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span>
+        <span class="s2">&quot;Preference&quot;</span><span class="p">,</span> <span class="n">cascade</span><span class="o">=</span><span class="s2">&quot;all, delete-orphan&quot;</span><span class="p">,</span>
+        <span class="n">single_parent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></pre></div>
+</div>
+<p>Above, if a hypothetical <code class="docutils literal notranslate"><span class="pre">Preference</span></code> object is removed from a <code class="docutils literal notranslate"><span class="pre">User</span></code>,
+it will be deleted on flush:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">some_user</span><span class="o">.</span><span class="n">preference</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">session</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>  <span class="c1"># will delete the Preference object</span></pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#unitofwork-cascades"><span class="std std-ref">Cascades</span></a> for detail on cascades.</p>
+</div>
+</section>
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="session_state_management.html" title="previous chapter">State Management</a>
+        Next:
+        <a href="session_transaction.html" title="next chapter">Transactions and Connection Management</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2021, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.1.2.
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '1.4.23',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/detectmobile.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+
