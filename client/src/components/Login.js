@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
-function Login() {
+function Login( { type } ) {
+  // const [type, setType] = useState("provider")
   // javascript
   function handleFocus(e) { //lets user click on any part of the div to type their information
     const input = e.target.querySelector("input")
@@ -53,6 +54,10 @@ function Login() {
           <div className="login-text">
             <h1>Welcome Back!</h1>
             <p>Please log in to your account.</p>
+            <div className={`user-type`}>
+              <a className={type==="provider"?"active":"inactive"} href="/provider-login">Provider</a>
+              <a className={type==="patient"?"active":"inactive"} href="/patient-login">Patient</a>
+            </div>
             {/* <form> */}
             <form onSubmit={handleSubmit}>
               <div className="input-div" onClick={handleFocus}>
@@ -70,13 +75,15 @@ function Login() {
               </label>
               </div>
               <p id="password-rules">Password must be 8 characters with a capital letter, a number, and a symbol</p>
-              <div className="input-div" onClick={handleFocus}>
-              <label >Provider code
-                <br/>
-                {/* <input id="code" type="text" placeholder="Enter provider code" value={formData.password} onChange={handleChange}/> */}
-                <input id="code" type="text" value={formData.code} onChange={handleChange}/>
-              </label>
-              </div>
+              {type === "patient" ? 
+                <div className="input-div" onClick={handleFocus}>
+                <label >New Provider Code
+                  <br/>
+                  {/* <input id="code" type="text" placeholder="Enter provider code" value={formData.password} onChange={handleChange}/> */}
+                  <input id="code" type="text" value={formData.code} onChange={handleChange}/>
+                </label>
+                </div>
+              : <></>}
               <div className="remember-forgot">
               <span id="span-remember">
               <label>

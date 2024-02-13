@@ -31,13 +31,13 @@ def create_providers():
 def create_clients_providers():
   j1 = ClientProvider(
     clientFK = 1,
-    providerFk = 1
+    providerFK = 1
     )
   j2 = ClientProvider(
     clientFK = 2,
-    providerFk = 1
+    providerFK = 1
     )
-  j1 = ClientProvider(
+  j3 = ClientProvider(
     clientFK = 2,
     providerFK = 2
   )
