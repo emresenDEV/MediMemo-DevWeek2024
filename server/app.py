@@ -2,10 +2,179 @@ from config import app, db
 from flask import make_response, request, session
 from models import Client, ClientProvider, Provider
 from sqlalchemy import UniqueConstraint
+import random
 
 @app.route('/')
 def index():
     return ''
+
+# Non-RESTful Routing:
+@app.route('/client_signup', methods = ['POST'])
+def client_signup():
+    # allow for client to signup new account
+    form_data = request.get_json()
+    try:
+        new_client = Client(
+            email = form_data['email'],
+        )
+        # generates hashed password
+        new_client._password_hash = form_data['password']
+
+        db.session.add(new_client)
+        db.session.commit()
+
+        # gives new client an id and sets signed in client to session
+        session['user_id'] = new_client.id
+
+        if len(form_data['provider_code']) == 9: #if the inputed code is the expected length
+            verified_code = Provider.query.filter(Provider.provider_code == form_data['provider_code']).first() #check if it's connected to a provider
+            print(verified_code)
+            if verified_code:
+                try: #make a link between this new patient and the provider
+                    new_client_provider = ClientProvider(
+                        clientFK = new_client.id,
+                        providerFK = verified_code.id
+                    )
+                except:
+                    response = make_response(
+                    {"ERROR": "Could not create ClientProviderJoin"},
+                    400
+                )
+        response = make_response(
+            new_client.to_dict(),
+            201
+        )
+    except:
+        response = make_response(
+            {"ERROR": "Could not create client"},
+            400
+        )
+    return response
+
+@app.route('/provider_signup', methods = ['POST'])
+def provider_signup():
+    # allow for provider to signup new account
+    form_data = request.get_json()
+    while True:
+        unique_code = random.randint(100000000, 999999999)
+        already_exists = Provider.query.filter(Provider.provider_code == unique_code).first()
+        print(already_exists)
+        if not already_exists:
+            break
+    print(unique_code)
+
+    try:
+        new_provider = Provider(
+            email = form_data['email'],
+            provider_code = unique_code # i don't like this solution to generating unique provider codes
+        )
+        # generates hashed password
+        new_provider._password_hash = form_data['password']
+
+        db.session.add(new_provider)
+        db.session.commit()
+
+        # gives new provider an id and sets signed in provider to session
+        session['user_id'] = new_provider.id
+
+        response = make_response(
+            new_provider.to_dict(),
+            201
+        )
+    except:
+        response = make_response(
+            {"ERROR": "Could not create provider. Please try again."},
+            400
+        )
+    return response
+
+@app.route('/check_client_session', methods = ['GET'])
+def check_client_session():
+    # check current session
+    client_id = session['user_id']
+    client = Client.query.filter(Client.id == client_id).first()
+
+    if client:
+        response = make_response(
+            client.to_dict(), 
+            200
+        )
+    else:
+        response = make_response(
+            {}, 
+            404
+        )
+    return response
+
+@app.route('/check_provider_session', methods = ['GET'])
+def check_provider_session():
+    # check current session
+    provider_id = session['user_id']
+    provider = Provider.query.filter(Provider.id == provider_id).first()
+
+    if provider:
+        response = make_response(
+            provider.to_dict(), 
+            200
+        )
+    else:
+        response = make_response(
+            {}, 
+            404
+        )
+    return response
+
+@app.route('/client_login', methods = ['POST'])
+def client_login():
+    # check if client can signin to account
+    form_data = request.get_json()
+    
+    email = form_data['email']
+    password = form_data['password']
+    
+    client = Client.query.filter_by(email = email).first()
+    if client:
+        # authenticate client
+        is_authenticated = client.authenticate(password)
+        if is_authenticated:
+            session['user_id'] = client.id
+            response= make_response(client.to_dict(), 201)
+        else:
+            response= make_response({"ERROR" : "CLIENT CANNOT LOG IN"}, 400)
+    else:
+        response= make_response({"ERROR" : "CLIENT NOT FOUND"}, 404)
+    return response
+
+@app.route('/provider_login', methods = ['POST'])
+def provider_login():
+    # check if provider can signin to account
+    form_data = request.get_json()
+    
+    email = form_data['email']
+    password = form_data['password']
+    
+    provider = Provider.query.filter_by(email = email).first()
+    if provider:
+        # authenticate provider
+        is_authenticated = provider.authenticate(password)
+        if is_authenticated:
+            session['user_id'] = provider.id
+            response= make_response(provider.to_dict(), 201)
+        else:
+            response= make_response({"ERROR" : "PROVIDER CANNOT LOG IN"}, 400)
+    else:
+        response= make_response({"ERROR" : "PROVIDER NOT FOUND"}, 404)
+    return response
+
+@app.route('/logout', methods = ['DELETE'])
+def logout():
+    # remove session
+    session['user_id'] = None
+    response = make_response(
+        {},
+        204
+    )
+    return response
 
 # clients ------------------------------------------------------------------------
 @app.route('/clients', methods=['GET', 'POST'])

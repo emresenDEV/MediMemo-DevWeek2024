@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 
 function Login( { type } ) {
-  // const [type, setType] = useState("provider")
+
+  const [user, setUser] = useState("")
   // javascript
   function handleFocus(e) { //lets user click on any part of the div to type their information
     const input = e.target.querySelector("input")
@@ -9,7 +10,7 @@ function Login( { type } ) {
       input.focus()
     }
   }
-
+  
   const [formData, setFormData] = useState( //temporarily stores what the user has entered into the form
     {
       email: "",
@@ -29,17 +30,38 @@ function Login( { type } ) {
     const action = document.activeElement.name //records which action is being taken
     // console.log(formData, action)
     if (action === 'login') {
-      console.log("client clicked log in")
+      // console.log("client clicked log in")
+      // check if user exists
+      fetch(`/${type}s`)
+          .then(r => r.json())
+          .then(users => {
+            console.log(users)
+            const login_attempt = users.find(user => user.email === formData.email.toLowerCase())
+            if (login_attempt) {
+              console.log("User found", login_attempt)
+              // check if user's password is correct
+              setUser(login_attempt)
+            }
+            else {
+              console.log("User not found")
+            }
+          })
+      // save user's id number
+      // fetch users's data using id number
+      // route to portal
     }
     if (action === 'signup') {
       console.log("client clicked create account")
+      // 
     }
-    // setFormData({ //clears the form
-    //   email: "",
-    //   password: "",
-    //   code: ""
-    // })
+    setFormData({ //clears the form
+      email: "",
+      password: "",
+      code: ""
+    })
   }
+  console.log(user)
+
 
   // function handleLogin(e) {
   //   e.preventDefault()
@@ -56,7 +78,7 @@ function Login( { type } ) {
             <p>Please log in to your account.</p>
             <div className={`user-type`}>
               <a className={type==="provider"?"active":"inactive"} href="/provider-login">Provider</a>
-              <a className={type==="patient"?"active":"inactive"} href="/patient-login">Patient</a>
+              <a className={type==="client"?"active":"inactive"} href="/patient-login">Patient</a>
             </div>
             {/* <form> */}
             <form onSubmit={handleSubmit}>
@@ -75,7 +97,7 @@ function Login( { type } ) {
               </label>
               </div>
               <p id="password-rules">Password must be 8 characters with a capital letter, a number, and a symbol</p>
-              {type === "patient" ? 
+              {type === "client" ? 
                 <div className="input-div" onClick={handleFocus}>
                 <label >New Provider Code
                   <br/>

@@ -16,12 +16,12 @@ def create_clients():
 
 def create_providers():
   p1 = Provider(
-    email = "Velma@gmail.com",
+    email = "velma@gmail.com",
     provider_code = "1000"
     )
   p1.password_hash = "Scooby1&"
   p2 = Provider(
-    email = "Daphne@gmail.com",
+    email = "daphne@gmail.com",
     provider_code = "1001"
     )
   p2.password_hash = "Mystery8?"

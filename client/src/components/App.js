@@ -17,7 +17,7 @@ function App() {
         <div className="App">
             <Switch>
                 <Route exact path = {["/", "/provider-login"]}> <Login type={"provider"}/> </Route>
-                <Route exact path = "/patient-login"> <Login type={"patient"}/> </Route>
+                <Route exact path = "/patient-login"> <Login type={"client"}/> </Route>
                 {/* <Route exact path = {["/", "/provider-login"]}> <Login type={"provider"}/> </Route>
                 <Route exact path = "/patient-login"> <Login type={"patient"}/> </Route> */}
             </Switch>
