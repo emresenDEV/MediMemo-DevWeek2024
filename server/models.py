@@ -34,17 +34,20 @@ class Client(db.Model, SerializerMixin):
     if all(char.isalnum() for char in password) == True:
       raise ValueError('Password must contain a symbol.')
     # generates hashed version of password
-    new_hashed_password = bcrypt.generate_password_hash(password, rounds=12)
-    self._password_hash = new_hashed_password
+    new_hashed_password = bcrypt.generate_password_hash(password.encode('utf-8'))
+    self._password_hash = new_hashed_password.decode('utf-8')
+
 
   def authenticate(self, password):
     # check if inputted password matches user's password
-    return bcrypt.check_password_hash(self._password_hash, bcrypt.generate_password_hash(password, rounds=12))
+    check = bcrypt.check_password_hash(self._password_hash, password.encode('utf-8'))
+    print(check)
+    return check
 
   @validates('email')
   def validates_email(self, key, value):
     if "@" in value and "." in value:
-      return value
+      return value.lower()
     else:
       raise ValueError('User must be given a email.')
     
@@ -82,19 +85,22 @@ class Provider(db.Model, SerializerMixin):
     if all(char.isalnum() for char in password) == True:
       raise ValueError('Password must contain a symbol.')
     # generates hashed version of password
-    new_hashed_password = bcrypt.generate_password_hash(password, rounds=12)
-    self._password_hash = new_hashed_password
+    new_hashed_password = bcrypt.generate_password_hash(password.encode('utf-8'))
+    self._password_hash = new_hashed_password.decode('utf-8')
+
 
   def authenticate(self, password):
     # check if inputted password matches user's password
-    return bcrypt.check_password_hash(self._password_hash, bcrypt.generate_password_hash(password, rounds=12))
+    check = bcrypt.check_password_hash(self._password_hash, password.encode('utf-8'))
+    print(check)
+    return check
 
   @validates('email')
   def validates_email(self, key, value):
     if "@" in value and "." in value:
-      return value
+      return value.lower()
     else:
-      raise ValueError('Provider must be given a email.')
+      raise ValueError('User must be given a email.')
 
   @validates('provider_code')
   def validates_provider_code(self, key, type):

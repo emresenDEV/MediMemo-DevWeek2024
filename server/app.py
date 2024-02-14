@@ -1,5 +1,5 @@
-from config import app, db
-from flask import make_response, request, session
+from config import app, db, bcrypt
+from flask import Flask, make_response, request, session
 from models import Client, ClientProvider, Provider
 from sqlalchemy import UniqueConstraint
 import random
@@ -18,7 +18,7 @@ def client_signup():
             email = form_data['email'],
         )
         # generates hashed password
-        new_client._password_hash = form_data['password']
+        new_client.password_hash = form_data['password']
 
         db.session.add(new_client)
         db.session.commit()
@@ -26,7 +26,8 @@ def client_signup():
         # gives new client an id and sets signed in client to session
         session['user_id'] = new_client.id
 
-        if len(form_data['provider_code']) == 9: #if the inputed code is the expected length
+        #if new clients enter a provider code
+        if len(form_data['provider_code']) == 9: #if the inputed provider code is the expected length
             verified_code = Provider.query.filter(Provider.provider_code == form_data['provider_code']).first() #check if it's connected to a provider
             print(verified_code)
             if verified_code:
@@ -35,6 +36,10 @@ def client_signup():
                         clientFK = new_client.id,
                         providerFK = verified_code.id
                     )
+
+                    db.session.add(new_client_provider)
+                    db.session.commit()
+
                 except:
                     response = make_response(
                     {"ERROR": "Could not create ClientProviderJoin"},
@@ -69,7 +74,7 @@ def provider_signup():
             provider_code = unique_code # i don't like this solution to generating unique provider codes
         )
         # generates hashed password
-        new_provider._password_hash = form_data['password']
+        new_provider.password_hash = form_data['password']
 
         db.session.add(new_provider)
         db.session.commit()
@@ -88,42 +93,6 @@ def provider_signup():
         )
     return response
 
-@app.route('/check_client_session', methods = ['GET'])
-def check_client_session():
-    # check current session
-    client_id = session['user_id']
-    client = Client.query.filter(Client.id == client_id).first()
-
-    if client:
-        response = make_response(
-            client.to_dict(), 
-            200
-        )
-    else:
-        response = make_response(
-            {}, 
-            404
-        )
-    return response
-
-@app.route('/check_provider_session', methods = ['GET'])
-def check_provider_session():
-    # check current session
-    provider_id = session['user_id']
-    provider = Provider.query.filter(Provider.id == provider_id).first()
-
-    if provider:
-        response = make_response(
-            provider.to_dict(), 
-            200
-        )
-    else:
-        response = make_response(
-            {}, 
-            404
-        )
-    return response
-
 @app.route('/client_login', methods = ['POST'])
 def client_login():
     # check if client can signin to account
@@ -132,13 +101,35 @@ def client_login():
     email = form_data['email']
     password = form_data['password']
     
-    client = Client.query.filter_by(email = email).first()
+    client = Client.query.filter_by(email = email.lower()).first()
     if client:
         # authenticate client
         is_authenticated = client.authenticate(password)
         if is_authenticated:
             session['user_id'] = client.id
+            print(session)
             response= make_response(client.to_dict(), 201)
+            #if new clients enter a provider code
+            if len(form_data['provider_code']) == 4: #if the inputed provider code is the expected length
+                verified_code = Provider.query.filter(Provider.provider_code == form_data['provider_code']).first() #check if it's connected to a provider
+                print(verified_code)
+                if verified_code:
+                    try: #make a link between this new patient and the provider
+                        new_client_provider = ClientProvider(
+                            clientFK = client.id,
+                            providerFK = verified_code.id
+                        )
+
+                        db.session.add(new_client_provider)
+                        db.session.commit()
+
+                        response=make_response([client.to_dict(), new_client_provider.to_dict()], 201)
+
+                    except:
+                        response = make_response(
+                        {"ERROR": "Could not create ClientProviderJoin"},
+                        400
+                    )
         else:
             response= make_response({"ERROR" : "CLIENT CANNOT LOG IN"}, 400)
     else:
@@ -153,7 +144,7 @@ def provider_login():
     email = form_data['email']
     password = form_data['password']
     
-    provider = Provider.query.filter_by(email = email).first()
+    provider = Provider.query.filter_by(email = email.lower()).first()
     if provider:
         # authenticate provider
         is_authenticated = provider.authenticate(password)
@@ -164,16 +155,6 @@ def provider_login():
             response= make_response({"ERROR" : "PROVIDER CANNOT LOG IN"}, 400)
     else:
         response= make_response({"ERROR" : "PROVIDER NOT FOUND"}, 404)
-    return response
-
-@app.route('/logout', methods = ['DELETE'])
-def logout():
-    # remove session
-    session['user_id'] = None
-    response = make_response(
-        {},
-        204
-    )
     return response
 
 # clients ------------------------------------------------------------------------
