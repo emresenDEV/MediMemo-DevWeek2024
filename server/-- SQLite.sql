@@ -1,2 +1,2 @@
 -- SQLite
-SELECT * FROM users
+SELECT * FROM providers
