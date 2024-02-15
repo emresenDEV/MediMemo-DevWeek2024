@@ -14,8 +14,21 @@ function App() {
     // return jsx
 
     if(!user) return (
-        <Login/>
+        <div className="App">
+            <Switch>
+                <Route exact path = {["/", "/provider-login"]}> <Login type={"provider"}/> </Route>
+                <Route exact path = "/patient-login"> <Login type={"client"}/> </Route>
+                {/* <Route exact path = {["/", "/provider-login"]}> <Login type={"provider"}/> </Route>
+                <Route exact path = "/patient-login"> <Login type={"patient"}/> </Route> */}
+            </Switch>
+        </div>
     )
+
+    // if(!user) return (
+    //     <div className="App">
+    //         <Login/>
+    //     </div>
+    // )
 
     if (user.type === 'patient') return (
         <>

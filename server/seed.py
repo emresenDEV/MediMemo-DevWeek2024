@@ -1,62 +1,71 @@
 import datetime
 from app import app
-from models import db, User, UserCodeJoin, ProviderCode #and all classes
+from models import db, Client, Provider, ClientProvider
 
-def create_users():
-  u1 = User(
-    email = "tom@gmail.com",
-    type = "provider"
+def create_clients():
+  c1 = Client(
+    email = "tom@gmail.com"
     )
-  u1.password_hash = "Abcdefgh1@"
-  u2 = User(
-    email = "jerry@gmail.com",
-    type = "patient"
+  c1.password_hash = "Abcdefgh1@"
+  c2 = Client(
+    email = "jerry@gmail.com"
     )
-  u2.password_hash = "1234567A&"
-  users = [u1, u2]
-  return users
+  c2.password_hash = "1234567A&"
+  clients = [c1, c2]
+  return clients
 
-def create_codes():
-  c1 = ProviderCode(
-    code = "AB12")
-  codes = [c1]
-  return codes
-
-def create_users_codes():
-  j1 = UserCodeJoin(
-    userFK = 1,
-    codeFK = 1
+def create_providers():
+  p1 = Provider(
+    email = "velma@gmail.com",
+    provider_code = "100000000"
     )
-  j2 = UserCodeJoin(
-    userFK = 2,
-    codeFK = 1
+  p1.password_hash = "Scooby1&"
+  p2 = Provider(
+    email = "daphne@gmail.com",
+    provider_code = "200000000"
     )
-  users_codes = [j1, j2]
-  return users_codes
+  p2.password_hash = "Mystery8?"
+  providers = [p1, p2]
+  return providers
 
+def create_clients_providers():
+  j1 = ClientProvider(
+    clientFK = 1,
+    providerFK = 1
+    )
+  j2 = ClientProvider(
+    clientFK = 2,
+    providerFK = 1
+    )
+  j3 = ClientProvider(
+    clientFK = 2,
+    providerFK = 2
+  )
+  clients_providers = [j1, j2, j3]
+  return clients_providers
 
 
 if __name__ == '__main__':
 
   with app.app_context():
     print("Clearing db...")
-    User.query.delete()
-    UserCodeJoin.query.delete()
-    ProviderCode.query.delete()
+    Client.query.delete()
+    Provider.query.delete()
+    ClientProvider.query.delete()
 
-    print("Seeding users...")
-    users = create_users()
-    db.session.add_all(users)
+    print("Seeding clients...")
+    clients = create_clients()
+    db.session.add_all(clients)
     db.session.commit()
 
-    print("Seeding codes...")
-    codes = create_codes()
-    db.session.add_all(codes)
+    print("Seeding providers...")
+    providers = create_providers()
+    db.session.add_all(providers)
     db.session.commit()
 
-    print("Seeding users_codes...")
-    users_codes = create_users_codes()
-    db.session.add_all(users_codes)
+    print("Seeding clients_providers...")
+    clients_providers = create_clients_providers()
+    db.session.add_all(clients_providers)
     db.session.commit()
 
     print("Done seeding!")
