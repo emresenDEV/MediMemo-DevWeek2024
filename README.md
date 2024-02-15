@@ -10,7 +10,7 @@
 
 ## Running the Backend
 ### First Time 
-    - must have pipenv, pip, and node installed
+    - must install the following in this order: pyenv, python (using pyenv), pip, and pipenv (using pip)
     - terminal commands:
         - pipenv install && pipenv shell
         - cd server && export FLASK_APP=app.py
