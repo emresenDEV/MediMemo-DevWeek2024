@@ -52,7 +52,7 @@ class Client(db.Model, SerializerMixin):
       raise ValueError('User must be given a email.')
     
   def __repr__(self):
-    return f'<User {self.id}: {self.email}>'
+    return f'<Client {self.id}: {self.email}>'
 
 class Provider(db.Model, SerializerMixin):
   __tablename__ = 'providers'
@@ -110,7 +110,7 @@ class Provider(db.Model, SerializerMixin):
       raise ValueError('Provider must be given a provider code.')
     
   def __repr__(self):
-    return f'<User {self.id}: {self.email}, provider_code {self.provider_code} >'
+    return f'<Provider {self.id}: {self.email}, provider_code {self.provider_code} >'
 
 class ClientProvider(db.Model, SerializerMixin):
   __tablename__ = 'clients_providers'

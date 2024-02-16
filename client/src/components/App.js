@@ -5,55 +5,39 @@ import NavBar from "./NavBar";
 import Login from "./Login";
 import PatientPortal from "./PatientPortal";
 import ProviderPortal from "./ProviderPortal";
+import { useUserContext} from '../UserContext';
 
 function App() {
-    // javascript here
-    const [user, setUser] = useState("")
-    // const [user, setUser] = useState({type:"patient"})
-    // const [user, setUser] = useState({type:"provider"})
-    // return jsx
+    const { users, setUsers } = useUserContext();
 
-    if(!user) return (
-        <div className="App">
-            <Switch>
-                <Route exact path = {["/", "/provider-login"]}> <Login type={"provider"}/> </Route>
-                <Route exact path = "/patient-login"> <Login type={"client"}/> </Route>
-                {/* <Route exact path = {["/", "/provider-login"]}> <Login type={"provider"}/> </Route>
-                <Route exact path = "/patient-login"> <Login type={"patient"}/> </Route> */}
-            </Switch>
-        </div>
-    )
+    // sessionStorage.clear()
+    console.log(sessionStorage.user_id)
 
-    // if(!user) return (
-    //     <div className="App">
-    //         <Login/>
-    //     </div>
-    // )
-
-    if (user.type === 'patient') return (
-        <>
-            <NavBar/>
-            <PatientPortal/>
-        </>
-    )
-    
-    if (user.type === 'provider') return (
-        <>
-            <NavBar/>
-            <ProviderPortal/>
-        </>
-    )
+    if (sessionStorage.user_id) {
+        return (
+            <div className="App">
+                <Switch>
+                    <Route exact path = "/provider-portal"> 
+                        <NavBar type={"provider"} users={users} setUsers={setUsers}/>
+                        <ProviderPortal type={"provider"} users={users} setUsers={setUsers}/>
+                    </Route>
+                    <Route exact path = "/client-portal"> 
+                        <NavBar type={"client"} users={users} setUsers={setUsers}/>
+                        <PatientPortal type={"client"} users={users} setUsers={setUsers}/> 
+                    </Route>
+                </Switch>
+            </div>
+        )
+    }
 
     return (
         <div className="App">
-            <NavBar />
             <Switch>
-                {/* <Route exact path="/portal"> <Portal/> </Route> */}
-                <Route exact path="/"> </Route>
-                {/* <Route exact path="/path1">  </Route> */}
+                <Route exact path = {["/", "/provider-login"]}> <Login type={"provider"} setUsers={setUsers}/> </Route>
+                <Route exact path = "/client-login"> <Login type={"client"} setUsers={setUsers}/> </Route>
             </Switch>
         </div>
-    );
+    )
 }
 
 export default App;

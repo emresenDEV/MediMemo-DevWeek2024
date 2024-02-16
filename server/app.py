@@ -15,16 +15,14 @@ def client_signup():
     form_data = request.get_json()
     try:
         new_client = Client(
-            email = form_data['email'],
+            email = form_data['email']
         )
         # generates hashed password
+        print(new_client)
         new_client.password_hash = form_data['password']
 
         db.session.add(new_client)
         db.session.commit()
-
-        # gives new client an id and sets signed in client to session
-        session['user_id'] = new_client.id
 
         #if new clients enter a provider code
         if len(form_data['provider_code']) == 9: #if the inputed provider code is the expected length
@@ -45,6 +43,7 @@ def client_signup():
                     {"ERROR": "Could not create ClientProviderJoin"},
                     400
                 )
+                    
         response = make_response(
             new_client.to_dict(),
             201
@@ -63,15 +62,15 @@ def provider_signup():
     while True:
         unique_code = random.randint(100000000, 999999999)
         already_exists = Provider.query.filter(Provider.provider_code == unique_code).first()
-        print(already_exists)
+        # print(already_exists)
         if not already_exists:
             break
-    print(unique_code)
+    # print(unique_code)
 
     try:
         new_provider = Provider(
             email = form_data['email'],
-            provider_code = unique_code # i don't like this solution to generating unique provider codes
+            provider_code = unique_code
         )
         # generates hashed password
         new_provider.password_hash = form_data['password']
@@ -80,7 +79,7 @@ def provider_signup():
         db.session.commit()
 
         # gives new provider an id and sets signed in provider to session
-        session['user_id'] = new_provider.id
+        # session['user_id'] = new_provider.id
 
         response = make_response(
             new_provider.to_dict(),
@@ -106,8 +105,8 @@ def client_login():
         # authenticate client
         is_authenticated = client.authenticate(password)
         if is_authenticated:
-            session['user_id'] = client.id
-            print(session)
+            # session['user_id'] = client.id
+            # print(session)
             response= make_response(client.to_dict(), 201)
             #if new clients enter a provider code
             if len(form_data['provider_code']) == 4: #if the inputed provider code is the expected length
@@ -149,7 +148,7 @@ def provider_login():
         # authenticate provider
         is_authenticated = provider.authenticate(password)
         if is_authenticated:
-            session['user_id'] = provider.id
+            # session['user_id'] = provider.id
             response= make_response(provider.to_dict(), 201)
         else:
             response= make_response({"ERROR" : "PROVIDER CANNOT LOG IN"}, 400)
