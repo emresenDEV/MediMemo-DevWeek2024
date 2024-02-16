@@ -8,6 +8,7 @@ from sqlalchemy import UniqueConstraint
 
 @app.route("/")
 def index():
+    """ """
     return ""
 
 
@@ -16,6 +17,7 @@ def index():
 
 @app.route("/client_signup", methods=["POST"])
 def client_signup():
+    """ """
     # allow for client to signup new account
     form_data = request.get_json()
     try:
@@ -57,6 +59,7 @@ def client_signup():
 
 @app.route("/provider_signup", methods=["POST"])
 def provider_signup():
+    """ """
     # allow for provider to signup new account
     form_data = request.get_json()
     while True:
@@ -90,6 +93,7 @@ def provider_signup():
 
 @app.route("/client_login", methods=["POST"])
 def client_login():
+    """ """
     # check if client can signin to account
     form_data = request.get_json()
 
@@ -138,6 +142,7 @@ def client_login():
 
 @app.route("/provider_login", methods=["POST"])
 def provider_login():
+    """ """
     # check if provider can signin to account
     form_data = request.get_json()
 
@@ -163,6 +168,7 @@ def provider_login():
 
 @app.route("/clients", methods=["GET", "POST"])
 def clients():
+    """ """
     if request.method == "GET":
         clients = Client.query.all()
         client_dict = [client.to_dict() for client in clients]
@@ -186,6 +192,11 @@ def clients():
 
 @app.route("/client/<int:id>", methods=["GET", "PATCH", "DELETE"])
 def clients_by_id(id):
+    """
+
+    :param id: 
+
+    """
     client = Client.query.filter(Client.id == id).first()
     if client:
         if request.method == "GET":
@@ -216,6 +227,7 @@ def clients_by_id(id):
 
 @app.route("/providers", methods=["GET", "POST"])
 def providers():
+    """ """
     if request.method == "GET":
         providers = Provider.query.all()
         provider_dict = [provider.to_dict() for provider in providers]
@@ -241,6 +253,11 @@ def providers():
 
 @app.route("/provider/<int:id>", methods=["GET", "PATCH", "DELETE"])
 def providers_by_id(id):
+    """
+
+    :param id: 
+
+    """
     provider = Provider.query.filter(Provider.id == id).first()
     if provider:
         if request.method == "GET":
@@ -271,6 +288,7 @@ def providers_by_id(id):
 
 @app.route("/clients_providers", methods=["GET", "POST"])
 def clients_providers():
+    """ """
     if request.method == "GET":
         clients_providers = ClientProvider.query.all()
         client_provider_dict = [
@@ -296,6 +314,11 @@ def clients_providers():
 
 @app.route("/client_provider/<int:id>", methods=["GET", "PATCH", "DELETE"])
 def clients_providers_by_id(id):
+    """
+
+    :param id: 
+
+    """
     client_provider = ClientProvider.query.filter(ClientProvider.id == id).first()
     if client_provider:
         if request.method == "GET":

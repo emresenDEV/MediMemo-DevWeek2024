@@ -6,6 +6,7 @@ from sqlalchemy_serializer import SerializerMixin
 
 
 class Client(db.Model, SerializerMixin):
+    """ """
     __tablename__ = "clients"
     # serialize_rules = ('','')
 
@@ -18,11 +19,17 @@ class Client(db.Model, SerializerMixin):
     # add password_hash property and authenticate instance methods here
     @property
     def password_hash(self):
+        """ """
         # ensures user does not have access to password
         raise AttributeError("You don't have permission to view the password!")
 
     @password_hash.setter
     def password_hash(self, password):
+        """
+
+        :param password: 
+
+        """
         # checks password security
         if len(password) < 8:
             raise ValueError("Password must be at least 8 characters.")
@@ -39,6 +46,11 @@ class Client(db.Model, SerializerMixin):
         self._password_hash = new_hashed_password.decode("utf-8")
 
     def authenticate(self, password):
+        """
+
+        :param password: 
+
+        """
         # check if inputted password matches user's password
         check = bcrypt.check_password_hash(
             self._password_hash, password.encode("utf-8")
@@ -48,6 +60,12 @@ class Client(db.Model, SerializerMixin):
 
     @validates("email")
     def validates_email(self, key, value):
+        """
+
+        :param key: 
+        :param value: 
+
+        """
         if "@" in value and "." in value:
             return value.lower()
         else:
@@ -58,6 +76,7 @@ class Client(db.Model, SerializerMixin):
 
 
 class Provider(db.Model, SerializerMixin):
+    """ """
     __tablename__ = "providers"
     # serialize_rules = ('','')
 
@@ -71,11 +90,17 @@ class Provider(db.Model, SerializerMixin):
     # add password_hash property and authenticate instance methods here
     @property
     def password_hash(self):
+        """ """
         # ensures user does not have access to password
         raise AttributeError("You don't have permission to view the password")
 
     @password_hash.setter
     def password_hash(self, password):
+        """
+
+        :param password: 
+
+        """
         # checks password security
         if len(password) < 8:
             raise ValueError("Password must be at least 8 characters.")
@@ -92,6 +117,11 @@ class Provider(db.Model, SerializerMixin):
         self._password_hash = new_hashed_password.decode("utf-8")
 
     def authenticate(self, password):
+        """
+
+        :param password: 
+
+        """
         # check if inputted password matches user's password
         check = bcrypt.check_password_hash(
             self._password_hash, password.encode("utf-8")
@@ -101,6 +131,12 @@ class Provider(db.Model, SerializerMixin):
 
     @validates("email")
     def validates_email(self, key, value):
+        """
+
+        :param key: 
+        :param value: 
+
+        """
         if "@" in value and "." in value:
             return value.lower()
         else:
@@ -108,6 +144,12 @@ class Provider(db.Model, SerializerMixin):
 
     @validates("provider_code")
     def validates_provider_code(self, key, type):
+        """
+
+        :param key: 
+        :param type: 
+
+        """
         if type:
             return type
         else:
@@ -120,6 +162,7 @@ class Provider(db.Model, SerializerMixin):
 
 
 class ClientProvider(db.Model, SerializerMixin):
+    """ """
     __tablename__ = "clients_providers"
     # serialize_rules = ('','')
 
@@ -131,6 +174,12 @@ class ClientProvider(db.Model, SerializerMixin):
 
     @validates("clientFK")
     def validates_clientFK(self, key, clientFK):
+        """
+
+        :param key: 
+        :param clientFK: 
+
+        """
         if clientFK:
             return clientFK
         else:
@@ -138,6 +187,12 @@ class ClientProvider(db.Model, SerializerMixin):
 
     @validates("providerFK")
     def validates_providerFK(self, key, providerFK):
+        """
+
+        :param key: 
+        :param providerFK: 
+
+        """
         if providerFK:
             return providerFK
         else:
