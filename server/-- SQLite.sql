@@ -1,2 +1,5 @@
 -- SQLite
-SELECT * FROM clients
+SELECT
+    *
+FROM
+    clients
