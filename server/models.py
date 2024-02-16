@@ -1,4 +1,5 @@
-from config import bcrypt, db
+from config import bcrypt
+from config import db
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import validates

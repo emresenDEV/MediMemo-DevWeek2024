@@ -1,8 +1,15 @@
 import random
 
-from config import app, bcrypt, db
-from flask import Flask, make_response, request, session
-from models import Client, ClientProvider, Provider
+from config import app
+from config import bcrypt
+from config import db
+from flask import Flask
+from flask import make_response
+from flask import request
+from flask import session
+from models import Client
+from models import ClientProvider
+from models import Provider
 from sqlalchemy import UniqueConstraint
 
 
