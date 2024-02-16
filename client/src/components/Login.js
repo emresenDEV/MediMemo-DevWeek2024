@@ -1,56 +1,55 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, {useState} from "react";
+import {useHistory} from "react-router-dom";
 
-function Login( { type, setUsers } ) {
+function Login({type, setUsers}) {
   const history = useHistory()
   const [showPassword, setShowPassword] = useState(false);
 
-  function handleFocus(e) { //lets user click on any part of the div to type their information
+  function handleFocus(
+      e) { // lets user click on any part of the div to type their information
     const input = e.target.querySelector("input")
     if (input) {
       input.focus()
     }
   }
-  
-  const [formData, setFormData] = useState( //temporarily stores what the user has entered into the form
-    {
-      email: "",
-      password: "",
-      provider_code: ""
-    })
 
-  function handleChange(e) { //adds any changes to the form to the temporary storage
+  const [formData, setFormData] =
+      useState( // temporarily stores what the user has entered into the form
+          {email : "", password : "", provider_code : ""})
+
+  function handleChange(
+      e) { // adds any changes to the form to the temporary storage
     setFormData({
       ...formData,
-      [e.target.id]: e.target.value,
+      [e.target.id] : e.target.value,
     });
   }
 
   const handleSubmit = async (e) => {//submits form
     e.preventDefault()
-    const action = document.activeElement.name //records which action is being taken
+    const action =
+        document.activeElement.name // records which action is being taken
     if (action === 'login') {
       // check if user exists
       const response = await fetch(`/${type}_login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+        method : 'POST',
+        headers : {
+          'Content-Type' : 'application/json',
         },
-        body: JSON.stringify(formData),
+        body : JSON.stringify(formData),
       });
       if (response.ok) {
         const user = await response.json();
         sessionStorage.setItem("type", type)
         sessionStorage.setItem("user_id", user.id)
         setUsers(user);
-        setFormData({ //clears the form
-          email: "",
-          password: "",
-          provider_code: ""
+        setFormData({
+          // clears the form
+          email : "",
+          password : "",
+          provider_code : ""
         })
-        setTimeout(() => {
-          history.push(`/${type}-portal`)
-        }, 125)
+        setTimeout(() => {history.push(`/${type}-portal`)}, 125)
       } else {
         const error = await response.json();
         console.error('Login failed:', error);
@@ -58,11 +57,9 @@ function Login( { type, setUsers } ) {
     }
     if (action === 'signup') {
       const response = await fetch(`/${type}_signup`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
+        method : 'POST',
+        headers : {'Content-Type' : 'application/json'},
+        body : JSON.stringify(formData)
       });
       // console.log(response)
       if (response.ok) {
@@ -70,14 +67,13 @@ function Login( { type, setUsers } ) {
         sessionStorage.setItem("type", type)
         sessionStorage.setItem("user_id", user.id)
         setUsers(user);
-        setFormData({ //clears the form
-          email: "",
-          password: "",
-          provider_code: ""
+        setFormData({
+          // clears the form
+          email : "",
+          password : "",
+          provider_code : ""
         })
-        setTimeout(() => {
-          history.push(`/${type}-portal`)
-        }, 125)
+        setTimeout(() => {history.push(`/${type}-portal`)}, 125)
       } else {
         const error = await response.json();
         console.error('Login failed:', error);
@@ -104,14 +100,16 @@ function Login( { type, setUsers } ) {
               <label>Email Address *
                 <br/>
                 {/* <input id="email" type="text" placeholder="Enter email" value={formData.email} onChange={handleChange}/> */}
-                <input id="email" type="text" value={formData.email} onChange={handleChange}/>
+                <input id="email" type="text" value={formData.email} onChange={
+    handleChange}/>
               </label>
               </div>
               <div className="input-div" onClick={handleFocus}>
               <label >Password *
                 <img id="toggle-vis" src="assets/eye2.png" alt="toggle" onClick={() => setShowPassword(!showPassword)}/>
                 <br/>
-                <input id="password" type={showPassword? "text" : "password"} value={formData.password} onChange={handleChange}/>
+                <input id="password" type={showPassword? "text" : "password"} value={formData.password} onChange={
+    handleChange}/>
               </label>
               </div>
               <p id="password-rules">Password must be 8 characters with a capital letter, a number, and a symbol</p>
@@ -120,7 +118,8 @@ function Login( { type, setUsers } ) {
                 <label >New Provider Code
                   <br/>
                   {/* <input id="code" type="text" placeholder="Enter provider code" value={formData.password} onChange={handleChange}/> */}
-                  <input id="provider_code" type="text" value={formData.provider_code} onChange={handleChange}/>
+                  <input id="provider_code" type="text" value={formData.provider_code} onChange={
+    handleChange}/>
                 </label>
                 </div>
               : <></>}

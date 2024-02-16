@@ -1,17 +1,15 @@
-import React, { useState } from "react";
-import { NavLink } from 'react-router-dom';
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import React, {useState} from "react";
+import {NavLink} from 'react-router-dom';
+import {useHistory} from "react-router-dom/cjs/react-router-dom.min";
 
-function NavBar( { type, users, setUsers } ) {
+function NavBar({type, users, setUsers}) {
   const history = useHistory()
 
-  function logout(){
+  function logout() {
     // console.log("this will log out the user and navigate to home page")
     sessionStorage.clear()
     setUsers()
-    setTimeout(() => {
-      history.push(`/${type}-login`)
-    }, 125)
+    setTimeout(() => {history.push(`/${type}-login`)}, 125)
   }
 
   return (
