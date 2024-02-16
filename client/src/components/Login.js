@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
-function Login( { type } ) {
+function Login( { type, setUsers } ) {
+  const history = useHistory()
+  const [showPassword, setShowPassword] = useState(false);
 
-  const [user, setUser] = useState("")
-  // javascript
   function handleFocus(e) { //lets user click on any part of the div to type their information
     const input = e.target.querySelector("input")
     if (input) {
@@ -15,7 +16,7 @@ function Login( { type } ) {
     {
       email: "",
       password: "",
-      code: ""
+      provider_code: ""
     })
 
   function handleChange(e) { //adds any changes to the form to the temporary storage
@@ -25,48 +26,65 @@ function Login( { type } ) {
     });
   }
 
-  function handleSubmit(e) { //submits form
+  const handleSubmit = async (e) => {//submits form
     e.preventDefault()
     const action = document.activeElement.name //records which action is being taken
-    // console.log(formData, action)
     if (action === 'login') {
-      // console.log("client clicked log in")
       // check if user exists
-      fetch(`/${type}s`)
-          .then(r => r.json())
-          .then(users => {
-            console.log(users)
-            const login_attempt = users.find(user => user.email === formData.email.toLowerCase())
-            if (login_attempt) {
-              console.log("User found", login_attempt)
-              // check if user's password is correct
-              setUser(login_attempt)
-            }
-            else {
-              console.log("User not found")
-            }
-          })
-      // save user's id number
-      // fetch users's data using id number
-      // route to portal
+      const response = await fetch(`/${type}_login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      if (response.ok) {
+        const user = await response.json();
+        sessionStorage.setItem("type", type)
+        sessionStorage.setItem("user_id", user.id)
+        setUsers(user);
+        setFormData({ //clears the form
+          email: "",
+          password: "",
+          provider_code: ""
+        })
+        setTimeout(() => {
+          history.push(`/${type}-portal`)
+        }, 125)
+      } else {
+        const error = await response.json();
+        console.error('Login failed:', error);
+      }
     }
     if (action === 'signup') {
-      console.log("client clicked create account")
-      // 
+      const response = await fetch(`/${type}_signup`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+      // console.log(response)
+      if (response.ok) {
+        const user = await response.json();
+        sessionStorage.setItem("type", type)
+        sessionStorage.setItem("user_id", user.id)
+        setUsers(user);
+        setFormData({ //clears the form
+          email: "",
+          password: "",
+          provider_code: ""
+        })
+        setTimeout(() => {
+          history.push(`/${type}-portal`)
+        }, 125)
+      } else {
+        const error = await response.json();
+        console.error('Login failed:', error);
+      }
     }
-    setFormData({ //clears the form
-      email: "",
-      password: "",
-      code: ""
-    })
   }
-  console.log(user)
 
-
-  // function handleLogin(e) {
-  //   e.preventDefault()
-  //   console.log(e.target)
-  // }
 
   return (
     // jsx here
@@ -78,7 +96,7 @@ function Login( { type } ) {
             <p>Please log in to your account.</p>
             <div className={`user-type`}>
               <a className={type==="provider"?"active":"inactive"} href="/provider-login">Provider</a>
-              <a className={type==="client"?"active":"inactive"} href="/patient-login">Patient</a>
+              <a className={type==="client"?"active":"inactive"} href="/client-login">Patient</a>
             </div>
             {/* <form> */}
             <form onSubmit={handleSubmit}>
@@ -91,9 +109,9 @@ function Login( { type } ) {
               </div>
               <div className="input-div" onClick={handleFocus}>
               <label >Password *
+                <img id="toggle-vis" src="assets/eye2.png" alt="toggle" onClick={() => setShowPassword(!showPassword)}/>
                 <br/>
-                {/* <input id="password" type="text" placeholder="Enter strong password" value={formData.password} onChange={handleChange}/> */}
-                <input id="password" type="text" value={formData.password} onChange={handleChange}/>
+                <input id="password" type={showPassword? "text" : "password"} value={formData.password} onChange={handleChange}/>
               </label>
               </div>
               <p id="password-rules">Password must be 8 characters with a capital letter, a number, and a symbol</p>
@@ -102,7 +120,7 @@ function Login( { type } ) {
                 <label >New Provider Code
                   <br/>
                   {/* <input id="code" type="text" placeholder="Enter provider code" value={formData.password} onChange={handleChange}/> */}
-                  <input id="code" type="text" value={formData.code} onChange={handleChange}/>
+                  <input id="provider_code" type="text" value={formData.provider_code} onChange={handleChange}/>
                 </label>
                 </div>
               : <></>}
