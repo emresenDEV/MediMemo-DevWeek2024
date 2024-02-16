@@ -201,7 +201,7 @@ def clients():
 def clients_by_id(id):
     """
 
-    :param id: 
+    :param id:
 
     """
     client = Client.query.filter(Client.id == id).first()
@@ -262,7 +262,7 @@ def providers():
 def providers_by_id(id):
     """
 
-    :param id: 
+    :param id:
 
     """
     provider = Provider.query.filter(Provider.id == id).first()
@@ -323,7 +323,7 @@ def clients_providers():
 def clients_providers_by_id(id):
     """
 
-    :param id: 
+    :param id:
 
     """
     client_provider = ClientProvider.query.filter(ClientProvider.id == id).first()

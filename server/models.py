@@ -28,7 +28,7 @@ class Client(db.Model, SerializerMixin):
     def password_hash(self, password):
         """
 
-        :param password: 
+        :param password:
 
         """
         # checks password security
@@ -49,7 +49,7 @@ class Client(db.Model, SerializerMixin):
     def authenticate(self, password):
         """
 
-        :param password: 
+        :param password:
 
         """
         # check if inputted password matches user's password
@@ -63,8 +63,8 @@ class Client(db.Model, SerializerMixin):
     def validates_email(self, key, value):
         """
 
-        :param key: 
-        :param value: 
+        :param key:
+        :param value:
 
         """
         if "@" in value and "." in value:
@@ -99,7 +99,7 @@ class Provider(db.Model, SerializerMixin):
     def password_hash(self, password):
         """
 
-        :param password: 
+        :param password:
 
         """
         # checks password security
@@ -120,7 +120,7 @@ class Provider(db.Model, SerializerMixin):
     def authenticate(self, password):
         """
 
-        :param password: 
+        :param password:
 
         """
         # check if inputted password matches user's password
@@ -134,8 +134,8 @@ class Provider(db.Model, SerializerMixin):
     def validates_email(self, key, value):
         """
 
-        :param key: 
-        :param value: 
+        :param key:
+        :param value:
 
         """
         if "@" in value and "." in value:
@@ -147,8 +147,8 @@ class Provider(db.Model, SerializerMixin):
     def validates_provider_code(self, key, type):
         """
 
-        :param key: 
-        :param type: 
+        :param key:
+        :param type:
 
         """
         if type:
@@ -177,8 +177,8 @@ class ClientProvider(db.Model, SerializerMixin):
     def validates_clientFK(self, key, clientFK):
         """
 
-        :param key: 
-        :param clientFK: 
+        :param key:
+        :param clientFK:
 
         """
         if clientFK:
@@ -190,8 +190,8 @@ class ClientProvider(db.Model, SerializerMixin):
     def validates_providerFK(self, key, providerFK):
         """
 
-        :param key: 
-        :param providerFK: 
+        :param key:
+        :param providerFK:
 
         """
         if providerFK:
