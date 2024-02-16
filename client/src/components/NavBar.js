@@ -17,11 +17,11 @@ function NavBar( { type, users, setUsers } ) {
   return (
     <div className = "topnav">
         <p className="left-nav">Medi Memo</p>
-        <NavLink className="middle-nav" to="/home">Home</NavLink>
+        {/* <NavLink className="middle-nav" to={`${type}-portal`}>Home</NavLink> */}
 
         {/* These are listed from right to left because of how they render: */}
         <button className="right-nav" onClick={logout}>Logout</button>
-        <NavLink className="right-nav" to="/account">Account</NavLink>
+        {/* <NavLink className="right-nav" to="/account">Account</NavLink> */}
     </div>
   )
 }
