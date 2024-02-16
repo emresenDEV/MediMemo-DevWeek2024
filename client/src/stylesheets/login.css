@@ -132,3 +132,12 @@ button:hover, label:has(input[type="checkbox"]), input[type="checkbox"] {
   border: #A6BDD0 2px solid;
   border-radius: 6px;
 }
+
+#toggle-vis {
+  margin-left: 4px;
+  height: 15px;
+}
+
+#toggle-vis:hover {
+  cursor: pointer;
+}

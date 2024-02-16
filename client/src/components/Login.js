@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 
 function Login( { type, setUsers } ) {
   const history = useHistory()
+  const [showPassword, setShowPassword] = useState(false);
 
   function handleFocus(e) { //lets user click on any part of the div to type their information
     const input = e.target.querySelector("input")
@@ -15,7 +16,7 @@ function Login( { type, setUsers } ) {
     {
       email: "",
       password: "",
-      code: ""
+      provider_code: ""
     })
 
   function handleChange(e) { //adds any changes to the form to the temporary storage
@@ -45,7 +46,7 @@ function Login( { type, setUsers } ) {
         setFormData({ //clears the form
           email: "",
           password: "",
-          code: ""
+          provider_code: ""
         })
         setTimeout(() => {
           history.push(`/${type}-portal`)
@@ -56,7 +57,6 @@ function Login( { type, setUsers } ) {
       }
     }
     if (action === 'signup') {
-      // console.log("client clicked create account")
       const response = await fetch(`/${type}_signup`, {
         method: 'POST',
         headers: {
@@ -64,6 +64,7 @@ function Login( { type, setUsers } ) {
         },
         body: JSON.stringify(formData)
       });
+      // console.log(response)
       if (response.ok) {
         const user = await response.json();
         sessionStorage.setItem("type", type)
@@ -72,7 +73,7 @@ function Login( { type, setUsers } ) {
         setFormData({ //clears the form
           email: "",
           password: "",
-          code: ""
+          provider_code: ""
         })
         setTimeout(() => {
           history.push(`/${type}-portal`)
@@ -108,9 +109,9 @@ function Login( { type, setUsers } ) {
               </div>
               <div className="input-div" onClick={handleFocus}>
               <label >Password *
+                <img id="toggle-vis" src="assets/eye2.png" alt="toggle" onClick={() => setShowPassword(!showPassword)}/>
                 <br/>
-                {/* <input id="password" type="text" placeholder="Enter strong password" value={formData.password} onChange={handleChange}/> */}
-                <input id="password" type="text" value={formData.password} onChange={handleChange}/>
+                <input id="password" type={showPassword? "text" : "password"} value={formData.password} onChange={handleChange}/>
               </label>
               </div>
               <p id="password-rules">Password must be 8 characters with a capital letter, a number, and a symbol</p>
@@ -119,7 +120,7 @@ function Login( { type, setUsers } ) {
                 <label >New Provider Code
                   <br/>
                   {/* <input id="code" type="text" placeholder="Enter provider code" value={formData.password} onChange={handleChange}/> */}
-                  <input id="code" type="text" value={formData.code} onChange={handleChange}/>
+                  <input id="provider_code" type="text" value={formData.provider_code} onChange={handleChange}/>
                 </label>
                 </div>
               : <></>}
