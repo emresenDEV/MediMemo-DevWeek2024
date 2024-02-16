@@ -1,8 +1,9 @@
-from config import app, db, bcrypt
+import random
+
+from config import app, bcrypt, db
 from flask import Flask, make_response, request, session
 from models import Client, ClientProvider, Provider
 from sqlalchemy import UniqueConstraint
-import random
 
 
 @app.route("/")
