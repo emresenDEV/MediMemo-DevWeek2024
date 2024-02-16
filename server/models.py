@@ -43,7 +43,8 @@ class Client(db.Model, SerializerMixin):
         if all(char.isalnum() for char in password) == True:
             raise ValueError("Password must contain a symbol.")
         # generates hashed version of password
-        new_hashed_password = bcrypt.generate_password_hash(password.encode("utf-8"))
+        new_hashed_password = bcrypt.generate_password_hash(
+            password.encode("utf-8"))
         self._password_hash = new_hashed_password.decode("utf-8")
 
     def authenticate(self, password):
@@ -53,9 +54,8 @@ class Client(db.Model, SerializerMixin):
 
         """
         # check if inputted password matches user's password
-        check = bcrypt.check_password_hash(
-            self._password_hash, password.encode("utf-8")
-        )
+        check = bcrypt.check_password_hash(self._password_hash,
+                                           password.encode("utf-8"))
         print(check)
         return check
 
@@ -114,7 +114,8 @@ class Provider(db.Model, SerializerMixin):
         if all(char.isalnum() for char in password) == True:
             raise ValueError("Password must contain a symbol.")
         # generates hashed version of password
-        new_hashed_password = bcrypt.generate_password_hash(password.encode("utf-8"))
+        new_hashed_password = bcrypt.generate_password_hash(
+            password.encode("utf-8"))
         self._password_hash = new_hashed_password.decode("utf-8")
 
     def authenticate(self, password):
@@ -124,9 +125,8 @@ class Provider(db.Model, SerializerMixin):
 
         """
         # check if inputted password matches user's password
-        check = bcrypt.check_password_hash(
-            self._password_hash, password.encode("utf-8")
-        )
+        check = bcrypt.check_password_hash(self._password_hash,
+                                           password.encode("utf-8"))
         print(check)
         return check
 

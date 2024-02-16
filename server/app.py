@@ -41,22 +41,19 @@ def client_signup():
         if len(form_data["provider_code"]) == 9:
             # check if it's connected to a provider
             verified_code = Provider.query.filter(
-                Provider.provider_code == form_data["provider_code"]
-            ).first()
+                Provider.provider_code == form_data["provider_code"]).first()
             print(verified_code)
             if verified_code:
                 try:  # make a link between this new patient and the provider
                     new_client_provider = ClientProvider(
-                        clientFK=new_client.id, providerFK=verified_code.id
-                    )
+                        clientFK=new_client.id, providerFK=verified_code.id)
 
                     db.session.add(new_client_provider)
                     db.session.commit()
 
                 except:
                     response = make_response(
-                        {"ERROR": "Could not create ClientProviderJoin"}, 400
-                    )
+                        {"ERROR": "Could not create ClientProviderJoin"}, 400)
 
         response = make_response(new_client.to_dict(), 201)
     except:
@@ -72,15 +69,15 @@ def provider_signup():
     while True:
         unique_code = random.randint(100000000, 999999999)
         already_exists = Provider.query.filter(
-            Provider.provider_code == unique_code
-        ).first()
+            Provider.provider_code == unique_code).first()
         # print(already_exists)
         if not already_exists:
             break
     # print(unique_code)
 
     try:
-        new_provider = Provider(email=form_data["email"], provider_code=unique_code)
+        new_provider = Provider(email=form_data["email"],
+                                provider_code=unique_code)
         # generates hashed password
         new_provider.password_hash = form_data["password"]
 
@@ -93,8 +90,7 @@ def provider_signup():
         response = make_response(new_provider.to_dict(), 201)
     except:
         response = make_response(
-            {"ERROR": "Could not create provider. Please try again."}, 400
-        )
+            {"ERROR": "Could not create provider. Please try again."}, 400)
     return response
 
 
@@ -120,26 +116,25 @@ def client_login():
             if len(form_data["provider_code"]) == 4:
                 # check if it's connected to a provider
                 verified_code = Provider.query.filter(
-                    Provider.provider_code == form_data["provider_code"]
-                ).first()
+                    Provider.provider_code ==
+                    form_data["provider_code"]).first()
                 print(verified_code)
                 if verified_code:
                     try:  # make a link between this new patient and the provider
                         new_client_provider = ClientProvider(
-                            clientFK=client.id, providerFK=verified_code.id
-                        )
+                            clientFK=client.id, providerFK=verified_code.id)
 
                         db.session.add(new_client_provider)
                         db.session.commit()
 
                         response = make_response(
-                            [client.to_dict(), new_client_provider.to_dict()], 201
-                        )
+                            [client.to_dict(),
+                             new_client_provider.to_dict()], 201)
 
                     except:
                         response = make_response(
-                            {"ERROR": "Could not create ClientProviderJoin"}, 400
-                        )
+                            {"ERROR": "Could not create ClientProviderJoin"},
+                            400)
         else:
             response = make_response({"ERROR": "CLIENT CANNOT LOG IN"}, 400)
     else:
@@ -183,16 +178,14 @@ def clients():
     elif request.method == "POST":
         form_data = request.get_json()
         try:
-            new_client_obj = Client(
-                email=form_data["email"], _password_hash=form_data["_password_hash"]
-            )
+            new_client_obj = Client(email=form_data["email"],
+                                    _password_hash=form_data["_password_hash"])
             db.session.add(new_client_obj)
             db.session.commit()
             response = make_response(new_client_obj.to_dict(), 201)
         except ValueError:
             response = make_response(
-                {"errors": ["validation errors in POST to clients"]}, 400
-            )
+                {"errors": ["validation errors in POST to clients"]}, 400)
             return response
     return response
 
@@ -217,8 +210,8 @@ def clients_by_id(id):
                 response = make_response(client.to_dict(), 202)
             except ValueError:
                 response = make_response(
-                    {"errors": ["validation errors in PATCH to clients id"]}, 400
-                )
+                    {"errors": ["validation errors in PATCH to clients id"]},
+                    400)
                 return response
         elif request.method == "DELETE":
             db.session.delete(client)
@@ -252,8 +245,7 @@ def providers():
             response = make_response(new_provider_obj.to_dict(), 201)
         except ValueError:
             response = make_response(
-                {"errors": ["validation errors in POST to providers"]}, 400
-            )
+                {"errors": ["validation errors in POST to providers"]}, 400)
             return response
     return response
 
@@ -278,8 +270,8 @@ def providers_by_id(id):
                 response = make_response(provider.to_dict(), 202)
             except ValueError:
                 response = make_response(
-                    {"errors": ["validation errors in PATCH to providers id"]}, 400
-                )
+                    {"errors": ["validation errors in PATCH to providers id"]},
+                    400)
                 return response
         elif request.method == "DELETE":
             db.session.delete(provider)
@@ -306,15 +298,15 @@ def clients_providers():
         form_data = request.get_json()
         try:
             new_client_provider_obj = ClientProvider(
-                clientFK=form_data["clientFK"], providerFK=form_data["_password_hash"]
-            )
+                clientFK=form_data["clientFK"],
+                providerFK=form_data["_password_hash"])
             db.session.add(new_client_provider_obj)
             db.session.commit()
             response = make_response(new_client_provider_obj.to_dict(), 201)
         except ValueError:
             response = make_response(
-                {"errors": ["validation errors in POST to clients_providers"]}, 400
-            )
+                {"errors": ["validation errors in POST to clients_providers"]},
+                400)
             return response
     return response
 
@@ -326,7 +318,8 @@ def clients_providers_by_id(id):
     :param id:
 
     """
-    client_provider = ClientProvider.query.filter(ClientProvider.id == id).first()
+    client_provider = ClientProvider.query.filter(
+        ClientProvider.id == id).first()
     if client_provider:
         if request.method == "GET":
             response = make_response(client_provider.to_dict(), 200)
@@ -339,7 +332,10 @@ def clients_providers_by_id(id):
                 response = make_response(client_provider.to_dict(), 202)
             except ValueError:
                 response = make_response(
-                    {"errors": ["validation errors in PATCH to clients_providers id"]},
+                    {
+                        "errors":
+                        ["validation errors in PATCH to clients_providers id"]
+                    },
                     400,
                 )
                 return response
