@@ -7,7 +7,7 @@ from config import db, bcrypt
 class Client(db.Model, SerializerMixin):
   __tablename__ = 'clients'
   # serialize_rules = ('',)
-  serialize_rules = ('-appointments.client', '-providers.client')
+  serialize_rules = ('-appointments.client', '-providers.client', '-providers.clientFK', '-providers.id', '-providers.providerFK')
 
   id = db.Column(db.Integer, primary_key=True)
   email = db.Column(db.String, unique=True)
@@ -60,7 +60,7 @@ class Client(db.Model, SerializerMixin):
 
 class Provider(db.Model, SerializerMixin):
   __tablename__ = 'providers'
-  serialize_rules = ('-appointments.provider', '-clients.provider')
+  serialize_rules = ('-appointments.provider', '-clients.provider', '-clients.clientFK', '-clients.id', '-clients.providerFK')
 
   #ROWS
   id = db.Column(db.Integer, primary_key=True)
@@ -121,7 +121,7 @@ class Provider(db.Model, SerializerMixin):
 
 class ClientProvider(db.Model, SerializerMixin):
   __tablename__ = 'clients_providers'
-  serialize_rules = ('-provider.clients', '-provider.appointments', '-provider._password_hash', '-client.providers', '-client.appointments', '-client._password_hash', '-provider.provider_code')
+  serialize_rules = ('-provider.clients', '-provider.appointments', '-provider._password_hash', '-client.appointments', '-client._password_hash', '-client.providers')
 
   id = db.Column(db.Integer, primary_key=True)
   clientFK = db.Column(db.Integer, db.ForeignKey('clients.id'))

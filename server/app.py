@@ -29,6 +29,10 @@ def client_signup():
             verified_code = Provider.query.filter(Provider.provider_code == form_data['provider_code']).first() #check if it's connected to a provider
             print(verified_code)
             if verified_code:
+                already_connected = ClientProvider.query.\
+                    filter(ClientProvider.clientFK == new_client.id, ClientProvider.providerFK == verified_code.id).first()
+                print(already_connected)
+            if verified_code and not already_connected:
                 try: #make a link between this new patient and the provider
                     new_client_provider = ClientProvider(
                         clientFK = new_client.id,
@@ -101,18 +105,22 @@ def client_login():
     password = form_data['password']
     
     client = Client.query.filter_by(email = email.lower()).first()
+    # print(client)
     if client:
         # authenticate client
         is_authenticated = client.authenticate(password)
         if is_authenticated:
             # session['user_id'] = client.id
             # print(session)
-            response= make_response(client.to_dict(), 201)
-            #if new clients enter a provider code
-            if len(form_data['provider_code']) == 4: #if the inputed provider code is the expected length
-                verified_code = Provider.query.filter(Provider.provider_code == form_data['provider_code']).first() #check if it's connected to a provider
+            #if clients enter a provider code
+            if len(form_data['provider_code']) == 9: #if the inputed provider code is the expected length
+                verified_code = Provider.query.filter(Provider.provider_code == form_data['provider_code']).first() #check if it's a valid provider code
                 print(verified_code)
                 if verified_code:
+                    already_connected = ClientProvider.query.\
+                        filter(ClientProvider.clientFK == client.id, ClientProvider.providerFK == verified_code.id).first()
+                    print(already_connected)
+                if verified_code and not already_connected:
                     try: #make a link between this new patient and the provider
                         new_client_provider = ClientProvider(
                             clientFK = client.id,
@@ -129,6 +137,7 @@ def client_login():
                         {"ERROR": "Could not create ClientProviderJoin"},
                         400
                     )
+            response= make_response(client.to_dict(), 201)
         else:
             response= make_response({"ERROR" : "CLIENT CANNOT LOG IN"}, 400)
     else:
