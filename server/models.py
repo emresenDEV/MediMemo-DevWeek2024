@@ -6,13 +6,17 @@ from config import db, bcrypt
 
 class Client(db.Model, SerializerMixin):
   __tablename__ = 'clients'
-  # serialize_rules = ('','')
+  # serialize_rules = ('',)
+  serialize_rules = ('-appointments.client', '-providers.client')
 
   id = db.Column(db.Integer, primary_key=True)
   email = db.Column(db.String, unique=True)
   _password_hash = db.Column(db.String)
 
   #add relationships
+  appointments = db.relationship('Appointment', backref="client")
+  providers = db.relationship('ClientProvider', backref="client")
+  #providers
 
   # add password_hash property and authenticate instance methods here
   @property
@@ -56,14 +60,17 @@ class Client(db.Model, SerializerMixin):
 
 class Provider(db.Model, SerializerMixin):
   __tablename__ = 'providers'
-  # serialize_rules = ('','')
+  serialize_rules = ('-appointments.provider', '-clients.provider')
 
+  #ROWS
   id = db.Column(db.Integer, primary_key=True)
   email = db.Column(db.String, unique=True)
   _password_hash = db.Column(db.String)
   provider_code = db.Column(db.String, unique=True)
 
-  #add relationships
+  #RELATIONSHIPS
+  appointments = db.relationship('Appointment', backref='provider', cascade="all, delete-orphan")
+  clients = db.relationship('ClientProvider', backref='provider', cascade="all, delete-orphan")
 
   # add password_hash property and authenticate instance methods here
   @property
@@ -114,13 +121,11 @@ class Provider(db.Model, SerializerMixin):
 
 class ClientProvider(db.Model, SerializerMixin):
   __tablename__ = 'clients_providers'
-  # serialize_rules = ('','')
+  serialize_rules = ('-provider.clients', '-provider.appointments', '-provider._password_hash', '-client.providers', '-client.appointments', '-client._password_hash', '-provider.provider_code')
 
   id = db.Column(db.Integer, primary_key=True)
-  clientFK = db.Column(db.String)
-  providerFK = db.Column(db.String)
-
-  #add relationships
+  clientFK = db.Column(db.Integer, db.ForeignKey('clients.id'))
+  providerFK = db.Column(db.Integer, db.ForeignKey('providers.id'))
 
   @validates('clientFK')
   def validates_clientFK(self, key, clientFK):
@@ -138,3 +143,58 @@ class ClientProvider(db.Model, SerializerMixin):
     
   def __repr__(self):
     return f'<ClientsProviders {self.id}: client {self.clientFK}, provider {self.providerFK}>'
+  
+class Appointment(db.Model, SerializerMixin):
+  __tablename__ = 'appointments'
+  serialize_rules = ('-client.appointments', '-client._password_hash', '-client.providers', '-provider.appointments', '-provider._password_hash', '-provider.clients', '-provider.provider_code')
+
+  id = db.Column(db.Integer, primary_key=True)
+  clientFK = db.Column(db.Integer, db.ForeignKey('clients.id'))
+  providerFK = db.Column(db.Integer, db.ForeignKey('providers.id'))
+  title = db.Column(db.String)
+  startDate = db.Column(db.String)
+  endDate = db.Column(db.String)
+  rRule = db.Column(db.String)
+  exDate = db.Column(db.String)
+  location = db.Column(db.String)
+
+  #add relationships
+  
+
+  @validates('clientFK')
+  def validates_clientFK(self, key, clientFK):
+    if clientFK:
+      return clientFK
+    else:
+      raise ValueError('ClientsProviders must be given a clientFK.')
+    
+  @validates('providerFK')
+  def validates_providerFK(self, key, providerFK):
+    if providerFK:
+      return providerFK
+    else:
+      raise ValueError('ClientsProviders must be given a providerFK.')
+    
+  @validates('title')
+  def validates_title(self, key, title):
+    if title:
+      return title
+    else:
+      raise ValueError('ClientsProviders must be given a title.')
+    
+  @validates('startDate')
+  def validates_startDate(self, key, startDate):
+    if startDate:
+      return startDate
+    else:
+      raise ValueError('ClientsProviders must be given a startDate.')
+    
+  @validates('endDate')
+  def validates_endDate(self, key, endDate):
+    if endDate:
+      return endDate
+    else:
+      raise ValueError('ClientsProviders must be given a endDate.')
+  
+  def __repr__(self):
+    return f'<Appointment {self.id}: {self.title}, client {self.clientFK}, provider {self.providerFK}, start {self.startDate}, end {self.endDate}>'

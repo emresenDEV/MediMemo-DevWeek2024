@@ -1,6 +1,6 @@
 from config import app, db, bcrypt
 from flask import Flask, make_response, request, session
-from models import Client, ClientProvider, Provider
+from models import Client, ClientProvider, Provider, Appointment
 from sqlalchemy import UniqueConstraint
 import random
 
@@ -363,6 +363,82 @@ def clients_providers_by_id(id):
     else:
         response = make_response(
             {"error": "ClientProvider not found"},
+            404
+        )
+    return response
+
+# appointments ------------------------------------------------------------------------
+@app.route('/appointments', methods=['GET', 'POST'])
+def appointments():
+    if request.method == 'GET':
+        appointments = Appointment.query.all()
+        appointment_dict = [appointment.to_dict() for appointment in appointments]
+        response = make_response(
+            appointment_dict,
+            200
+        )
+    elif request.method == 'POST':
+        form_data = request.get_json()
+        try:
+            new_appointment_obj = Appointment(
+                clientFK = form_data['clientFK'],
+                providerFK = form_data['_password_hash'],
+                title = form_data['title'],
+                startDate = form_data['startDate'],
+                endDate = form_data['endDate'],
+                rRule = form_data['rRule'],
+                exDate = form_data['exDate'],
+                location = form_data['location']
+            )
+            db.session.add(new_appointment_obj)
+            db.session.commit()
+            response = make_response(
+                new_appointment_obj.to_dict(),
+                201
+            )
+        except ValueError:
+            response = make_response(
+                {"errors": ["validation errors in POST to appointments"]},
+                400
+            )
+            return response
+    return response
+
+@app.route('/appointment/<int:id>', methods=['GET', 'PATCH', 'DELETE'])
+def appointments_by_id(id):
+    appointment = Appointment.query.filter(Appointment.id == id).first()
+    if appointment:
+        if request.method == 'GET':
+            response = make_response(
+                appointment.to_dict(),
+                200
+            )
+        elif request.method == 'PATCH':
+            form_data = request.get_json()
+            try:
+                for attr in form_data:
+                    setattr(appointment, attr, form_data.get(attr))
+                db.session.commit()
+                response = make_response(
+                    appointment.to_dict(),
+                    202
+                )
+            except ValueError:
+                response = make_response(
+                    {"errors": ["validation errors in PATCH to clients_providers id"]},
+                    400
+                )
+                return response
+        elif request.method == 'DELETE':
+            db.session.delete(appointment)
+            db.session.commit()
+            response = make_response(
+                {},
+                204
+            )
+    else:
+        response = make_response(
+            {"error": "Appointment not found"},
             404
         )
     return response

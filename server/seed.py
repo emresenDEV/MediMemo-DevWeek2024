@@ -1,6 +1,6 @@
 import datetime
 from app import app
-from models import db, Client, Provider, ClientProvider
+from models import db, Client, Provider, ClientProvider, Appointment
 
 def create_clients():
   c1 = Client(
@@ -44,6 +44,24 @@ def create_clients_providers():
   clients_providers = [j1, j2, j3]
   return clients_providers
 
+def create_appointments():
+  a1 = Appointment(
+    clientFK = 1,
+    providerFK = 1,
+    title = "Well Check-Up",
+    startDate = "2024, 1, 16, 9, 30",
+    endDate = "2024, 1, 16, 11, 30"
+  )
+  a2 = Appointment(
+    clientFK = 1,
+    providerFK = 1,
+    title = "Follow Up",
+    startDate = "2024, 1, 17, 9, 30",
+    endDate = "2024, 1, 17, 11, 30"
+  )
+  appointments = [a1, a2]
+  return appointments
+
 
 if __name__ == '__main__':
 
@@ -52,6 +70,7 @@ if __name__ == '__main__':
     Client.query.delete()
     Provider.query.delete()
     ClientProvider.query.delete()
+    Appointment.query.delete()
 
     print("Seeding clients...")
     clients = create_clients()
@@ -66,6 +85,11 @@ if __name__ == '__main__':
     print("Seeding clients_providers...")
     clients_providers = create_clients_providers()
     db.session.add_all(clients_providers)
+    db.session.commit()
+
+    print("Seeding appointments...")
+    appointments = create_appointments()
+    db.session.add_all(appointments)
     db.session.commit()
 
     print("Done seeding!")
