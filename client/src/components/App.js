@@ -10,7 +10,7 @@ import { useUserContext } from '../UserContext';
 function App() {
     const { user, setUser } = useUserContext();
     const [ appointments, setAppointments ] = useState([])
-
+    const [isLoading, setIsLoading] = useState(true);
 
     function formatDate(date) {
         const pieces = date.split(",")
@@ -23,7 +23,6 @@ function App() {
             if (response.ok) {
                 response.json()
                 .then((u) => {
-                    // console.log(u)
                     const formattedAppointments = []
                     const old_appointments = u.appointments
                     old_appointments.forEach((ap) => {
@@ -32,17 +31,21 @@ function App() {
                         if (ap.endDate.length) {new_ap.endDate = formatDate(ap.endDate)}
                         formattedAppointments.push(new_ap)
                     })
-                    console.log(formattedAppointments)
                     const new_u = u
                     new_u.appointments = formattedAppointments
                     setUser(new_u)
                     setAppointments(formattedAppointments)
+                    setIsLoading(false)
                 })
             }
         }
         userData()
     }, [setUser])
 
+
+    if (isLoading) {
+        return <p>Loading...</p>
+    }
 
     if (sessionStorage.user_id) {
         return (

@@ -16,6 +16,7 @@ function ProviderPortal( { type, appointments, setAppointments } ) {
   //messages/inbox
   //pharmacy/other provider connections
 
+
   return(
   <>
     <div className="schedule">

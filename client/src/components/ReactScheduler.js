@@ -26,6 +26,8 @@ function ReactScheduler( {appointments, setAppointments} ) {
     console.log(user)
     console.log(appointments)
 
+    useEffect(() => {}, [appointments])
+
     return (
         <Paper>
             <Scheduler
