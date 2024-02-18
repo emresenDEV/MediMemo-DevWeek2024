@@ -45,7 +45,7 @@ class Client(db.Model, SerializerMixin):
   def authenticate(self, password):
     # check if inputted password matches user's password
     check = bcrypt.check_password_hash(self._password_hash, password.encode('utf-8'))
-    print(check)
+    # print(check)
     return check
 
   @validates('email')
@@ -99,7 +99,7 @@ class Provider(db.Model, SerializerMixin):
   def authenticate(self, password):
     # check if inputted password matches user's password
     check = bcrypt.check_password_hash(self._password_hash, password.encode('utf-8'))
-    print(check)
+    # print(check)
     return check
 
   @validates('email')
@@ -151,15 +151,12 @@ class Appointment(db.Model, SerializerMixin):
   id = db.Column(db.Integer, primary_key=True)
   clientFK = db.Column(db.Integer, db.ForeignKey('clients.id'))
   providerFK = db.Column(db.Integer, db.ForeignKey('providers.id'))
-  title = db.Column(db.String)
   startDate = db.Column(db.String)
   endDate = db.Column(db.String)
+  title = db.Column(db.String)
+  allDay = db.Column(db.String)
   rRule = db.Column(db.String)
   exDate = db.Column(db.String)
-  location = db.Column(db.String)
-
-  #add relationships
-  
 
   @validates('clientFK')
   def validates_clientFK(self, key, clientFK):
@@ -188,13 +185,15 @@ class Appointment(db.Model, SerializerMixin):
       return startDate
     else:
       raise ValueError('ClientsProviders must be given a startDate.')
-    
-  @validates('endDate')
-  def validates_endDate(self, key, endDate):
-    if endDate:
-      return endDate
-    else:
-      raise ValueError('ClientsProviders must be given a endDate.')
   
   def __repr__(self):
     return f'<Appointment {self.id}: {self.title}, client {self.clientFK}, provider {self.providerFK}, start {self.startDate}, end {self.endDate}>'
+  
+  def serialize(self):
+    return {"event_id": self.id,
+            "title": self.title,
+            "startDate": self.startDate,
+            "endDate": self.endDate,
+            "clientFK": self.clientFK,
+            "providerFK": self.providerFK
+            }

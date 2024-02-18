@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 
 import './stylesheets/index.css';
 import "./stylesheets/login.css";
-import "react-big-calendar/lib/css/react-big-calendar.css";
+import "./stylesheets/providerPortal.css";
 
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';

@@ -1,32 +1,12 @@
-import React from "react";
-// import MyCalendar from "./MyCalendar";
-import ReactScheduler from "./ReactScheduler";
+import React, { useEffect, useState } from "react";
+import ReactScheduler from "./ReactScheduler"; 
+import { useUserContext } from "../UserContext";
 
 
-function ProviderPortal() {
+function ProviderPortal( { type, appointments, setAppointments } ) {
+  const { user, setUser } = useUserContext();
   //*schedule (day/week/month options) -> sync with google calendar with patient data protected
-  const myEventsList = [
-    {
-      id: 0,
-      title: 'Watercolor Landscape',
-      startDate: new Date(2024, 1, 16, 9, 30), //Months start at zero (Jan = 0). Days and years are normal.
-      endDate: new Date(2024, 1, 16, 11, 30),
-      // ownerId: 1
-    }, {
-      id: 1,
-      title: 'Monthly Planning',
-      startDate: new Date(2024, 1, 17, 9, 30),
-      endDate: new Date(2024, 1, 17, 11, 30),
-      // ownerId: 1
-    }, {
-      id: 2,
-      title: 'Recruiting students',
-      startDate: new Date(2024, 1, 9, 12, 0),
-      endDate: new Date(2024, 1, 9, 13, 0),
-      // ownerId: 2
-    }
-  ]
-
+  // console.log(user)
 
   //*patient list
   //*patient interactions/surveys record
@@ -36,12 +16,12 @@ function ProviderPortal() {
   //messages/inbox
   //pharmacy/other provider connections
 
-
-
-
   return(
   <>
-    <ReactScheduler myEventsList={myEventsList}/>
+    <div className="schedule">
+      <ReactScheduler appointments={appointments} setAppointments={setAppointments}/>
+      {/* <ProviderSchedule appointments={appointments} setAppointments={setAppointments} users={users} /> */}
+    </div>
     {/* <MyCalendar myEventsList={myEventsList}/> */}
     {/* <p>provider portal</p> */}
   </>

@@ -1,9 +1,9 @@
-import React, { useState, PureComponent } from "react";
+import React, { useEffect, useState } from "react";
 import Paper from '@mui/material/Paper';
 import { 
     DayView,
     WeekView, 
-    MonthView, 
+    MonthView,
     Scheduler, 
     Appointments,
     AppointmentForm,
@@ -13,85 +13,68 @@ import {
     ViewSwitcher,
     DateNavigator,
     TodayButton,
-    DragDropProvider,
-    EditRecurrenceMenu,
+    // DragDropProvider,
+    // EditRecurrenceMenu,
     AllDayPanel
     } from '@devexpress/dx-react-scheduler-material-ui';
 import { ViewState, EditingState, IntegratedEditing } from '@devexpress/dx-react-scheduler';
+import { useUserContext } from "../UserContext";
 
-export default class ReactScheduler extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: props.myEventsList
-    };
-
-    this.commitChanges = this.commitChanges.bind(this);
-  }
-
-  commitChanges({ added, changed, deleted }) {
-    this.setState((state) => {
-      let { data } = state;
-      if (added) {
-        const startingAddedId = data.length > 0 ? data[data.length - 1].id + 1 : 0;
-        data = [...data, { id: startingAddedId, ...added }];
-      }
-      if (changed) {
-        data = data.map(appointment => (
-          changed[appointment.id] ? { ...appointment, ...changed[appointment.id] } : appointment));
-      }
-      if (deleted !== undefined) {
-        data = data.filter(appointment => appointment.id !== deleted);
-      }
-      return { data };
-    });
-  }
-
-  render() {
-    const { data } = this.state;
+function ReactScheduler( {appointments, setAppointments} ) {
+    const { user, setUser } = useUserContext();
+    
+    console.log(user)
+    console.log(appointments)
 
     return (
-      <Paper>
-        <Scheduler
-          data={data}
-          height={660}
-        >
-          <ViewState
-            defaultCurrentViewName="Week"
-          />
-          <EditingState
-            onCommitChanges={this.commitChanges}
-          />
-          <IntegratedEditing />
-          <DayView
-            startDayHour={7}
-            endDayHour={17}
-          />
-          <WeekView
-            startDayHour={7}
-            endDayHour={17}
-          />
-          <MonthView/>
-          <ConfirmationDialog />
-          <Appointments
-          />
-          <AppointmentTooltip
-            showOpenButton
-            showDeleteButton
-          />
-          <AppointmentForm />
-          <Toolbar/>
-          <DateNavigator/>
-          <TodayButton/>
-          <ViewSwitcher/>
-          <AllDayPanel/>
-          <DragDropProvider
-            // allowDrag={allowDrag}
-          />
-        </Scheduler>
-      </Paper>
+        <Paper>
+            <Scheduler
+            data={appointments}
+            height={660}
+            >
+            <ViewState
+                defaultCurrentViewName="Month"
+            />
+            {/* <EditingState
+                onCommitChanges={this.commitChanges}
+            /> */}
+            {/* <IntegratedEditing /> */}
+            <DayView
+                startDayHour={7}
+                endDayHour={17}
+            />
+            <WeekView
+                startDayHour={7}
+                endDayHour={17}
+            />
+            <MonthView/>
+            {/* <ConfirmationDialog /> */}
+            <Toolbar/>
+            <ViewSwitcher/>
+            <Appointments
+            />
+            {/* <AppointmentTooltip
+                showOpenButton
+                showDeleteButton
+            /> */}
+            {/* <AppointmentForm /> */}
+            
+            <DateNavigator/>
+            <TodayButton/>
+            <AllDayPanel/>
+            {/* <DragDropProvider
+                // allowDrag={allowDrag}
+            /> */}
+            </Scheduler>
+        </Paper>
     );
-  }
 }
 
-//appoint changes do not persist. i'll switch this to be handled by our database hopefully
+export default ReactScheduler
+
+// appoint changes do not persist. i'll switch this to be handled by our database hopefully
+
+
+//     "@devexpress/dx-react-core": "^4.0.8",
+//     "@devexpress/dx-react-scheduler": "^4.0.8",
+//     "@devexpress/dx-react-scheduler-material-ui": "^4.0.8",

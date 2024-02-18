@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useUserContext } from "../UserContext";
 
-function Login( { type, setUsers } ) {
+function Login( { type } ) {
+  const { user, setUser } = useUserContext()
   const history = useHistory()
   const [showPassword, setShowPassword] = useState(false);
 
@@ -39,10 +41,10 @@ function Login( { type, setUsers } ) {
         body: JSON.stringify(formData),
       });
       if (response.ok) {
-        const user = await response.json();
+        const u = await response.json();
         sessionStorage.setItem("type", type)
-        sessionStorage.setItem("user_id", user.id)
-        setUsers(user);
+        sessionStorage.setItem("user_id", u.id)
+        setUser(u);
         setFormData({ //clears the form
           email: "",
           password: "",
@@ -66,10 +68,10 @@ function Login( { type, setUsers } ) {
       });
       // console.log(response)
       if (response.ok) {
-        const user = await response.json();
+        const u = await response.json();
         sessionStorage.setItem("type", type)
-        sessionStorage.setItem("user_id", user.id)
-        setUsers(user);
+        sessionStorage.setItem("user_id", u.id)
+        setUser(u);
         setFormData({ //clears the form
           email: "",
           password: "",

@@ -1,17 +1,27 @@
 import React, { useState } from "react";
 import { NavLink } from 'react-router-dom';
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useUserContext } from "../UserContext";
 
-function NavBar( { type, users, setUsers } ) {
+function NavBar( { type } ) {
+  const {user, setUser} = useUserContext()
   const history = useHistory()
 
-  function logout(){
-    // console.log("this will log out the user and navigate to home page")
-    sessionStorage.clear()
-    setUsers()
-    setTimeout(() => {
-      history.push(`/${type}-login`)
-    }, 125)
+  function logout() {
+    fetch("/logout", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: {}
+    })
+    .then(() => {
+      sessionStorage.clear()
+      setUser()
+      setTimeout(() => {
+        history.push(`/${type}-login`)
+      }, 125)
+    })
   }
 
   return (

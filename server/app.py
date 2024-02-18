@@ -1,14 +1,39 @@
 from config import app, db, bcrypt
-from flask import Flask, make_response, request, session
+from flask import Flask, make_response, request, session, jsonify
 from models import Client, ClientProvider, Provider, Appointment
 from sqlalchemy import UniqueConstraint
 import random
+import calendar
 
 @app.route('/')
 def index():
     return ''
 
 # Non-RESTful Routing:
+@app.route('/provider_check_session', methods = ['GET'])
+def provider_check_session():
+    user_id = session['user_id']
+    # print(user_id)
+    if user_id:
+        user = Provider.query.filter(Provider.id == user_id).first()
+        return user.to_dict(), 200
+    return {"ERROR" : "PROVIDER CANNOT LOG IN"}, 401
+
+@app.route('/client_check_session', methods = ['GET'])
+def client_check_session():
+    user_id = session['user_id']
+    if user_id:
+        user = Client.query.filter(Client.id == user_id).first()
+        return user.to_dict(), 200
+    return {"ERROR" : "CLIENT CANNOT LOG IN"}, 401
+
+@app.route('/logout', methods = ['DELETE'])
+def logout():
+    session['user_id'] = None
+    if session['type']:
+        session['type'] = None
+    return {"ERROR" : "USER CANNOT LOG OUT"}, 204
+
 @app.route('/client_signup', methods = ['POST'])
 def client_signup():
     # allow for client to signup new account
@@ -23,6 +48,8 @@ def client_signup():
 
         db.session.add(new_client)
         db.session.commit()
+        session['user_id'] = new_client.id
+        session['type'] = "client"
 
         #if new clients enter a provider code
         if len(form_data['provider_code']) == 9: #if the inputed provider code is the expected length
@@ -41,7 +68,7 @@ def client_signup():
 
                     db.session.add(new_client_provider)
                     db.session.commit()
-
+                    
                 except:
                     response = make_response(
                     {"ERROR": "Could not create ClientProviderJoin"},
@@ -81,6 +108,8 @@ def provider_signup():
 
         db.session.add(new_provider)
         db.session.commit()
+        session['user_id'] = new_provider.id
+        session['type'] = "provider"
 
         # gives new provider an id and sets signed in provider to session
         # session['user_id'] = new_provider.id
@@ -110,7 +139,8 @@ def client_login():
         # authenticate client
         is_authenticated = client.authenticate(password)
         if is_authenticated:
-            # session['user_id'] = client.id
+            session['user_id'] = client.id
+            session['type'] = "client"
             # print(session)
             #if clients enter a provider code
             if len(form_data['provider_code']) == 9: #if the inputed provider code is the expected length
@@ -157,7 +187,9 @@ def provider_login():
         # authenticate provider
         is_authenticated = provider.authenticate(password)
         if is_authenticated:
-            # session['user_id'] = provider.id
+            session['user_id'] = provider.id
+            session['type'] = "provider"
+            print(session)
             response= make_response(provider.to_dict(), 201)
         else:
             response= make_response({"ERROR" : "PROVIDER CANNOT LOG IN"}, 400)
@@ -392,12 +424,12 @@ def appointments():
             new_appointment_obj = Appointment(
                 clientFK = form_data['clientFK'],
                 providerFK = form_data['_password_hash'],
-                title = form_data['title'],
                 startDate = form_data['startDate'],
                 endDate = form_data['endDate'],
+                title = form_data['title'],
+                allDay = form_data['allDay'],
                 rRule = form_data['rRule'],
                 exDate = form_data['exDate'],
-                location = form_data['location']
             )
             db.session.add(new_appointment_obj)
             db.session.commit()
@@ -451,6 +483,37 @@ def appointments_by_id(id):
             404
         )
     return response
+
+# @app.route('/appointment_subset/<start1>/<end1>', methods=['GET'])
+# def appointments_subset(start1, end1):
+#     def reformatDate(date):
+#         year = date[11:15]
+#         day = date[8:10]
+#         month = list(calendar.month_abbr).index(date[4:7])
+#         hour = date[16:18]
+#         minute = date[19:21]
+#         return (f'{str(year)}/{str(month)}/{str(day)}, {str(hour)}:{str(minute)}')
+#     start2 = reformatDate(start1)
+#     end2 = reformatDate(end1)
+
+#     if session.get('type') == "provider":
+#         appointments = Appointment.query.\
+#             filter(Appointment.providerFK == session.get('user_id'), Appointment.start >= start2, Appointment.end <= end2 ).all()
+#     if appointments:
+#         # def s(a):
+#         #     return a.serialize()
+#         # aps_serialized = map(s, appointments)
+#         # print(aps_serialized)
+#         response = make_response(
+#             jsonify([appointment.serialize() for appointment in appointments]),
+#             200
+#         )
+#     else:
+#         response = make_response(
+#                 {},
+#                 404
+#         )
+#     return response
 
 # run python app.py
 if __name__ == '__main__':

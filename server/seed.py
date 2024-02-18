@@ -49,15 +49,15 @@ def create_appointments():
     clientFK = 1,
     providerFK = 1,
     title = "Well Check-Up",
-    startDate = "2024, 1, 16, 9, 30",
-    endDate = "2024, 1, 16, 11, 30"
+    startDate = "2024, 01, 16, 09, 30",
+    endDate = "2024, 01, 16, 11, 30"
   )
   a2 = Appointment(
     clientFK = 1,
     providerFK = 1,
     title = "Follow Up",
-    startDate = "2024, 1, 17, 9, 30",
-    endDate = "2024, 1, 17, 11, 30"
+    startDate = "2024, 01, 17, 09, 30",
+    endDate = "2024, 01, 17, 11, 30"
   )
   appointments = [a1, a2]
   return appointments
