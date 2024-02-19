@@ -7,6 +7,48 @@
     gap: 10px;
     padding: 20px;
 }
+/* User's Profile Picture */
+.user-profile-pic {
+    display: block;
+    margin: 0 auto; /* Center the image */
+    width: 100px; /* Fixed width */
+    height: 100px; /* Fixed height to maintain aspect ratio */
+    border-radius: 50%; /* Makes the image round */
+    object-fit: cover; /* Ensures the image covers the area without losing its aspect ratio */
+}
+
+/* Spacing for Icons at left of User's information section (top, before divider) */
+.icon-spacing {
+    margin-right: 8px;
+}
+
+/* Divider-line between User's information and buttons */
+.divider-line {
+    border: 0;
+    height: 1px;
+    background: #E0E0E0; /* Line color */
+    margin: 20px 0; /* vertical space around the line */
+}
+
+/* Buttons styling, below divider */
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.icon-label-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.icon-container {
+    font-size: 24px; /* ICON SIZE -adjust as needed */
+    margin-bottom: 8px
+}
 
 .flexGrid {
     padding: 20px;
@@ -23,11 +65,11 @@
 }
 
 .gridItem {
-    background-color: #fff; /* Example background color for grid items */
+    background-color: #fff; /* Background color for grid items */
     padding: 20px;
     text-align: center;
     border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;; /* Example shadow for depth */
+    box-shadow: 0 2px 4px rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;; /* Shadow for depth */
 }
 
   /* Media query for larger screens */
