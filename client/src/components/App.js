@@ -4,59 +4,68 @@ import { Switch, Route } from 'react-router-dom';
 import NavBar from "./NavBar";
 import Login from "./Login";
 import PatientPortal from "./PatientPortal";
-import ProviderPortal from "./ProviderPortal";
+// import ProviderPortal from "./ProviderPortal";
 import { useUserContext } from '../UserContext';
+import ClientsList from "./ClientsList";
+import AddAClient from "./AddAClient";
+import EditSurvey from "./EditSurvey";
+import Inbox from "./Inbox";
+import ReactScheduler from "./ReactScheduler";
+import Test from "./Test";
+import DataEntry from "./DataEntry";
+
 
 function App() {
     const { user, setUser } = useUserContext();
-    const [ appointments, setAppointments ] = useState([])
-    const [isLoading, setIsLoading] = useState(true);
-
-    function formatDate(date) {
-        const pieces = date.split(",")
-        return new Date(parseInt(pieces[0]), parseInt(pieces[1]), parseInt(pieces[2]), parseInt(pieces[3]), parseInt(pieces[4]))
-    }
 
     useEffect(() => {
-        const userData = async () => {
-            const response = await fetch(`/${sessionStorage.type}_check_session`)
-            if (response.ok) {
-                response.json()
-                .then((u) => {
-                    const formattedAppointments = []
-                    const old_appointments = u.appointments
-                    old_appointments.forEach((ap) => {
-                        const new_ap = ap
-                        new_ap.startDate = formatDate(ap.startDate)
-                        if (ap.endDate.length) {new_ap.endDate = formatDate(ap.endDate)}
-                        formattedAppointments.push(new_ap)
-                    })
-                    const new_u = u
-                    new_u.appointments = formattedAppointments
-                    setUser(new_u)
-                    setAppointments(formattedAppointments)
-                    setIsLoading(false)
-                })
+        // auto-login
+        fetch(`/${sessionStorage.type}_check_session`).then((r) => {
+            if (r.ok) {
+                r.json().then((u) => {
+                setUser(u)
+                });
             }
-        }
-        userData()
-    }, [setUser])
+        });
+    }, [setUser]);
 
+    // console.log(user)
 
-    if (isLoading) {
-        return <p>Loading...</p>
-    }
-
-    if (sessionStorage.user_id) {
+    if (sessionStorage.type === "provider") {
         return (
             <div className="App">
                 <Switch>
                     <Route exact path = "/provider-login"> <Login type={"provider"} setUser={setUser}/> </Route>
-                    <Route exact path = "/client-login"> <Login type={"client"} setUser={setUser}/> </Route>
-                    <Route exact path = "/provider-portal"> 
+                    {/* <Route exact path = "/provider-portal"> 
                         <NavBar type={"provider"} user={user} setUser={setUser}/>
-                        <ProviderPortal type={"provider"} appointments={appointments} setAppointments={setAppointments}/>
+                    </Route> */}
+                    <Route exact path = "/provider-portal/schedule">
+                        <NavBar type={"provider"} user={user} setUser={setUser}/>
+                        {/* <ReactScheduler/>  */}
+                        <Test/>
                     </Route>
+                    <Route exact path = "/provider-portal/clients">
+                        <NavBar type={"provider"} user={user} setUser={setUser}/>
+                        <ClientsList/>
+                    </Route>
+                    <Route exact path = "/provider-portal/data-entry">
+                        <NavBar type={"provider"} user={user} setUser={setUser}/>
+                        <DataEntry/>
+                    </Route>
+                    <Route exact path = "/provider-portal/inbox">
+                        <NavBar type={"provider"} user={user} setUser={setUser}/>
+                        <Inbox/>
+                    </Route>
+                </Switch>
+            </div>
+        )
+    }
+
+    else if (sessionStorage.type === "client") {
+        return (
+            <div className="App">
+                <Switch>
+                    <Route exact path = "/client-login"> <Login type={"client"} setUser={setUser}/> </Route>
                     <Route exact path = "/client-portal"> 
                         <NavBar type={"client"} user={user} setUser={setUser}/>
                         <PatientPortal type={"client"} user={user} setUser={setUser}/> 

@@ -42,6 +42,7 @@ function Login( { type } ) {
       });
       if (response.ok) {
         const u = await response.json();
+        console.log(u)
         sessionStorage.setItem("type", type)
         sessionStorage.setItem("user_id", u.id)
         setUser(u);
@@ -51,7 +52,7 @@ function Login( { type } ) {
           provider_code: ""
         })
         setTimeout(() => {
-          history.push(`/${type}-portal`)
+          history.push(`/${type}-portal/schedule`)
         }, 125)
       } else {
         const error = await response.json();

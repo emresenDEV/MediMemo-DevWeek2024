@@ -2,13 +2,11 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   background-color: rgb(255, 255, 255);
   margin: 0;
-  /* color: black; */
   overflow: auto;
 }
 
 /* Nav Bar */
 .topnav {
-  
   min-width: 600px;
   overflow: hidden;
   margin: 0;
@@ -67,5 +65,9 @@ body {
   border-radius: 15px;
 }
 
-
+/* .home-button:hover {
+  cursor: pointer;
+  background-color: rgba(219, 219, 227, 0.468);
+  border-radius: 15px;
+} */
 

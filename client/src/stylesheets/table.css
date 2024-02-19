@@ -1,0 +1,10 @@
+table {
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid black;
+  text-align: left;
+}
+
+tr:nth-child(even){background-color: rgba(219, 219, 227, .8)}
