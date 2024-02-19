@@ -6,7 +6,8 @@ import './stylesheets/portals.css';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
-import IconButtons from './components/IconButtons';
+// import { IconButton } from '@material-ui/core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
