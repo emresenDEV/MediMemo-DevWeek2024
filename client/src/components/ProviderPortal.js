@@ -1,6 +1,5 @@
 import React from "react";
-import IconLabelButton from "./IconLabelButton";
-import { faMessage, faCalendarCheck, faStarOfLife, faFolderOpen, faCakeCandles, faHospitalUser, faCircleUser, faCalendarPlus } from '@fortawesome/free-solid-svg-icons';
+
 
 //__Contents__:
 // Picture (round, set default icon)
@@ -53,7 +52,7 @@ function ProviderPortal() {
       phoneNumber:'1-234-567-8901',
       photo: ""
   }
-  const defaultPhoto = <FontAwesomeIcon icon={faCircleUser} />
+  const defaultPhoto = ""
 
   return(
   // jsx here
@@ -67,17 +66,12 @@ function ProviderPortal() {
       <br/>
       <h1>{provider.firstName} {provider.lastName}, ",", {provider.licenseType}</h1>
       <br/>
-      <h3><FontAwesomeIcon icon={faCakeCandles} className="icon-spacing" /> {provider.practiceName}</h3>
+
       <br/>
       {/* LIGHT COLORED LINE TO DIVIDE TOP FROM BUTTONS BELOW */}
       <hr className="divider-line" />
   <div className="button-container">
-      <IconLabelButton icon={faCalendarCheck} label="Today's Appointments" onClick={() => { /* Handle click */ }} />
-      <IconLabelButton icon={faCalendarPlus} label="Scheduler" onClick={() => { /* Handle click */ }} />
-      <IconLabelButton icon={faStarOfLife} label="Patient List" onClick={() => { /* Handle click */ }} />
-      <IconLabelButton icon={faMessage} label="Patient Messages" onClick={() => { /* Handle click */ }} />
-      <IconLabelButton icon={faHospitalUser} label="Provider Messages" onClick={() => { /* Handle click */ }} />
-      <IconLabelButton icon={faFolderOpen} label="Patient Forms" onClick={() => { /* Handle click */ }} />
+
 
   </div>
   </div>

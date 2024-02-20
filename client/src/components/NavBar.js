@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { NavLink } from 'react-router-dom';
 
 function NavBar() {
-  const [user, setUser] = useState("")
+  const [user, setUser] = useState("asdf")
 
   function logout(){
     console.log("this will log out the user and navigate to home page")
@@ -12,7 +12,7 @@ function NavBar() {
   if (user) return (
     <div className = "topnav">
         <p className="left-nav">Medi Memo</p>
-        <NavLink className="middle-nav" to="/home">Home</NavLink>
+        <NavLink className="middle-nav" to="/patient-select-provider">Providers</NavLink>
 
         {/* These are listed from right to left because of how they render: */}
         <button className="right-nav" onClick={logout}>Logout</button>

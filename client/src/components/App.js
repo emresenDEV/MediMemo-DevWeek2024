@@ -1,15 +1,20 @@
 import React, { useState } from "react";
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, useHistory } from 'react-router-dom';
 // import components
 import NavBar from "./NavBar";
 import Login from "./Login";
-import PatientPortal from "./PatientSelectProvider";
+import PatientSelectProvider from "./PatientSelectProvider";
 import ProviderPortal from "./ProviderPortal";
+import PatientPortal from "./PatientPortal";
+import Account from "./Account";
 
 function App() {
     // javascript here
     // const [user, setUser] = useState("")
     const [user, setUser] = useState({type:"patient"})
+    const [providerOffice, setProviderOffice] = useState({providerOfficeName: 'Office Name', providerCity: 'City', providerState: 'State'})
+    const history = useHistory();
+    history.push('/patient-select-provider')
     // const [user, setUser] = useState({type:"provider"})
     // return jsx
 
@@ -31,10 +36,14 @@ function App() {
     // )
 
     if (user.type === 'patient') return (
-        <>
+        <div className="App">
             <NavBar/>
-            <PatientPortal/>
-        </>
+            <Switch>
+                <Route exact path="/patient-select-provider"> < PatientSelectProvider setProviderOffice={setProviderOffice}/> </Route>
+                <Route exact path="/patient-portal"> < PatientPortal providerOffice={providerOffice}/> </Route>
+                <Route exact path="/account"> < Account /></Route>
+            </Switch>
+        </div>
     )
     
     if (user.type === 'provider') return (

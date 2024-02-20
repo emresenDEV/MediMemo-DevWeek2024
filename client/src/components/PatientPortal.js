@@ -1,67 +1,96 @@
 import React from "react";
-import IconLabelButton from "./IconLabelButton";
-import { faHeartPulse, faViruses, faNotesMedical, faSyringe, faRectangleList, faMessage, faCalendarCheck, faPrescriptionBottleMedical, faUserDoctor, faGraduationCap, faFolderOpen, faCakeCandles, faEnvelope, faHouse, faCircleUser } from '@fortawesome/free-solid-svg-icons';
+
 //__Contents__:
 // Picture (round, set default icon)
 // User Birthday
 // User Email
 // --line break--
 // Vitals 
-// Allergies
+// Allergies < FUNCTIONAL
 // Problems
 // Immunizations
 // Results
-// Messages 
-// Appointments
-// Medications
+// Messages < FUNCTIONAL
+// Appointments < FUNCTIONAL
+// Medications < FUNCTIONAL 
 // Referrals
 // Education
-// Documents
+// Documents < FUNCTIONAL (ACCOUNT -rename)
 
-function PatientPortal() {
+function PatientPortal({providerOffice}) {
     const user = {
-        firstName:"John", 
-        lastName:"Doe", 
+        firstName:"Jennifer", 
+        lastName:"Smith", 
         birthday:"01/01/2000", 
-        email:"jdoe@gmail.com", 
-        address:"1234 Main St, City, State, 12345", 
+        email:"jsmith@gmail.com", 
+        address:"1234 Main St, Beaumont, TX, 77705", 
         gender:'female',
-        photo: ""
+        photo: 'https://images.pexels.com/photos/3812742/pexels-photo-3812742.jpeg'
+        // FIXME: find a generic pic to use as default
     }
-    const defaultPhoto = <FontAwesomeIcon icon={faCircleUser} />
-
+    
+    const defaultPhoto = <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+    console.log(providerOffice)
     return(
     // jsx here
     <div className='flexGrid'>
+        <div className='all'>
         {/* USER PROFILE PIC - ROUND. INSERT DEFAULT PIC */}
         <img 
             src={user.photo || defaultPhoto}
-            alt = {'${user.firstName} ${user.lastName}'}
-            className="user-profile-pic"
+            alt = {'{user.firstName} {user.lastName}'}
+            className="userProfilePic"
         />
         <br/>
-        <h1>{user.firstName} {user.lastName}, {user.gender}</h1>
+        <h1>{user.firstName} {user.lastName} </h1> {user.gender}
         <br/>
-        <h3><FontAwesomeIcon icon={faCakeCandles} className="icon-spacing" /> {user.birthday}</h3>
+        <div className='userInfo'>
+        {user.gender}
         <br/>
-        <h3><FontAwesomeIcon icon={faEnvelope} className="icon-spacing" /> {user.email}</h3>
+        {providerOffice.providerOfficeName} | {providerOffice.providerCity}, {providerOffice.providerState}
         <br/>
-        <h3><FontAwesomeIcon icon={faHouse} className="icon-spacing" /> {user.address}</h3>
+        {user.birthday}
         <br/>
+        {user.email}
+
+        <br/>
+        
         {/* LIGHT COLORED LINE TO DIVIDE TOP FROM BUTTONS BELOW */}
-        <hr className="divider-line" />
-    <div className="button-container">
-        <IconLabelButton icon={faHeartPulse} label="Vitals" onClick={() => { /* Handle click */ }} />
-        <IconLabelButton icon={faViruses} label="Allergies" onClick={() => { /* Handle click */ }} />
-        <IconLabelButton icon={faNotesMedical} label="Problems" onClick={() => { /* Handle click */ }} />
-        <IconLabelButton icon={faSyringe} label="Immunizations" onClick={() => { /* Handle click */ }} />
-        <IconLabelButton icon={faRectangleList} label="Results" onClick={() => { /* Handle click */ }} />
-        <IconLabelButton icon={faMessage} label="Messages" onClick={() => { /* Handle click */ }} />
-        <IconLabelButton icon={faCalendarCheck} label="Appointments" onClick={() => { /* Handle click */ }} />
-        <IconLabelButton icon={faPrescriptionBottleMedical} label="Medications" onClick={() => { /* Handle click */ }} />
-        <IconLabelButton icon={faUserDoctor} label="Referrals" onClick={() => { /* Handle click */ }} />
-        <IconLabelButton icon={faGraduationCap} label="Education" onClick={() => { /* Handle click */ }} />
-        <IconLabelButton icon={faFolderOpen} label="Documents" onClick={() => { /* Handle click */ }} />
+        </div>
+        <hr className="dividerLine" />
+        {/* FIXME: icons not populating for buttons */}
+    <div className="buttonContainer"> 
+        {[
+            { icon: "fa fa-heartbeat", label: "Vitals" },
+            { icon: "fa fa-eye", label: "Allergies" },
+            { icon: "fa fa-file-text", label: "Problems" },
+            { icon: "fa fa-medkit", label: "Immunizations" },
+            { icon: "fa fa-list", label: "Results" },
+            { icon: "fa fa-user-md", label: "Messages" },
+            { icon: "fa fa-calendar-check-o", label: "Appointments" },
+            { icon: "fa fa-heart-o", label: "Medications" },
+            { icon: "fa fa-paper-plane-o", label: "Referrals" },
+            { icon: "fa fa-graduation-cap", label: "Education" },
+            { icon: "fa fa-user-circle", label: "Account" }
+        ].map((button, index) => (
+            <button key = {index} className="styledButton">
+                <i className={'fa ${button.icon}'} aria-hidden="true"></i>
+                <span>{button.label}</span>
+            </button>
+        ))}
+
+        {/* <i class="fa fa-eye" id="iconButton" aria-hidden="true">Allergies</i>
+        <i class="fa fa-file-text" id="iconButton" aria-hidden="true">Problems</i>
+        <i class="fa fa-medkit" id="iconButton" aria-hidden="true">Immunizations</i>
+        <i class="fa fa-list" id="iconButton" aria-hidden="true">Results</i>
+        <i class="fa fa-user-md" id="iconButton" aria-hidden="true">Messages</i>
+        <i class="fa fa-calendar-check-o" id="iconButton" aria-hidden="true">Appointments</i>
+        <i class="fa fa-heart-o" id="iconButton" aria-hidden="true">Medications</i>
+        <i class="fa fa-paper-plane-o" id="iconButton" aria-hidden="true">Referrals</i>
+        <i class="fa fa-graduation-cap" id="iconButton" aria-hidden="true">Education</i>
+        <i class="fa fa-user-circle" id="iconButton" aria-hidden="true">Account</i> */}
+
+    </div>
     </div>
     </div>
     )

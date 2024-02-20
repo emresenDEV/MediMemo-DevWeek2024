@@ -1,3 +1,10 @@
+/* COLOR PALETTE
+#45b3e0	(69,179,224) Blue
+#87ceeb	(135,206,235) Light Blue
+#c9e9f6	(201,233,246) Lightest Blue
+#f3fafd	(243,250,253) Nearly White
+#ffffff	(255,255,255) White */
+
 body {
   font-family: Arial, Helvetica, sans-serif;
   background-color: rgb(255, 255, 255);
