@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useUserContext } from "../UserContext";
 
-function Login( { type } ) {
+function Login( { type, setAppointments } ) {
   const { user, setUser } = useUserContext()
   const history = useHistory()
   const [showPassword, setShowPassword] = useState(false);
@@ -28,6 +28,11 @@ function Login( { type } ) {
     });
   }
 
+  function formatDate(date) {
+    const pieces = date.split(",")
+    return new Date(parseInt(pieces[0]), parseInt(pieces[1]), parseInt(pieces[2]), parseInt(pieces[3]), parseInt(pieces[4]))
+}
+
   const handleSubmit = async (e) => {//submits form
     e.preventDefault()
     const action = document.activeElement.name //records which action is being taken
@@ -43,9 +48,21 @@ function Login( { type } ) {
       if (response.ok) {
         const u = await response.json();
         console.log(u)
+
         sessionStorage.setItem("type", type)
         sessionStorage.setItem("user_id", u.id)
         setUser(u);
+
+        const formattedAppointments = []
+        const old_appointments = u.appointments
+        old_appointments.forEach((ap) => {
+            const new_ap = ap
+            new_ap.startDate = formatDate(ap.startDate)
+            if (ap.endDate.length) {new_ap.endDate = formatDate(ap.endDate)}
+            formattedAppointments.push(new_ap)
+        })
+        setAppointments(formattedAppointments)
+
         setFormData({ //clears the form
           email: "",
           password: "",
@@ -73,6 +90,17 @@ function Login( { type } ) {
         sessionStorage.setItem("type", type)
         sessionStorage.setItem("user_id", u.id)
         setUser(u);
+
+        const formattedAppointments = []
+        const old_appointments = u.appointments
+        old_appointments.forEach((ap) => {
+            const new_ap = ap
+            new_ap.startDate = formatDate(ap.startDate)
+            if (ap.endDate.length) {new_ap.endDate = formatDate(ap.endDate)}
+            formattedAppointments.push(new_ap)
+        })
+        setAppointments(formattedAppointments)
+
         setFormData({ //clears the form
           email: "",
           password: "",

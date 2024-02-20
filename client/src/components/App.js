@@ -17,6 +17,14 @@ import DataEntry from "./DataEntry";
 
 function App() {
     const { user, setUser } = useUserContext();
+    const [appointments, setAppointments] = useState([])
+    const [selectedAppointment, setSelectedAppointment] = useState({})
+    const [selectedClient, setSelectedClient] = useState({})
+
+    function formatDate(date) {
+        const pieces = date.split(",")
+        return new Date(parseInt(pieces[0]), parseInt(pieces[1]), parseInt(pieces[2]), parseInt(pieces[3]), parseInt(pieces[4]))
+    }
 
     useEffect(() => {
         // auto-login
@@ -24,6 +32,15 @@ function App() {
             if (r.ok) {
                 r.json().then((u) => {
                 setUser(u)
+                const formattedAppointments = []
+                const old_appointments = u.appointments
+                old_appointments.forEach((ap) => {
+                const new_ap = ap
+                new_ap.startDate = formatDate(ap.startDate)
+                if (ap.endDate.length) {new_ap.endDate = formatDate(ap.endDate)}
+                formattedAppointments.push(new_ap)
+        })
+        setAppointments(formattedAppointments)
                 });
             }
         });
@@ -42,7 +59,7 @@ function App() {
                     <Route exact path = "/provider-portal/schedule">
                         <NavBar type={"provider"} user={user} setUser={setUser}/>
                         {/* <ReactScheduler/>  */}
-                        <Test/>
+                        <Test appointments={appointments} setAppointments={setAppointments} selectedAppointment={selectedAppointment} setSelectedAppointment={setSelectedAppointment} selectedClient={selectedClient} setSelectedClient={setSelectedClient}/>
                     </Route>
                     <Route exact path = "/provider-portal/clients">
                         <NavBar type={"provider"} user={user} setUser={setUser}/>
@@ -78,8 +95,8 @@ function App() {
     return (
         <div className="App">
             <Switch>
-                <Route exact path = {["/", "/provider-login"]}> <Login type={"provider"} setUser={setUser}/> </Route>
-                <Route exact path = "/client-login"> <Login type={"client"} setUser={setUser}/> </Route>
+                <Route exact path = {["/", "/provider-login"]}> <Login type={"provider"} setAppointments={setAppointments}/> </Route>
+                <Route exact path = "/client-login"> <Login type={"client"} setAppointments={setAppointments}/> </Route>
             </Switch>
         </div>
     )
