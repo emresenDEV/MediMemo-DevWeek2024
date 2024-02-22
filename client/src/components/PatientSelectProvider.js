@@ -36,12 +36,13 @@ function PatientSelectProvider({setProviderOffice}) {
         <br/>
       <h2>Welcome</h2>
       <h1>{user.firstName} {user.lastName}</h1>
+
       <hr className="dividerLine" />
-      <br/>
+
       {/* List ALL registered providers for this patient. MUST be at least ONE. User selects desired Provider's Office name to access their provider's patient portal */}
         <div className='gridContainer'>
           <br/>
-          <div className='gridItem' onClick={handleClick}>[{providerLocation.providerOfficeName} - {providerLocation.providerCity}, {providerLocation.providerState}]</div>
+          <div className='gridItem' onClick={handleClick}>{providerLocation.providerOfficeName} - {providerLocation.providerCity}, {providerLocation.providerState}</div>
         </div>
         </div>
     </div>

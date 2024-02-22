@@ -7,6 +7,17 @@ import PatientSelectProvider from "./PatientSelectProvider";
 import ProviderPortal from "./ProviderPortal";
 import PatientPortal from "./PatientPortal";
 import Account from "./Account";
+// import user side pages
+import Allergies from "./Allergies";
+import Appointments from "./Appointments";
+import Education from "./Education";
+import Immunizations from "./Immunizations";
+import Medications from "./Medications";
+import Messages from "./Messages";
+import Problems from "./Problems";
+import Referrals from "./Referrals";
+import Results from "./Results";
+import Vitals from "./Vitals";
 
 function App() {
     // javascript here

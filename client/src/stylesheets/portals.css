@@ -6,15 +6,18 @@
 #ffffff	(255,255,255) White */
 
 
-all {
+.all {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    display: flex;
+    /* box-sizing: border-box; */
+    display:grid;
     justify-content: center;
-    gap: 10px;
-    padding: 20px;
-}
+    /* gap: 10px; */
+    /* padding: 20px; */
+    text-align: center;
+    
+} 
+
 /* User's Profile Picture */
 .userProfilePic {
     display: block;
@@ -72,7 +75,7 @@ all {
 
 .styledButton i {
     font-size: 20px; /* Adjust the size as needed */
-    color: #000000; /* Change the color to make the icon visible */
+    color: #030969; /* Change the color to make the icon visible */
     margin-right: 10px; /* Space between icon and label */
     vertical-align: middle; /* Adjust alignment as needed */
 }
@@ -91,8 +94,9 @@ all {
 
 .gridContainer {
     display: grid;
-    gap: 20px; /* Space between grid items */
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Creates as many columns as can fit, each at least 150px wide */
+    gap: 10px; /* Space between grid items */
+    justify-content: center;
+    grid-template-columns: 1fr; /* Creates as many columns as can fit, each at least 150px wide */
 }
 
 .gridItem {
@@ -103,6 +107,7 @@ all {
     text-align: center;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;; /* Shadow for depth */
+    cursor: pointer
 }
 
   /* Media query for larger screens */

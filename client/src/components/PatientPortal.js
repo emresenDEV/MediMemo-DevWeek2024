@@ -1,5 +1,6 @@
 import React from "react";
 
+
 //__Contents__:
 // Picture (round, set default icon)
 // User Birthday
@@ -21,7 +22,7 @@ function PatientPortal({providerOffice}) {
     const user = {
         firstName:"Jennifer", 
         lastName:"Smith", 
-        birthday:"01/01/2000", 
+        birthday:"August 21, 2001", 
         email:"jsmith@gmail.com", 
         address:"1234 Main St, Beaumont, TX, 77705", 
         gender:'female',
@@ -42,8 +43,8 @@ function PatientPortal({providerOffice}) {
             className="userProfilePic"
         />
         <br/>
-        <h1>{user.firstName} {user.lastName} </h1> {user.gender}
-        <br/>
+        <h1>{user.firstName} {user.lastName} </h1>
+
         <div className='userInfo'>
         {user.gender}
         <br/>
@@ -74,21 +75,10 @@ function PatientPortal({providerOffice}) {
             { icon: "fa fa-user-circle", label: "Account" }
         ].map((button, index) => (
             <button key = {index} className="styledButton">
-                <i className={'fa ${button.icon}'} aria-hidden="true"></i>
+                <i className={`fa ${button.icon}`}></i>
                 <span>{button.label}</span>
             </button>
         ))}
-
-        {/* <i class="fa fa-eye" id="iconButton" aria-hidden="true">Allergies</i>
-        <i class="fa fa-file-text" id="iconButton" aria-hidden="true">Problems</i>
-        <i class="fa fa-medkit" id="iconButton" aria-hidden="true">Immunizations</i>
-        <i class="fa fa-list" id="iconButton" aria-hidden="true">Results</i>
-        <i class="fa fa-user-md" id="iconButton" aria-hidden="true">Messages</i>
-        <i class="fa fa-calendar-check-o" id="iconButton" aria-hidden="true">Appointments</i>
-        <i class="fa fa-heart-o" id="iconButton" aria-hidden="true">Medications</i>
-        <i class="fa fa-paper-plane-o" id="iconButton" aria-hidden="true">Referrals</i>
-        <i class="fa fa-graduation-cap" id="iconButton" aria-hidden="true">Education</i>
-        <i class="fa fa-user-circle" id="iconButton" aria-hidden="true">Account</i> */}
 
     </div>
     </div>
