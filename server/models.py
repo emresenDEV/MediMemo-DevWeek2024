@@ -6,13 +6,17 @@ from config import db, bcrypt
 
 class Client(db.Model, SerializerMixin):
   __tablename__ = 'clients'
-  # serialize_rules = ('','')
+  # serialize_rules = ('',)
+  serialize_rules = ('-appointments.client', '-providers.client', '-providers.clientFK', '-providers.id', '-providers.providerFK')
 
   id = db.Column(db.Integer, primary_key=True)
   email = db.Column(db.String, unique=True)
   _password_hash = db.Column(db.String)
 
   #add relationships
+  appointments = db.relationship('Appointment', backref="client")
+  providers = db.relationship('ClientProvider', backref="client")
+  #providers
 
   # add password_hash property and authenticate instance methods here
   @property
@@ -41,7 +45,7 @@ class Client(db.Model, SerializerMixin):
   def authenticate(self, password):
     # check if inputted password matches user's password
     check = bcrypt.check_password_hash(self._password_hash, password.encode('utf-8'))
-    print(check)
+    # print(check)
     return check
 
   @validates('email')
@@ -52,18 +56,21 @@ class Client(db.Model, SerializerMixin):
       raise ValueError('User must be given a email.')
     
   def __repr__(self):
-    return f'<User {self.id}: {self.email}>'
+    return f'<Client {self.id}: {self.email}>'
 
 class Provider(db.Model, SerializerMixin):
   __tablename__ = 'providers'
-  # serialize_rules = ('','')
+  serialize_rules = ('-appointments.provider', '-clients.provider', '-clients.clientFK', '-clients.id', '-clients.providerFK')
 
+  #ROWS
   id = db.Column(db.Integer, primary_key=True)
   email = db.Column(db.String, unique=True)
   _password_hash = db.Column(db.String)
   provider_code = db.Column(db.String, unique=True)
 
-  #add relationships
+  #RELATIONSHIPS
+  appointments = db.relationship('Appointment', backref='provider', cascade="all, delete-orphan")
+  clients = db.relationship('ClientProvider', backref='provider', cascade="all, delete-orphan")
 
   # add password_hash property and authenticate instance methods here
   @property
@@ -92,7 +99,7 @@ class Provider(db.Model, SerializerMixin):
   def authenticate(self, password):
     # check if inputted password matches user's password
     check = bcrypt.check_password_hash(self._password_hash, password.encode('utf-8'))
-    print(check)
+    # print(check)
     return check
 
   @validates('email')
@@ -110,17 +117,15 @@ class Provider(db.Model, SerializerMixin):
       raise ValueError('Provider must be given a provider code.')
     
   def __repr__(self):
-    return f'<User {self.id}: {self.email}, provider_code {self.provider_code} >'
+    return f'<Provider {self.id}: {self.email}, provider_code {self.provider_code} >'
 
 class ClientProvider(db.Model, SerializerMixin):
   __tablename__ = 'clients_providers'
-  # serialize_rules = ('','')
+  serialize_rules = ('-provider.clients', '-provider.appointments', '-provider._password_hash', '-client.appointments', '-client._password_hash', '-client.providers')
 
   id = db.Column(db.Integer, primary_key=True)
-  clientFK = db.Column(db.String)
-  providerFK = db.Column(db.String)
-
-  #add relationships
+  clientFK = db.Column(db.Integer, db.ForeignKey('clients.id'))
+  providerFK = db.Column(db.Integer, db.ForeignKey('providers.id'))
 
   @validates('clientFK')
   def validates_clientFK(self, key, clientFK):
@@ -138,3 +143,57 @@ class ClientProvider(db.Model, SerializerMixin):
     
   def __repr__(self):
     return f'<ClientsProviders {self.id}: client {self.clientFK}, provider {self.providerFK}>'
+  
+class Appointment(db.Model, SerializerMixin):
+  __tablename__ = 'appointments'
+  serialize_rules = ('-client.appointments', '-client._password_hash', '-client.providers', '-provider.appointments', '-provider._password_hash', '-provider.clients', '-provider.provider_code')
+
+  id = db.Column(db.Integer, primary_key=True)
+  clientFK = db.Column(db.Integer, db.ForeignKey('clients.id'))
+  providerFK = db.Column(db.Integer, db.ForeignKey('providers.id'))
+  startDate = db.Column(db.String)
+  endDate = db.Column(db.String)
+  title = db.Column(db.String)
+  allDay = db.Column(db.String)
+  rRule = db.Column(db.String)
+  exDate = db.Column(db.String)
+
+  @validates('clientFK')
+  def validates_clientFK(self, key, clientFK):
+    if clientFK:
+      return clientFK
+    else:
+      raise ValueError('ClientsProviders must be given a clientFK.')
+    
+  @validates('providerFK')
+  def validates_providerFK(self, key, providerFK):
+    if providerFK:
+      return providerFK
+    else:
+      raise ValueError('ClientsProviders must be given a providerFK.')
+    
+  @validates('title')
+  def validates_title(self, key, title):
+    if title:
+      return title
+    else:
+      raise ValueError('ClientsProviders must be given a title.')
+    
+  @validates('startDate')
+  def validates_startDate(self, key, startDate):
+    if startDate:
+      return startDate
+    else:
+      raise ValueError('ClientsProviders must be given a startDate.')
+  
+  def __repr__(self):
+    return f'<Appointment {self.id}: {self.title}, client {self.clientFK}, provider {self.providerFK}, start {self.startDate}, end {self.endDate}>'
+  
+  def serialize(self):
+    return {"event_id": self.id,
+            "title": self.title,
+            "startDate": self.startDate,
+            "endDate": self.endDate,
+            "clientFK": self.clientFK,
+            "providerFK": self.providerFK
+            }

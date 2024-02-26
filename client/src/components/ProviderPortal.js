@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import ReactScheduler from "./ReactScheduler"; 
+import { useUserContext } from "../UserContext";
+
 
 
 //__Contents__:
@@ -41,40 +44,27 @@ import React from "react";
 
 // Basic Level is set up but nested components are not yet created. <-- CURRENT PLACE IN ABOVE PLAN
 function ProviderPortal() {
-  const provider = {
-      firstName:"Jane", 
-      lastName:"Doey",
-      licenseType:"MD",
-      userName:"doeyjMD",
-      practiceName:"DoctorOffice", 
-      practiceAddress:"1234 Main St",
-      practiceCityStateZip: "SomeCity, FL, 12345", 
-      phoneNumber:'1-234-567-8901',
-      photo: ""
-  }
-  const defaultPhoto = ""
+  //*schedule (day/week/month options) -> sync with google calendar with patient data protected
+  
+
+  //*patient list
+  //*patient interactions/surveys record
+  //*patient data collection
+  //*invite new patient
+  //tailor new patient survey
+  //messages/inbox
+  //pharmacy/other provider connections
+
 
   return(
-  // jsx here
-  <div className='flexGrid'>
-      {/* USER PROVIDER PIC - ROUND. INSERT DEFAULT PIC */}
-      <img 
-          src={provider.photo || defaultPhoto}
-          alt = {'${provider.firstName} ${provider.lastName}'}
-          className="user-profile-pic"
-      />
-      <br/>
-      <h1>{provider.firstName} {provider.lastName}, ",", {provider.licenseType}</h1>
-      <br/>
-
-      <br/>
-      {/* LIGHT COLORED LINE TO DIVIDE TOP FROM BUTTONS BELOW */}
-      <hr className="divider-line" />
-  <div className="button-container">
-
-
-  </div>
-  </div>
+  <>
+    <div className="schedule">
+      {/* <ReactScheduler/> */}
+      {/* <ProviderSchedule appointments={appointments} setAppointments={setAppointments} users={users} /> */}
+    </div>
+    {/* <MyCalendar myEventsList={myEventsList}/> */}
+    {/* <p>provider portal</p> */}
+  </>
   )
 }
 
