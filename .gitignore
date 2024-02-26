@@ -4,6 +4,9 @@
 node_modules
 /.pnp
 .pnp.js
+.venv
+Pipfile.lock
+package-lock.json
 
 # testing
 /coverage
@@ -26,3 +29,4 @@ yarn-error.log*
 server/__pycache__
 server/instance
 server/migrations
+secret.py

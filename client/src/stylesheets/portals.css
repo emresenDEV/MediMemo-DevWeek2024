@@ -1,0 +1,119 @@
+/* COLOR PALETTE
+#45b3e0	(69,179,224) Blue
+#87ceeb	(135,206,235) Light Blue
+#c9e9f6	(201,233,246) Lightest Blue
+#f3fafd	(243,250,253) Nearly White
+#ffffff	(255,255,255) White */
+
+
+.all {
+    margin: 0;
+    padding: 0;
+    /* box-sizing: border-box; */
+    display:grid;
+    justify-content: center;
+    /* gap: 10px; */
+    /* padding: 20px; */
+    text-align: center;
+    
+} 
+
+/* User's Profile Picture */
+.userProfilePic {
+    display: block;
+    margin: 0 auto; /* Center the image */
+    width: 100px; /* Fixed width */
+    height: 100px; /* Fixed height to maintain aspect ratio */
+    border-radius: 50%; /* Makes the image round */
+    object-fit: cover; /* Ensures the image covers the area without losing its aspect ratio */
+}
+
+/* Spacing for Icons at left of User's information section (top, before divider) */
+/* .icon-spacing {
+    margin-right: 8px;
+} */
+
+.userInfo {
+    font-weight: bold;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Divider-line between User's information and buttons */
+.dividerLine {
+    border: 0;
+    height: 1px;
+    background: #E0E0E0; /* Line color */
+    margin: 20px 0; /* vertical space around the line */
+}
+
+/* Buttons styling, below divider */
+.fa {
+    font-family: 'FontAwesome'; /* Ensuring the font family is set */
+    /* font-size: larger; */
+}
+.buttonContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.styledButton {
+    display: inline-flex;
+    align-items: center;
+    background-color: #f3fafd; /* Light background color */
+    border: 1px solid #c9e9f6; /* Light border */
+    border-radius: 5px;
+    padding: 10px 15px; /* Spacing inside the button */
+    cursor: pointer;
+    font-size: 20px; /* Larger font size */
+}
+
+.styledButton i {
+    font-size: 20px; /* Adjust the size as needed */
+    color: #030969; /* Change the color to make the icon visible */
+    margin-right: 10px; /* Space between icon and label */
+    vertical-align: middle; /* Adjust alignment as needed */
+}
+
+.styledButton span {
+    text-align: left;
+}
+
+.flexGrid {
+    padding: 20px;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gridContainer {
+    display: grid;
+    gap: 10px; /* Space between grid items */
+    justify-content: center;
+    grid-template-columns: 1fr; /* Creates as many columns as can fit, each at least 150px wide */
+}
+
+.gridItem {
+    background-color: #f3fafd; /* Background color for grid items */
+    font-size: larger;
+    font-weight:bold;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;; /* Shadow for depth */
+    cursor: pointer
+}
+
+  /* Media query for larger screens */
+@media (min-width: 768px) {
+    .flexGrid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+        /* Adjusts the minimum column width for larger screens */
+}
+}

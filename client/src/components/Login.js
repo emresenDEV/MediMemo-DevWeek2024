@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useUserContext } from "../UserContext";
 
-function Login( { type, setUsers } ) {
+function Login( { type, setAppointments } ) {
+  const { user, setUser } = useUserContext()
   const history = useHistory()
   const [showPassword, setShowPassword] = useState(false);
 
@@ -26,6 +28,11 @@ function Login( { type, setUsers } ) {
     });
   }
 
+  function formatDate(date) {
+    const pieces = date.split(",")
+    return new Date(parseInt(pieces[0]), parseInt(pieces[1]), parseInt(pieces[2]), parseInt(pieces[3]), parseInt(pieces[4]))
+}
+
   const handleSubmit = async (e) => {//submits form
     e.preventDefault()
     const action = document.activeElement.name //records which action is being taken
@@ -39,17 +46,30 @@ function Login( { type, setUsers } ) {
         body: JSON.stringify(formData),
       });
       if (response.ok) {
-        const user = await response.json();
+        const u = await response.json();
+        console.log(u)
+
         sessionStorage.setItem("type", type)
-        sessionStorage.setItem("user_id", user.id)
-        setUsers(user);
+        sessionStorage.setItem("user_id", u.id)
+        setUser(u);
+
+        const formattedAppointments = []
+        const old_appointments = u.appointments
+        old_appointments.forEach((ap) => {
+            const new_ap = ap
+            new_ap.startDate = formatDate(ap.startDate)
+            if (ap.endDate.length) {new_ap.endDate = formatDate(ap.endDate)}
+            formattedAppointments.push(new_ap)
+        })
+        setAppointments(formattedAppointments)
+
         setFormData({ //clears the form
           email: "",
           password: "",
           provider_code: ""
         })
         setTimeout(() => {
-          history.push(`/${type}-portal`)
+          history.push(`/${type}-portal/schedule`)
         }, 125)
       } else {
         const error = await response.json();
@@ -66,10 +86,21 @@ function Login( { type, setUsers } ) {
       });
       // console.log(response)
       if (response.ok) {
-        const user = await response.json();
+        const u = await response.json();
         sessionStorage.setItem("type", type)
-        sessionStorage.setItem("user_id", user.id)
-        setUsers(user);
+        sessionStorage.setItem("user_id", u.id)
+        setUser(u);
+
+        const formattedAppointments = []
+        const old_appointments = u.appointments
+        old_appointments.forEach((ap) => {
+            const new_ap = ap
+            new_ap.startDate = formatDate(ap.startDate)
+            if (ap.endDate.length) {new_ap.endDate = formatDate(ap.endDate)}
+            formattedAppointments.push(new_ap)
+        })
+        setAppointments(formattedAppointments)
+
         setFormData({ //clears the form
           email: "",
           password: "",
