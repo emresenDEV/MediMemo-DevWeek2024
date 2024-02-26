@@ -7,7 +7,6 @@ node_modules
 .venv
 Pipfile.lock
 package-lock.json
-secret.py
 
 # testing
 /coverage
@@ -30,3 +29,4 @@ yarn-error.log*
 server/__pycache__
 server/instance
 server/migrations
+secret.py
