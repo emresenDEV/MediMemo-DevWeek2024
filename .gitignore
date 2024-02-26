@@ -4,6 +4,10 @@
 node_modules
 /.pnp
 .pnp.js
+.venv
+Pipfile.lock
+package-lock.json
+secret.py
 
 # testing
 /coverage
