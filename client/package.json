@@ -2,7 +2,7 @@
   "name": "medimemo",
   "version": "0.1.0",
   "private": true,
-
+  "proxy": "http://localhost:8000/",
   "dependencies": {
     "@devexpress/dx-react-core": "^4.0.8",
     "@devexpress/dx-react-scheduler": "^4.0.8",

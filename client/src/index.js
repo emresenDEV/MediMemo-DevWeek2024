@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom/client';
 import './stylesheets/index.css';
 import './stylesheets/login.css';
 import './stylesheets/portals.css';
-import 'font-awesome/css/font-awesome.min.css';
 import "./stylesheets/providerPortal.css";
 import "./stylesheets/table.css"
 

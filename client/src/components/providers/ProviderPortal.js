@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import ReactScheduler from "./ReactScheduler"; 
 import { useUserContext } from "../../UserContext";
 
 
@@ -59,8 +58,6 @@ function ProviderPortal() {
   return(
   <>
     <div className="schedule">
-      {/* <ReactScheduler/> */}
-      {/* <ProviderSchedule appointments={appointments} setAppointments={setAppointments} users={users} /> */}
     </div>
     {/* <MyCalendar myEventsList={myEventsList}/> */}
     {/* <p>provider portal</p> */}

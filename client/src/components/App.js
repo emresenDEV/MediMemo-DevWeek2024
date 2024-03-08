@@ -5,7 +5,6 @@ import { Switch, Route, useHistory } from 'react-router-dom';
 import NavBar from "./NavBar";
 import Login from "./Login";
 import PatientSelectProvider from "./patients/PatientSelectProvider";
-import ProviderPortal from "./providers/ProviderPortal";
 import PatientPortal from "./patients/PatientPortal";
 import Account from "./patients/Account";
 // import user side pages
@@ -20,13 +19,13 @@ import Referrals from "./patients/Referrals";
 import Results from "./patients/Results";
 import Vitals from "./patients/Vitals";
 // provider portal pages
+import AddAClient from "./providers/AddAClient";
 import ClientsList from "./providers/ClientsList";
-import AddAClient from "./AddAClient";
+import DataEntry from "./providers/DataEntry";
 import EditSurvey from "./providers/EditSurvey";
 import Inbox from "./providers/Inbox";
-import ReactScheduler from "./ReactScheduler";
 import Schedule from "./providers/Schedule";
-import DataEntry from "./providers/DataEntry";
+import ProviderPortal from "./providers/ProviderPortal";
 
     function App() {
         const { user, setUser } = useUserContext();
@@ -60,7 +59,7 @@ import DataEntry from "./providers/DataEntry";
         });
     }, [setUser]);
 
-    if (user.type === 'patient') return (
+    if (sessionStorage.type === 'patient') return (
         <div className="App">
             <NavBar/>
             <Switch>
@@ -71,12 +70,6 @@ import DataEntry from "./providers/DataEntry";
         </div>
     )
     
-    if (user.type === 'provider') return (
-        <>
-            <NavBar/>
-            <ProviderPortal/>
-        </>
-    )
     // console.log(user)
 
     if (sessionStorage.type === "provider") {
