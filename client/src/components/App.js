@@ -4,29 +4,29 @@ import { Switch, Route, useHistory } from 'react-router-dom';
 // import components
 import NavBar from "./NavBar";
 import Login from "./Login";
-import PatientSelectProvider from "./PatientSelectProvider";
-import ProviderPortal from "./ProviderPortal";
-import PatientPortal from "./PatientPortal";
-import Account from "./Account";
+import PatientSelectProvider from "./patients/PatientSelectProvider";
+import ProviderPortal from "./providers/ProviderPortal";
+import PatientPortal from "./patients/PatientPortal";
+import Account from "./patients/Account";
 // import user side pages
-import Allergies from "./Allergies";
-import Appointments from "./Appointments";
-import Education from "./Education";
-import Immunizations from "./Immunizations";
-import Medications from "./Medications";
-import Messages from "./Messages";
-import Problems from "./Problems";
-import Referrals from "./Referrals";
-import Results from "./Results";
-import Vitals from "./Vitals";
+import Allergies from "./patients/Allergies";
+import Appointments from "./patients/Appointments";
+import Education from "./patients/Education";
+import Immunizations from "./patients/Immunizations";
+import Medications from "./patients/Medications";
+import Messages from "./patients/Messages";
+import Problems from "./patients/Problems";
+import Referrals from "./patients/Referrals";
+import Results from "./patients/Results";
+import Vitals from "./patients/Vitals";
 // provider portal pages
-import ClientsList from "./ClientsList";
+import ClientsList from "./providers/ClientsList";
 import AddAClient from "./AddAClient";
-import EditSurvey from "./EditSurvey";
-import Inbox from "./Inbox";
+import EditSurvey from "./providers/EditSurvey";
+import Inbox from "./providers/Inbox";
 import ReactScheduler from "./ReactScheduler";
-import Test from "./Test";
-import DataEntry from "./DataEntry";
+import Schedule from "./providers/Schedule";
+import DataEntry from "./providers/DataEntry";
 
     function App() {
         const { user, setUser } = useUserContext();
@@ -90,7 +90,7 @@ import DataEntry from "./DataEntry";
                     <Route exact path = "/provider-portal/schedule">
                         <NavBar type={"provider"} user={user} setUser={setUser}/>
                         {/* <ReactScheduler/>  */}
-                        <Test appointments={appointments} setAppointments={setAppointments} selectedAppointment={selectedAppointment} setSelectedAppointment={setSelectedAppointment} selectedClient={selectedClient} setSelectedClient={setSelectedClient}/>
+                        <Schedule appointments={appointments} setAppointments={setAppointments} selectedAppointment={selectedAppointment} setSelectedAppointment={setSelectedAppointment} selectedClient={selectedClient} setSelectedClient={setSelectedClient}/>
                     </Route>
                     <Route exact path = "/provider-portal/clients">
                         <NavBar type={"provider"} user={user} setUser={setUser}/>

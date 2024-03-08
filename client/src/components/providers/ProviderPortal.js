@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ReactScheduler from "./ReactScheduler"; 
-import { useUserContext } from "../UserContext";
+import { useUserContext } from "../../UserContext";
 
 
 

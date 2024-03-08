@@ -1,5 +1,5 @@
 import React, { useState, useEffect }  from "react";
-import { useUserContext } from "../UserContext";
+import { useUserContext } from "../../UserContext";
 import ClientTr from "./ClientTr";
 
 function ClientsList() {
