@@ -51,6 +51,7 @@ function NavBar( { type } ) {
 
           {/* These are listed from right to left because of how they render: */}
           <button className="right-nav" onClick={logout}>Logout</button>
+          <NavLink className="right-nav" to={`/provider-portal/data-settings`}>Data Settings</NavLink>
           {/* <NavLink className="right-nav" to="/account">Account</NavLink> */}
       </div>
     )

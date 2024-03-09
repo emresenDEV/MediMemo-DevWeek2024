@@ -22,10 +22,13 @@ import Vitals from "./patients/Vitals";
 import AddAClient from "./providers/AddAClient";
 import ClientsList from "./providers/ClientsList";
 import DataEntry from "./providers/DataEntry";
+import DataSettings from "./providers/DataSettings";
 import EditSurvey from "./providers/EditSurvey";
 import Inbox from "./providers/Inbox";
+import InsuranceViewer from "./providers/InsuranceViewer";
 import Schedule from "./providers/Schedule";
 import ProviderPortal from "./providers/ProviderPortal";
+import CustomizeDataEntry from "./providers/CustomizeDataEntry";
 
     function App() {
         const { user, setUser } = useUserContext();
@@ -33,6 +36,8 @@ import ProviderPortal from "./providers/ProviderPortal";
         const [selectedAppointment, setSelectedAppointment] = useState({})
         const [selectedClient, setSelectedClient] = useState({})
         const [providerOffice, setProviderOffice] = useState({providerOfficeName: 'Office Name', providerCity: 'City', providerState: 'State'})
+        const [selectedInsurance, setSelectedInsurance] = useState({})
+        const [selectedDataProfile, setSelectedDataProfile] = useState({})
 
     function formatDate(date) {
         const pieces = date.split(",")
@@ -92,6 +97,18 @@ import ProviderPortal from "./providers/ProviderPortal";
                     <Route exact path = "/provider-portal/data-entry">
                         <NavBar type={"provider"} user={user} setUser={setUser}/>
                         <DataEntry/>
+                    </Route>
+                    <Route exact path = "/provider-portal/data-settings">
+                        <NavBar type={"provider"} user={user} setUser={setUser}/>
+                        <DataSettings setSelectedInsurance={setSelectedInsurance} setSelectedDataProfile={setSelectedDataProfile}/>
+                    </Route>
+                    <Route path = "/provider-portal/data-settings/insurance-viewer"> 
+                        <NavBar type={"provider"} user={user} setUser={setUser}/>
+                        <InsuranceViewer insurance={selectedInsurance}/>
+                    </Route>
+                    <Route path = "/provider-portal/data-settings/customize-data-entry"> 
+                        <NavBar type={"provider"} user={user} setUser={setUser}/>
+                        <CustomizeDataEntry dataProfile={selectedDataProfile}/>
                     </Route>
                     <Route exact path = "/provider-portal/inbox">
                         <NavBar type={"provider"} user={user} setUser={setUser}/>

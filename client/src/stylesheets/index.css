@@ -25,14 +25,13 @@ body {
 .topnav p {
   color: black;
   text-align: center;
-  font-size: 21px;
+  font-size: 18px;
   font-weight: bold;
   text-decoration: none;
-  width: 170px;
+  width: 100px;
   display: inline;
   margin: 0;
   padding: 12px;
-  padding-left: 0;
 }
 
 .left-nav {
@@ -54,9 +53,9 @@ body {
 .topnav a, button {
   /* color: #f2f2f2; */
   color: black;
-  padding: 14px 20px;
+  padding: 14px 14px;
   text-decoration: none;
-  font-size: 17px;
+  font-size: 13px;
   display: inline;
   font-weight: bold;
 }
