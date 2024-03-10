@@ -4,10 +4,22 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 function DataSettings() {
   const history = useHistory()
 
+  function newInsurance(){
+    setTimeout(()=>{
+      history.push("/provider-portal/data-settings/new-insurance")
+    }, 125)
+  }
+  
   function viewInsurance(e){
     const fetchId = e.target.className //used to fetch the settings for that insurance that you've laid out
     setTimeout(() => {
       history.push(`data-settings/insurance-viewer`)
+    }, 125)
+  }
+
+  function newDataForm(){
+    setTimeout(()=>{
+      history.push("/provider-portal/data-settings/new-data-form")
     }, 125)
   }
 
@@ -24,7 +36,7 @@ function DataSettings() {
         <h3>
           Manage Your Accepted Insurances
         </h3>
-        <button>New</button>
+        <button onClick={newInsurance}>New</button>
         <ul>
           <li><span className="1" onClick={viewInsurance}>Medicare</span></li>
           <li><span className="2" onClick={viewInsurance}>Blue Cross Blue Shield</span></li>
@@ -34,7 +46,7 @@ function DataSettings() {
         <h3>
           Customize Your Data Entry Forms
         </h3>
-        <button>New</button>
+        <button onClick={newDataForm}>New</button>
         <ul>
           <li><span className="1" onClick={viewCustomizer}>Informed Consent</span></li>
           <li><span className="2" onClick={viewCustomizer}>New Patient</span></li>

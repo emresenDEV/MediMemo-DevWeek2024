@@ -130,46 +130,51 @@ function Login( { type, setAppointments } ) {
               <a className={type==="client"?"active":"inactive"} href="/client-login">Patient</a>
             </div>
             {/* <form> */}
+
             <form onSubmit={handleSubmit}>
               <div className="input-div" onClick={handleFocus}>
-              <label>Email Address *
-                <br/>
-                {/* <input id="email" type="text" placeholder="Enter email" value={formData.email} onChange={handleChange}/> */}
-                <input id="email" type="text" value={formData.email} onChange={handleChange}/>
-              </label>
+                <label>Email Address *
+                  <br/>
+                  {/* <input id="email" type="text" placeholder="Enter email" value={formData.email} onChange={handleChange}/> */}
+                  <input id="email" type="text" value={formData.email} onChange={handleChange}/>
+                </label>
               </div>
+
               <div className="input-div" onClick={handleFocus}>
-              <label >Password *
-                <img id="toggle-vis" src="assets/eye2.png" alt="toggle" onClick={() => setShowPassword(!showPassword)}/>
-                <br/>
-                <input id="password" type={showPassword? "text" : "password"} value={formData.password} onChange={handleChange}/>
-              </label>
+                <label >Password *
+                  <img id="toggle-vis" src="assets/eye2.png" alt="toggle" onClick={() => setShowPassword(!showPassword)}/>
+                  <br/>
+                  <input id="password" type={showPassword? "text" : "password"} value={formData.password} onChange={handleChange}/>
+                </label>
               </div>
+
               <p id="password-rules">Password must be 8 characters with a capital letter, a number, and a symbol</p>
               {type === "client" ? 
                 <div className="input-div" onClick={handleFocus}>
-                <label >New Provider Code
-                  <br/>
-                  {/* <input id="code" type="text" placeholder="Enter provider code" value={formData.password} onChange={handleChange}/> */}
-                  <input id="provider_code" type="text" value={formData.provider_code} onChange={handleChange}/>
-                </label>
+                  <label >New Provider Code
+                    <br/>
+                    {/* <input id="code" type="text" placeholder="Enter provider code" value={formData.password} onChange={handleChange}/> */}
+                    <input id="provider_code" type="text" value={formData.provider_code} onChange={handleChange}/>
+                  </label>
                 </div>
               : <></>}
+
               <div className="remember-forgot">
-              <span id="span-remember">
-              <label>
-                <input id="remember-me"type="checkbox"/>
-                Remember me
-              </label>
-              </span>
-              <span id="span-forgot">
-              <a id="forgot-password" href="/recover-password">Forgot password?</a>
-              </span>
+                <span id="span-remember">
+                <label>
+                  <input id="remember-me"type="checkbox"/>
+                  Remember me
+                </label>
+                </span>
+                <span id="span-forgot">
+                <a id="forgot-password" href="/recover-password">Forgot password?</a>
+                </span>
               </div>
+
               <div>
-              <button id="login-button" type="submit" name="login">Log In</button>
-              {/* <button id="login-button" type="submit" onClick={handleLogin}>Login</button> */}
-              <button id="signup-button" type="submit" name="signup">Create Account</button>
+                <button id="login-button" type="submit" name="login">Log In</button>
+                {/* <button id="login-button" type="submit" onClick={handleLogin}>Login</button> */}
+                <button id="signup-button" type="submit" name="signup">Create Account</button>
               </div>
             </form>
           </div>
