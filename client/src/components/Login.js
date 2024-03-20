@@ -68,9 +68,14 @@ function Login( { type, setAppointments } ) {
           password: "",
           provider_code: ""
         })
-        setTimeout(() => {
-          history.push(`/${type}-portal/schedule`)
-        }, 125)
+        if (type === "provider") {
+          setTimeout(() => {
+            history.push(`/provider-portal/schedule`)
+          }, 125) }
+        else if (type === "client") {
+          setTimeout(() => {
+            history.push(`/patient-portal`) //client landing page
+          }, 125)}
       } else {
         const error = await response.json();
         console.error('Login failed:', error);

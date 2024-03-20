@@ -27,13 +27,15 @@ import Inbox from "./providers/Inbox";
 import Schedule from "./providers/Schedule";
 import ProviderPortal from "./providers/ProviderPortal";
 
-    function App() {
-        const { user, setUser } = useUserContext();
-        const [appointments, setAppointments] = useState([])
-        const [selectedAppointment, setSelectedAppointment] = useState({})
-        const [selectedClient, setSelectedClient] = useState({})
-        const [providerOffice, setProviderOffice] = useState({providerOfficeName: 'Office Name', providerCity: 'City', providerState: 'State'})
 
+function App() {
+    const { user, setUser } = useUserContext();
+    const [appointments, setAppointments] = useState([])
+    const [selectedAppointment, setSelectedAppointment] = useState({})
+    const [selectedClient, setSelectedClient] = useState({})
+    const [providerOffice, setProviderOffice] = useState({providerOfficeName: 'Office Name', providerCity: 'City', providerState: 'State'})
+
+    console.log(appointments)
     function formatDate(date) {
         const pieces = date.split(",")
         return new Date(parseInt(pieces[0]), parseInt(pieces[1]), parseInt(pieces[2]), parseInt(pieces[3]), parseInt(pieces[4]))
@@ -59,17 +61,6 @@ import ProviderPortal from "./providers/ProviderPortal";
         });
     }, [setUser]);
 
-    if (sessionStorage.type === 'patient') return (
-        <div className="App">
-            <NavBar/>
-            <Switch>
-                <Route exact path="/patient-select-provider"> < PatientSelectProvider setProviderOffice={setProviderOffice}/> </Route>
-                <Route exact path="/patient-portal"> < PatientPortal providerOffice={providerOffice}/> </Route>
-                <Route exact path="/account"> < Account /></Route>
-            </Switch>
-        </div>
-    )
-    
     // console.log(user)
 
     if (sessionStorage.type === "provider") {
@@ -105,12 +96,11 @@ import ProviderPortal from "./providers/ProviderPortal";
     else if (sessionStorage.type === "client") {
         return (
             <div className="App">
+                <NavBar/>
                 <Switch>
-                    <Route exact path = "/client-login"> <Login type={"client"} setUser={setUser}/> </Route>
-                    <Route exact path = "/client-portal"> 
-                        <NavBar type={"client"} user={user} setUser={setUser}/>
-                        <PatientPortal type={"client"} user={user} setUser={setUser}/> 
-                    </Route>
+                    <Route exact path="/patient-select-provider"> < PatientSelectProvider setProviderOffice={setProviderOffice}/> </Route>
+                    <Route exact path="/patient-portal"> < PatientPortal providerOffice={providerOffice}/> </Route>
+                    <Route exact path="/account"> < Account /></Route>
                 </Switch>
             </div>
         )
