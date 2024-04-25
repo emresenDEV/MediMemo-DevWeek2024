@@ -41,7 +41,7 @@ function NavBar( { type } ) {
     return(
       <div className = "topnav">
           {/* <p className="left-nav home-button" onClick={sendHome}>Medi Memo</p> */}
-          <p className="left-nav home-button" >Medi Memo</p>
+          <img className="left-nav logo" src="/assets/Conex_Medical_Logo.png" alt="logo"></img>
           
           {/* <NavLink className="left-nav" to={`/${type}-portal`}>Home</NavLink> */}
           <NavLink className="left-nav" to={`/provider-portal/schedule`}>Schedule</NavLink>
