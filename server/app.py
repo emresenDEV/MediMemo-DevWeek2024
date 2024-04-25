@@ -212,6 +212,7 @@ def clients():
         try:
             new_client_obj = Client(
                 email = form_data['email'],
+                name = "",
                 _password_hash = form_data['_password_hash']
             )
             db.session.add(new_client_obj)

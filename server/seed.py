@@ -4,11 +4,13 @@ from models import db, Client, Provider, ClientProvider, Appointment
 
 def create_clients():
   c1 = Client(
-    email = "tom@gmail.com"
+    email = "tom@gmail.com",
+    name = "Tom Jones"
     )
   c1.password_hash = "Abcdefgh1@"
   c2 = Client(
-    email = "jerry@gmail.com"
+    email = "jerry@gmail.com",
+    name = "Jerry Smith"
     )
   c2.password_hash = "1234567A&"
   clients = [c1, c2]
@@ -48,18 +50,28 @@ def create_appointments():
   a1 = Appointment(
     clientFK = 1,
     providerFK = 1,
-    title = "Well Check-Up",
-    startDate = "2024, 1, 18, 9, 30",
-    endDate = "2024, 1, 18, 11, 30"
+    title = "Sick Visit",
+    startDate = "2024, 3, 22, 8, 30", ## April 22, 2024, 8:30 AM
+    endDate = "2024, 3, 22, 9, 30"
   )
+
   a2 = Appointment(
     clientFK = 1,
     providerFK = 1,
     title = "Follow Up",
-    startDate = "2024, 1, 19, 9, 30",
-    endDate = "2024, 1, 19, 11, 30"
+    startDate = "2024, 3, 26, 8, 30",
+    endDate = "2024, 3, 26, 9, 30"
   )
-  appointments = [a1, a2]
+
+  a3 = Appointment(
+    clientFK = 2,
+    providerFK = 1,
+    title = "Well Visit",
+    startDate = "2024, 3, 25, 10, 0", ## April 22, 2024, 8:30 AM
+    endDate = "2024, 3, 25, 11, 0"
+  )
+
+  appointments = [a1, a2, a3]
   return appointments
 
 

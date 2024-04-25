@@ -11,6 +11,7 @@ class Client(db.Model, SerializerMixin):
 
   id = db.Column(db.Integer, primary_key=True)
   email = db.Column(db.String, unique=True)
+  name = db.Column(db.String)
   _password_hash = db.Column(db.String)
 
   #add relationships
