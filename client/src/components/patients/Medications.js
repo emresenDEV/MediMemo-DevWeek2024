@@ -6,6 +6,21 @@ import react from 'react';
 function Medications() {
     return (
         // JSX goes here
+        // Medication Name
+        // time between refills (ex: 30 days, 90 days, etc-ideally would prompt user to refill 7 days before running out)
+        // prescription length (num days or months prescribed)
+        // Dosage (### mg, for example)
+        // Frequency
+        // time of day
+        // Start Date
+        // End Date
+        // Reason
+        // Provider
+        // Pharmacy
+
+        // request refill button
+        // remove medication button
+
         <></>
     )
 }
