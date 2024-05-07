@@ -2,7 +2,7 @@ import React from "react";
 
 
 //__Contents__:
-// Picture (round, set default icon)
+// Picture (round, set default icon) consider using Cloudinary for image hosting/user uploading
 // User Birthday
 // User Email
 // --line break--
