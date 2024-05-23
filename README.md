@@ -1,29 +1,14 @@
 # MediMemo-DevWeek2024
 
- This application is a team submission for the DeveloperWeek2024 Hackathon. Our goal is to create a health app that emphasizes the ability to securely cache patient data offline and seamlessly update patient files once the connection is restored.
+ This application is currently in development. Our goal is to create a health app that prevents the loss of patient data during data entry due to network loss and seamlessly updates patient files once the connection is restored.
 
-## Running the Backend
+## Anticipated Features:
+- Scheduling Tool
+- Data Entry Tool
+- Patient History Viewer
+- Provider Locator
 
-### First Time
-
-    - must install the following in this order: pyenv, python (using pyenv), pip, and pipenv (using pip)
-    - terminal commands:
-        - python3 -m venv .venv
-        - pipenv install
-        - pipenv shell
-        - cd server && export FLASK_APP=app.py
-        - flask db init && flask db migrate -m "initial migration" && flask db upgrade
-        - python seed.py && python app.py
-
-### Future Times
-
-    - terminal commands:
-        - pipenv shell
-        - cd server
-        - python app.py
-
-
-## Running the Frontend
+## Running the Program
 
 ### First Time
 

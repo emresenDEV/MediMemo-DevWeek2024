@@ -7,25 +7,10 @@ import Login from "./Login";
 import PatientSelectProvider from "./patients/PatientSelectProvider";
 import PatientPortal from "./patients/PatientPortal";
 import Account from "./patients/Account";
-// import user side pages
-import Allergies from "./patients/Allergies";
-import Appointments from "./patients/Appointments";
-import Education from "./patients/Education";
-import Immunizations from "./patients/Immunizations";
-import Medications from "./patients/Medications";
-import Messages from "./patients/Messages";
-import Problems from "./patients/Problems";
-import Referrals from "./patients/Referrals";
-import Results from "./patients/Results";
-import Vitals from "./patients/Vitals";
 // provider portal pages
-import AddAClient from "./providers/AddAClient";
 import ClientsList from "./providers/ClientsList";
 import DataEntry from "./providers/DataEntry";
-import EditSurvey from "./providers/EditSurvey";
-import Inbox from "./providers/Inbox";
 import Schedule from "./providers/Schedule";
-import ProviderPortal from "./providers/ProviderPortal";
 
 
 function App() {
@@ -35,31 +20,38 @@ function App() {
     const [selectedClient, setSelectedClient] = useState({})
     const [providerOffice, setProviderOffice] = useState({providerOfficeName: 'Office Name', providerCity: 'City', providerState: 'State'})
 
-    console.log(appointments)
+    //Choose with type of user to simulate
+    sessionStorage.setItem("type", "provider")
+    // sessionStorage.setItem("type", "client")
+
+    setUser(null)
+
+
+    // console.log(appointments)
     function formatDate(date) {
         const pieces = date.split(",")
         return new Date(parseInt(pieces[0]), parseInt(pieces[1]), parseInt(pieces[2]), parseInt(pieces[3]), parseInt(pieces[4]))
     }
 
-    useEffect(() => {
-        // auto-login
-        fetch(`/${sessionStorage.type}_check_session`).then((r) => {
-            if (r.ok) {
-                r.json().then((u) => {
-                setUser(u)
-                const formattedAppointments = []
-                const old_appointments = u.appointments
-                old_appointments.forEach((ap) => {
-                const new_ap = ap
-                new_ap.startDate = formatDate(ap.startDate)
-                if (ap.endDate.length) {new_ap.endDate = formatDate(ap.endDate)}
-                formattedAppointments.push(new_ap)
-        })
-        setAppointments(formattedAppointments)
-                });
-            }
-        });
-    }, [setUser]);
+    // useEffect(() => {
+    //     // auto-login
+    //     fetch(`/${sessionStorage.type}_check_session`).then((r) => {
+    //         if (r.ok) {
+    //             r.json().then((u) => {
+    //             setUser(u)
+    //             const formattedAppointments = []
+    //             const old_appointments = u.appointments
+    //             old_appointments.forEach((ap) => {
+    //             const new_ap = ap
+    //             new_ap.startDate = formatDate(ap.startDate)
+    //             if (ap.endDate.length) {new_ap.endDate = formatDate(ap.endDate)}
+    //             formattedAppointments.push(new_ap)
+    //     })
+    //     setAppointments(formattedAppointments)
+    //             });
+    //         }
+    //     });
+    // }, [setUser]);
 
     // console.log(user)
 
@@ -67,11 +59,11 @@ function App() {
         return (
             <div className="App">
                 <Switch>
-                    <Route exact path = "/provider-login"> <Login type={"provider"} setUser={setUser}/> </Route>
+                    {/* <Route exact path = "/provider-login"> <Login type={"provider"} setUser={setUser}/> </Route> */}
                     {/* <Route exact path = "/provider-portal"> 
                         <NavBar type={"provider"} user={user} setUser={setUser}/>
                     </Route> */}
-                    <Route exact path = "/provider-portal/schedule">
+                    <Route exact path = "/">
                         <NavBar type={"provider"} user={user} setUser={setUser}/>
                         {/* <ReactScheduler/>  */}
                         <Schedule appointments={appointments} setAppointments={setAppointments} selectedAppointment={selectedAppointment} setSelectedAppointment={setSelectedAppointment} selectedClient={selectedClient} setSelectedClient={setSelectedClient}/>
@@ -84,10 +76,6 @@ function App() {
                         <NavBar type={"provider"} user={user} setUser={setUser}/>
                         <DataEntry/>
                     </Route>
-                    <Route exact path = "/provider-portal/inbox">
-                        <NavBar type={"provider"} user={user} setUser={setUser}/>
-                        <Inbox/>
-                    </Route>
                 </Switch>
             </div>
         )
@@ -98,7 +86,7 @@ function App() {
             <div className="App">
                 <NavBar/>
                 <Switch>
-                    <Route exact path="/patient-select-provider"> < PatientSelectProvider setProviderOffice={setProviderOffice}/> </Route>
+                    <Route exact path="/"> < PatientSelectProvider setProviderOffice={setProviderOffice}/> </Route>
                     <Route exact path="/patient-portal"> < PatientPortal providerOffice={providerOffice}/> </Route>
                     <Route exact path="/account"> < Account /></Route>
                 </Switch>
@@ -106,14 +94,14 @@ function App() {
         )
     }
 
-    return (
-        <div className="App">
-            <Switch>
-                <Route exact path = {["/", "/provider-login"]}> <Login type={"provider"} setAppointments={setAppointments}/> </Route>
-                <Route exact path = "/client-login"> <Login type={"client"} setAppointments={setAppointments}/> </Route>
-            </Switch>
-        </div>
-    )
+    // return (
+    //     <div className="App">
+    //         <Switch>
+    //             <Route exact path = {["/", "/provider-login"]}> <Login type={"provider"} setAppointments={setAppointments}/> </Route>
+    //             <Route exact path = "/client-login"> <Login type={"client"} setAppointments={setAppointments}/> </Route>
+    //         </Switch>
+    //     </div>
+    // )
 }
 
 export default App;
