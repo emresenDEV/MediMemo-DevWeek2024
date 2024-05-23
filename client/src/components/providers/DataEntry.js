@@ -1,13 +1,6 @@
 import React from "react";
 
 function DataEntry() {
-<<<<<<< HEAD
-    return (
-        <div>
-            <h1>Data Entry</h1>
-        </div>
-    )
-=======
   return(
   <div>
     <ul>
@@ -18,7 +11,6 @@ function DataEntry() {
     </ul>
   </div>
   )
->>>>>>> origin/providerSettings
 }
 
 export default DataEntry;

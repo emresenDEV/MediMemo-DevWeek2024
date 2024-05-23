@@ -11,11 +11,8 @@ import Account from "./patients/Account";
 import ClientsList from "./providers/ClientsList";
 import DataEntry from "./providers/DataEntry";
 import DataSettings from "./providers/DataSettings";
-import EditSurvey from "./providers/EditSurvey";
-import Inbox from "./providers/Inbox";
 import InsuranceViewer from "./providers/InsuranceViewer";
 import Schedule from "./providers/Schedule";
-import ProviderPortal from "./providers/ProviderPortal";
 import CustomizeDataForm from "./providers/CustomizeDataForm";
 import AddAnInsurance from "./providers/AddAnInsurance";
 import AddADataForm from "./providers/AddADataForm";
@@ -33,62 +30,62 @@ function App() {
     //Choose which type of user to simulate (leave the other commented out):
 
     //CLIENT:
-    sessionStorage.setItem("type", "client")
+    // sessionStorage.setItem("type", "client")
 
     //PROVIDER:
-    // sessionStorage.setItem("type", "provider")
-    // setUser({
-    //     "_password_hash": "$2b$12$vUssJqFlzpUEUCDsXQIZTu/nGlrQUJBRwlR4k6vPyixHKjo6eWIYu",
-    //     "appointments": [
-    //         {
-    //             "allDay": null,
-    //             "client": {
-    //                 "email": "tom@gmail.com",
-    //                 "id": 1
-    //             },
-    //             "clientFK": 1,
-    //             "endDate": "2024-02-18T16:30:00.000Z",
-    //             "exDate": null,
-    //             "id": 1,
-    //             "providerFK": 1,
-    //             "rRule": null,
-    //             "startDate": "2024-02-18T14:30:00.000Z",
-    //             "title": "Well Check-Up"
-    //         },
-    //         {
-    //             "allDay": null,
-    //             "client": {
-    //                 "email": "tom@gmail.com",
-    //                 "id": 1
-    //             },
-    //             "clientFK": 1,
-    //             "endDate": "2024-02-19T16:30:00.000Z",
-    //             "exDate": null,
-    //             "id": 2,
-    //             "providerFK": 1,
-    //             "rRule": null,
-    //             "startDate": "2024-02-19T14:30:00.000Z",
-    //             "title": "Follow Up"
-    //         }
-    //     ],
-    //     "clients": [
-    //         {
-    //             "client": {
-    //                 "email": "tom@gmail.com",
-    //                 "id": 1
-    //             }
-    //         },
-    //         {
-    //             "client": {
-    //                 "email": "jerry@gmail.com",
-    //                 "id": 2
-    //             }
-    //         }
-    //     ],
-    //     "email": "velma@gmail.com",
-    //     "id": 1,
-    //     "provider_code": "100000000"
-    // })
+    sessionStorage.setItem("type", "provider")
+    setUser({
+        "_password_hash": "$2b$12$vUssJqFlzpUEUCDsXQIZTu/nGlrQUJBRwlR4k6vPyixHKjo6eWIYu",
+        "appointments": [
+            {
+                "allDay": null,
+                "client": {
+                    "email": "tom@gmail.com",
+                    "id": 1
+                },
+                "clientFK": 1,
+                "endDate": "2024-02-18T16:30:00.000Z",
+                "exDate": null,
+                "id": 1,
+                "providerFK": 1,
+                "rRule": null,
+                "startDate": "2024-02-18T14:30:00.000Z",
+                "title": "Well Check-Up"
+            },
+            {
+                "allDay": null,
+                "client": {
+                    "email": "tom@gmail.com",
+                    "id": 1
+                },
+                "clientFK": 1,
+                "endDate": "2024-02-19T16:30:00.000Z",
+                "exDate": null,
+                "id": 2,
+                "providerFK": 1,
+                "rRule": null,
+                "startDate": "2024-02-19T14:30:00.000Z",
+                "title": "Follow Up"
+            }
+        ],
+        "clients": [
+            {
+                "client": {
+                    "email": "tom@gmail.com",
+                    "id": 1
+                }
+            },
+            {
+                "client": {
+                    "email": "jerry@gmail.com",
+                    "id": 2
+                }
+            }
+        ],
+        "email": "velma@gmail.com",
+        "id": 1,
+        "provider_code": "100000000"
+    })
     //-----------------------------------------------------------------------------------------------------------------
 
     // console.log(appointments)
