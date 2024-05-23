@@ -3,7 +3,7 @@ import { useUserContext } from '../UserContext';
 import { Switch, Route, useHistory } from 'react-router-dom';
 // import components
 import NavBar from "./NavBar";
-import Login from "./Login";
+// import Login from "./Login";
 import PatientSelectProvider from "./patients/PatientSelectProvider";
 import PatientPortal from "./patients/PatientPortal";
 import Account from "./patients/Account";
@@ -20,12 +20,67 @@ function App() {
     const [selectedClient, setSelectedClient] = useState({})
     const [providerOffice, setProviderOffice] = useState({providerOfficeName: 'Office Name', providerCity: 'City', providerState: 'State'})
 
-    //Choose with type of user to simulate
-    sessionStorage.setItem("type", "provider")
-    // sessionStorage.setItem("type", "client")
+    //-----------------------------------------------------------------------------------------------------------------
+    //Choose which type of user to simulate (leave the other commented out):
 
-    setUser(null)
+    //CLIENT:
+    sessionStorage.setItem("type", "client")
 
+    //PROVIDER:
+    // sessionStorage.setItem("type", "provider")
+    // setUser({
+    //     "_password_hash": "$2b$12$vUssJqFlzpUEUCDsXQIZTu/nGlrQUJBRwlR4k6vPyixHKjo6eWIYu",
+    //     "appointments": [
+    //         {
+    //             "allDay": null,
+    //             "client": {
+    //                 "email": "tom@gmail.com",
+    //                 "id": 1
+    //             },
+    //             "clientFK": 1,
+    //             "endDate": "2024-02-18T16:30:00.000Z",
+    //             "exDate": null,
+    //             "id": 1,
+    //             "providerFK": 1,
+    //             "rRule": null,
+    //             "startDate": "2024-02-18T14:30:00.000Z",
+    //             "title": "Well Check-Up"
+    //         },
+    //         {
+    //             "allDay": null,
+    //             "client": {
+    //                 "email": "tom@gmail.com",
+    //                 "id": 1
+    //             },
+    //             "clientFK": 1,
+    //             "endDate": "2024-02-19T16:30:00.000Z",
+    //             "exDate": null,
+    //             "id": 2,
+    //             "providerFK": 1,
+    //             "rRule": null,
+    //             "startDate": "2024-02-19T14:30:00.000Z",
+    //             "title": "Follow Up"
+    //         }
+    //     ],
+    //     "clients": [
+    //         {
+    //             "client": {
+    //                 "email": "tom@gmail.com",
+    //                 "id": 1
+    //             }
+    //         },
+    //         {
+    //             "client": {
+    //                 "email": "jerry@gmail.com",
+    //                 "id": 2
+    //             }
+    //         }
+    //     ],
+    //     "email": "velma@gmail.com",
+    //     "id": 1,
+    //     "provider_code": "100000000"
+    // })
+    //-----------------------------------------------------------------------------------------------------------------
 
     // console.log(appointments)
     function formatDate(date) {
