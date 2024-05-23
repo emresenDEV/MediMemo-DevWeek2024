@@ -28,6 +28,8 @@ function Test({ appointments, setAppointments, selectedAppointment, setSelectedA
         }, 125)
       }    
       // console.log(children[1].props.data) //appointment data
+      console.log(children[1].props.data.client) //client data
+      const client = children[1].props.data.client
       return (
         <Appointments.Appointment 
         {...restProps}
@@ -43,7 +45,7 @@ function Test({ appointments, setAppointments, selectedAppointment, setSelectedA
           <div className="VerticalAppointment-content css-gyiown">
             <div className="VerticalAppointment-container">
               <div style={{"width": "fit-content"}} className="VerticalAppointment-textContainer" onClick={(e) => viewClientData(children)}>
-                Client Name
+                {client.name}
               </div>
             </div>
           </div>

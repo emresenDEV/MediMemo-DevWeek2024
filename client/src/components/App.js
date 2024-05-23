@@ -10,8 +10,15 @@ import Account from "./patients/Account";
 // provider portal pages
 import ClientsList from "./providers/ClientsList";
 import DataEntry from "./providers/DataEntry";
+import DataSettings from "./providers/DataSettings";
+import EditSurvey from "./providers/EditSurvey";
+import Inbox from "./providers/Inbox";
+import InsuranceViewer from "./providers/InsuranceViewer";
 import Schedule from "./providers/Schedule";
-
+import ProviderPortal from "./providers/ProviderPortal";
+import CustomizeDataForm from "./providers/CustomizeDataForm";
+import AddAnInsurance from "./providers/AddAnInsurance";
+import AddADataForm from "./providers/AddADataForm";
 
 function App() {
     const { user, setUser } = useUserContext();
@@ -19,6 +26,8 @@ function App() {
     const [selectedAppointment, setSelectedAppointment] = useState({})
     const [selectedClient, setSelectedClient] = useState({})
     const [providerOffice, setProviderOffice] = useState({providerOfficeName: 'Office Name', providerCity: 'City', providerState: 'State'})
+    const [selectedInsurance, setSelectedInsurance] = useState({})
+    const [selectedDataProfile, setSelectedDataProfile] = useState({})
 
     //-----------------------------------------------------------------------------------------------------------------
     //Choose which type of user to simulate (leave the other commented out):
@@ -114,22 +123,32 @@ function App() {
         return (
             <div className="App">
                 <Switch>
-                    {/* <Route exact path = "/provider-login"> <Login type={"provider"} setUser={setUser}/> </Route> */}
-                    {/* <Route exact path = "/provider-portal"> 
-                        <NavBar type={"provider"} user={user} setUser={setUser}/>
+                    {/* <Route exact path = "/provider-login"> 
+                        <Login type={"provider"} setUser={setUser}/>
                     </Route> */}
-                    <Route exact path = "/">
-                        <NavBar type={"provider"} user={user} setUser={setUser}/>
-                        {/* <ReactScheduler/>  */}
+                    <Route exact path = "/"><NavBar type={"provider"} user={user} setUser={setUser}/>
                         <Schedule appointments={appointments} setAppointments={setAppointments} selectedAppointment={selectedAppointment} setSelectedAppointment={setSelectedAppointment} selectedClient={selectedClient} setSelectedClient={setSelectedClient}/>
                     </Route>
-                    <Route exact path = "/provider-portal/clients">
-                        <NavBar type={"provider"} user={user} setUser={setUser}/>
+                    <Route exact path = "/provider-portal/clients"><NavBar type={"provider"} user={user} setUser={setUser}/>
                         <ClientsList/>
                     </Route>
-                    <Route exact path = "/provider-portal/data-entry">
-                        <NavBar type={"provider"} user={user} setUser={setUser}/>
+                    <Route exact path = "/provider-portal/data-entry"><NavBar type={"provider"} user={user} setUser={setUser}/>
                         <DataEntry/>
+                    </Route>
+                    <Route exact path = "/provider-portal/data-settings"> <NavBar type={"provider"} user={user} setUser={setUser}/>
+                        <DataSettings setSelectedInsurance={setSelectedInsurance} setSelectedDataProfile={setSelectedDataProfile}/>
+                    </Route>
+                    <Route exact path = "/provider-portal/data-settings/new-insurance"> <NavBar type={"provider"} user={user} setUser={setUser}/>
+                        <AddAnInsurance/>
+                    </Route>
+                    <Route exact path = "/provider-portal/data-settings/insurance-viewer"> <NavBar type={"provider"} user={user} setUser={setUser}/>
+                        <InsuranceViewer insurance={selectedInsurance}/>
+                    </Route>
+                    <Route exact path = "/provider-portal/data-settings/new-data-form"> <NavBar type={"provider"} user={user} setUser={setUser}/>
+                        <AddADataForm/>
+                    </Route>
+                    <Route exact path = "/provider-portal/data-settings/customize-data-entry"> <NavBar type={"provider"} user={user} setUser={setUser}/>
+                        <CustomizeDataForm dataProfile={selectedDataProfile} setSelectedDataProfile={setSelectedDataProfile}/>
                     </Route>
                 </Switch>
             </div>
