@@ -1,0 +1,4 @@
+#data-settings div ul li span:hover {
+  text-decoration: underline solid;
+  cursor: pointer;
+}

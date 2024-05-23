@@ -6,6 +6,7 @@ import './stylesheets/login.css';
 import './stylesheets/portals.css';
 import "./stylesheets/providerPortal.css";
 import "./stylesheets/table.css"
+import "./stylesheets/dataSettings.css"
 
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
