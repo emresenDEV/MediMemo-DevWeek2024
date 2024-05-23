@@ -27,11 +27,11 @@ function NavBar( { type } ) {
   if (sessionStorage.type && sessionStorage.type === "client") {
     return(
       <div className = "topnav">
-        <p className="left-nav">Medi Memo</p>
-        <NavLink className="middle-nav" to="/patient-select-provider">Providers</NavLink>
+        <p className="left-nav home-button">Medi Memo</p>
+        <NavLink className="middle-nav" to="/">Providers</NavLink>
 
         {/* These are listed from right to left because of how they render: */}
-        <button className="right-nav" onClick={logout}>Logout</button>
+        {/* <button className="right-nav" onClick={logout}>Logout</button> */}
         {/* <NavLink className="right-nav" to="/account">Account</NavLink> */}
       </div>
     )
@@ -44,13 +44,12 @@ function NavBar( { type } ) {
           <p className="left-nav home-button" >Medi Memo</p>
           
           {/* <NavLink className="left-nav" to={`/${type}-portal`}>Home</NavLink> */}
-          <NavLink className="left-nav" to={`/provider-portal/schedule`}>Schedule</NavLink>
+          <NavLink className="left-nav" to={`/`}>Schedule</NavLink>
           <NavLink className="left-nav" to={`/provider-portal/clients`}>Clients</NavLink>
           <NavLink className="left-nav" to={`/provider-portal/data-entry`}>Data Entry</NavLink>
-          <NavLink className="left-nav" to={`/provider-portal/inbox`}>Inbox</NavLink>
 
           {/* These are listed from right to left because of how they render: */}
-          <button className="right-nav" onClick={logout}>Logout</button>
+          {/* <button className="right-nav" onClick={logout}>Logout</button> */}
           {/* <NavLink className="right-nav" to="/account">Account</NavLink> */}
       </div>
     )
@@ -63,7 +62,7 @@ function NavBar( { type } ) {
         {/* <NavLink className="middle-nav" to={`${type}-portal`}>Home</NavLink> */}
 
         {/* These are listed from right to left because of how they render: */}
-        <button className="right-nav" onClick={logout}>Logout</button>
+        {/* <button className="right-nav" onClick={logout}>Logout</button> */}
         {/* <NavLink className="right-nav" to="/account">Account</NavLink> */}
     </div>
   )
