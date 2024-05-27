@@ -24,9 +24,3 @@ package-lock.json
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-# database
-server/__pycache__
-server/instance
-server/migrations
-secret.py

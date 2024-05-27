@@ -21,5 +21,11 @@
     - terminal command:
         - cd client && npm start
 
+## Instructions for Using Pipenv
+
+- pip install pipenv (installs pipenv to your machine)
+- pipenv shell (creates a virtual environment for your project)
+- pipenv install (installs packages from our pipfile to your machine)
+
 
 ### Thank you!!
