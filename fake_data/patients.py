@@ -1,5 +1,7 @@
 from faker import Faker
 import csv
+from datetime import date
+
 fake = Faker()
 
 '''
@@ -47,7 +49,7 @@ def generate_patient_data():
   #determine sex and gender (transgender, nonbinary, intersex, cisgender)
 
   is_transgender = fake.boolean(chance_of_getting_true=1)
-  print('is_transgender:', is_transgender)
+  # print('is_transgender:', is_transgender)
   if is_transgender:
     sex = fake.random_element(elements=('FtM male', 'MtF female'))
     changed_name = fake.boolean(chance_of_getting_true=30)
@@ -55,7 +57,6 @@ def generate_patient_data():
     #if trans male
     if (sex == 'FtM male'):
       gender = 'male'
-      print(gender)
       pronouns = 'he/him'
       if changed_name:
         first_name = fake.first_name_male()
@@ -87,7 +88,7 @@ def generate_patient_data():
       pronouns = 'he/him'
 
   is_nonbinary = fake.boolean(chance_of_getting_true=2)
-  print('is_nonbinary:', is_nonbinary)
+  # print('is_nonbinary:', is_nonbinary)
   if is_nonbinary:
     gender = 'nonbinary'
     pronouns = fake.random_element(elements=('they/them', 'she/her', 'he/him', 'she/they', 'he/they', 'she/they/he', 'he/they/she', 'they/she/he', 'they/he/she', 'they/she', 'they/he', 'she/he'))
@@ -95,15 +96,14 @@ def generate_patient_data():
   is_intersex = fake.boolean(chance_of_getting_true=2)
   if is_intersex:
     sex = 'intersex' 
-  print('is_intersex:', is_intersex)
+  # print('is_intersex:', is_intersex)
 
-  print('sex:',sex)
-  print('gender:',gender)
-  print('first_name:', first_name)
-  if 'preferred_name' in locals():
-    print('preferred_name', preferred_name)
-  print('pronouns:', pronouns)
-
+  # print('sex:',sex)
+  # print('gender:',gender)
+  # print('first_name:', first_name)
+  # if 'preferred_name' in locals():
+  #   print('preferred_name', preferred_name)
+  # print('pronouns:', pronouns)
 
   last_name = fake.last_name()
   email = first_name[0].lower() + last_name.lower() + '@' + fake.domain_name()
@@ -112,30 +112,48 @@ def generate_patient_data():
       email = first_name[slice(digits)].lower() + last_name.lower() + '@' + fake.domain_name()
       digits += 1
   emails.append(email)
-  date_of_birth = fake.date()
+  date_of_birth = fake.date_of_birth(minimum_age=18, maximum_age=90)
+  days_in_year = 365.2425    
+  age = int((date.today() - date_of_birth).days / days_in_year)
+  # print("DOB:",date_of_birth)
+  # print("age:", age)
   religion = fake.random_element(elements=('Christian', 'Muslim', 'Jewish', 'Buddhist', 'Hindu', 'Atheist', 'Agnostic', 'Other'))
-
   eyesight = fake.random_element(elements=('20/20', '20/40', '20/60', '20/80', '20/100', 'blind'))
   hearing = fake.random_element(elements=('hearing', 'hard of hearing', 'deaf'))
   mobility = fake.random_element(elements=('able', 'wheelchair', 'walker', 'cane', 'crutches'))
-  is_pregnant = fake.boolean(chance_of_getting_true=5)
-  months_pregnant = fake.random_int(min=1, max=9)
-  if is_pregnant:
-    last_menstrual = fake.date_between(start_date='-'+months_pregnant+'m', end_date='today')
+  #if female anatomy
+  if sex == 'FtM male' or sex == 'female' or sex == 'intersex':
+    is_pregnant = fake.boolean(chance_of_getting_true=5)
+    # print("is_pregnant", is_pregnant)
+    if is_pregnant:
+      last_menstrual = fake.date_between(start_date='-280d', end_date='today')
+    else:
+      last_menstrual = fake.date_between(start_date='-28d', end_date='today')
+  #if male anatomy
   else:
-    last_menstrual = None
+    is_pregnant = False
+    # print("is_pregnant", is_pregnant)
   SSN = fake.random_int(min=100000000, max=999999999)
-  # height = fake.random_int(min=48, max=84)
-  # weight = fake.random_int(min=100, max=400)
-  # vaccines = fake.random_elements(elements=('MMR', 'Polio', 'Hepatitis A', 'Hepatitis B', 'Tetanus', 'Flu', 'COVID-19'), length=fake.random_int(min=0, max=7), unique=True)
+  height = fake.pyfloat(min_value=48, max_value=84, right_digits=2)
+  # print("height:", height)
+  weight = fake.pyfloat(min_value=110, max_value=270, right_digits=2)
+  # print("weight:", weight)
   
-
-
-  
+  last_reviewed_timestamp = fake.date_time_this_year(before_now=True, after_now=False, tzinfo=None)
 
 
   phone = fake.random_int(min=1000000000, max=9999999999)
+  blood_type = fake.random_element(elements=('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'))
 
+
+'''
+vaccines JSON
+allergies JSON
+surgeries JSON
+family_history JSON
+emergency_contacts JSON
+last_reviewer_staff_id UUID
+'''
 
 generate_patient_data()
 
