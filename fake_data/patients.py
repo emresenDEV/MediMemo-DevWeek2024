@@ -3,6 +3,7 @@ import csv
 from datetime import date
 from dateutil import tz
 import json
+import requests
 
 fake = Faker()
 
@@ -17,7 +18,7 @@ last_name VARCHAR
 name_suffix VARCHAR
 
 date_of_birth DATE
-sex_at_birth VARCHAR
+sex VARCHAR
 gender VARCHAR
 pronouns VARCHAR
 
@@ -26,24 +27,37 @@ eyesight VARCHAR
 hearing VARCHAR
 mobility VARCHAR
 is_pregnant BOOLEAN
+
 last_menstrual DATE
 SSN INTEGER
 height NUMERIC
 weight NUMERIC
-vaccines JSON
-allergies JSON
-surgeries JSON
-family_history JSON
+vaccines JSON object (vaccine: date)
+
+allergies JSON object (allergen: [reactions])
+surgeries JSON object (surgery: date)
+family_history JSON object (condition: [relatives])
 last_reviewed_timestamp TIMESTAMP
-emergency_contacts JSON
-last_reviewer_staff_id UUID
+emergency_contacts JSON object (name: [phones])
+
+last_reviewer_staff_id UUID (temporarily blank)
 preferred_name VARCHAR
 blood_type VARCHAR
 phone VARCHAR
+medical_history JSON array [conditions]
 
+pharmacy_name
+pharmacy_address
+pharmacy_phone
 '''
 
 emails = []
+possible_allergens = ['Peanuts', 'Penicillin', 'NSAIDs', 'Iodinated contrast', 'Gadolinium contrast', 'Ester local anesthetics', 'Latex', 'Soy', 'Dairy', 'Eggs', 'Shellfish', 'Gluten', 'Fish', 'Tree nuts', 'Wheat', 'Sesame', 'Sulfites', 'Corn', 'Kiwi', 'Mango', 'Pineapple']
+possible_reactions = ['Anaphylaxis', 'Hives', 'Rash', 'Itching', 'Swelling', 'Coughing', 'Wheezing', 'Shortness of breath', 'Nausea', 'Vomiting', 'Diarrhea', 'Abdominal pain', 'Dizziness', 'Fainting', 'Low blood pressure', 'Fast heart rate', 'Confusion', 'Loss of consciousness']
+possible_vaccines = ['COVID-19', 'Influenza', 'Hepatitis A', 'Hepatitis B', 'HPV', 'Measles, Mumps, Rubella', 'Pneumococcal', 'Polio', 'Tetanus, Diphtheria, Pertussis', 'Varicella', 'Zoster']
+possible_surgeries = ['Appendectomy', 'Cholecystectomy', 'Hernia repair', 'Mastectomy', 'Tonsillectomy', 'Adenoidectomy', 'Cataract surgery', 'Coronary artery bypass', 'Heart valve repair', 'Hip replacement', 'Knee replacement', 'Spinal fusion', 'Laminectomy', 'Lobectomy', 'Lung transplant', 'Wisdom Teeth Removal', 'ACL repair', 'Rotator cuff repair']
+possible_conditions = ['Heart disease', 'Stroke', 'Diabetes', 'Cancer', 'High blood pressure', 'High cholesterol', 'Asthma', 'Arthritis', 'Osteoporosis', 'Alzheimer\'s', 'Dementia', 'Depression', 'Anxiety', 'Bipolar disorder', 'Schizophrenia', 'ADHD', 'Autism', 'Epilepsy', 'Migraines', 'Thyroid disease', 'Kidney disease', 'Liver disease', 'Lung disease', 'COPD', 'Crohn\'s disease', 'Ulcerative colitis', 'Celiac disease', 'Multiple sclerosis', 'Lupus', 'Rheumatoid arthritis', 'Psoriasis', 'HIV/AIDS', 'Hepatitis', 'Tuberculosis']
+medical_conditions = ['Asthma', 'Diabetes', 'High blood pressure', 'High cholesterol', 'Heart disease', 'Stroke', 'Cancer', 'Arthritis', 'Osteoporosis', 'Alzheimer\'s', 'Dementia', 'Depression', 'Anxiety', 'Bipolar disorder', 'Schizophrenia', 'ADHD', 'Autism', 'Epilepsy', 'Migraines', 'Thyroid disease', 'Kidney disease', 'Liver disease', 'Lung disease', 'COPD', 'Crohn\'s disease', 'Ulcerative colitis', 'Celiac disease', 'Multiple sclerosis', 'Lupus', 'Rheumatoid arthritis', 'Psoriasis', 'HIV/AIDS', 'Hepatitis', 'Tuberculosis']
 
 def generate_patient_data():
   password = fake.password()
@@ -65,6 +79,7 @@ def generate_patient_data():
   # reviewer_staff_id = fake.uuid4()
 
   #determine sex and gender (transgender, nonbinary, intersex, cisgender)
+  preferred_name = 'NULL' #reset later if needed
   is_transgender = fake.boolean(chance_of_getting_true=1)
   if is_transgender:
     sex = fake.random_element(elements=('FtM male', 'MtF female'))
@@ -120,6 +135,7 @@ def generate_patient_data():
   #if male anatomy
   else:
     is_pregnant = False
+    last_menstrual = 'NULL'
 
   last_name = fake.last_name()
   email = first_name[0].lower() + last_name.lower() + '@' + fake.domain_name()
@@ -130,8 +146,6 @@ def generate_patient_data():
   emails.append(email)
 
   #allergies JSON object (allergen: [reactions])
-  possible_allergens = ['Peanuts', 'Penicillin', 'NSAIDs', 'Iodinated contrast', 'Gadolinium contrast', 'Ester local anesthetics', 'Latex', 'Soy', 'Dairy', 'Eggs', 'Shellfish', 'Gluten', 'Fish', 'Tree nuts', 'Wheat', 'Sesame', 'Sulfites', 'Corn', 'Kiwi', 'Mango', 'Pineapple']
-  possible_reactions = ['Anaphylaxis', 'Hives', 'Rash', 'Itching', 'Swelling', 'Coughing', 'Wheezing', 'Shortness of breath', 'Nausea', 'Vomiting', 'Diarrhea', 'Abdominal pain', 'Dizziness', 'Fainting', 'Low blood pressure', 'Fast heart rate', 'Confusion', 'Loss of consciousness']
   allergies = {}
   num_allergies = fake.random_int(min=0, max=2)
   their_allergens = set()
@@ -149,7 +163,6 @@ def generate_patient_data():
   # print(allergies)
 
   #vaccines JSON object (vaccine: date)
-  possible_vaccines = ['COVID-19', 'Influenza', 'Hepatitis A', 'Hepatitis B', 'HPV', 'Measles, Mumps, Rubella', 'Pneumococcal', 'Polio', 'Tetanus, Diphtheria, Pertussis', 'Varicella', 'Zoster']
   vaccines = {}
   num_vaccines = fake.random_int(min=5, max=11)
   their_vaccines = set()
@@ -163,7 +176,6 @@ def generate_patient_data():
 
   #surgeries JSON object (surgery: date)
   surgeries = {}
-  possible_surgeries = ['Appendectomy', 'Cholecystectomy', 'Hernia repair', 'Mastectomy', 'Tonsillectomy', 'Adenoidectomy', 'Cataract surgery', 'Coronary artery bypass', 'Heart valve repair', 'Hip replacement', 'Knee replacement', 'Spinal fusion', 'Laminectomy', 'Lobectomy', 'Lung transplant', 'Wisdom Teeth Removal', 'ACL repair', 'Rotator cuff repair']
   num_surgeries = fake.random_int(min=0, max=4)
   their_surgeries = set()
   while len(their_surgeries) < num_surgeries:
@@ -175,27 +187,77 @@ def generate_patient_data():
   # print(surgeries)
 
   #family_history JSON object (condition: [relatives])
-  possible_conditions = ['Heart disease', 'Stroke', 'Diabetes', 'Cancer', 'High blood pressure', 'High cholesterol', 'Asthma', 'Arthritis', 'Osteoporosis', 'Alzheimer\'s', 'Dementia', 'Depression', 'Anxiety', 'Bipolar disorder', 'Schizophrenia', 'ADHD', 'Autism', 'Epilepsy', 'Migraines', 'Thyroid disease', 'Kidney disease', 'Liver disease', 'Lung disease', 'COPD', 'Crohn\'s disease', 'Ulcerative colitis', 'Celiac disease', 'Multiple sclerosis', 'Lupus', 'Rheumatoid arthritis', 'Psoriasis', 'HIV/AIDS', 'Hepatitis', 'Tuberculosis']
+  family_history = {}
+  num_conditions = fake.random_int(min=0, max=5)
+  their_conditions = set()
+  while len(their_conditions) < num_conditions:
+    condition = fake.random_element(elements=possible_conditions)
+    their_conditions.add(condition)
+  for condition in their_conditions:
+    num_relatives = fake.random_int(min=1, max=3)
+    their_relatives = set()
+    while len(their_relatives) < num_relatives:
+      relative = fake.random_element(elements=('mother', 'father', 'sister', 'brother', 'grandmother', 'grandfather', 'aunt', 'uncle', 'cousin'))
+      their_relatives.add(relative)
+    family_history.update({condition: list(their_relatives)})
+  family_history = json.dumps(family_history)
+  # print(family_history)
 
-'''
-medical_history JSON array [conditions]
-family_history JSON object (condition: [relatives])
-emergency_contacts JSON object (name: [phones])
-medications JSON object (medication: {dosage, frequency, start_date, end_date, prescriber(?)})
-pharmacy_name
-pharmacy_address
-pharmacy_phone
-last_reviewer_staff_id UUID
-'''
+  #emergency_contacts JSON object (name: [phones])
+  emergency_contacts = {}
+  num_contacts = fake.random_int(min=1, max=2)
+  their_contacts = set()
+  while len(their_contacts) < num_contacts:
+    contact = fake.name()
+    their_contacts.add(contact)
+  for contact in their_contacts:
+    num_phones = fake.random_int(min=1, max=2)
+    their_phones = set()
+    while len(their_phones) < num_phones:
+      phone = fake.random_int(min=1000000000, max=9999999999)
+      their_phones.add(phone)
+    emergency_contacts.update({contact: list(their_phones)})
+  emergency_contacts = json.dumps(emergency_contacts)
+  # print(emergency_contacts)
 
-generate_patient_data()
+  #medical_history JSON array [conditions]
+  num_conditions = fake.random_int(min=0, max=5)
+  their_conditions = set()
+  while len(their_conditions) < num_conditions:
+    condition = fake.random_element(elements=medical_conditions)
+    their_conditions.add(condition)
+  medical_history = json.dumps(list(their_conditions))
+  # print(medical_history)
 
+  #legal_guardians JSON array [{name, relationship to patient, phones: [], emails: []}]
+  legal_guardians = []
+  num_guardians = fake.random_int(min=1, max=2)
+  while len(legal_guardians) < num_guardians:
+    guardian_gender = fake.random_element(elements=('Male','Female'))
+    if guardian_gender == 'Male':
+      first_name = fake.first_name_male()
+      relationship = fake.random_element(elements=('father', 'grandfather', 'uncle', 'cousin', 'brother'))
+    else:
+      first_name = fake.first_name_female()
+      relationship = fake.random_element(elements=('mother', 'grandmother', 'aunt', 'cousin', 'sister'))
+    last_name = fake.last_name()
+    email = first_name[0].lower() + last_name.lower() + '@' + fake.domain_name()
+    phone = fake.random_int(min=1000000000, max=9999999999)
+    legal_guardians.append({'first_name': first_name, 'last_name': last_name, 'relationship': relationship, 'phones': [phone], 'emails': [email]})
+  legal_guardians = json.dumps(list(legal_guardians))
 
-headers = ['email', 'password', 'first_name', 'last_name', 'date_of_birth', 'sex_at_birth', 'gender', 'pronouns', 'religion', 'eyesight', 'hearing', 'mobility', 'is_pregnant', 'last_menstrual', 'SSN', 'height', 'weight', 'vaccines', 'allergies', 'surgeries', 'family_history', 'last_reviewed_timestamp', 'emergency_contacts', 'last_reviewer_staff_id', 'preferred_name', 'blood_type']
+  pharmacy_name = fake.company()
+  pharmacy_address = fake.address()
+  pharmacy_phone = fake.random_int(min=1000000000, max=9999999999)
 
-# with open('patients.csv', 'w', newline='') as file:
-#   writer = csv.writer(file)
-#   writer.writerow(headers)
-#   for i in range(10):
-#     data = generate_patient_data()
-#     writer.writerow(data)
+  # fake_patient = {'email':email, 'password':password, 'name_title':'NULL', 'first_name':first_name, 'middle_name':'NULL', 'last_name':last_name, 'name_suffix':'NULL', 'date_of_birth':date_of_birth, 'sex':sex, 'gender':gender, 'pronouns':pronouns, 'religion':religion, 'eyesight':eyesight, 'hearing':hearing, 'mobility':mobility, 'is_pregnant':str(is_pregnant).lower(), 'last_menstrual':last_menstrual, 'SSN':SSN, 'height':height, 'weight':weight, 'vaccines':vaccines, 'allergies':allergies, 'surgeries':surgeries, 'family_history':family_history, 'last_reviewed_timestamp':last_reviewed_timestamp, 'emergency_contacts':emergency_contacts, 'last_reviewer_staff_id':'NULL', 'preferred_name':preferred_name, 'blood_type':blood_type, 'phone':phone, 'medical_history':medical_history, 'pharmacy_name':pharmacy_name, 'pharmacy_address':pharmacy_address, 'pharmacy_phone':pharmacy_phone}
+  return [email, password, 'NULL', first_name, 'NULL', last_name, 'NULL', date_of_birth, sex, gender, pronouns, religion, eyesight, hearing, mobility, str(is_pregnant).lower(), last_menstrual, preferred_name, SSN, height, weight, vaccines, allergies, surgeries, family_history, last_reviewed_timestamp, emergency_contacts, 'NULL', blood_type, phone, medical_history, pharmacy_name, pharmacy_address, pharmacy_phone]
+
+headers = ['email', 'password', 'name_title', 'first_name', 'middle_name', 'last_name', 'name_suffix', 'date_of_birth', 'sex', 'gender', 'pronouns', 'religion', 'eyesight', 'hearing', 'mobility', 'is_pregnant', 'last_menstrual', 'preferred_name', 'SSN', 'height', 'weight', 'vaccines', 'allergies', 'surgeries', 'family_history', 'last_reviewed_timestamp', 'emergency_contacts', 'last_reviewer_staff_id', 'blood_type', 'phone', 'medical_history', 'pharmacy_name', 'pharmacy_address', 'pharmacy_phone']
+
+with open('patients.csv', 'w', newline='') as file:
+  writer = csv.writer(file)
+  # writer.writerow(headers)
+  for i in range(1000):
+    data = generate_patient_data()
+    writer.writerow(data)
