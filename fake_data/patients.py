@@ -1,8 +1,9 @@
-from faker import Faker
 import csv
-from datetime import date
-from dateutil import tz
 import json
+from datetime import date
+
+from dateutil import tz
+from faker import Faker
 
 fake = Faker()
 

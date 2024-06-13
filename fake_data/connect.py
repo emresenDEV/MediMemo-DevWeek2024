@@ -1,7 +1,8 @@
+import csv
+
 import psycopg2
 from config import load_config
 from tabulate import tabulate
-import csv
 
 
 def connect(config):

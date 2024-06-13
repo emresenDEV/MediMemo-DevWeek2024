@@ -1,5 +1,6 @@
-from faker import Faker
 import csv
+
+from faker import Faker
 
 fake = Faker()
 

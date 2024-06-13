@@ -1,8 +1,9 @@
-from random import randrange
 import csv
-from faker import Faker
+from random import randrange
+
 import psycopg2
 from config import load_config
+from faker import Faker
 
 fake = Faker()
 

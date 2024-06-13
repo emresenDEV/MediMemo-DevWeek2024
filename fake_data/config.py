@@ -1,5 +1,5 @@
-from configparser import ConfigParser
 import os
+from configparser import ConfigParser
 
 
 def load_config(filename="database.ini", section="postgresql"):

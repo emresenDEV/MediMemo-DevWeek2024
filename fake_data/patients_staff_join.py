@@ -1,5 +1,6 @@
-from random import randrange
 import csv
+from random import randrange
+
 from faker import Faker
 
 fake = Faker()
