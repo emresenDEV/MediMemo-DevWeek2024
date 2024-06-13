@@ -26,6 +26,7 @@
 - pip install pipenv (installs pipenv to your machine)
 - pipenv shell (creates a virtual environment for your project)
 - pipenv install (installs packages from our pipfile to your machine)
+- pipenv install <package-name> (to add more packages to the pipfile)
 
 ## Instructions for Querying the Database
 
