@@ -23,6 +23,7 @@ group_number varchar
 
 
 def list_insurances():
+    """ """
     insurances = []
     with open("insurance_ids.csv") as file:
         reader_obj = csv.reader(file)
@@ -38,6 +39,12 @@ def list_insurances():
 
 
 def loop_through_patients(insurances, num_insurances):
+    """
+
+    :param insurances: 
+    :param num_insurances: 
+
+    """
     insurances_patients_join = []
     with open("patient_ids.csv") as file_obj:
         reader_obj = csv.reader(file_obj)
@@ -60,6 +67,11 @@ def loop_through_patients(insurances, num_insurances):
 
 
 def write_to_join_csv(insurances_patients_join):
+    """
+
+    :param insurances_patients_join: 
+
+    """
     with open("insurances_patients_join.csv", "w", newline="") as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(
@@ -79,6 +91,7 @@ def write_to_join_csv(insurances_patients_join):
 
 
 def query_patient_data():
+    """ """
     config = load_config()
     with psycopg2.connect(**config) as conn:
         with conn.cursor() as cur:

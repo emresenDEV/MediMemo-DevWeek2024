@@ -73,6 +73,7 @@ emails = []
 
 
 def generate_staff_data():
+    """ """
     password = fake.password()
     # name_title = fake.prefix()
     first_name = fake.first_name()

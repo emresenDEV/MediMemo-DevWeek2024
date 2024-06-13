@@ -34,6 +34,7 @@ offices_types = [
 
 
 def generate_office_data():
+    """ """
     nameA = fake.city()
     nameB = fake.random_element(offices_types)
     office_name = nameA + " " + nameB

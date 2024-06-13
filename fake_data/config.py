@@ -3,6 +3,12 @@ from configparser import ConfigParser
 
 
 def load_config(filename="database.ini", section="postgresql"):
+    """
+
+    :param filename:  (Default value = "database.ini")
+    :param section:  (Default value = "postgresql")
+
+    """
     if not os.path.exists(filename):
         raise FileNotFoundError(
             f"{filename} does not exist. Please request access to database.ini from the administrator."

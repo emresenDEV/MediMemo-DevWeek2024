@@ -6,7 +6,11 @@ from tabulate import tabulate
 
 
 def connect(config):
-    """Connect to the PostgreSQL database server"""
+    """Connect to the PostgreSQL database server
+
+    :param config: 
+
+    """
     try:
         # connecting to the PostgreSQL server
         with psycopg2.connect(**config) as conn:
@@ -17,7 +21,11 @@ def connect(config):
 
 
 def query(operation):
-    """Fetch data from the PostgreSQL database server"""
+    """Fetch data from the PostgreSQL database server
+
+    :param operation: 
+
+    """
     try:
         config = load_config()
         with psycopg2.connect(**config) as conn:

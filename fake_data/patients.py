@@ -203,6 +203,7 @@ medical_conditions = [
 
 
 def generate_patient_data():
+    """ """
     password = fake.password()
     SSN = fake.random_int(min=100000000, max=999999999)
     phone = fake.random_int(min=1000000000, max=9999999999)
