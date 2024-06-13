@@ -3,7 +3,6 @@ import csv
 from datetime import date
 from dateutil import tz
 import json
-import requests
 
 fake = Faker()
 

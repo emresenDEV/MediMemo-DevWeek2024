@@ -8,6 +8,10 @@ node_modules
 Pipfile.lock
 package-lock.json
 
+# database key
+passcode.py
+database.ini
+
 # testing
 /coverage
 
