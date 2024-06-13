@@ -1,8 +1,9 @@
 # MediMemo-DevWeek2024
 
- This application is currently in development. Our goal is to create a health app that prevents the loss of patient data during data entry due to network loss and seamlessly updates patient files once the connection is restored.
+This application is currently in development. Our goal is to create a health app that prevents the loss of patient data during data entry due to network loss and seamlessly updates patient files once the connection is restored.
 
 ## Anticipated Features:
+
 - Scheduling Tool
 - Data Entry Tool
 - Patient History Viewer
@@ -32,9 +33,8 @@
 
 - To query the database with SQL commands, you must be given the login credientials by an administrator.
 - Then you can use the **query** function defined in **fake_data/connect.py**:
-    - from fake_data.connect import query
-    - query("SELECT * FROM patients LIMIT 5")
-    - results will populate in query.csv
+  - from fake_data.connect import query
+  - query("SELECT \* FROM patients LIMIT 5")
+  - results will populate in query.csv
 
 ### Thank you!!
-
