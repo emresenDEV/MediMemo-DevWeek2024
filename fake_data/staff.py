@@ -3,7 +3,6 @@ import csv
 from faker import Faker
 
 fake = Faker()
-
 """
 email VARCHAR UNIQUE
 password VARCHAR
@@ -83,15 +82,12 @@ def generate_staff_data():
     #     name_suffix = fake.suffix()
     # else:
     #     name_suffix = ''
-    email = first_name[0].lower() + last_name.lower() + "@" + fake.domain_name()
+    email = first_name[0].lower() + last_name.lower() + "@" + fake.domain_name(
+    )
     while email in emails:
         digits = 2
-        email = (
-            first_name[slice(digits)].lower()
-            + last_name.lower()
-            + "@"
-            + fake.domain_name()
-        )
+        email = (first_name[slice(digits)].lower() + last_name.lower() + "@" +
+                 fake.domain_name())
         digits += 1
     emails.append(email)
     phone = fake.random_int(min=1000000000, max=9999999999)

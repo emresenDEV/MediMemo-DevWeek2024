@@ -35,4 +35,5 @@ with open("offices_staff_join.csv", "w", newline="") as csvfile:
     writer = csv.writer(csvfile)
     writer.writerow(["office_id", "staff_id", "is_admin"])
     for join in offices_staff_join:
-        writer.writerow([join["office_id"], join["staff_id"], join["is_admin"]])
+        writer.writerow(
+            [join["office_id"], join["staff_id"], join["is_admin"]])

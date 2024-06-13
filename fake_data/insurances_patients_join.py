@@ -74,18 +74,16 @@ def write_to_join_csv(insurances_patients_join):
     """
     with open("insurances_patients_join.csv", "w", newline="") as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow(
-            [
-                "insurance_id",
-                "patient_id",
-                "primary_insured_name",
-                "primary_insured_birthdate",
-                "primary_insured_SSN",
-                "primary_insured_relationship",
-                "member_number",
-                "group_number",
-            ]
-        )
+        writer.writerow([
+            "insurance_id",
+            "patient_id",
+            "primary_insured_name",
+            "primary_insured_birthdate",
+            "primary_insured_SSN",
+            "primary_insured_relationship",
+            "member_number",
+            "group_number",
+        ])
         for join in insurances_patients_join:
             writer.writerow([join["insurance_id"], join["patient_id"]])
 

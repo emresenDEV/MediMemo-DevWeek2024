@@ -3,7 +3,6 @@ import csv
 from faker import Faker
 
 fake = Faker()
-
 """
 name VARCHAR
 

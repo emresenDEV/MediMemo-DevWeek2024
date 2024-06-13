@@ -6,7 +6,6 @@ from dateutil import tz
 from faker import Faker
 
 fake = Faker()
-
 """
 email VARCHAR UNIQUE
 password VARCHAR
@@ -207,38 +206,33 @@ def generate_patient_data():
     password = fake.password()
     SSN = fake.random_int(min=100000000, max=999999999)
     phone = fake.random_int(min=1000000000, max=9999999999)
-    religion = fake.random_element(
-        elements=(
-            "Christian",
-            "Muslim",
-            "Jewish",
-            "Buddhist",
-            "Hindu",
-            "Atheist",
-            "Agnostic",
-            "Other",
-        )
-    )
-    eyesight = fake.random_element(
-        elements=("20/20", "20/40", "20/60", "20/80", "20/100", "blind")
-    )
-    hearing = fake.random_element(elements=("hearing", "hard of hearing", "deaf"))
-    mobility = fake.random_element(
-        elements=("able", "wheelchair", "walker", "cane", "crutches")
-    )
+    religion = fake.random_element(elements=(
+        "Christian",
+        "Muslim",
+        "Jewish",
+        "Buddhist",
+        "Hindu",
+        "Atheist",
+        "Agnostic",
+        "Other",
+    ))
+    eyesight = fake.random_element(elements=("20/20", "20/40", "20/60",
+                                             "20/80", "20/100", "blind"))
+    hearing = fake.random_element(elements=("hearing", "hard of hearing",
+                                            "deaf"))
+    mobility = fake.random_element(elements=("able", "wheelchair", "walker",
+                                             "cane", "crutches"))
     height = fake.pyfloat(min_value=48, max_value=84, right_digits=2)
     weight = fake.pyfloat(min_value=110, max_value=270, right_digits=2)
-    blood_type = fake.random_element(
-        elements=("A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-")
-    )
+    blood_type = fake.random_element(elements=("A+", "A-", "B+", "B-", "AB+",
+                                               "AB-", "O+", "O-"))
 
     date_of_birth = fake.date_of_birth(minimum_age=18, maximum_age=90)
     days_in_year = 365.2425
     age = int((date.today() - date_of_birth).days / days_in_year)
 
     last_reviewed_timestamp = fake.date_time_this_year(
-        before_now=True, after_now=False, tzinfo=tz.gettz("America/Chicago")
-    )
+        before_now=True, after_now=False, tzinfo=tz.gettz("America/Chicago"))
     # reviewer_staff_id = fake.uuid4()
 
     # determine sex and gender (transgender, nonbinary, intersex, cisgender)
@@ -282,22 +276,20 @@ def generate_patient_data():
     is_nonbinary = fake.boolean(chance_of_getting_true=2)
     if is_nonbinary:
         gender = "nonbinary"
-        pronouns = fake.random_element(
-            elements=(
-                "they/them",
-                "she/her",
-                "he/him",
-                "she/they",
-                "he/they",
-                "she/they/he",
-                "he/they/she",
-                "they/she/he",
-                "they/he/she",
-                "they/she",
-                "they/he",
-                "she/he",
-            )
-        )
+        pronouns = fake.random_element(elements=(
+            "they/them",
+            "she/her",
+            "he/him",
+            "she/they",
+            "he/they",
+            "she/they/he",
+            "he/they/she",
+            "they/she/he",
+            "they/he/she",
+            "they/she",
+            "they/he",
+            "she/he",
+        ))
 
     is_intersex = fake.boolean(chance_of_getting_true=2)
     if is_intersex:
@@ -307,24 +299,23 @@ def generate_patient_data():
     if sex == "FtM male" or sex == "female" or sex == "intersex":
         is_pregnant = fake.boolean(chance_of_getting_true=5)
         if is_pregnant:
-            last_menstrual = fake.date_between(start_date="-280d", end_date="today")
+            last_menstrual = fake.date_between(start_date="-280d",
+                                               end_date="today")
         else:
-            last_menstrual = fake.date_between(start_date="-28d", end_date="today")
+            last_menstrual = fake.date_between(start_date="-28d",
+                                               end_date="today")
     # if male anatomy
     else:
         is_pregnant = False
         last_menstrual = "NULL"
 
     last_name = fake.last_name()
-    email = first_name[0].lower() + last_name.lower() + "@" + fake.domain_name()
+    email = first_name[0].lower() + last_name.lower() + "@" + fake.domain_name(
+    )
     while email in emails:
         digits = 2
-        email = (
-            first_name[slice(digits)].lower()
-            + last_name.lower()
-            + "@"
-            + fake.domain_name()
-        )
+        email = (first_name[slice(digits)].lower() + last_name.lower() + "@" +
+                 fake.domain_name())
         digits += 1
     emails.append(email)
 
@@ -353,13 +344,12 @@ def generate_patient_data():
         vaccine = fake.random_element(elements=possible_vaccines)
         their_vaccines.add(vaccine)
     for vaccine in their_vaccines:
-        vaccines.update(
-            {
-                vaccine: str(
-                    fake.date_between(start_date="-" + str(age) + "y", end_date="today")
-                )
-            }
-        )
+        vaccines.update({
+            vaccine:
+            str(
+                fake.date_between(start_date="-" + str(age) + "y",
+                                  end_date="today"))
+        })
     vaccines = json.dumps(vaccines)
     # print(vaccines)
 
@@ -371,15 +361,12 @@ def generate_patient_data():
         surgery = fake.random_element(elements=possible_surgeries)
         their_surgeries.add(surgery)
     for surgery in their_surgeries:
-        surgeries.update(
-            {
-                surgery: str(
-                    fake.date_between(
-                        start_date="-" + str(age - 15) + "y", end_date="today"
-                    )
-                )
-            }
-        )
+        surgeries.update({
+            surgery:
+            str(
+                fake.date_between(start_date="-" + str(age - 15) + "y",
+                                  end_date="today"))
+        })
     surgeries = json.dumps(surgeries)
     # print(surgeries)
 
@@ -394,19 +381,17 @@ def generate_patient_data():
         num_relatives = fake.random_int(min=1, max=3)
         their_relatives = set()
         while len(their_relatives) < num_relatives:
-            relative = fake.random_element(
-                elements=(
-                    "mother",
-                    "father",
-                    "sister",
-                    "brother",
-                    "grandmother",
-                    "grandfather",
-                    "aunt",
-                    "uncle",
-                    "cousin",
-                )
-            )
+            relative = fake.random_element(elements=(
+                "mother",
+                "father",
+                "sister",
+                "brother",
+                "grandmother",
+                "grandfather",
+                "aunt",
+                "uncle",
+                "cousin",
+            ))
             their_relatives.add(relative)
         family_history.update({condition: list(their_relatives)})
     family_history = json.dumps(family_history)
@@ -445,26 +430,26 @@ def generate_patient_data():
         guardian_gender = fake.random_element(elements=("Male", "Female"))
         if guardian_gender == "Male":
             first_name = fake.first_name_male()
-            relationship = fake.random_element(
-                elements=("father", "grandfather", "uncle", "cousin", "brother")
-            )
+            relationship = fake.random_element(elements=("father",
+                                                         "grandfather",
+                                                         "uncle", "cousin",
+                                                         "brother"))
         else:
             first_name = fake.first_name_female()
-            relationship = fake.random_element(
-                elements=("mother", "grandmother", "aunt", "cousin", "sister")
-            )
+            relationship = fake.random_element(elements=("mother",
+                                                         "grandmother", "aunt",
+                                                         "cousin", "sister"))
         last_name = fake.last_name()
-        email = first_name[0].lower() + last_name.lower() + "@" + fake.domain_name()
+        email = first_name[0].lower() + last_name.lower(
+        ) + "@" + fake.domain_name()
         phone = fake.random_int(min=1000000000, max=9999999999)
-        legal_guardians.append(
-            {
-                "first_name": first_name,
-                "last_name": last_name,
-                "relationship": relationship,
-                "phones": [phone],
-                "emails": [email],
-            }
-        )
+        legal_guardians.append({
+            "first_name": first_name,
+            "last_name": last_name,
+            "relationship": relationship,
+            "phones": [phone],
+            "emails": [email],
+        })
     legal_guardians = json.dumps(list(legal_guardians))
 
     pharmacy_name = fake.company()

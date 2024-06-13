@@ -3,7 +3,6 @@ import csv
 from faker import Faker
 
 fake = Faker()
-
 """
 name VARCHAR UNIQUE
 phone VARCHAR
@@ -26,4 +25,5 @@ with open("insurances.csv", "w", newline="") as file:
     writer = csv.writer(file)
     writer.writerow(header)
     for item in insurances_list:
-        writer.writerow([item, fake.random_int(min=1000000000, max=9999999999)])
+        writer.writerow(
+            [item, fake.random_int(min=1000000000, max=9999999999)])
