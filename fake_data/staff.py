@@ -23,46 +23,46 @@ licenses VARCHAR
 
 '''
 
-specialties = [ 'Family Medicine',
-  'Internal Medicine',
-  'Pediatrics',
-  'OB/GYN',
-  'Surgery',
-  'Neurology',
-  'Psychiatry',
-  'Plastic Surgery',
-  'Otolaryngology',
-  'Urology',
-  'Anesthesiology',
-  'Radiology',
-  'Pathology',
-  'Emergency Medicine',
-  'Critical Care',
-  'Preventive Medicine',
-  'Physical Medicine and Rehabilitation',
-  'Orthopedics',
-  'Ophthalmology',
-  'Dermatology',
-  'Cardiology',
-  'Gastroenterology',
-  'Pulmonology',
-  'Hematology',
-  'Oncology',
-  'Rheumatology',
-  'Endocrinology',
-  'Nephrology',
-  'Infectious Diseases',
-  'Allergy/Immunology',
-  'Trauma Surgery',
-  'Cardiothoracic Surgery',
-  'Vascular Surgery',
-  'Gender Surgery',
-  'Interventional Cardiology',
-  'Reproductive Endocrinology',
-  'Neonatology',
-  'Pediatric Intensivist',
-  'Podiatry',
-  'Sports Medicine Doctor']
+specialties = ['Family Medicine',
+               'Internal Medicine',
+               'Pediatrics',
+               'OB/GYN',
+               'Surgery',
+               'Neurology',
+               'Psychiatry',
+               'Plastic Surgery',
+               'Otolaryngology',
+               'Urology',
+               'Anesthesiology',
+               'Radiology',
+               'Pathology',
+               'Emergency Medicine',
+               'Critical Care',
+               'Preventive Medicine',
+               'Physical Medicine and Rehabilitation',
+               'Orthopedics',
+               'Ophthalmology',
+               'Dermatology',
+               'Cardiology',
+               'Gastroenterology',
+               'Pulmonology',
+               'Hematology',
+               'Oncology',
+               'Rheumatology',
+               'Endocrinology',
+               'Nephrology',
+               'Infectious Diseases',
+               'Allergy/Immunology',
+               'Trauma Surgery',
+               'Cardiothoracic Surgery',
+               'Vascular Surgery',
+               'Gender Surgery',
+               'Interventional Cardiology',
+               'Reproductive Endocrinology',
+               'Neonatology',
+               'Pediatric Intensivist',
+               'Podiatry',
+               'Sports Medicine Doctor']
 
 passwords = []
 emails = []
@@ -78,10 +78,12 @@ def generate_staff_data():
     #     name_suffix = fake.suffix()
     # else:
     #     name_suffix = ''
-    email = first_name[0].lower() + last_name.lower() + '@' + fake.domain_name()
+    email = first_name[0].lower() + last_name.lower() + \
+        '@' + fake.domain_name()
     while email in emails:
         digits = 2
-        email = first_name[slice(digits)].lower() + last_name.lower() + '@' + fake.domain_name()
+        email = first_name[slice(digits)].lower() + \
+            last_name.lower() + '@' + fake.domain_name()
         digits += 1
     emails.append(email)
     phone = fake.random_int(min=1000000000, max=9999999999)
@@ -92,13 +94,15 @@ def generate_staff_data():
         extra_languages = fake.random_int(min=1, max=2)
     else:
         extra_languages = 0
-    languages = ["English"] + fake.random_elements(unique="true",length=extra_languages, elements=['Spanish', 'French', 'German', 'Italian', 'Russian', 'Chinese', 'Japanese', 'Korean', 'Arabic', 'Hindi', 'Portuguese'])
+    languages = ["English"] + fake.random_elements(unique="true", length=extra_languages, elements=[
+                                                   'Spanish', 'French', 'German', 'Italian', 'Russian', 'Chinese', 'Japanese', 'Korean', 'Arabic', 'Hindi', 'Portuguese'])
     languages = ', '.join(languages)
     accepting_new = fake.boolean(chance_of_getting_true=70)
     return [email, password, first_name, last_name, specialty, biography, languages, accepting_new, phone]
 
 
-header = ['email', 'password', 'first_name', 'last_name', 'specialty', 'biography', 'languages', 'accepting_new', 'phone']
+header = ['email', 'password', 'first_name', 'last_name',
+          'specialty', 'biography', 'languages', 'accepting_new', 'phone']
 
 with open('staff.csv', 'w', newline='') as file:
     writer = csv.writer(file)

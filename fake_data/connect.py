@@ -3,6 +3,7 @@ from config import load_config
 from tabulate import tabulate
 import csv
 
+
 def connect(config):
     """ Connect to the PostgreSQL database server """
     try:
@@ -12,6 +13,7 @@ def connect(config):
             return conn
     except (psycopg2.DatabaseError, Exception) as error:
         print(error)
+
 
 def query(operation):
     '''Fetch data from the PostgreSQL database server'''

@@ -18,7 +18,9 @@ hours VARCHAR //there's a syntax for making hours into a string
 Mo - Fr <start>:00 - <end>:00
 Sa - Su <start>:00 - <end>:00 or closed
 '''
-offices_types = ['Medical', 'Health', 'Group', 'Clinic', 'Memorial Hospital', 'University Medical Group', 'Medical Center', 'Medical Clinic', 'Health Center']
+offices_types = ['Medical', 'Health', 'Group', 'Clinic', 'Memorial Hospital',
+                 'University Medical Group', 'Medical Center', 'Medical Clinic', 'Health Center']
+
 
 def generate_office_data():
     nameA = fake.city()
@@ -52,15 +54,11 @@ def generate_office_data():
     # print(hours)
 
 
-
-
-header = ['name', 'address_line_1', 'city', 'state', 'zipcode', 'phone', 'email', 'website', 'hours']
+header = ['name', 'address_line_1', 'city', 'state',
+          'zipcode', 'phone', 'email', 'website', 'hours']
 with open('offices.csv', 'w', newline='') as file:
     writer = csv.writer(file)
     writer.writerow(header)
     for i in range(1000):
         data = generate_office_data()
         writer.writerow(data)
-
-
-
