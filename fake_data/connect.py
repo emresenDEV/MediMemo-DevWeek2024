@@ -8,7 +8,7 @@ from tabulate import tabulate
 def connect(config):
     """Connect to the PostgreSQL database server
 
-    :param config: 
+    :param config:
 
     """
     try:
@@ -23,7 +23,7 @@ def connect(config):
 def query(operation):
     """Fetch data from the PostgreSQL database server
 
-    :param operation: 
+    :param operation:
 
     """
     try:

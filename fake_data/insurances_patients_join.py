@@ -41,8 +41,8 @@ def list_insurances():
 def loop_through_patients(insurances, num_insurances):
     """
 
-    :param insurances: 
-    :param num_insurances: 
+    :param insurances:
+    :param num_insurances:
 
     """
     insurances_patients_join = []
@@ -69,7 +69,7 @@ def loop_through_patients(insurances, num_insurances):
 def write_to_join_csv(insurances_patients_join):
     """
 
-    :param insurances_patients_join: 
+    :param insurances_patients_join:
 
     """
     with open("insurances_patients_join.csv", "w", newline="") as csvfile:
