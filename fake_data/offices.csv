@@ -1,0 +1,1001 @@
+name,address_line_1,city,state,zipcode,phone,email,website,hours
+Martinville Medical Clinic,2361 Deanna Dam,Martinville,WI,34743,8222975216,rachelhoward@example.com,http://www.rice-shepherd.com/,Mo - Su 10:00 - 16:00
+Lake Gwendolyn Medical,870 Julia Pass Apt. 825,Lake Gwendolyn,NE,56471,4451723927,valenciajoseph@example.net,http://www.fleming.net/,"Mo - Fr 9:00 - 19:00, Sa - Su Closed"
+Lauraport University Medical Group,2790 Burch Vista,Lauraport,RI,08681,7378029879,emilymathews@example.net,https://www.peterson.info/,"Mo - Fr 7:00 - 19:00, Sa - Su Closed"
+Brandonside Medical Center,37959 Jack Radial Suite 182,Brandonside,MO,38744,7584389664,carrjessica@example.com,http://brown-saunders.com/,Mo - Su 8:00 - 16:00
+Davidfurt Medical Clinic,848 Nicole Keys,Davidfurt,NC,34562,2640760496,nadams@example.com,http://walsh.com/,"Mo - Fr 10:00 - 19:00, Sa - Su Closed"
+Petersborough Health,04170 Steven Crest Apt. 460,Petersborough,PA,80551,5730069780,michaelcamacho@example.org,http://washington.net/,Mo - Su 8:00 - 16:00
+Aguirrestad Memorial Hospital,142 Smith Station,Aguirrestad,LA,61993,3331694223,michael66@example.org,http://brown.net/,"Mo - Fr 9:00 - 17:00, Sa - Su Closed"
+North Gregoryside Clinic,870 Stephen Groves,North Gregoryside,NE,86979,2139232256,robertyoung@example.com,http://www.dickerson.com/,Mo - Su 10:00 - 18:00
+Hatfieldhaven University Medical Group,6606 Angel Haven,Hatfieldhaven,ID,05897,3519675084,chenjason@example.org,https://www.york.com/,"Mo - Fr 8:00 - 17:00, Sa - Su Closed"
+Port Danielleborough Medical,7279 Price Tunnel,Port Danielleborough,IN,85124,3749106568,perkinscatherine@example.com,https://caldwell.com/,"Mo - Fr 9:00 - 18:00, Sa - Su Closed"
+New Brookefurt Group,2059 Mary Corners,New Brookefurt,KS,65787,4552501283,ryan93@example.net,http://williams.com/,Mo - Su 7:00 - 16:00
+South Joshua Clinic,26616 Bowman Haven,South Joshua,TX,82956,1330460778,yolanda94@example.com,http://newman.org/,"Mo - Fr 9:00 - 18:00, Sa - Su Closed"
+East Alejandrashire Memorial Hospital,25786 Jenkins Track,East Alejandrashire,MS,53745,7507238651,barnesjeffrey@example.org,http://may.biz/,Mo - Su 7:00 - 17:00
+Johnsonville Health,99809 Jacobs Vista Suite 690,Johnsonville,TN,98896,8314421350,helenharrison@example.org,http://www.moore.com/,Mo - Su 8:00 - 18:00
+Christophertown Medical Clinic,61151 Glenn Land Apt. 618,Christophertown,HI,05945,7541737575,arellanojohn@example.org,https://www.brown-collins.org/,Mo - Su 10:00 - 17:00
+Carlville Memorial Hospital,897 Traci Motorway,Carlville,OH,06681,3691542699,douglas01@example.org,https://gregory.com/,"Mo - Fr 10:00 - 17:00, Sa - Su Closed"
+West William Medical,111 Bryan Mills,West William,NH,81034,5823702654,roberthendricks@example.net,http://schmidt-figueroa.org/,Mo - Su 9:00 - 19:00
+Brightland Clinic,264 Emily Fields,Brightland,WV,22375,9190102038,joel08@example.com,https://www.allen.com/,Mo - Su 7:00 - 18:00
+North Brandy Medical Clinic,868 Espinoza Light Apt. 195,North Brandy,VI,99050,4060215648,brownjoseph@example.org,http://www.miller.com/,Mo - Su 7:00 - 18:00
+Rodriguezfort Health,917 Wright Street,Rodriguezfort,MO,53091,5873222750,odonnelldanielle@example.net,https://www.owens-park.com/,"Mo - Fr 10:00 - 18:00, Sa - Su Closed"
+Camposview Medical Clinic,43987 Timothy Terrace,Camposview,ND,08673,9896691723,davistraci@example.com,http://www.miller.biz/,Mo - Su 7:00 - 19:00
+Brendamouth Health,93712 Melody Row Suite 376,Brendamouth,WV,12729,1248466291,imiller@example.com,http://www.proctor.com/,"Mo - Fr 7:00 - 19:00, Sa - Su Closed"
+Phillipfort Medical Clinic,012 Robyn Crest,Phillipfort,DE,94866,9804699746,rodriguezaudrey@example.com,http://palmer-kelly.com/,"Mo - Fr 9:00 - 18:00, Sa - Su Closed"
+East Courtney Medical Clinic,911 Erin Ferry,East Courtney,CA,32417,8531704544,nichole70@example.org,https://stephens.com/,"Mo - Fr 7:00 - 18:00, Sa - Su Closed"
+Ashleestad University Medical Group,45837 Kelly Shores Suite 151,Ashleestad,CT,84547,3013487585,martinezstephanie@example.org,http://www.huff.com/,"Mo - Fr 10:00 - 19:00, Sa - Su Closed"
+Catherinefort Clinic,6574 Andre Shores Apt. 565,Catherinefort,AK,38060,5809562876,kelly93@example.com,http://carney-guzman.com/,"Mo - Fr 7:00 - 16:00, Sa - Su Closed"
+South Meganville Medical Center,9987 Moss Prairie,South Meganville,MP,96521,5665203585,bbanks@example.net,http://sawyer-flynn.com/,Mo - Su 8:00 - 18:00
+West Michele Memorial Hospital,9689 Anderson Harbors,West Michele,IA,46453,9875721752,wallacealbert@example.com,http://simpson.com/,"Mo - Fr 9:00 - 17:00, Sa - Su Closed"
+Nelsontown Clinic,697 Barnes Harbor,Nelsontown,KS,35567,4920860169,gcook@example.net,http://www.hammond.net/,"Mo - Fr 10:00 - 18:00, Sa - Su Closed"
+Port Rachaelburgh Medical,82045 Johnson Unions,Port Rachaelburgh,RI,01323,8111479665,glassdaniel@example.net,http://henderson.com/,Mo - Su 10:00 - 19:00
+Melanieland Clinic,500 Aimee Run Suite 755,Melanieland,LA,03195,9770299101,patrick50@example.net,https://harris-pugh.com/,"Mo - Fr 8:00 - 17:00, Sa - Su Closed"
+Shafferstad Medical,19546 Ricky Lane Apt. 239,Shafferstad,WI,20357,2354435785,bishopscott@example.net,https://duran.com/,Mo - Su 8:00 - 17:00
+New Carmen Memorial Hospital,262 Little Pines,New Carmen,PR,81485,6548310502,natasha87@example.com,http://stone-harris.com/,"Mo - Fr 7:00 - 18:00, Sa - Su Closed"
+Woodsville Medical Clinic,11300 Cummings Spring Apt. 469,Woodsville,AZ,71031,2115127003,sandramcdaniel@example.net,http://hill.com/,Mo - Su 8:00 - 17:00
+Floresside Clinic,60592 David Fields Suite 032,Floresside,NC,94841,1951858250,huffmannathan@example.com,https://ramos.com/,"Mo - Fr 10:00 - 16:00, Sa - Su Closed"
+Garciamouth Health,4662 Green Haven,Garciamouth,UT,14280,1050281264,jeffrey50@example.com,http://anderson.com/,Mo - Su 10:00 - 16:00
+South Melody Memorial Hospital,43001 David Spur Apt. 766,South Melody,CA,33562,3941926461,victoriapitts@example.org,https://williams.com/,Mo - Su 8:00 - 18:00
+Georgeshire University Medical Group,380 Warren Ferry Apt. 165,Georgeshire,MA,09216,2268973420,william50@example.com,http://fuentes.com/,"Mo - Fr 9:00 - 18:00, Sa - Su Closed"
+Karistad Memorial Hospital,590 Jenkins Knolls Suite 523,Karistad,IN,56580,9268563106,andrewjackson@example.com,https://ochoa-franco.com/,Mo - Su 9:00 - 16:00
+Jasonside Medical Clinic,77305 Michael Camp,Jasonside,MT,73662,9473806934,cynthia17@example.com,https://smith.com/,Mo - Su 9:00 - 19:00
+Gloverberg Health Center,270 Amy Falls Apt. 058,Gloverberg,OK,24124,9537479896,jamesdavis@example.com,https://www.rodgers.biz/,Mo - Su 7:00 - 17:00
+New Robert Clinic,1565 Rollins Plaza,New Robert,HI,61118,1984733921,chendonald@example.com,https://www.patterson.com/,"Mo - Fr 10:00 - 16:00, Sa - Su Closed"
+Port Karenville University Medical Group,0680 Sharon Shore Suite 995,Port Karenville,GU,36855,5172028336,michaelmay@example.org,https://thomas-rogers.com/,"Mo - Fr 8:00 - 17:00, Sa - Su Closed"
+Amandashire University Medical Group,6248 Garcia Drive Suite 602,Amandashire,PR,03228,8015467804,lwalsh@example.org,https://alexander.com/,"Mo - Fr 10:00 - 18:00, Sa - Su Closed"
+Millerview Medical Clinic,953 Clark Vista Suite 655,Millerview,NM,99443,8559408330,mccoyjulie@example.net,https://www.smith.com/,Mo - Su 7:00 - 19:00
+West Jennifertown Group,80583 Murphy Throughway,West Jennifertown,HI,78195,4800630214,lindafuller@example.com,https://www.gill.org/,"Mo - Fr 8:00 - 18:00, Sa - Su Closed"
+Port Coreyville Group,79009 York Islands,Port Coreyville,TN,61827,4543025167,gardnermary@example.net,http://www.carroll-parker.com/,Mo - Su 8:00 - 16:00
+Gordonchester Clinic,06457 James Brooks Suite 935,Gordonchester,ME,63954,3973538861,fischercarmen@example.org,http://www.taylor.com/,"Mo - Fr 9:00 - 18:00, Sa - Su Closed"
+Beckyberg Health,918 Heather Trace Apt. 562,Beckyberg,AL,63596,6069745369,taylormelinda@example.net,https://williams.com/,Mo - Su 9:00 - 16:00
+Dominguezchester Health,48866 Moore Fields Apt. 454,Dominguezchester,OH,83255,5849771239,amygarrett@example.com,http://www.rodriguez-greer.biz/,"Mo - Fr 9:00 - 16:00, Sa - Su Closed"
+Hodgefurt Health,1827 Chad Cape,Hodgefurt,SC,59769,8930584966,lrobles@example.com,https://simmons-white.net/,Mo - Su 10:00 - 17:00
+North Johnburgh Group,90871 Watts Wall,North Johnburgh,GA,90891,4815928646,franklinjames@example.com,http://boyd.com/,Mo - Su 10:00 - 19:00
+Zacharyfurt University Medical Group,766 Bray Dam Suite 113,Zacharyfurt,AR,81988,5186005999,caitlynbrown@example.com,https://www.tucker.com/,"Mo - Fr 8:00 - 18:00, Sa - Su Closed"
+Hardingburgh Health,182 Taylor Highway Apt. 291,Hardingburgh,MN,54539,9767530043,williamsjennifer@example.org,http://flores-tran.com/,"Mo - Fr 10:00 - 18:00, Sa - Su Closed"
+Rachelport Medical Center,0126 Jeremy Village Suite 146,Rachelport,AS,99183,9041457743,ugray@example.com,https://walsh.com/,"Mo - Fr 9:00 - 18:00, Sa - Su Closed"
+Ashleyport Health,013 Victoria Hill,Ashleyport,VA,94062,8981429077,johngriffith@example.org,https://www.arnold.com/,"Mo - Fr 10:00 - 17:00, Sa - Su Closed"
+South Evan Memorial Hospital,01718 Pearson Rest,South Evan,FM,90298,8652594673,hernandezjulia@example.net,http://www.rose.net/,Mo - Su 7:00 - 18:00
+New Hayleymouth Clinic,258 Laura Causeway,New Hayleymouth,CT,37845,7755927763,kaylamedina@example.com,https://www.smith.com/,Mo - Su 7:00 - 17:00
+South Terriberg Memorial Hospital,2797 Chan Mews,South Terriberg,VT,36138,8386859948,yatkins@example.com,http://alvarado-grant.com/,"Mo - Fr 7:00 - 18:00, Sa - Su Closed"
+North Lisahaven Health Center,3019 Atkinson Hills,North Lisahaven,MH,89714,9936668719,linda09@example.org,https://duncan.com/,Mo - Su 9:00 - 19:00
+Prestonland Medical Center,1489 Rivers Divide,Prestonland,NH,60265,1339700548,janice96@example.net,https://www.brown-welch.info/,Mo - Su 10:00 - 19:00
+Elizabethfort Memorial Hospital,1964 Brown Parks Suite 868,Elizabethfort,SC,65650,7376706825,richardwhitney@example.com,http://parker.info/,Mo - Su 9:00 - 18:00
+New Patricia Memorial Hospital,038 Kendra Loop Suite 671,New Patricia,CA,80403,1722044481,jennycurry@example.net,http://hickman.info/,Mo - Su 9:00 - 18:00
+South Christina Health,0464 Jade Place,South Christina,WV,17454,7631602741,pforbes@example.org,http://www.williams-brooks.com/,Mo - Su 10:00 - 17:00
+Joanborough Medical Center,606 Adams Corner Suite 269,Joanborough,VA,36952,6680370478,aewing@example.net,https://hale-bowers.com/,"Mo - Fr 10:00 - 19:00, Sa - Su Closed"
+Benitezfort Medical Clinic,1973 Wright Shoal Apt. 610,Benitezfort,PW,25848,6598318031,stephaniebrown@example.net,http://www.wells-velez.info/,"Mo - Fr 8:00 - 16:00, Sa - Su Closed"
+Russellmouth University Medical Group,826 Holland Vista,Russellmouth,VA,30751,2164585848,jason53@example.com,http://bell-perez.com/,Mo - Su 9:00 - 19:00
+Frankfort Memorial Hospital,90613 Joseph Creek,Frankfort,ME,53763,8099559078,wrightchad@example.com,http://www.marshall-daniel.info/,"Mo - Fr 9:00 - 16:00, Sa - Su Closed"
+East Jamiefort Clinic,21234 Wesley Fall,East Jamiefort,PR,37438,2051860790,greenmichael@example.com,https://www.robinson.com/,Mo - Su 7:00 - 17:00
+Jessicamouth Medical Clinic,6175 Patrick Plaza Apt. 245,Jessicamouth,MP,88912,7519254700,justinballard@example.com,https://www.jordan-lam.com/,Mo - Su 7:00 - 19:00
+Donnashire Medical Center,2869 Brent Port,Donnashire,AS,74531,2170382939,frederickmonica@example.org,http://benson.com/,Mo - Su 10:00 - 17:00
+Kelleystad Health,1007 Herman Streets Apt. 623,Kelleystad,MA,11146,9363828150,martinezmelissa@example.com,https://www.raymond.info/,Mo - Su 9:00 - 16:00
+North Robin Medical Clinic,95527 Nicole Flat,North Robin,CO,11612,4865185073,xfox@example.net,https://johnson.org/,Mo - Su 8:00 - 16:00
+West Victoriafort Clinic,197 Price Hill,West Victoriafort,KY,98828,1596316487,poncecarlos@example.org,https://carroll-hood.net/,"Mo - Fr 9:00 - 17:00, Sa - Su Closed"
+Kramershire Medical Clinic,70507 April Mission,Kramershire,IA,86597,3794909139,jmurphy@example.com,http://www.perez.com/,Mo - Su 10:00 - 16:00
+East Clintonport Medical Center,219 Wanda Islands Apt. 307,East Clintonport,NY,68351,6901632982,maryharris@example.net,https://www.ramos.org/,"Mo - Fr 7:00 - 18:00, Sa - Su Closed"
+North Courtney Clinic,989 Williams Shore Suite 233,North Courtney,ME,17662,6830681863,fortiz@example.net,http://murphy.org/,Mo - Su 8:00 - 17:00
+New Cindy Group,639 Stephanie Cliffs,New Cindy,AS,36905,8007498449,laura94@example.com,http://kim.com/,Mo - Su 10:00 - 16:00
+Mccoymouth Clinic,95152 Christy Harbors Apt. 821,Mccoymouth,NY,59098,6710553860,markwilliams@example.com,http://www.finley.com/,Mo - Su 7:00 - 17:00
+Taylorborough Clinic,87073 Michael Plaza,Taylorborough,PR,62941,7463030291,thomasosborne@example.net,https://howell-ewing.com/,Mo - Su 7:00 - 19:00
+Barrfurt Medical,265 Amanda Mountain Apt. 474,Barrfurt,WY,34086,4681551033,vancekristin@example.net,http://wilson.net/,Mo - Su 8:00 - 16:00
+New Davidchester University Medical Group,92397 Sara Turnpike,New Davidchester,NJ,93098,6830466634,keith41@example.net,http://hinton.org/,Mo - Su 9:00 - 19:00
+Seanborough Medical,8911 Boyd Forge Apt. 469,Seanborough,TX,31361,3842179761,ricardowaller@example.org,http://rowe.com/,Mo - Su 7:00 - 17:00
+South Greg Medical Clinic,739 Brown Spring Suite 218,South Greg,MD,61864,1967269217,kylesantiago@example.com,https://salinas.com/,Mo - Su 7:00 - 18:00
+East William Medical Clinic,7723 Jacobs Landing,East William,OK,93268,9676121011,nancy09@example.com,https://rogers.com/,Mo - Su 9:00 - 19:00
+Sanchezchester Health Center,8283 Amanda Crest,Sanchezchester,PW,41552,2910483879,juliewelch@example.com,https://www.higgins-snyder.com/,Mo - Su 8:00 - 19:00
+Johnsonchester Medical Center,43914 Maria Field Apt. 795,Johnsonchester,GU,38186,7844379457,elizabethmiller@example.net,http://moore.org/,Mo - Su 9:00 - 18:00
+Bellhaven Health,409 Lopez Trail Suite 666,Bellhaven,OR,36613,7136303898,jfigueroa@example.org,http://perry.com/,Mo - Su 7:00 - 16:00
+Port Joelhaven Clinic,68536 Evans Pine,Port Joelhaven,NE,53714,5911464010,bduncan@example.org,https://www.bryant.com/,"Mo - Fr 8:00 - 18:00, Sa - Su Closed"
+South Julie Medical Clinic,2968 Brandon Corners Apt. 542,South Julie,MA,20612,9210842692,kayleewhite@example.com,https://cunningham-hale.com/,Mo - Su 8:00 - 17:00
+Lake Jasmine Clinic,01882 Aaron Port Apt. 124,Lake Jasmine,NJ,28242,5643947579,aknapp@example.org,http://www.thomas.com/,"Mo - Fr 10:00 - 16:00, Sa - Su Closed"
+Port Isabelton University Medical Group,6705 Guzman Fords,Port Isabelton,MD,51147,1465927844,xweber@example.com,http://www.peterson.com/,"Mo - Fr 8:00 - 18:00, Sa - Su Closed"
+Brandonmouth University Medical Group,12146 Mary Parkway Suite 941,Brandonmouth,PR,92953,8712382322,hallgary@example.com,http://howell-williams.biz/,"Mo - Fr 9:00 - 16:00, Sa - Su Closed"
+Romerofort University Medical Group,402 Brooks Light,Romerofort,OH,33304,2039176957,bcervantes@example.net,http://www.smith.com/,"Mo - Fr 10:00 - 16:00, Sa - Su Closed"
+South Lisaton Memorial Hospital,8035 Kelsey Hill,South Lisaton,PA,68578,4488825034,raymond00@example.net,https://www.miller.com/,Mo - Su 9:00 - 18:00
+Jamesfort Memorial Hospital,01097 Browning Squares Apt. 926,Jamesfort,AZ,33457,2954134042,erik90@example.com,http://www.wilson.com/,"Mo - Fr 7:00 - 16:00, Sa - Su Closed"
+Bradfordton Clinic,4521 Olivia Oval Suite 486,Bradfordton,PW,20346,8547698968,nwilkins@example.com,https://www.potts.com/,Mo - Su 10:00 - 17:00
+West Marissaberg University Medical Group,0417 Barrera Trace Apt. 449,West Marissaberg,PR,10306,6188509624,parkbrian@example.com,https://booker-jones.info/,Mo - Su 8:00 - 16:00
+Edwardmouth Clinic,09533 Becky Row Apt. 433,Edwardmouth,AS,83407,1945565363,kimberlysmith@example.org,https://www.benton-cannon.com/,Mo - Su 10:00 - 18:00
+South Ronald University Medical Group,82657 Chase Square Suite 220,South Ronald,VT,68450,6046364819,stewartmario@example.org,http://holland.com/,"Mo - Fr 7:00 - 18:00, Sa - Su Closed"
+Hansenstad Clinic,055 Doyle Cliffs,Hansenstad,UT,24416,5200597618,andrewmooney@example.org,http://tran.biz/,"Mo - Fr 9:00 - 19:00, Sa - Su Closed"
+Toddborough Health,51365 Crawford Mission,Toddborough,PW,21677,3767048465,amyers@example.org,https://www.armstrong-cuevas.com/,Mo - Su 9:00 - 17:00
+Nicholasside Clinic,0804 Buckley Rapids,Nicholasside,MD,60227,5135567035,fwoodard@example.org,http://www.garza-roberts.biz/,Mo - Su 7:00 - 19:00
+Andersonville University Medical Group,656 Sarah Fall Apt. 331,Andersonville,IL,94170,3015189698,michelle09@example.com,http://www.tucker.info/,"Mo - Fr 10:00 - 16:00, Sa - Su Closed"
+North Barbara Medical Clinic,3578 Watkins Manor,North Barbara,NY,89714,2836275875,davisjohn@example.org,http://moore-johnson.com/,"Mo - Fr 10:00 - 18:00, Sa - Su Closed"
+West Aaron Medical,9469 Osborn Park,West Aaron,WV,28609,4656830839,owilliams@example.com,http://www.villa.com/,"Mo - Fr 9:00 - 16:00, Sa - Su Closed"
+South Dalehaven Medical,942 Price Ford,South Dalehaven,RI,61377,9202650631,cynthiawilliams@example.org,http://www.reynolds.biz/,"Mo - Fr 7:00 - 18:00, Sa - Su Closed"
+Johnsonfurt Memorial Hospital,614 Atkinson Burgs,Johnsonfurt,LA,92612,8062986060,mackjane@example.com,http://martinez-roberts.biz/,Mo - Su 10:00 - 19:00
+Codystad Medical Clinic,31146 Kari Causeway,Codystad,MS,82913,8739067409,fhill@example.com,http://rivers-mayer.biz/,"Mo - Fr 9:00 - 16:00, Sa - Su Closed"
+Simonstad Clinic,7225 Hamilton Burg Suite 601,Simonstad,TN,56140,7098483122,peterscody@example.com,https://riggs-norman.com/,"Mo - Fr 9:00 - 19:00, Sa - Su Closed"
+Brittneyborough Health,723 Gregory Dam,Brittneyborough,MA,42505,6884030990,lawrence20@example.com,http://www.cunningham-scott.com/,Mo - Su 8:00 - 17:00
+Gonzalezburgh Medical Center,51158 Adam Crest,Gonzalezburgh,MI,57940,3216446990,john24@example.com,https://www.green.com/,"Mo - Fr 8:00 - 16:00, Sa - Su Closed"
+Johnshire Group,04177 Jennifer Creek Suite 933,Johnshire,IN,50755,9093965109,gibsonandrew@example.net,http://fowler-steele.com/,"Mo - Fr 8:00 - 18:00, Sa - Su Closed"
+Webbport Group,049 Meyer Fall Apt. 858,Webbport,NH,77768,3751684010,tmoore@example.org,http://stewart-smith.com/,"Mo - Fr 9:00 - 17:00, Sa - Su Closed"
+West Josephport Medical Center,8801 Alexander Cliffs,West Josephport,PW,32256,7089682665,johnsonkim@example.com,https://www.randolph.com/,"Mo - Fr 9:00 - 18:00, Sa - Su Closed"
+Contrerashaven Medical Center,32065 Anderson Branch Suite 114,Contrerashaven,AL,38889,6853336748,vmorales@example.net,https://www.martinez-taylor.com/,Mo - Su 7:00 - 19:00
+East Victoria Health Center,236 Thompson Meadow,East Victoria,SD,00865,5968508497,simscandice@example.com,http://www.proctor.com/,Mo - Su 9:00 - 17:00
+New Linda Medical Center,79631 Kenneth Burg Suite 122,New Linda,MT,81087,2351170638,brockcynthia@example.org,http://lopez-brown.org/,Mo - Su 10:00 - 19:00
+West Jorgeborough Health,89811 Ward Brook Suite 407,West Jorgeborough,KY,00874,1844617714,jenniferflores@example.com,http://www.morton.biz/,Mo - Su 9:00 - 17:00
+Jamieberg Health Center,40004 Trevor Plains Apt. 408,Jamieberg,WI,40975,8111894214,lewisdwayne@example.net,https://singh.net/,Mo - Su 10:00 - 18:00
+Karenton Medical,3898 Baldwin Isle,Karenton,CO,50647,4643831011,hayestodd@example.org,http://hawkins.com/,"Mo - Fr 8:00 - 18:00, Sa - Su Closed"
+Timothystad Medical Center,258 Valenzuela Isle,Timothystad,CT,25855,3726708435,greenjacqueline@example.com,http://www.bailey.com/,Mo - Su 8:00 - 17:00
+Staceyborough Medical,264 Perry Lane,Staceyborough,PW,67959,6285177445,pmccullough@example.net,http://parsons.com/,Mo - Su 9:00 - 17:00
+New Diana Group,973 Wilson Inlet Apt. 828,New Diana,AR,19260,5594024966,harpermichael@example.net,https://www.perry-miller.biz/,"Mo - Fr 8:00 - 16:00, Sa - Su Closed"
+New Jessica Memorial Hospital,792 Clarke Stream Suite 265,New Jessica,AS,36937,1494364111,sandra17@example.com,https://www.maynard.com/,Mo - Su 10:00 - 16:00
+East Loriberg Memorial Hospital,0339 Michael Parks,East Loriberg,CT,84329,7247271265,allentara@example.org,https://www.anderson.com/,"Mo - Fr 9:00 - 16:00, Sa - Su Closed"
+Jamesmouth University Medical Group,0385 Kelsey Forge Apt. 308,Jamesmouth,NJ,70597,8691061735,jason50@example.org,https://goodman.biz/,"Mo - Fr 9:00 - 19:00, Sa - Su Closed"
+Fernandeztown Health,63878 Joe Port,Fernandeztown,NC,84654,1684971152,beasleykelly@example.net,https://www.duncan-crawford.biz/,Mo - Su 10:00 - 16:00
+Samanthaburgh Clinic,7641 Anthony Hill,Samanthaburgh,GA,08615,1394122807,dhopkins@example.org,https://rice.com/,Mo - Su 7:00 - 16:00
+South Rachel Health Center,30259 Austin Route,South Rachel,AZ,54965,1970108307,bushjohn@example.org,https://howard.com/,"Mo - Fr 7:00 - 16:00, Sa - Su Closed"
+Perryborough Clinic,18588 Cordova Field Apt. 340,Perryborough,PW,29066,3077235114,dcampbell@example.com,http://www.gibson.com/,"Mo - Fr 7:00 - 18:00, Sa - Su Closed"
+New Christopher Clinic,74862 Wheeler Ridges,New Christopher,CA,18375,8192248965,victorchapman@example.org,http://www.mata.info/,Mo - Su 9:00 - 17:00
+South Williamshire Group,69146 Stewart Crescent Suite 382,South Williamshire,OK,02813,2324421634,cassandra51@example.net,https://www.drake.com/,"Mo - Fr 10:00 - 19:00, Sa - Su Closed"
+Port Alicia Medical Center,862 Garrett Springs Apt. 381,Port Alicia,NY,26019,3133494688,justin55@example.net,http://chapman-kent.info/,Mo - Su 7:00 - 17:00
+North Erica Memorial Hospital,39915 Julia Mountains,North Erica,MO,24070,5431046869,sharris@example.org,https://reed-smith.com/,Mo - Su 9:00 - 16:00
+Marioshire Memorial Hospital,078 Wheeler Corner Apt. 663,Marioshire,NH,81336,5515354165,taylor30@example.net,http://garcia.org/,Mo - Su 10:00 - 16:00
+Georgeport Medical Center,37947 Donald Throughway Apt. 486,Georgeport,CA,77747,3116337241,patricia64@example.net,https://www.johnson.net/,Mo - Su 9:00 - 19:00
+Lake Cynthia University Medical Group,389 Rachel Fields Suite 626,Lake Cynthia,IN,65138,2217832934,lhoward@example.org,http://www.schmidt-booker.com/,"Mo - Fr 7:00 - 19:00, Sa - Su Closed"
+Bennettborough University Medical Group,002 Brian Point,Bennettborough,AK,13691,3167722217,jesse09@example.net,http://www.patel.com/,Mo - Su 7:00 - 17:00
+Lake Johnton Medical Clinic,68211 Stacy Neck Apt. 348,Lake Johnton,ND,98035,7705340779,martinsamantha@example.org,https://www.daniel-shields.com/,Mo - Su 9:00 - 19:00
+South Kristenbury Health,21476 John Land Suite 391,South Kristenbury,AL,33825,1319066578,uanderson@example.org,https://pena.com/,"Mo - Fr 7:00 - 16:00, Sa - Su Closed"
+North Joanne University Medical Group,0391 Ingram Isle,North Joanne,SD,18867,6967518791,hhood@example.net,http://rodriguez.com/,Mo - Su 9:00 - 16:00
+Amberfurt Group,44280 Stokes Neck Suite 841,Amberfurt,MI,80396,7171632575,nicole46@example.org,https://www.moss.com/,Mo - Su 7:00 - 18:00
+New Melvinstad Clinic,25580 Kelly Shoal Suite 300,New Melvinstad,WA,82142,1530161273,steven82@example.net,http://jordan.com/,Mo - Su 10:00 - 19:00
+Baileyfurt Clinic,6499 Mcmahon Manor,Baileyfurt,RI,79854,3766143731,sarah01@example.net,http://taylor.org/,"Mo - Fr 7:00 - 17:00, Sa - Su Closed"
+Lake Jessica University Medical Group,3186 Hooper Islands Suite 129,Lake Jessica,ID,29673,7424684592,jeffreyclark@example.net,https://robinson-boyd.com/,Mo - Su 10:00 - 19:00
+Wardton Memorial Hospital,5889 Kirby Views,Wardton,HI,61089,2433593020,james85@example.net,https://barton.com/,"Mo - Fr 10:00 - 17:00, Sa - Su Closed"
+South Mary Clinic,223 Martin Key Apt. 944,South Mary,AS,26488,7649672452,kevin70@example.org,http://lucas-russell.com/,Mo - Su 8:00 - 19:00
+Tamiborough University Medical Group,70062 Amanda Square,Tamiborough,MS,55616,5208540673,leecharles@example.com,http://walsh.com/,Mo - Su 9:00 - 19:00
+Port Derek Group,626 Lam Mills,Port Derek,DC,06725,8234882408,isaachudson@example.com,http://chavez.com/,Mo - Su 8:00 - 18:00
+Jessicamouth Clinic,9383 John Bridge,Jessicamouth,NH,66352,7648658305,erika80@example.com,http://wells.com/,Mo - Su 10:00 - 16:00
+Grahamshire Health Center,174 Montgomery Trafficway,Grahamshire,AK,51254,5262163397,joshuasmith@example.net,https://perez.com/,Mo - Su 8:00 - 16:00
+Taylorhaven Health,701 Benton Crossing Suite 676,Taylorhaven,LA,31956,5224593680,gonzalezmaureen@example.com,https://www.harris.com/,"Mo - Fr 7:00 - 16:00, Sa - Su Closed"
+Thomaston Medical,08943 Martin Creek,Thomaston,MI,36393,6326146308,xpeterson@example.org,https://www.peters.info/,"Mo - Fr 8:00 - 16:00, Sa - Su Closed"
+Martinside Group,257 Walls Center,Martinside,CO,46969,9395317541,carlos46@example.net,https://glass.com/,"Mo - Fr 8:00 - 16:00, Sa - Su Closed"
+New James Memorial Hospital,629 James Circle,New James,TX,79372,1864784364,jonathanbishop@example.org,http://www.dillon.com/,Mo - Su 9:00 - 17:00
+Pierceborough University Medical Group,494 Irwin Dam Suite 474,Pierceborough,CT,66748,3831290291,benjamin79@example.com,http://www.smith-williams.info/,Mo - Su 7:00 - 17:00
+Brownshire Health Center,140 Andrew Plain,Brownshire,PW,34642,5048168546,julia35@example.com,https://hobbs.com/,"Mo - Fr 7:00 - 19:00, Sa - Su Closed"
+Franklintown Health,39708 Jennifer Trail,Franklintown,CT,27455,8154938564,millerelizabeth@example.org,https://www.barry-nichols.com/,"Mo - Fr 8:00 - 18:00, Sa - Su Closed"
+Hughesshire Clinic,110 Amber Lights Suite 904,Hughesshire,OH,16420,6132272631,brandonkane@example.org,https://www.garcia.net/,Mo - Su 9:00 - 18:00
+Nelsonborough Health,76937 David Square Apt. 436,Nelsonborough,PW,18231,7305706773,pross@example.org,http://www.carr.com/,"Mo - Fr 9:00 - 19:00, Sa - Su Closed"
+Hamptonton University Medical Group,966 Cherry Square,Hamptonton,AL,41354,6226790112,jbrown@example.com,https://johnson.com/,"Mo - Fr 8:00 - 18:00, Sa - Su Closed"
+Annettemouth Clinic,798 Thompson Turnpike,Annettemouth,OK,80514,9326880965,sarahbarrera@example.net,https://benson.biz/,Mo - Su 8:00 - 18:00
+Annetteland Medical,71219 David Ford,Annetteland,TX,20639,3045596043,haynesharold@example.net,https://www.smith-price.com/,Mo - Su 8:00 - 17:00
+Nicholasview Medical Center,87109 Julie Curve Suite 050,Nicholasview,TX,32022,3768287755,gmorris@example.org,http://davis.com/,Mo - Su 10:00 - 19:00
+Nguyenstad Medical Center,4651 Perry Circle,Nguyenstad,VA,41772,5703637825,spencer04@example.org,http://stevens-elliott.com/,Mo - Su 9:00 - 19:00
+New Markchester Clinic,007 Townsend Bypass,New Markchester,WY,04629,8638028514,andersonmichael@example.com,https://sellers.info/,"Mo - Fr 10:00 - 17:00, Sa - Su Closed"
+South Courtney Medical Clinic,98756 Crystal View Apt. 006,South Courtney,KY,94887,9863064240,rosariojose@example.net,https://moore.com/,Mo - Su 8:00 - 19:00
+Scottfurt Medical,88130 James Landing Suite 731,Scottfurt,CA,82396,6169398387,charleswhitehead@example.com,http://thornton.org/,"Mo - Fr 9:00 - 19:00, Sa - Su Closed"
+South Samanthaview University Medical Group,885 Wilson Port,South Samanthaview,CA,22971,8556316482,brandyyoung@example.com,http://mcdowell-aguirre.com/,Mo - Su 7:00 - 17:00
+Port Robertburgh Memorial Hospital,02423 Thompson Flat Suite 358,Port Robertburgh,ME,32811,6815716250,mccarthyjennifer@example.net,http://www.rivera.com/,"Mo - Fr 8:00 - 19:00, Sa - Su Closed"
+Hendrickshaven Health Center,63577 Sanchez Vista,Hendrickshaven,VA,51629,9196127752,davidflores@example.org,http://gomez.org/,"Mo - Fr 10:00 - 18:00, Sa - Su Closed"
+West Stephaniemouth Medical Clinic,5704 Smith Branch,West Stephaniemouth,NJ,57394,2612885145,lthomas@example.net,https://orr.com/,"Mo - Fr 7:00 - 16:00, Sa - Su Closed"
+Jamesview Health Center,718 Harrison Well,Jamesview,AK,35989,8285437015,ericwatson@example.net,http://frazier-ross.com/,Mo - Su 7:00 - 16:00
+Wilkinsonborough Group,6396 Leonard Landing Suite 061,Wilkinsonborough,IN,37549,1599020750,carolinelopez@example.com,http://watson.com/,"Mo - Fr 8:00 - 19:00, Sa - Su Closed"
+Zacharyview Medical Center,8695 James Ford Apt. 248,Zacharyview,IN,19081,5563646163,anthony05@example.net,http://www.thompson-castillo.com/,Mo - Su 7:00 - 17:00
+North Mary Medical,84279 Mcdonald Skyway,North Mary,MO,44436,2668772023,emily04@example.org,https://smith.com/,Mo - Su 10:00 - 18:00
+East Ann Medical Center,21197 Christopher Passage Apt. 018,East Ann,LA,58414,4550493525,bettythompson@example.org,https://www.rojas-brown.com/,Mo - Su 7:00 - 19:00
+East Sethbury Clinic,2342 James Lake Suite 729,East Sethbury,PA,49551,5745952860,welliott@example.net,https://www.adams.biz/,"Mo - Fr 8:00 - 19:00, Sa - Su Closed"
+Sanchezfurt Medical Center,40101 Maxwell Rapids Suite 878,Sanchezfurt,AR,81484,1181985253,kellyeric@example.net,http://wilson.com/,"Mo - Fr 10:00 - 16:00, Sa - Su Closed"
+Swansonberg Group,7640 Ariana Mews,Swansonberg,IA,30404,1841242173,omanning@example.net,https://www.winters-bolton.com/,Mo - Su 10:00 - 16:00
+Cranechester University Medical Group,7976 Miller Harbors Suite 837,Cranechester,CT,30064,3862890164,craigwhite@example.com,https://marsh.biz/,"Mo - Fr 10:00 - 18:00, Sa - Su Closed"
+Jameschester Group,834 Valdez Fields,Jameschester,AL,52696,3908149146,christinewarren@example.com,http://www.carlson.org/,"Mo - Fr 10:00 - 18:00, Sa - Su Closed"
+West Christopher Group,547 Ballard Roads,West Christopher,DE,61086,3262131454,mcclainlaura@example.com,https://mckenzie.com/,Mo - Su 10:00 - 18:00
+North Jamie Health,1805 Quinn Harbors Suite 406,North Jamie,DC,31310,9039947283,cbenson@example.com,https://wise-mills.org/,"Mo - Fr 8:00 - 18:00, Sa - Su Closed"
+Lake Nancy Medical Center,55467 Deborah Ferry Suite 212,Lake Nancy,CA,83611,7065941709,theodoreconway@example.com,http://hoffman.com/,"Mo - Fr 8:00 - 16:00, Sa - Su Closed"
+East Michael Medical Center,2753 Carlson Prairie Apt. 685,East Michael,FM,92119,8641202896,brian99@example.net,http://www.wilson.com/,Mo - Su 8:00 - 19:00
+Chadside Medical Center,1772 Bryan Lock Apt. 581,Chadside,TX,46337,9674061628,smithjonathan@example.net,http://richardson-dixon.com/,Mo - Su 10:00 - 16:00
+North Nathan Medical Clinic,458 Dwayne Forge,North Nathan,WI,66114,1907396419,avelazquez@example.org,https://www.brooks.biz/,Mo - Su 9:00 - 19:00
+Morenoville Medical Center,225 Michael Rue Apt. 733,Morenoville,AL,28518,8971201509,robinperez@example.com,https://www.kane-carter.com/,"Mo - Fr 9:00 - 16:00, Sa - Su Closed"
+New Annatown University Medical Group,35322 Courtney Well,New Annatown,MH,64370,2122764883,melissa13@example.com,https://www.roman.com/,"Mo - Fr 9:00 - 19:00, Sa - Su Closed"
+Josefurt University Medical Group,438 Salinas Motorway,Josefurt,SC,78218,9193096421,uwilson@example.org,http://garcia.com/,"Mo - Fr 10:00 - 16:00, Sa - Su Closed"
+Hamptontown Medical,5195 Robertson Rest Suite 656,Hamptontown,CT,43631,1326481311,travis07@example.org,https://peterson.com/,Mo - Su 10:00 - 16:00
+Rogershaven Health Center,90734 Andrea Hills Suite 753,Rogershaven,SC,27297,3277018343,kevin06@example.net,http://allen.com/,Mo - Su 7:00 - 17:00
+West Jason Clinic,075 Palmer Station,West Jason,SC,67252,5658577372,rebeccajoseph@example.net,http://gilmore.com/,"Mo - Fr 7:00 - 16:00, Sa - Su Closed"
+North Christian Memorial Hospital,142 Anderson Overpass,North Christian,TN,20167,3830148653,samanthajones@example.net,http://arroyo.net/,Mo - Su 9:00 - 19:00
+East Cassandraborough Memorial Hospital,104 Jeremiah Ports Apt. 624,East Cassandraborough,SC,40493,1640324503,charlesfrye@example.org,https://holmes.net/,Mo - Su 10:00 - 18:00
+Port Williamfurt University Medical Group,5086 Kimberly Glens Apt. 478,Port Williamfurt,NH,44192,7909380160,kcobb@example.com,https://www.mitchell-reynolds.net/,"Mo - Fr 8:00 - 16:00, Sa - Su Closed"
+North Theresamouth Medical Center,830 Long Stravenue Suite 999,North Theresamouth,GU,77120,4247104409,nramos@example.net,https://stokes-haley.com/,Mo - Su 8:00 - 17:00
+Johnsonport University Medical Group,21259 Susan Well,Johnsonport,PR,48053,9608317379,stephanie01@example.net,https://www.lynch-keller.biz/,Mo - Su 8:00 - 17:00
+Derrickside Medical Clinic,896 Barrett Well Apt. 886,Derrickside,CA,17360,6706399993,castillodaniel@example.com,https://www.vasquez.biz/,Mo - Su 10:00 - 18:00
+Curtisview Medical Clinic,349 David Dam,Curtisview,CA,07388,6073214148,sandra72@example.com,http://www.mathews.biz/,Mo - Su 10:00 - 17:00
+South Janice Medical Clinic,099 Erik Glens Suite 435,South Janice,TN,89928,1743512220,jameshill@example.net,http://www.burgess.biz/,Mo - Su 9:00 - 16:00
+East Kimberly Memorial Hospital,16445 Matthews Locks,East Kimberly,ND,92242,9982266001,carlsonbrooke@example.net,https://gregory-shelton.com/,"Mo - Fr 9:00 - 17:00, Sa - Su Closed"
+Davisport Health,027 Porter Mission Apt. 113,Davisport,KS,90518,2149758060,tescobar@example.net,http://hall-white.com/,"Mo - Fr 7:00 - 16:00, Sa - Su Closed"
+Port Whitneyport Clinic,013 Mary Station Suite 340,Port Whitneyport,MP,75580,2741869283,cruzkristina@example.net,https://wilson.org/,Mo - Su 7:00 - 16:00
+West Stevenshire Memorial Hospital,361 Johnson Islands,West Stevenshire,GA,21897,7445975652,holmeskristina@example.org,http://www.davila-white.com/,"Mo - Fr 9:00 - 19:00, Sa - Su Closed"
+Lake Ericashire Medical,81829 Jeffrey Center Suite 095,Lake Ericashire,CO,87428,2476506656,ghall@example.net,http://www.clayton.com/,Mo - Su 9:00 - 16:00
+Freemanchester University Medical Group,386 Dennis Throughway,Freemanchester,CA,72009,6982601760,mathew88@example.com,http://www.johnson.com/,"Mo - Fr 8:00 - 18:00, Sa - Su Closed"
+Port Angelaport Health,2817 Smith Point,Port Angelaport,HI,60085,8230905928,marcgonzalez@example.com,http://green.net/,"Mo - Fr 9:00 - 19:00, Sa - Su Closed"
+Lake Brian Health,6644 Kenneth Mill Suite 880,Lake Brian,VA,07097,5745593531,colleenanderson@example.net,http://www.mccall.com/,"Mo - Fr 9:00 - 19:00, Sa - Su Closed"
+Coopershire Health Center,74790 Brianna Extensions Suite 009,Coopershire,RI,15984,1292825624,annjackson@example.com,http://downs.com/,Mo - Su 8:00 - 16:00
+Marychester Health Center,630 Mathews Gardens,Marychester,VA,43691,2876189403,scottthompson@example.net,http://murphy-walker.com/,Mo - Su 9:00 - 19:00
+Port Thomas Medical Clinic,088 Elijah Port Suite 635,Port Thomas,IA,05407,4984235445,stephen27@example.net,https://phillips-garcia.com/,"Mo - Fr 7:00 - 18:00, Sa - Su Closed"
+Lisaside University Medical Group,7721 Porter Course Apt. 991,Lisaside,OR,26721,4635950139,jamesortiz@example.com,http://www.jackson.info/,Mo - Su 8:00 - 17:00
+New Robert University Medical Group,2864 Pamela Estates,New Robert,HI,19686,1278887282,christina90@example.com,http://paul.com/,"Mo - Fr 8:00 - 16:00, Sa - Su Closed"
+Port Beth Medical,18693 Jeremy Crest Suite 611,Port Beth,NH,19863,1295215908,cameron26@example.net,http://nguyen.com/,Mo - Su 10:00 - 17:00
+Andresburgh Medical Center,58863 Murray Isle Suite 297,Andresburgh,WI,39401,8616571647,btaylor@example.com,http://www.robinson-rogers.com/,Mo - Su 9:00 - 19:00
+Lake Paul Medical,1143 Washington Well Suite 551,Lake Paul,SC,08580,5937123358,lbailey@example.org,http://www.winters-preston.info/,Mo - Su 10:00 - 19:00
+New Debraland Medical Clinic,1678 Christina Island Apt. 015,New Debraland,MH,83737,3298032221,steven37@example.net,http://mendoza-owens.com/,Mo - Su 8:00 - 16:00
+Janetmouth Health,394 Jeffery Burgs Apt. 413,Janetmouth,DC,73993,5910242597,vanessa17@example.com,https://www.lucas.info/,"Mo - Fr 9:00 - 17:00, Sa - Su Closed"
+Stewartside Memorial Hospital,5726 Jones Landing Apt. 875,Stewartside,TX,35691,5582765818,michael93@example.org,http://www.peters.com/,Mo - Su 10:00 - 18:00
+Port Thomasshire Group,95033 Gibbs Isle,Port Thomasshire,DE,11568,2705067459,jonathansims@example.org,http://www.long-wood.com/,"Mo - Fr 9:00 - 17:00, Sa - Su Closed"
+Port Leslie Group,73542 Pena Views Suite 890,Port Leslie,IA,53370,3360885848,daniel38@example.net,http://www.robinson.info/,"Mo - Fr 8:00 - 16:00, Sa - Su Closed"
+Amyberg Health,039 Garcia Manors Apt. 343,Amyberg,MI,87890,5474146732,staffordjames@example.net,https://clark-cruz.com/,Mo - Su 8:00 - 19:00
+Bellside Memorial Hospital,887 Henderson Isle Apt. 591,Bellside,WI,83176,6643779048,fpaul@example.org,http://melton-williams.com/,"Mo - Fr 7:00 - 18:00, Sa - Su Closed"
+South Michelle Health Center,108 Ward Ville Suite 026,South Michelle,WV,56488,6452075646,courtney89@example.net,http://www.andrews-kim.com/,"Mo - Fr 7:00 - 17:00, Sa - Su Closed"
+Port Stevenstad Medical Clinic,281 Laurie Via Suite 849,Port Stevenstad,MO,75218,4718620880,reneejones@example.net,http://www.smith.org/,Mo - Su 7:00 - 17:00
+North Nicoleside Medical,00621 Graves Ranch Suite 719,North Nicoleside,DC,98456,4547170625,ycollins@example.net,https://randall-franklin.org/,"Mo - Fr 8:00 - 17:00, Sa - Su Closed"
+Gonzalezberg Health,5370 Roberts Trail,Gonzalezberg,VT,90793,7396377287,matthew24@example.net,http://calderon.com/,"Mo - Fr 8:00 - 18:00, Sa - Su Closed"
+West Jacqueline University Medical Group,8575 Patricia Isle,West Jacqueline,NH,23235,5195284656,fernandezstephanie@example.org,https://smith-glenn.com/,Mo - Su 7:00 - 17:00
+North Amymouth Memorial Hospital,48015 Cynthia Valleys,North Amymouth,NH,65333,3136026057,catherine10@example.net,https://kramer.org/,Mo - Su 8:00 - 18:00
+East Shanechester Medical Center,94248 Evans Crescent Suite 332,East Shanechester,CA,26796,4876908036,bautistaalexander@example.org,http://martinez-gomez.info/,"Mo - Fr 7:00 - 16:00, Sa - Su Closed"
+New Robert Health,61041 Jimenez Canyon,New Robert,IA,83238,8059377110,melissastewart@example.com,http://wood.com/,Mo - Su 9:00 - 19:00
+Lake Adamberg Group,822 Atkins Club Suite 331,Lake Adamberg,MT,33868,6567820829,ledwards@example.com,http://www.martinez-phelps.net/,"Mo - Fr 8:00 - 16:00, Sa - Su Closed"
+Chadfurt Memorial Hospital,673 Robles Center,Chadfurt,DC,61615,4691559613,jamesadams@example.net,https://roth-johnston.info/,Mo - Su 7:00 - 19:00
+South Rachelview Medical Clinic,5553 Ryan Common,South Rachelview,CT,94988,1397147865,roy72@example.com,http://hernandez.com/,Mo - Su 10:00 - 17:00
+Brownville Memorial Hospital,6525 Taylor Drives Apt. 073,Brownville,OK,99604,9558917983,michaelvaldez@example.org,http://www.lewis.biz/,Mo - Su 7:00 - 17:00
+Jacquelineshire University Medical Group,1381 Ramirez Village,Jacquelineshire,UT,95892,8095562345,williamsandrew@example.com,https://moore.com/,Mo - Su 7:00 - 16:00
+Matthewberg Memorial Hospital,931 Smith Summit Suite 539,Matthewberg,AK,62901,1206414681,sara70@example.net,https://www.smith.com/,"Mo - Fr 9:00 - 16:00, Sa - Su Closed"
+Jasonshire Memorial Hospital,62874 Jonathan Tunnel Suite 052,Jasonshire,FL,99590,4080412340,lopezelizabeth@example.net,http://erickson.org/,"Mo - Fr 8:00 - 16:00, Sa - Su Closed"
+Lake Tonya Medical Clinic,985 Newman Place Apt. 183,Lake Tonya,ME,91236,7186447565,baileyallen@example.org,https://www.gates-horne.com/,"Mo - Fr 10:00 - 16:00, Sa - Su Closed"
+South Sean Medical Clinic,6422 Tiffany Point Suite 871,South Sean,IN,78579,9635271987,jason34@example.com,https://www.howard-buchanan.com/,Mo - Su 7:00 - 19:00
+East Jessicamouth Medical Center,458 Kristina Mountain Suite 188,East Jessicamouth,UT,03006,3171109054,rmckinney@example.org,https://dixon.com/,"Mo - Fr 10:00 - 16:00, Sa - Su Closed"
+Michellemouth Memorial Hospital,85535 Jones Lane,Michellemouth,MD,67028,5872074936,christymorgan@example.net,https://www.payne.com/,"Mo - Fr 10:00 - 16:00, Sa - Su Closed"
+South Leslie Medical Clinic,191 Andrea Glens,South Leslie,ID,68887,8825249273,briankaiser@example.org,https://www.stanton-wang.info/,"Mo - Fr 9:00 - 16:00, Sa - Su Closed"
+Crawfordville University Medical Group,569 Julie Grove,Crawfordville,AZ,65305,7421415676,rubiopatricia@example.net,http://johnson.com/,"Mo - Fr 8:00 - 17:00, Sa - Su Closed"
+Lake William Group,140 Larry Park Suite 318,Lake William,AZ,90285,6863916225,lcasey@example.org,https://shah-turner.com/,Mo - Su 7:00 - 19:00
+Thomasbury Memorial Hospital,582 Bruce Ford,Thomasbury,VI,28176,5066965959,james72@example.com,https://hughes.biz/,"Mo - Fr 7:00 - 19:00, Sa - Su Closed"
+West Carla Medical Center,815 Hale Unions,West Carla,SD,64820,7684223348,perezbrittney@example.net,https://www.hamilton-martin.com/,Mo - Su 8:00 - 17:00
+Weberfurt Medical,7587 Montgomery Point Suite 276,Weberfurt,IN,88730,2215054130,lisa54@example.org,http://mullins-simon.com/,Mo - Su 8:00 - 16:00
+Lake Kristin Health Center,6169 James Trace Suite 990,Lake Kristin,KS,11600,7909653219,langandrew@example.org,https://www.mora.info/,Mo - Su 10:00 - 16:00
+Hinesside University Medical Group,0175 Hayes Springs,Hinesside,VA,37078,6586159333,jonathan48@example.net,http://www.gibson-johnson.info/,"Mo - Fr 10:00 - 18:00, Sa - Su Closed"
+East Christian Group,531 Nicole Squares Suite 792,East Christian,CT,48556,4678066704,joshuamurphy@example.com,http://ortiz-anderson.biz/,Mo - Su 10:00 - 16:00
+South Debbie Health,2644 Martinez Point,South Debbie,SC,01142,3975143544,mackbryan@example.com,http://www.shepherd.com/,"Mo - Fr 8:00 - 18:00, Sa - Su Closed"
+North Johnhaven Memorial Hospital,8146 Edward Mission Apt. 947,North Johnhaven,NY,03457,6550711979,kcarr@example.com,http://richardson.com/,"Mo - Fr 8:00 - 18:00, Sa - Su Closed"
+Edwardchester Medical,61388 Bradley Curve,Edwardchester,CT,74137,1763101728,iayers@example.net,http://green.com/,"Mo - Fr 7:00 - 17:00, Sa - Su Closed"
+Lindsaymouth Health Center,3697 Castro Mill Apt. 268,Lindsaymouth,ME,64822,2846521638,xarmstrong@example.org,http://cunningham-skinner.com/,Mo - Su 10:00 - 18:00
+Rhondaburgh Memorial Hospital,9096 Charles Cliffs,Rhondaburgh,WY,24065,9199226444,ashleyyoung@example.net,http://www.gonzales-baker.com/,Mo - Su 9:00 - 18:00
+Lake Johnchester Medical Center,50146 Miller Loop,Lake Johnchester,MI,95922,5623171946,brandon70@example.net,https://www.simmons.biz/,"Mo - Fr 8:00 - 17:00, Sa - Su Closed"
+Larachester Medical Clinic,307 Karen Centers Apt. 567,Larachester,ME,53306,5721131535,johnsonlonnie@example.net,http://www.smith.org/,"Mo - Fr 10:00 - 18:00, Sa - Su Closed"
+East Angelashire Medical,6965 Hayden Ford Apt. 006,East Angelashire,KY,67418,6332370562,bsmith@example.org,https://morgan-morgan.com/,Mo - Su 9:00 - 18:00
+East Brandon Group,497 Sampson Harbors Apt. 771,East Brandon,LA,09446,7418031226,karaphillips@example.com,http://werner.com/,"Mo - Fr 7:00 - 18:00, Sa - Su Closed"
+Donaldmouth Group,731 Hughes Crest Suite 360,Donaldmouth,OK,69502,9191254687,umoran@example.com,https://fowler-hickman.com/,Mo - Su 7:00 - 19:00
+Lake Brittanyville Health Center,66328 Evans Port,Lake Brittanyville,VT,37179,1489413581,gyoung@example.com,http://ramsey.com/,"Mo - Fr 8:00 - 18:00, Sa - Su Closed"
+East Richardstad Group,659 Kristen Burgs,East Richardstad,GU,45903,8811398239,ashleymills@example.net,http://brooks.net/,Mo - Su 10:00 - 18:00
+North Wendyberg Health Center,488 Henderson Valleys Suite 110,North Wendyberg,FL,52309,3845382855,dballard@example.org,http://www.rios.biz/,"Mo - Fr 8:00 - 18:00, Sa - Su Closed"
+Alexville Health Center,2198 Molly Springs Suite 683,Alexville,WI,90551,5758175746,dylanpetty@example.org,http://www.reyes.net/,"Mo - Fr 8:00 - 17:00, Sa - Su Closed"
+Jeremytown Medical Clinic,93615 Cantu Skyway,Jeremytown,MP,57752,2337501914,millerrhonda@example.org,http://lindsey.com/,Mo - Su 10:00 - 18:00
+Hunterfurt Clinic,2602 Stevens Canyon,Hunterfurt,MH,45885,7411258715,alvarezcarrie@example.net,http://www.henderson.com/,"Mo - Fr 10:00 - 18:00, Sa - Su Closed"
+Candaceberg Medical Center,54659 Willis Cliff,Candaceberg,GU,96132,4661903723,michael38@example.org,http://www.craig-miller.net/,Mo - Su 10:00 - 19:00
+North Kellyville Medical Center,388 Jensen Trail Suite 179,North Kellyville,ND,56406,5372078334,tyler65@example.com,http://acevedo-flynn.com/,"Mo - Fr 9:00 - 16:00, Sa - Su Closed"
+New Randall Medical Center,969 Jeffrey Valleys Suite 560,New Randall,DE,32018,7155669958,brittany25@example.com,http://www.callahan-lucas.com/,Mo - Su 9:00 - 18:00
+East Bradleyborough Medical Center,5770 Wise Vista,East Bradleyborough,PA,42198,5637410445,nicholas05@example.com,https://www.graham-hickman.com/,"Mo - Fr 8:00 - 19:00, Sa - Su Closed"
+North Rachelton Medical Clinic,4473 Jeffrey Islands,North Rachelton,ME,07466,2842506793,kelly99@example.net,http://robinson.com/,"Mo - Fr 8:00 - 16:00, Sa - Su Closed"
+Hannahton Memorial Hospital,67086 Fitzgerald Lakes Suite 021,Hannahton,IL,00808,7648907927,ashleemckee@example.com,http://wise.com/,Mo - Su 9:00 - 17:00
+Pittmanchester Medical Center,127 House Crossroad Apt. 049,Pittmanchester,MH,82150,5577682640,xwoods@example.net,https://miller-williams.com/,"Mo - Fr 10:00 - 19:00, Sa - Su Closed"
+Forbesmouth Health,166 Hernandez Harbors Apt. 489,Forbesmouth,PA,68957,8167974840,jenniferpoole@example.org,http://thomas.com/,"Mo - Fr 7:00 - 18:00, Sa - Su Closed"
+North Kevin Medical,6005 Garcia Extensions,North Kevin,NE,73968,1381905555,higginsjason@example.com,http://www.mason.net/,Mo - Su 9:00 - 17:00
+Roberttown Medical,53691 Reeves Park,Roberttown,LA,96077,3038083170,diazjohnny@example.org,http://www.berry-hull.info/,"Mo - Fr 8:00 - 19:00, Sa - Su Closed"
+South Scottview Health Center,94479 Vanessa Ways,South Scottview,PR,29294,1020587079,zimmermannicholas@example.org,http://www.martin.biz/,"Mo - Fr 10:00 - 16:00, Sa - Su Closed"
+Spenceshire Group,047 Alan Wall Suite 367,Spenceshire,WA,67621,7585214659,margaretscott@example.org,http://griffin-vasquez.com/,Mo - Su 10:00 - 18:00
+Danamouth Health Center,38616 Gregory Throughway,Danamouth,MO,60869,1295408609,kimberlyvelez@example.net,http://dunn.net/,Mo - Su 7:00 - 18:00
+Lake Michelleport University Medical Group,92149 Heather Forge Suite 099,Lake Michelleport,FL,09449,3592336493,sarahthompson@example.org,https://torres.com/,"Mo - Fr 8:00 - 18:00, Sa - Su Closed"
+Littlehaven Group,6621 Arnold Streets Suite 626,Littlehaven,FM,22454,7574510379,lindseyroth@example.com,http://walter.com/,Mo - Su 7:00 - 17:00
+Lake Reginald Health,84529 Martin Parks Suite 116,Lake Reginald,NM,42727,9853065025,christopherharrison@example.org,http://www.curry-murphy.com/,"Mo - Fr 8:00 - 17:00, Sa - Su Closed"
+East Dawn Group,1890 Laura Ways,East Dawn,NC,16639,3668821392,noah52@example.net,https://sparks.com/,"Mo - Fr 9:00 - 17:00, Sa - Su Closed"
+Freemanview Clinic,7498 Melissa Gateway Suite 101,Freemanview,LA,14344,2599420843,ipittman@example.org,https://fleming.com/,Mo - Su 8:00 - 18:00
+Perezshire Medical Clinic,027 Jessica Shores,Perezshire,DE,66717,7183451411,garrettelizabeth@example.org,https://www.benson.com/,"Mo - Fr 10:00 - 17:00, Sa - Su Closed"
+Johnston Clinic,930 Jessica View Suite 196,Johnston,WV,02741,2721270549,john34@example.net,http://www.lawrence-jackson.net/,"Mo - Fr 8:00 - 19:00, Sa - Su Closed"
+Lake Mary Medical,2247 Matthew Glens,Lake Mary,NE,90278,4497596693,cynthiabauer@example.com,http://beasley-thomas.com/,Mo - Su 7:00 - 17:00
+Haasstad Memorial Hospital,66430 Sullivan Landing Suite 869,Haasstad,DE,56446,7039430673,alyssa18@example.net,https://gomez.com/,"Mo - Fr 7:00 - 16:00, Sa - Su Closed"
+Kellyfort Medical,20000 Toni Curve Apt. 240,Kellyfort,CT,94171,5177729187,rodgersjulia@example.net,https://www.doyle.com/,"Mo - Fr 10:00 - 16:00, Sa - Su Closed"
+North Jennifer University Medical Group,225 Bill Mill,North Jennifer,CT,78465,9698190731,hendersonsteven@example.com,http://travis.com/,Mo - Su 7:00 - 16:00
+North Christopher University Medical Group,72724 Melinda Drive,North Christopher,KS,06005,9909246883,devin71@example.org,http://www.brown.com/,"Mo - Fr 9:00 - 18:00, Sa - Su Closed"
+Lake Cynthiaside University Medical Group,74987 William Vista,Lake Cynthiaside,PW,47867,4108724489,mendozakatherine@example.com,https://www.webb-harris.com/,Mo - Su 9:00 - 16:00
+South Russell Medical,1124 Patterson River,South Russell,CO,69008,3313320987,kristin34@example.net,https://www.maynard.org/,"Mo - Fr 9:00 - 16:00, Sa - Su Closed"
+Andersonfurt Medical Clinic,6790 Carrie Neck Apt. 903,Andersonfurt,AS,91638,5953229525,williamskimberly@example.net,http://joyce.com/,Mo - Su 10:00 - 16:00
+Darrelltown Health Center,959 Katherine Points,Darrelltown,RI,17991,4129371131,lindabaker@example.org,https://riggs-malone.org/,"Mo - Fr 10:00 - 18:00, Sa - Su Closed"
+Lake Josephchester Medical Center,479 Sarah Fields Suite 470,Lake Josephchester,HI,83362,6348618094,rjones@example.org,http://www.vang-johnson.com/,"Mo - Fr 9:00 - 19:00, Sa - Su Closed"
+South Connie Clinic,952 Scott Lodge,South Connie,FL,14934,2074006829,emma99@example.com,http://brown-griffith.com/,"Mo - Fr 7:00 - 19:00, Sa - Su Closed"
+West Josephton Memorial Hospital,6543 King Summit,West Josephton,UT,82607,9049750930,amywilliams@example.net,https://williamson.com/,"Mo - Fr 7:00 - 19:00, Sa - Su Closed"
+Jerrybury Medical Clinic,0730 Mora Branch,Jerrybury,CO,84332,4169946075,ehartman@example.org,https://martinez-bennett.info/,"Mo - Fr 10:00 - 17:00, Sa - Su Closed"
+West Carrie Group,3436 Dunn Via,West Carrie,AK,22897,5919689695,cookrose@example.net,http://www.lopez-hays.info/,Mo - Su 8:00 - 16:00
+Selenaside Medical Clinic,32481 Oneill Streets Apt. 913,Selenaside,AZ,06729,8165859583,othomas@example.net,https://ramsey-evans.com/,Mo - Su 8:00 - 16:00
+New Louis University Medical Group,9654 Smith Greens Apt. 226,New Louis,VT,44976,9414366845,jessica44@example.org,https://www.moore.com/,Mo - Su 8:00 - 18:00
+Lake Misty University Medical Group,1810 Phillips Burg,Lake Misty,VA,48462,7073474502,qforbes@example.org,https://baker.com/,Mo - Su 8:00 - 18:00
+Perezland Medical Center,76972 Victor Plains,Perezland,FM,30811,6593305813,morristravis@example.net,http://www.fields.com/,Mo - Su 7:00 - 17:00
+South Erikberg Memorial Hospital,9606 Donald Falls Suite 142,South Erikberg,IN,48954,1444117689,christina40@example.org,https://robinson.biz/,"Mo - Fr 10:00 - 16:00, Sa - Su Closed"
+North Erinstad Health Center,0096 Steven Spur,North Erinstad,IN,77127,5847144340,julie52@example.org,https://smith.com/,"Mo - Fr 8:00 - 17:00, Sa - Su Closed"
+Toddstad Medical,429 Tammy Alley,Toddstad,NY,42629,5153882391,dawn36@example.org,http://www.boyd-thompson.com/,Mo - Su 10:00 - 16:00
+South Amy Clinic,639 Stephenson Trace,South Amy,DC,39828,3487484262,gabrielleruiz@example.org,http://www.bean.com/,"Mo - Fr 10:00 - 17:00, Sa - Su Closed"
+South Mary Medical Clinic,504 Jacob Drive,South Mary,MH,66758,2938403772,rmays@example.com,http://fry.com/,"Mo - Fr 9:00 - 16:00, Sa - Su Closed"
+East Michele Memorial Hospital,55770 Elizabeth Parkways,East Michele,PW,29677,9543054000,ssimmons@example.net,http://www.shaffer-jones.com/,"Mo - Fr 10:00 - 17:00, Sa - Su Closed"
+Port Derekville Medical Center,0704 Brown Prairie,Port Derekville,ID,26782,4596332665,johnathanchoi@example.net,https://garcia-poole.org/,Mo - Su 8:00 - 19:00
+Port Matthew Health Center,6015 Omar Course,Port Matthew,CA,74300,9749468485,william35@example.net,http://harris.org/,"Mo - Fr 9:00 - 19:00, Sa - Su Closed"
+New Deanna Group,6168 Wheeler Port,New Deanna,IN,63753,8498154360,hunter69@example.net,http://www.jones.info/,"Mo - Fr 10:00 - 19:00, Sa - Su Closed"
+Lake Jasonfurt Medical,901 James Islands,Lake Jasonfurt,ID,11076,7219343546,kristinaellis@example.org,https://davis.com/,"Mo - Fr 9:00 - 18:00, Sa - Su Closed"
+Hernandezfurt Medical Center,59687 Ashley Meadows Suite 389,Hernandezfurt,MD,01076,1485007685,darryl28@example.net,https://www.mcdonald.com/,Mo - Su 9:00 - 19:00
+South Josephberg Medical Center,416 Dixon Prairie,South Josephberg,TN,83466,7043070173,katrina43@example.org,http://woods-peck.com/,Mo - Su 8:00 - 17:00
+Burchbury Medical Clinic,0373 Rhonda Cove,Burchbury,TX,18142,5669305711,julie76@example.net,https://coleman.com/,Mo - Su 10:00 - 16:00
+New Shane Health,077 Angela Square,New Shane,TN,11372,1197901674,waltersjulia@example.com,https://www.thompson-griffith.com/,Mo - Su 7:00 - 19:00
+New Georgeberg Group,12996 Patricia Walk,New Georgeberg,VI,03778,8675580244,danapalmer@example.net,http://www.flores.biz/,Mo - Su 9:00 - 17:00
+Tylermouth Health Center,86484 Scott Ford Suite 632,Tylermouth,IL,64536,2833970457,gcastro@example.net,https://www.jenkins-smith.info/,"Mo - Fr 9:00 - 18:00, Sa - Su Closed"
+East Carlyshire Medical Center,5869 Moore Mission Suite 863,East Carlyshire,WV,81147,5559719352,amanda37@example.org,https://www.king.com/,"Mo - Fr 7:00 - 19:00, Sa - Su Closed"
+Paynehaven Medical Clinic,0831 Farmer Extension Apt. 385,Paynehaven,NH,08924,6546242655,ianleonard@example.com,http://flores.net/,Mo - Su 9:00 - 19:00
+Waltontown Medical Center,96061 Angela Glen Apt. 325,Waltontown,AK,38313,6478787418,cabreradaniel@example.org,https://www.evans-mccarthy.org/,"Mo - Fr 9:00 - 18:00, Sa - Su Closed"
+New Lori Health,511 Victoria Expressway,New Lori,WV,80631,6550352774,jonesmichelle@example.org,https://www.moore.com/,Mo - Su 8:00 - 18:00
+East Jonathantown Medical,94028 Peck Ferry Apt. 054,East Jonathantown,AS,83485,5693703167,jennifermartinez@example.com,http://www.morrow-hughes.com/,"Mo - Fr 9:00 - 19:00, Sa - Su Closed"
+Reynoldschester Memorial Hospital,5756 Potter Prairie Apt. 356,Reynoldschester,AL,23469,2071588902,riveragary@example.org,https://www.haley.com/,"Mo - Fr 8:00 - 18:00, Sa - Su Closed"
+South Casey Medical Center,956 Sara Gateway,South Casey,UT,15057,1793017495,kennedyvictor@example.com,http://williams.net/,Mo - Su 7:00 - 18:00
+Williamsborough Health,917 Drake Hollow Suite 333,Williamsborough,VT,59901,7305267145,rachelbrown@example.org,http://www.clarke-adams.org/,"Mo - Fr 7:00 - 18:00, Sa - Su Closed"
+Davismouth Medical Center,38890 Gibbs Springs,Davismouth,AL,84638,1210614703,trodriguez@example.org,http://www.gibbs.com/,"Mo - Fr 10:00 - 18:00, Sa - Su Closed"
+Vanessaton Clinic,9010 Davidson Avenue,Vanessaton,NC,34265,5693636313,mitchellmartin@example.com,http://www.neal.biz/,"Mo - Fr 10:00 - 16:00, Sa - Su Closed"
+North Jonathanville University Medical Group,1860 Gonzalez Station,North Jonathanville,SC,88764,8391222434,ericsmith@example.net,http://www.diaz-cobb.com/,Mo - Su 9:00 - 16:00
+West Christopherland Medical,9597 Sarah Locks Suite 903,West Christopherland,NH,18751,6178452181,mlang@example.org,https://www.smith.com/,Mo - Su 10:00 - 17:00
+South Barbaratown Memorial Hospital,8245 Tara Ranch Suite 286,South Barbaratown,UT,86915,6835650332,hreeves@example.net,https://www.jackson-huffman.com/,Mo - Su 7:00 - 17:00
+Richardsonberg Health Center,6031 James Mount Suite 009,Richardsonberg,IN,10708,1117771089,cody12@example.com,https://www.hawkins.org/,Mo - Su 10:00 - 17:00
+New Allison Medical Clinic,06398 Hines Extension Apt. 307,New Allison,DE,14939,3196693545,joann15@example.org,http://www.vasquez-george.com/,Mo - Su 9:00 - 18:00
+Joannhaven Medical Clinic,92429 Bailey Drives,Joannhaven,IN,97511,1295026813,elizabeth26@example.net,http://www.allen.com/,Mo - Su 8:00 - 16:00
+East Kurtland Group,23483 Krystal Dale,East Kurtland,WY,80741,6163609485,esharp@example.org,http://www.evans-smith.com/,Mo - Su 7:00 - 16:00
+Burkeburgh Group,667 Roth Square Suite 033,Burkeburgh,HI,09738,1619452059,priceandrea@example.com,http://www.frye.info/,Mo - Su 7:00 - 19:00
+Kevinborough Clinic,4157 Annette Rest,Kevinborough,DC,40180,6266978736,cooperlaura@example.com,http://rosario.com/,Mo - Su 10:00 - 16:00
+West Gary Medical Clinic,184 Rush Cape,West Gary,NE,27971,4865172945,sandrabeard@example.com,http://shannon-flowers.info/,Mo - Su 9:00 - 19:00
+New Veronica Memorial Hospital,0675 Kayla Cove,New Veronica,FM,16626,7867335906,stacyrichardson@example.net,https://www.jenkins.com/,"Mo - Fr 8:00 - 19:00, Sa - Su Closed"
+New Christopherbury Medical,4417 Ashley Road,New Christopherbury,FL,54329,2744664275,greenejoe@example.org,https://calhoun.org/,"Mo - Fr 8:00 - 18:00, Sa - Su Closed"
+South Thomas University Medical Group,8830 Nolan Freeway Suite 986,South Thomas,MN,17601,6175703581,jeffreyhensley@example.org,https://cooper.com/,Mo - Su 9:00 - 19:00
+Kaylaport Health Center,1523 Cabrera Trail,Kaylaport,LA,95238,8428157226,coopertheresa@example.org,https://www.garcia.com/,Mo - Su 8:00 - 19:00
+New Ericaburgh Group,28572 Wright Canyon,New Ericaburgh,MI,11578,2751492430,maxwellryan@example.org,http://www.rios.com/,Mo - Su 8:00 - 19:00
+Annachester Clinic,7864 Brian Ridge,Annachester,OH,02206,9170039562,jennifer52@example.net,https://www.allen-sims.com/,Mo - Su 9:00 - 19:00
+New Sean Memorial Hospital,02432 Stark Road,New Sean,MI,60963,1383037143,eswanson@example.net,https://martinez.com/,Mo - Su 10:00 - 16:00
+South Karen Memorial Hospital,6565 Rodriguez Creek,South Karen,MP,45250,1524324726,rosariobrandon@example.net,https://brown.net/,Mo - Su 9:00 - 18:00
+South Caroline Medical,07088 Kristina Spring Apt. 889,South Caroline,NH,01610,6848229833,jkramer@example.net,https://lee.com/,"Mo - Fr 10:00 - 19:00, Sa - Su Closed"
+Turnerside Medical Center,996 Woodard Forks,Turnerside,OH,99074,8546029531,charlesmendoza@example.net,https://www.peterson.org/,"Mo - Fr 8:00 - 17:00, Sa - Su Closed"
+Heathertown Health,8227 Allison Isle,Heathertown,OH,92929,1165019606,katrina33@example.org,http://lewis.com/,Mo - Su 10:00 - 19:00
+Markberg Clinic,3716 Gonzalez Hills,Markberg,MN,57574,8960432985,george99@example.net,http://www.hood-jordan.com/,Mo - Su 9:00 - 16:00
+South Brianna Group,5520 Morris Trace,South Brianna,MP,19946,7738232044,burgessmatthew@example.org,http://www.coleman-mcintosh.biz/,"Mo - Fr 9:00 - 19:00, Sa - Su Closed"
+Robertoburgh Memorial Hospital,5386 Jessica Ville Apt. 608,Robertoburgh,GU,31634,9223760493,thompsonpatricia@example.com,https://wade.org/,"Mo - Fr 9:00 - 18:00, Sa - Su Closed"
+Hannahborough Clinic,0044 Campbell Ramp Suite 742,Hannahborough,OH,40651,3514697766,peter73@example.net,https://www.massey-thomas.com/,"Mo - Fr 8:00 - 19:00, Sa - Su Closed"
+South Kevin Group,11562 Clark Pine Suite 759,South Kevin,IL,62254,8768624273,washingtonlisa@example.net,http://www.madden-snyder.com/,Mo - Su 9:00 - 19:00
+Smithport University Medical Group,6446 Maria Stream Apt. 550,Smithport,NJ,46457,9294313819,connie64@example.net,https://www.gutierrez.com/,Mo - Su 10:00 - 19:00
+Patrickville Clinic,0097 Ashley Lake Suite 436,Patrickville,KY,79307,4764845849,amiddleton@example.com,http://kirk.com/,"Mo - Fr 10:00 - 16:00, Sa - Su Closed"
+West David Health,646 Wilson Hill Apt. 617,West David,OR,81343,6470427332,icosta@example.net,https://www.reilly-miller.biz/,"Mo - Fr 9:00 - 18:00, Sa - Su Closed"
+Martineztown Health,7347 Anthony Drive Suite 111,Martineztown,CT,97631,5995196891,josephthomas@example.org,http://www.williams.net/,Mo - Su 7:00 - 17:00
+New Marissa Health,085 Friedman Stream,New Marissa,MP,98541,7532458860,michael43@example.org,http://hayes.com/,Mo - Su 9:00 - 19:00
+Huberland Medical,74088 Hammond Pike Apt. 778,Huberland,MI,48462,9667416027,nelsonernest@example.org,https://www.barrera.biz/,"Mo - Fr 9:00 - 19:00, Sa - Su Closed"
+Alyssaton University Medical Group,25905 Melissa Stravenue,Alyssaton,VA,13912,9095792696,gsimmons@example.org,http://spence-rivas.com/,Mo - Su 10:00 - 17:00
+New Paul Health Center,91793 Kline Ports,New Paul,KY,08267,3653786549,rogermiller@example.com,http://www.quinn.com/,"Mo - Fr 10:00 - 16:00, Sa - Su Closed"
+East Cassiebury Memorial Hospital,50711 Smith Flat Suite 760,East Cassiebury,CT,65188,5010062949,monicaholt@example.com,http://www.garcia.com/,Mo - Su 8:00 - 17:00
+North Erika Group,152 Linda Walk Apt. 070,North Erika,IN,60150,1540425099,sanderson@example.net,https://jones.com/,Mo - Su 9:00 - 18:00
+South Zacharyton Health,4696 Kevin Isle,South Zacharyton,IN,84213,5762043101,zamorakristen@example.net,https://www.cruz.com/,Mo - Su 8:00 - 18:00
+Judithview Memorial Hospital,090 David Track,Judithview,OK,13736,4632830717,shannon33@example.org,http://www.williams-patterson.com/,Mo - Su 7:00 - 16:00
+Moorefort Group,48907 Martin Brooks,Moorefort,ND,66372,1675873956,aguirrederek@example.com,https://sanchez.com/,Mo - Su 9:00 - 17:00
+Valdezberg Medical,48258 Moore Branch Suite 895,Valdezberg,LA,07375,7788217010,vboyd@example.net,http://www.hanson.com/,Mo - Su 8:00 - 16:00
+Brandonmouth Medical Clinic,8547 Smith Drive Suite 601,Brandonmouth,VI,91401,6507796617,jonathantaylor@example.net,https://www.shea-mueller.net/,Mo - Su 8:00 - 18:00
+West Johnshire Clinic,02238 Meagan Parkways,West Johnshire,MN,53261,9251098060,kimberlyfowler@example.com,http://www.love.org/,"Mo - Fr 7:00 - 17:00, Sa - Su Closed"
+Danielmouth Clinic,92706 Mary Ways Apt. 898,Danielmouth,MI,61480,6613541877,nbarnes@example.com,http://www.smith.com/,Mo - Su 10:00 - 19:00
+North Melanie Medical Center,80114 Knox Forge Suite 436,North Melanie,VT,09577,6253415697,jason87@example.com,http://www.simon.com/,"Mo - Fr 9:00 - 16:00, Sa - Su Closed"
+North Robertmouth Medical Center,3404 Hamilton Junctions,North Robertmouth,DE,91697,5205051509,becky65@example.net,https://www.smith.net/,"Mo - Fr 10:00 - 18:00, Sa - Su Closed"
+Rebeccaland Medical Clinic,6590 Levine Walk Apt. 913,Rebeccaland,HI,91216,9300529366,rclark@example.net,http://www.white-romero.org/,Mo - Su 9:00 - 17:00
+West Stephenland University Medical Group,520 Hickman Rue Apt. 181,West Stephenland,MO,10618,7524214302,olivia53@example.org,https://www.davis.org/,"Mo - Fr 7:00 - 17:00, Sa - Su Closed"
+Davisshire Memorial Hospital,74578 Dixon Court,Davisshire,MP,65892,8736703327,alexis84@example.net,https://www.smith.com/,Mo - Su 8:00 - 17:00
+Katherinechester Clinic,584 Ruiz Loop Suite 938,Katherinechester,IA,34428,8787422980,xaguilar@example.net,https://hoffman.info/,"Mo - Fr 7:00 - 16:00, Sa - Su Closed"
+South Samanthaberg University Medical Group,2447 White Expressway Apt. 770,South Samanthaberg,MA,65120,4600206681,michelefrye@example.com,https://taylor.biz/,Mo - Su 8:00 - 17:00
+New Patriciaview Health,155 Sylvia Springs Suite 404,New Patriciaview,AS,12825,8276548564,brookseric@example.com,http://baker.com/,Mo - Su 10:00 - 18:00
+West Courtneymouth Memorial Hospital,8274 Ann Burgs Suite 300,West Courtneymouth,HI,47527,8820945516,maureen70@example.com,https://www.anderson.net/,"Mo - Fr 10:00 - 18:00, Sa - Su Closed"
+Hernandezfort Medical Clinic,79088 Sexton Mills Suite 329,Hernandezfort,NC,27108,6907227160,whitakervictor@example.org,http://www.sanchez-rogers.com/,"Mo - Fr 9:00 - 17:00, Sa - Su Closed"
+Murrayland Clinic,70440 Diaz Glens Suite 027,Murrayland,WY,58960,3200376156,jbruce@example.org,http://jacobs.com/,Mo - Su 8:00 - 16:00
+Munozmouth Clinic,120 Sara Dale Apt. 957,Munozmouth,SD,01051,7090053009,gsparks@example.net,http://arnold-jackson.com/,Mo - Su 10:00 - 19:00
+South Briannamouth Health,69279 Jesse Green,South Briannamouth,MH,48394,3745786672,david43@example.org,http://www.salazar.com/,Mo - Su 10:00 - 17:00
+Amandaview Medical Center,876 Vargas Estates Apt. 534,Amandaview,UT,59361,6052941653,cblankenship@example.net,https://steele-thompson.info/,Mo - Su 7:00 - 16:00
+East Robert Group,26591 Matthew Track,East Robert,VI,73887,4386022890,jeffery99@example.com,http://www.hall.com/,"Mo - Fr 8:00 - 19:00, Sa - Su Closed"
+Lake Richard Health,2140 Thomas Wells,Lake Richard,IN,72854,6974378423,gcoleman@example.net,http://scott.com/,"Mo - Fr 10:00 - 16:00, Sa - Su Closed"
+West Biancaburgh Medical Clinic,74676 Hernandez Gardens Suite 055,West Biancaburgh,CO,38012,5239352641,amandalopez@example.net,http://fletcher.biz/,"Mo - Fr 8:00 - 16:00, Sa - Su Closed"
+West Kathrynmouth Group,4457 Makayla Shore Apt. 760,West Kathrynmouth,NV,48104,9286457859,qwest@example.net,http://spencer.com/,Mo - Su 10:00 - 18:00
+Sandersfurt Memorial Hospital,19701 Moody Centers,Sandersfurt,AS,23817,7390212166,anthony33@example.org,http://www.roberts.com/,"Mo - Fr 10:00 - 19:00, Sa - Su Closed"
+Port Sarah Health,8632 Breanna Road Suite 331,Port Sarah,KY,75901,5790937925,sarahroberts@example.org,http://www.miles-jimenez.com/,"Mo - Fr 7:00 - 16:00, Sa - Su Closed"
+Phillipsstad Clinic,34540 Brown Cove Apt. 772,Phillipsstad,CO,64665,8308401775,bakertrevor@example.org,https://williams.com/,"Mo - Fr 8:00 - 16:00, Sa - Su Closed"
+South Aaron Health Center,559 Owens Centers,South Aaron,DC,79671,1798350046,nbrown@example.com,http://vargas.com/,Mo - Su 7:00 - 17:00
+Mcdonaldside Medical Center,96420 Latoya Locks Suite 306,Mcdonaldside,MD,87059,7613515620,wford@example.com,http://www.owens.com/,"Mo - Fr 8:00 - 18:00, Sa - Su Closed"
+Reynoldstown Health Center,920 Daniel River,Reynoldstown,IL,60960,8793528522,parkerashley@example.org,https://evans-tran.com/,"Mo - Fr 8:00 - 17:00, Sa - Su Closed"
+Patriciachester Memorial Hospital,676 Parker Hills,Patriciachester,OH,92766,2766312424,barnesalexander@example.com,https://phillips.com/,"Mo - Fr 9:00 - 18:00, Sa - Su Closed"
+Amychester Memorial Hospital,4982 Cooper Tunnel Suite 752,Amychester,RI,98269,5584452460,hwhite@example.org,http://www.george.com/,"Mo - Fr 9:00 - 18:00, Sa - Su Closed"
+Kingborough Memorial Hospital,78983 James Brooks Suite 328,Kingborough,AK,29986,8754186310,kristinashaw@example.org,https://mckinney.biz/,"Mo - Fr 9:00 - 17:00, Sa - Su Closed"
+Lake Michaelville University Medical Group,38538 Neal Rest Apt. 340,Lake Michaelville,FL,96491,5022393125,robinsonangela@example.com,http://gibson.com/,"Mo - Fr 7:00 - 19:00, Sa - Su Closed"
+New Ashleyport Medical Center,17362 Reynolds Point,New Ashleyport,VT,65390,8054218318,michael30@example.org,http://www.reed.com/,Mo - Su 10:00 - 19:00
+Jennifertown Group,8655 Lee Passage Apt. 881,Jennifertown,SC,55104,3314417103,paul49@example.net,http://smith-edwards.com/,Mo - Su 9:00 - 18:00
+Mitchellbury Memorial Hospital,8606 Miguel Flats Suite 262,Mitchellbury,CA,76533,1612664122,josephedwards@example.org,http://www.ramos.net/,Mo - Su 10:00 - 16:00
+Simpsonchester Health,8337 Davis Vista Apt. 649,Simpsonchester,FM,96768,4266556615,jacksonfrank@example.org,https://harris-bennett.com/,Mo - Su 8:00 - 19:00
+West Nicholasberg Memorial Hospital,6041 Chandler Islands,West Nicholasberg,NM,11418,7111050272,andrea46@example.net,http://campbell.com/,Mo - Su 8:00 - 19:00
+Millerfort Group,6978 Kristine Isle Apt. 086,Millerfort,TX,79449,9772755632,xryan@example.com,https://www.brown.com/,Mo - Su 7:00 - 18:00
+Lake Barry Clinic,1579 Joseph Mountain Apt. 373,Lake Barry,PA,09948,9301969995,gkaufman@example.com,http://ross.com/,"Mo - Fr 7:00 - 18:00, Sa - Su Closed"
+Christopherview Memorial Hospital,904 Paul Crescent Suite 802,Christopherview,CT,14267,2043377363,joseph08@example.net,https://foley-walter.com/,Mo - Su 9:00 - 17:00
+Port William Health Center,60928 Paula Plain Suite 901,Port William,MT,58352,5548886310,murphyalyssa@example.com,https://www.johnson.com/,Mo - Su 7:00 - 19:00
+Geoffreyburgh Medical,8684 Debra Landing Suite 685,Geoffreyburgh,OK,34761,5282086009,stewartdaniel@example.net,https://lopez-chen.com/,"Mo - Fr 9:00 - 17:00, Sa - Su Closed"
+Mckinneyport Medical Clinic,76967 Davis Flats,Mckinneyport,TX,73848,4843413993,hwood@example.net,https://www.cervantes-roberts.com/,"Mo - Fr 10:00 - 16:00, Sa - Su Closed"
+Katieburgh Health Center,698 Nelson Street,Katieburgh,ND,87021,9958939644,jhood@example.net,http://www.mills-powell.com/,Mo - Su 8:00 - 16:00
+West Michael Medical Clinic,9864 Christopher Mission,West Michael,AZ,96185,3645592660,lisagray@example.net,http://www.armstrong.com/,Mo - Su 8:00 - 19:00
+Kathrynbury Medical Clinic,82489 Patrick Islands Suite 339,Kathrynbury,NV,67700,8399148634,steven67@example.org,https://www.taylor-aguilar.com/,Mo - Su 9:00 - 18:00
+North Douglasview Medical,7420 Sabrina Ports Suite 895,North Douglasview,VI,47212,6737853580,antonio27@example.net,http://www.shaffer.info/,Mo - Su 10:00 - 18:00
+Stevenmouth Group,4969 Joe Ranch Apt. 508,Stevenmouth,GU,87332,5933962018,sparkskathy@example.org,http://www.andersen.org/,Mo - Su 9:00 - 17:00
+South Ryan Medical Clinic,6716 Lowe Trace,South Ryan,CO,86298,8837464858,smithjoshua@example.com,http://edwards-johnson.info/,Mo - Su 8:00 - 18:00
+Colontown Health Center,511 Henderson Road,Colontown,MD,74334,2115753676,yweber@example.org,https://welch-allison.com/,"Mo - Fr 8:00 - 16:00, Sa - Su Closed"
+Adamsstad University Medical Group,564 Ramos Radial,Adamsstad,MS,39619,3919590999,griffinrobert@example.net,http://www.gardner-mccullough.com/,Mo - Su 7:00 - 19:00
+Cooperbury Memorial Hospital,6085 Jenkins Forges,Cooperbury,MH,12211,7824474681,mshelton@example.net,https://hebert.com/,"Mo - Fr 10:00 - 17:00, Sa - Su Closed"
+Fitzpatrickmouth Group,59789 Pittman Light Apt. 702,Fitzpatrickmouth,MP,97009,2753236421,rojasdaniel@example.com,https://www.rose-benjamin.info/,"Mo - Fr 10:00 - 17:00, Sa - Su Closed"
+Richardshaven Health Center,096 Cisneros Pass Suite 124,Richardshaven,CA,93126,4407289538,fwalter@example.net,https://leblanc.org/,"Mo - Fr 10:00 - 17:00, Sa - Su Closed"
+North Shannon Memorial Hospital,301 Micheal Station,North Shannon,WV,22778,8273360184,omiller@example.org,https://www.woods.com/,"Mo - Fr 9:00 - 19:00, Sa - Su Closed"
+Davidfurt Medical Clinic,2896 Sarah Dale,Davidfurt,OK,91741,1472425852,davisjim@example.org,https://clark.com/,"Mo - Fr 7:00 - 16:00, Sa - Su Closed"
+Kevinburgh Memorial Hospital,505 Lauren Alley,Kevinburgh,ID,17552,7344700114,martinezerin@example.org,https://benson.com/,"Mo - Fr 9:00 - 17:00, Sa - Su Closed"
+South Emilyfurt Memorial Hospital,65945 Jackson Ways,South Emilyfurt,AR,06342,6798086793,eleonard@example.net,http://ball-tran.com/,"Mo - Fr 8:00 - 18:00, Sa - Su Closed"
+Trujillochester Memorial Hospital,96349 Brown Rapids Suite 330,Trujillochester,KY,72827,9495231527,jacquelinewilliams@example.com,https://www.bentley.com/,Mo - Su 9:00 - 17:00
+Manningberg University Medical Group,56876 Charles Prairie,Manningberg,DC,50934,2190126277,brian01@example.org,http://moore-brown.com/,Mo - Su 10:00 - 19:00
+Adrianachester University Medical Group,7819 Cox Manors,Adrianachester,ND,40440,6342693124,tiffany64@example.com,https://collins.com/,Mo - Su 7:00 - 18:00
+Lake Stephanie University Medical Group,00432 Michelle Shoal,Lake Stephanie,MI,63504,4744177560,melissamoody@example.org,https://rivas.biz/,"Mo - Fr 10:00 - 17:00, Sa - Su Closed"
+Catherinestad Medical,53894 Patricia Mission,Catherinestad,AK,68273,7211418506,paulamartin@example.com,https://brown.org/,Mo - Su 7:00 - 16:00
+East Danielmouth University Medical Group,0623 Kristen Square Suite 327,East Danielmouth,AS,19496,3721179047,kathy76@example.net,https://turner.com/,"Mo - Fr 9:00 - 19:00, Sa - Su Closed"
+South Renee Health Center,06385 Schmidt Spurs,South Renee,WY,88549,9500848514,newmandavid@example.com,https://lowe.info/,Mo - Su 10:00 - 18:00
+Patrickland Medical,876 Smith Street Suite 940,Patrickland,CA,50065,7417969293,vincent37@example.org,http://jones.net/,Mo - Su 10:00 - 16:00
+North Todd Health Center,28357 Nelson Walks,North Todd,DC,07916,5252663443,ajohnson@example.com,https://fox-campbell.info/,"Mo - Fr 7:00 - 17:00, Sa - Su Closed"
+Oconnorstad Medical Clinic,057 Martinez Spring,Oconnorstad,MD,00879,2414138569,jensenmaria@example.com,http://graham.com/,"Mo - Fr 9:00 - 16:00, Sa - Su Closed"
+Lake Kaylamouth Clinic,1787 Julia Terrace Apt. 149,Lake Kaylamouth,MH,49066,7998559589,audrey43@example.com,http://cole-bolton.biz/,"Mo - Fr 8:00 - 19:00, Sa - Su Closed"
+Harrisburgh Medical,26460 Fisher Circle,Harrisburgh,NY,11367,9870037185,logan35@example.org,https://young-greene.com/,Mo - Su 7:00 - 16:00
+Michaelshire Medical Center,094 Hudson Shoals Suite 145,Michaelshire,PR,78712,5802594124,brownluke@example.com,http://www.ramirez.com/,Mo - Su 8:00 - 16:00
+Hoganbury Health Center,0146 Lacey Squares,Hoganbury,AZ,37995,9062764803,natalie84@example.net,https://www.parker-shepard.com/,Mo - Su 10:00 - 16:00
+New Jennifer Medical Center,581 Benjamin Extension Apt. 137,New Jennifer,ID,63594,4383098554,emartinez@example.org,http://young.com/,Mo - Su 8:00 - 18:00
+Brittanyhaven Medical Clinic,7940 Bates Green Suite 449,Brittanyhaven,KY,42248,4083622574,ramirezfrances@example.com,https://taylor-lloyd.org/,"Mo - Fr 10:00 - 16:00, Sa - Su Closed"
+New Charlesview Health,630 Vincent Branch Suite 651,New Charlesview,TX,19152,2180221686,hfranco@example.net,https://www.walsh.biz/,Mo - Su 8:00 - 19:00
+Christinetown Medical Center,40629 Kelley Ports,Christinetown,DE,72788,9803546799,donald95@example.com,https://www.hill.com/,"Mo - Fr 8:00 - 16:00, Sa - Su Closed"
+Port Mary Medical Clinic,8060 Mcgrath Flat Apt. 915,Port Mary,ME,85910,5853440238,zachary26@example.net,https://www.chen.com/,Mo - Su 8:00 - 18:00
+Diazland Group,461 John Shores Suite 511,Diazland,FL,89616,4659915529,denisewelch@example.net,https://green.com/,"Mo - Fr 8:00 - 18:00, Sa - Su Closed"
+Lake Julie Health Center,106 Young Prairie Apt. 348,Lake Julie,ME,49948,7195106953,ramosmaureen@example.com,http://www.keith-harrell.net/,"Mo - Fr 8:00 - 19:00, Sa - Su Closed"
+Garciaport Medical Center,99511 Michael Ferry Suite 151,Garciaport,KS,37665,3999324409,ryanferguson@example.net,https://warner.com/,"Mo - Fr 8:00 - 19:00, Sa - Su Closed"
+North Christopherport Medical Clinic,932 Barbara Heights,North Christopherport,WA,97236,1190236862,jonathan36@example.org,http://smith.com/,Mo - Su 8:00 - 18:00
+East Mary University Medical Group,127 Chaney Keys,East Mary,OH,97444,2278100778,kurt27@example.net,https://phillips.net/,"Mo - Fr 7:00 - 19:00, Sa - Su Closed"
+Danahaven Health Center,95529 Kelley Falls Apt. 347,Danahaven,FM,28193,4716675644,perezchristopher@example.net,https://www.liu.com/,Mo - Su 9:00 - 18:00
+Samuelstad University Medical Group,680 Spears Ville,Samuelstad,OK,58856,3934762013,kennethjones@example.org,http://www.wagner.com/,"Mo - Fr 8:00 - 16:00, Sa - Su Closed"
+East Amanda Medical Clinic,267 Michelle Islands Suite 668,East Amanda,MS,74049,7530911255,thomastaylor@example.com,https://www.garcia-snyder.com/,"Mo - Fr 9:00 - 16:00, Sa - Su Closed"
+West Tylerfort Group,03516 Sara Pine Apt. 673,West Tylerfort,OH,02858,3069797852,taylor70@example.net,https://maxwell.net/,Mo - Su 9:00 - 17:00
+Watkinsside Medical Center,7501 Meyer Island Apt. 293,Watkinsside,MO,57761,8310509829,sherrilivingston@example.com,https://www.rogers-edwards.com/,Mo - Su 7:00 - 18:00
+Christyland Clinic,515 Sheppard Keys,Christyland,MS,50061,8267510453,jamessimon@example.org,http://morales.com/,Mo - Su 10:00 - 17:00
+East Crystal Health Center,203 Nolan Points,East Crystal,AK,06013,2825921376,jeremy23@example.org,http://valenzuela.net/,"Mo - Fr 9:00 - 18:00, Sa - Su Closed"
+Matthewton Clinic,6177 Paul Port Apt. 922,Matthewton,MH,95979,4677079010,ufoster@example.com,http://www.copeland.biz/,Mo - Su 9:00 - 17:00
+Riveraville Medical Clinic,1723 Jennings Drive,Riveraville,MI,06717,2713960224,josephwright@example.com,https://rios-baker.com/,"Mo - Fr 9:00 - 18:00, Sa - Su Closed"
+Denisemouth Medical,275 Skinner Mountain Apt. 291,Denisemouth,VA,13818,1963185923,lisa35@example.net,https://www.wagner.com/,Mo - Su 10:00 - 17:00
+North Christopherburgh Memorial Hospital,418 Christopher Trafficway Apt. 988,North Christopherburgh,PR,50755,4182904861,kelleytammy@example.com,http://www.phillips.biz/,"Mo - Fr 10:00 - 19:00, Sa - Su Closed"
+Williamsside University Medical Group,307 Christina Lakes Suite 067,Williamsside,IN,60394,1284674544,uharris@example.com,https://thompson.org/,"Mo - Fr 10:00 - 17:00, Sa - Su Closed"
+North Jeffreyberg Medical Center,894 Simpson Rapid,North Jeffreyberg,AL,01001,6847158598,alicia70@example.com,https://www.king.info/,"Mo - Fr 9:00 - 17:00, Sa - Su Closed"
+Rebeccaside Memorial Hospital,4133 Richard Branch Suite 943,Rebeccaside,AZ,92817,5610444063,patrickdaugherty@example.net,https://www.hinton.com/,Mo - Su 8:00 - 18:00
+Barnesfurt University Medical Group,1318 Chelsea Lodge,Barnesfurt,WY,53547,8182738901,joshua55@example.org,https://dudley-alvarez.com/,Mo - Su 8:00 - 19:00
+Lake Jonathanchester Medical,7056 Jeffrey Fork Suite 320,Lake Jonathanchester,FM,03664,7805685014,ashleymassey@example.net,https://preston.biz/,"Mo - Fr 10:00 - 19:00, Sa - Su Closed"
+Robinmouth Memorial Hospital,771 Garcia Locks Suite 139,Robinmouth,KS,39997,1772896074,usanders@example.net,http://webb.biz/,Mo - Su 7:00 - 17:00
+Bryantbury University Medical Group,6426 Hayden Heights,Bryantbury,VA,53044,7632575448,morenorebecca@example.net,https://www.daniels.com/,"Mo - Fr 8:00 - 19:00, Sa - Su Closed"
+Hollytown Medical Center,273 Ashley Camp,Hollytown,WI,91918,4361344586,theresa25@example.org,https://www.martin-jones.com/,Mo - Su 7:00 - 19:00
+Harveyside Medical Clinic,53737 Lauren Avenue Suite 309,Harveyside,HI,24468,8491724100,zweaver@example.com,http://www.jones.com/,Mo - Su 9:00 - 18:00
+Michellefurt Health Center,2223 Fisher Heights Suite 560,Michellefurt,CO,91260,7935130709,garciagary@example.com,http://mcgee-campbell.com/,"Mo - Fr 10:00 - 17:00, Sa - Su Closed"
+South Jesus University Medical Group,48271 Daniel River,South Jesus,FM,52113,3508282380,evanssusan@example.net,http://www.keller.com/,"Mo - Fr 10:00 - 19:00, Sa - Su Closed"
+Port Roger Health,28563 Grace Mountains,Port Roger,UT,80715,9886339417,taylorrobert@example.com,https://smith.com/,Mo - Su 8:00 - 16:00
+Jonesmouth Group,6237 Michael Harbors,Jonesmouth,WV,04993,4658756094,rebekah00@example.net,http://richardson.net/,Mo - Su 8:00 - 19:00
+Romeroborough Medical Center,616 Rebekah Village,Romeroborough,MO,30572,4896914887,kennedybarbara@example.net,http://zavala.net/,Mo - Su 9:00 - 16:00
+Helenbury Health Center,3283 Mora Heights Apt. 783,Helenbury,TN,39379,8294412377,andrea28@example.com,http://www.james-christensen.com/,Mo - Su 9:00 - 19:00
+Emilyview Memorial Hospital,13631 Rebecca Unions Apt. 746,Emilyview,MP,54044,2384313011,santosmaria@example.net,http://mendez-peterson.com/,"Mo - Fr 8:00 - 18:00, Sa - Su Closed"
+New Angelatown Clinic,41755 Lisa Hill Apt. 129,New Angelatown,SD,70606,5624974565,henryrichard@example.org,https://glover-davenport.com/,"Mo - Fr 9:00 - 17:00, Sa - Su Closed"
+Sarahport Group,4591 Mccarthy Burg,Sarahport,NJ,02013,2259343980,andersonsusan@example.com,https://www.martinez-knight.com/,Mo - Su 10:00 - 16:00
+East Timothy Medical Clinic,4236 Clinton Islands Apt. 957,East Timothy,MH,35212,9481016725,smithjessica@example.net,https://scott.com/,"Mo - Fr 9:00 - 19:00, Sa - Su Closed"
+Robertfurt Group,00803 Robert Squares,Robertfurt,PA,97374,4683103210,brittanyrussell@example.org,http://www.mejia.com/,"Mo - Fr 8:00 - 17:00, Sa - Su Closed"
+Port Katherine Medical Clinic,5382 Jason Mission,Port Katherine,MD,93030,3485876831,huntmark@example.com,https://www.smith.com/,Mo - Su 8:00 - 19:00
+Port Katherinechester Memorial Hospital,04879 Williams Plaza,Port Katherinechester,CO,71604,5538238778,erik12@example.net,http://sanchez.biz/,Mo - Su 9:00 - 19:00
+Deleonborough Clinic,4842 David Circle,Deleonborough,CA,41363,8721394367,jamesjensen@example.net,http://carrillo-walters.com/,Mo - Su 8:00 - 16:00
+Bryanthaven University Medical Group,035 Coleman Well,Bryanthaven,VI,32951,6566740706,georgecross@example.net,https://weber.info/,Mo - Su 8:00 - 16:00
+Tatefort University Medical Group,390 Rose Square Suite 713,Tatefort,OR,57057,8625884847,barry29@example.net,https://www.dominguez.net/,Mo - Su 8:00 - 17:00
+Lake Candace University Medical Group,26733 Morales Street Suite 840,Lake Candace,PR,04766,3388452489,ueaton@example.org,http://www.gutierrez.com/,"Mo - Fr 7:00 - 19:00, Sa - Su Closed"
+South Cheryl Memorial Hospital,870 Jackson Junction Suite 263,South Cheryl,WI,78847,7569665368,ruthgray@example.com,http://lindsey.com/,Mo - Su 9:00 - 19:00
+North Jordan Medical Clinic,04112 Mary Dale Apt. 408,North Jordan,IA,29309,2029178829,karen67@example.net,https://walter.com/,Mo - Su 10:00 - 18:00
+Berryburgh Medical,04218 Richard Plain Suite 682,Berryburgh,AL,45566,5240962693,daviscynthia@example.net,https://morgan.net/,Mo - Su 9:00 - 19:00
+Whiteland Memorial Hospital,288 Julie Vista,Whiteland,CO,23569,7016680951,burnettjerry@example.net,https://rios-velazquez.info/,"Mo - Fr 9:00 - 16:00, Sa - Su Closed"
+South Shannonfurt Memorial Hospital,4295 Garcia Lake,South Shannonfurt,TX,48496,1049828953,matthewpayne@example.net,http://www.phelps-lopez.biz/,"Mo - Fr 9:00 - 18:00, Sa - Su Closed"
+Lake Nicholas University Medical Group,7626 Matthew Avenue,Lake Nicholas,NY,90641,7092696967,christina78@example.net,http://allen-jensen.com/,Mo - Su 7:00 - 16:00
+Clarkstad Medical,851 Angel Rapids,Clarkstad,MT,66371,9118539890,sydney15@example.org,https://www.tapia-blair.org/,Mo - Su 7:00 - 16:00
+Port Kylie Medical,883 Brown Forest,Port Kylie,PR,77219,9167213826,zcontreras@example.com,https://www.soto-cruz.com/,Mo - Su 10:00 - 18:00
+Lake Angela Health Center,61161 Orr Cliff Suite 675,Lake Angela,VA,61414,7461675045,drodriguez@example.com,http://williams-edwards.biz/,Mo - Su 9:00 - 16:00
+Port Jessica Clinic,2962 Ritter Points,Port Jessica,WA,63592,1628785265,ohanson@example.com,https://www.carrillo-lopez.com/,Mo - Su 9:00 - 17:00
+West Jennifermouth Clinic,728 Harmon Crossroad Suite 212,West Jennifermouth,MT,83839,9233217123,estone@example.net,https://dunn.info/,Mo - Su 8:00 - 17:00
+New Jamesside Medical Clinic,32047 Rush Lock Apt. 404,New Jamesside,DC,58016,2115789806,courtneyclark@example.org,http://www.delgado.biz/,"Mo - Fr 9:00 - 18:00, Sa - Su Closed"
+Brownstad Medical Clinic,738 Betty Lane Suite 646,Brownstad,IL,45931,5207167279,ochoaelizabeth@example.com,http://lopez.com/,"Mo - Fr 10:00 - 18:00, Sa - Su Closed"
+Rodneyview Group,9920 Jessica Mountain,Rodneyview,VT,78179,1890032645,vbaldwin@example.net,https://malone-gomez.org/,Mo - Su 8:00 - 18:00
+South Carl Medical Center,301 Miller Skyway Suite 462,South Carl,OR,55638,8309600608,derrickbond@example.net,http://www.miles.com/,"Mo - Fr 8:00 - 17:00, Sa - Su Closed"
+South Madison Clinic,8143 Carey Plains,South Madison,VI,14017,1108714868,dannyhendricks@example.org,https://cunningham.com/,"Mo - Fr 8:00 - 17:00, Sa - Su Closed"
+South Andrea Medical Center,58245 Oliver River,South Andrea,LA,92971,6992147001,newmanaustin@example.org,https://levine.com/,"Mo - Fr 9:00 - 16:00, Sa - Su Closed"
+West Joshua Medical Center,655 Diaz Extension,West Joshua,NH,47500,8909934135,petermoreno@example.net,http://www.hodges.com/,Mo - Su 8:00 - 17:00
+North Davidhaven Medical,24123 Anna Radial Suite 977,North Davidhaven,NY,59764,6876068354,kmelendez@example.net,https://www.shepard.com/,Mo - Su 10:00 - 16:00
+Sarahchester Medical,511 Casey Station,Sarahchester,SD,93798,9234198664,brent64@example.com,http://www.moore-reynolds.com/,Mo - Su 9:00 - 18:00
+Scottside Medical,036 Tony Lake Apt. 852,Scottside,DC,95428,8676126407,richard60@example.net,https://www.cox.com/,"Mo - Fr 8:00 - 19:00, Sa - Su Closed"
+Barryshire Clinic,529 Briggs Lake,Barryshire,ME,86170,4803982167,geraldjacobs@example.org,http://ponce-li.com/,"Mo - Fr 7:00 - 19:00, Sa - Su Closed"
+Julieberg University Medical Group,82892 Black Plains,Julieberg,OK,03382,9143478613,obrown@example.org,http://hale-watson.net/,"Mo - Fr 7:00 - 19:00, Sa - Su Closed"
+West Jesseshire Medical,3941 Jessica Camp,West Jesseshire,WV,94373,6242205206,bruce80@example.com,https://tran-jones.com/,"Mo - Fr 7:00 - 18:00, Sa - Su Closed"
+North Leslie Medical Center,80407 Clark Park,North Leslie,MA,69218,8025509225,gainestammy@example.org,http://trujillo.com/,"Mo - Fr 7:00 - 18:00, Sa - Su Closed"
+Lake Lisa Medical Center,967 Sarah Plains,Lake Lisa,SC,38121,7022927507,jgarcia@example.org,http://simpson.org/,Mo - Su 7:00 - 17:00
+New Katie Memorial Hospital,23437 Paul Corner,New Katie,UT,39013,1640439947,mcphersonchristopher@example.org,http://www.fernandez.com/,Mo - Su 9:00 - 19:00
+East Belinda Health,43833 Franklin Crest Suite 462,East Belinda,KY,17258,2020726336,vmoore@example.net,http://www.martin.com/,"Mo - Fr 9:00 - 17:00, Sa - Su Closed"
+North Alanmouth Health,820 Olson Trafficway,North Alanmouth,VT,71262,2865626331,blake50@example.com,https://thornton.com/,Mo - Su 9:00 - 19:00
+North Jenniferbury Medical Clinic,51319 Hannah Land,North Jenniferbury,VI,20006,9353380458,johnsonlaura@example.net,https://petty.biz/,Mo - Su 7:00 - 19:00
+North Johnnyport Medical Clinic,5520 Long Groves,North Johnnyport,MO,26797,6611814188,stevenkelly@example.org,http://www.mitchell.com/,Mo - Su 9:00 - 18:00
+Crawfordbury Group,1105 Moran Expressway Suite 147,Crawfordbury,AL,10413,4160702835,johnthomas@example.org,http://white-lewis.com/,Mo - Su 7:00 - 19:00
+North Sheryl Memorial Hospital,61335 Brenda Locks,North Sheryl,NV,28843,8426406397,aprildennis@example.net,https://green.com/,"Mo - Fr 10:00 - 16:00, Sa - Su Closed"
+Port Kevin Medical,1378 Jordan Walks,Port Kevin,MO,01757,4118580789,changfelicia@example.com,https://johnson.org/,Mo - Su 7:00 - 17:00
+Thomasland Clinic,89126 Roberts Oval Suite 842,Thomasland,VA,22926,3238498094,michelewilliams@example.com,http://www.wagner.com/,"Mo - Fr 10:00 - 18:00, Sa - Su Closed"
+Marymouth Group,35648 Brittney Pike Apt. 978,Marymouth,IA,90198,5984823922,jbell@example.net,http://cox.info/,Mo - Su 7:00 - 16:00
+Michaelberg Medical Clinic,479 Scott Place,Michaelberg,ID,75207,1802555246,deanbarbara@example.net,https://miller.com/,Mo - Su 10:00 - 17:00
+North Judystad Health,261 Jason Ville,North Judystad,MI,08767,9480142258,cynthiastokes@example.org,http://www.smith-finley.net/,Mo - Su 8:00 - 16:00
+Erinview Medical Center,145 Elizabeth Landing Apt. 639,Erinview,AK,61742,1376196215,lori79@example.com,http://www.stevenson.net/,"Mo - Fr 9:00 - 17:00, Sa - Su Closed"
+Michelleport Medical,2818 Roberts Court,Michelleport,MA,49446,4306708735,vrichards@example.net,http://lamb-davis.net/,"Mo - Fr 7:00 - 19:00, Sa - Su Closed"
+Nathanielmouth Health,82802 Donna Streets Suite 818,Nathanielmouth,OR,88914,6324083030,ggonzales@example.net,http://lopez.com/,Mo - Su 7:00 - 17:00
+Kylemouth University Medical Group,56552 Emma Walk,Kylemouth,NM,67450,9088642220,stewarttodd@example.org,https://johnson-mason.biz/,Mo - Su 9:00 - 19:00
+Kelleyshire Health,5862 Anderson Center Apt. 770,Kelleyshire,NE,74902,6221509324,pfischer@example.com,http://www.hernandez-nelson.info/,"Mo - Fr 10:00 - 16:00, Sa - Su Closed"
+Salazarport University Medical Group,70975 Franklin Road Apt. 941,Salazarport,NJ,69865,4972234240,erika13@example.net,http://stewart.com/,Mo - Su 7:00 - 18:00
+North Pam Group,26940 Kerr Shore,North Pam,AK,98339,5553486153,coreymartinez@example.net,http://smith.org/,Mo - Su 9:00 - 16:00
+Ayalaville Health Center,659 Nathan Grove Suite 074,Ayalaville,PR,50299,9492144974,jennifer45@example.com,https://www.foster.info/,Mo - Su 8:00 - 19:00
+West Teresaton Group,71106 Jeremy Wall Apt. 115,West Teresaton,AS,52464,2467366275,monica85@example.org,http://www.washington-schwartz.info/,"Mo - Fr 8:00 - 17:00, Sa - Su Closed"
+South Justinton Medical,8281 Jessica Wall Suite 049,South Justinton,OK,43851,9382611080,jason18@example.org,https://www.richardson.com/,Mo - Su 10:00 - 19:00
+Zacharyview University Medical Group,011 Evans Point,Zacharyview,RI,96229,6096630504,henrycooper@example.org,http://chandler-vasquez.biz/,"Mo - Fr 10:00 - 17:00, Sa - Su Closed"
+Sharonland Health Center,815 Roberts Forest,Sharonland,SD,93214,2596740736,sean48@example.net,https://www.reese.com/,Mo - Su 9:00 - 19:00
+East Kristy Medical,7253 Jacob Ridges,East Kristy,KS,18012,4466097869,rjones@example.net,https://www.davis.com/,Mo - Su 8:00 - 16:00
+Coryfurt Health,328 Ortiz Falls,Coryfurt,AZ,05648,4067569262,washingtonamanda@example.com,http://diaz.com/,"Mo - Fr 7:00 - 19:00, Sa - Su Closed"
+South Camerontown Medical Center,319 Philip Plaza,South Camerontown,WI,73940,7758039530,ndeleon@example.com,http://ryan.com/,Mo - Su 10:00 - 16:00
+North Cynthia Group,676 Linda Parks Suite 093,North Cynthia,MH,17015,7480726838,vbaker@example.net,http://www.murphy.com/,"Mo - Fr 10:00 - 19:00, Sa - Su Closed"
+Aprilberg Health Center,481 Barrera Meadow,Aprilberg,WA,75275,5711146845,madisonpark@example.org,https://rowland.biz/,Mo - Su 9:00 - 16:00
+Port Melissa Health,61983 Jessica Course,Port Melissa,CT,85549,4290102103,owilliams@example.com,http://mccoy-campbell.org/,"Mo - Fr 10:00 - 16:00, Sa - Su Closed"
+North Daisystad Health Center,445 James Hills,North Daisystad,TN,60257,1807545248,jbowers@example.com,http://www.cummings-lane.com/,"Mo - Fr 9:00 - 19:00, Sa - Su Closed"
+East Coreymouth Medical,4358 Wilkins Mews Suite 085,East Coreymouth,UT,99944,6426865469,xhays@example.com,http://wells-reed.com/,"Mo - Fr 9:00 - 19:00, Sa - Su Closed"
+Port Carolyn Medical,837 Stephanie Hollow Suite 148,Port Carolyn,NE,79934,2652695757,stacydoyle@example.org,https://www.ward.com/,Mo - Su 9:00 - 19:00
+East Valerie Group,7038 Amber Parkway,East Valerie,UT,99773,4523515705,ryankaiser@example.net,https://www.brewer.com/,Mo - Su 7:00 - 17:00
+Sarahhaven Clinic,705 Wolfe Drive,Sarahhaven,NJ,13869,1373658171,sandraharris@example.net,https://www.martinez-martinez.com/,Mo - Su 8:00 - 18:00
+Harperfort Group,6954 Flores Overpass Suite 158,Harperfort,RI,98190,7657615856,smithkenneth@example.com,https://www.butler.com/,"Mo - Fr 10:00 - 16:00, Sa - Su Closed"
+Henrymouth Group,2509 Mary Junction,Henrymouth,AS,08090,4917256775,miguelmontgomery@example.com,http://www.mata.org/,Mo - Su 8:00 - 18:00
+Port Jenniferchester Medical Center,8498 Rangel Run,Port Jenniferchester,LA,67326,3196790124,davidsantos@example.com,https://arroyo.com/,Mo - Su 10:00 - 18:00
+West Ryan Health,72094 Monica Drive,West Ryan,SD,77908,2503644522,johnstonlogan@example.com,http://wilcox-tate.org/,"Mo - Fr 7:00 - 18:00, Sa - Su Closed"
+Johnsonview Group,0399 Christopher Turnpike,Johnsonview,AZ,12459,7473655488,james38@example.net,https://koch.com/,Mo - Su 7:00 - 16:00
+Lake Markfurt Health Center,340 Benson Estate Suite 334,Lake Markfurt,CT,84875,6826433656,cruzteresa@example.com,https://www.olsen.com/,Mo - Su 7:00 - 18:00
+Parrishfurt Group,56292 Jeff Burgs Suite 704,Parrishfurt,GA,79563,4713285347,rwells@example.com,https://www.gonzalez-white.com/,Mo - Su 8:00 - 16:00
+Port Jamesville Medical Clinic,8634 Porter Lane Apt. 978,Port Jamesville,WV,29449,7028229956,angela19@example.net,http://austin-cummings.com/,"Mo - Fr 7:00 - 16:00, Sa - Su Closed"
+Port Jefferyfort Medical Clinic,9262 Derrick Mills Suite 491,Port Jefferyfort,UT,33913,9082009215,rmcintyre@example.com,http://www.bauer.com/,"Mo - Fr 8:00 - 18:00, Sa - Su Closed"
+Farleychester Memorial Hospital,4000 Connor Viaduct Apt. 251,Farleychester,NV,86022,1460466718,cperry@example.net,https://www.greene.com/,Mo - Su 7:00 - 19:00
+Lake Matthew Medical Clinic,7205 Gonzalez Estate,Lake Matthew,MP,64798,3546494544,johnsonmatthew@example.net,https://www.rodriguez-willis.com/,Mo - Su 10:00 - 19:00
+Jaymouth Medical Center,2947 Sarah Roads Apt. 887,Jaymouth,AR,06593,8011515132,autumn11@example.net,http://lamb.net/,"Mo - Fr 8:00 - 18:00, Sa - Su Closed"
+Pereztown Clinic,4195 Norman Light,Pereztown,CA,04998,7553202827,popeelizabeth@example.org,https://www.hayden.org/,Mo - Su 10:00 - 19:00
+West Michael Medical Center,83860 Samantha Canyon,West Michael,LA,55548,3252812873,milesalejandro@example.net,https://scott-moore.com/,"Mo - Fr 9:00 - 18:00, Sa - Su Closed"
+Simonstad Health Center,9084 Carpenter Dam,Simonstad,HI,20498,5557804900,tanderson@example.net,http://allen.com/,Mo - Su 10:00 - 18:00
+Christinaborough Memorial Hospital,59507 James Canyon Apt. 961,Christinaborough,CA,08262,6057693176,martinjon@example.com,https://www.brady.com/,"Mo - Fr 8:00 - 17:00, Sa - Su Closed"
+North Andreahaven Medical,0055 Perkins Extension Suite 835,North Andreahaven,ME,99827,8982951860,robert35@example.net,http://waller-ortega.net/,"Mo - Fr 8:00 - 17:00, Sa - Su Closed"
+Ruizstad Medical Clinic,14185 Jeffrey Stravenue,Ruizstad,WV,42949,1983550154,fergusonamanda@example.net,https://www.brown-fischer.com/,Mo - Su 7:00 - 17:00
+Lake George Health,53991 Ethan Common,Lake George,PR,97747,9758614670,whitneymark@example.com,http://spencer.biz/,"Mo - Fr 10:00 - 19:00, Sa - Su Closed"
+Lake Ashleyview Group,9790 Chandler Ridge Apt. 137,Lake Ashleyview,NY,86867,4713231384,nperry@example.com,https://www.jarvis.com/,"Mo - Fr 10:00 - 16:00, Sa - Su Closed"
+Lopezside Health Center,094 Shelton Key,Lopezside,MP,43149,3758953931,kimberly80@example.net,https://vargas.com/,Mo - Su 10:00 - 18:00
+Kingview Medical Clinic,75457 Jones Mews,Kingview,VT,24009,3846475764,aliciadavenport@example.com,http://www.fuller.biz/,Mo - Su 8:00 - 18:00
+Bowmanstad Medical Center,36781 Avila Neck,Bowmanstad,NE,64693,4551495348,nsnyder@example.com,http://williams-wells.com/,"Mo - Fr 9:00 - 16:00, Sa - Su Closed"
+Bobfort Health Center,33282 Miller Village Apt. 895,Bobfort,RI,81604,4083128351,rmoore@example.com,http://www.osborne.net/,"Mo - Fr 7:00 - 19:00, Sa - Su Closed"
+East Stacey Health,938 Brown Branch,East Stacey,WI,44771,3613779940,tammymorris@example.com,https://randolph-bowen.biz/,"Mo - Fr 10:00 - 16:00, Sa - Su Closed"
+West Leslie Medical Clinic,2580 Fisher Row,West Leslie,KY,26102,3246728403,patricia39@example.org,http://underwood.biz/,Mo - Su 7:00 - 18:00
+Lake Christopher Group,400 Garcia Corner Suite 247,Lake Christopher,AS,56327,8342741438,andersoneric@example.net,http://meyers.com/,"Mo - Fr 10:00 - 16:00, Sa - Su Closed"
+East Mariafort Group,11914 Kristin Mall Suite 918,East Mariafort,WA,14720,7660205601,michellejones@example.net,https://www.turner.com/,"Mo - Fr 7:00 - 18:00, Sa - Su Closed"
+New Alexandrabury Memorial Hospital,6509 Berry Heights Suite 350,New Alexandrabury,AS,07362,2438785413,laradavid@example.com,http://chan.com/,Mo - Su 7:00 - 18:00
+Valeriemouth Medical,4266 Alison Station,Valeriemouth,NY,77929,2065638089,bonniecordova@example.com,http://armstrong.com/,"Mo - Fr 9:00 - 19:00, Sa - Su Closed"
+Mitchellberg Memorial Hospital,89527 Angela Island Suite 015,Mitchellberg,RI,88795,3278925471,herringjames@example.com,http://www.king-ramirez.com/,Mo - Su 7:00 - 19:00
+Lake Travisland University Medical Group,2797 Erin Station Suite 983,Lake Travisland,OK,33921,7540931906,brendafranco@example.com,https://young.info/,"Mo - Fr 7:00 - 19:00, Sa - Su Closed"
+Haysland Health,9549 Moreno Street Suite 029,Haysland,LA,65432,3259534263,abates@example.net,https://www.bryan-ortiz.org/,"Mo - Fr 7:00 - 19:00, Sa - Su Closed"
+Phillipsmouth Clinic,5310 Williams Run,Phillipsmouth,TX,29623,7605465147,pamela38@example.com,https://www.lester.com/,"Mo - Fr 8:00 - 16:00, Sa - Su Closed"
+Marissastad Health,157 Klein Well,Marissastad,CO,41969,5941178954,hthompson@example.net,http://www.williams.com/,"Mo - Fr 7:00 - 18:00, Sa - Su Closed"
+Alvaradoville Medical,88635 Anthony Road,Alvaradoville,CT,34759,9567303264,smithamanda@example.net,http://www.brown.net/,Mo - Su 9:00 - 19:00
+West Benjamin Medical Center,987 Katelyn Park Suite 770,West Benjamin,WY,85495,2718921042,geraldmontoya@example.com,https://sanders-norris.net/,"Mo - Fr 10:00 - 18:00, Sa - Su Closed"
+Martinview Medical Clinic,993 Dawson Squares Apt. 441,Martinview,NY,99708,9549449048,arroyogregory@example.org,https://www.goodman.biz/,Mo - Su 7:00 - 16:00
+Rhodeshaven Clinic,32082 Adrian Forks,Rhodeshaven,ME,09973,7702953133,matthewleonard@example.com,https://www.jackson.com/,"Mo - Fr 8:00 - 17:00, Sa - Su Closed"
+Amyhaven Health Center,6781 Sara Spur,Amyhaven,UT,04980,9353693817,elizabethcooper@example.com,http://www.riley.net/,"Mo - Fr 7:00 - 17:00, Sa - Su Closed"
+New Cynthia Group,8120 Michelle Extensions Suite 144,New Cynthia,LA,88597,9503765289,patriciathompson@example.com,https://www.clayton.com/,"Mo - Fr 8:00 - 16:00, Sa - Su Closed"
+New Todd Group,02033 Hall Trace,New Todd,GU,33292,6938495561,carlhicks@example.net,http://english.com/,"Mo - Fr 7:00 - 18:00, Sa - Su Closed"
+Sandovalbury Clinic,6352 Cook Alley,Sandovalbury,DC,02548,5540609321,hollowaytaylor@example.org,https://www.pope-cox.com/,Mo - Su 9:00 - 16:00
+Klineville Medical,431 Kaitlyn Prairie Apt. 918,Klineville,MS,70996,1601665460,burnettphilip@example.com,https://roberts.com/,"Mo - Fr 9:00 - 18:00, Sa - Su Closed"
+Adamschester Clinic,28052 Martin Club,Adamschester,IN,92266,9096785527,melinda92@example.com,https://www.dixon.com/,Mo - Su 10:00 - 17:00
+Booneburgh Memorial Hospital,1748 Sanders Way,Booneburgh,SC,84541,3346688942,grodriguez@example.com,https://yu.org/,"Mo - Fr 8:00 - 18:00, Sa - Su Closed"
+Lake Andreaville Medical Center,202 Harvey Prairie,Lake Andreaville,AL,30707,7527666564,cking@example.com,http://bell-weaver.info/,Mo - Su 7:00 - 16:00
+New April Health,365 Nichols Square,New April,WY,28068,9303545421,christopherlester@example.com,http://moore.com/,Mo - Su 10:00 - 19:00
+Lake Nichole University Medical Group,71899 Brandon Fall Suite 110,Lake Nichole,WI,63226,6237364981,jeremy61@example.com,https://www.wallace.org/,"Mo - Fr 8:00 - 16:00, Sa - Su Closed"
+Port Davidville Medical Center,234 Skinner Plain,Port Davidville,AL,13751,5866728194,natasha72@example.com,https://www.davis-jenkins.org/,"Mo - Fr 7:00 - 19:00, Sa - Su Closed"
+Washingtonland Health,33956 Ramos Plaza Apt. 812,Washingtonland,NJ,02450,4850030172,travis62@example.org,https://www.andrade-greene.com/,"Mo - Fr 9:00 - 16:00, Sa - Su Closed"
+East Amanda Medical Clinic,0585 Brandt Wall,East Amanda,KS,68888,1584935823,kellerrebecca@example.org,https://guzman.net/,Mo - Su 9:00 - 18:00
+Williamshaven University Medical Group,92152 Tanya Coves Apt. 964,Williamshaven,MI,28346,6405293872,mosesbrian@example.net,http://www.rodriguez-knight.com/,Mo - Su 7:00 - 19:00
+Mayerton Health,73799 Cummings Forest,Mayerton,RI,87680,3922830985,kim73@example.net,http://alvarado-murray.com/,Mo - Su 9:00 - 16:00
+Floresport Medical Center,7776 Anna River,Floresport,NH,02520,2184202926,michellepatterson@example.com,https://barrett-briggs.com/,"Mo - Fr 7:00 - 19:00, Sa - Su Closed"
+South Kathryn Health,358 Mckee Landing Suite 228,South Kathryn,AL,91036,7634044498,vicki53@example.net,https://hernandez-green.com/,"Mo - Fr 10:00 - 17:00, Sa - Su Closed"
+Johnsonport Clinic,1507 Sheila Coves Suite 871,Johnsonport,CT,82257,8176396066,whitakerkatrina@example.net,http://www.ross.net/,"Mo - Fr 9:00 - 16:00, Sa - Su Closed"
+Mooreburgh Medical,627 Johnson Trafficway,Mooreburgh,TN,25474,5258091991,foxwilliam@example.com,https://www.garcia-richards.org/,"Mo - Fr 9:00 - 19:00, Sa - Su Closed"
+New Richard Memorial Hospital,52713 Vincent Throughway Suite 714,New Richard,GU,95860,6463837050,jeffrey23@example.com,http://www.brewer-pierce.com/,Mo - Su 7:00 - 19:00
+Lake David University Medical Group,40789 Patricia Shores,Lake David,MD,48624,8623602386,terri12@example.org,http://www.oconnor-miller.com/,Mo - Su 7:00 - 16:00
+West Diana Health,71604 Novak Trail Suite 931,West Diana,VT,90359,6686050671,qdougherty@example.com,http://www.scott.com/,"Mo - Fr 10:00 - 17:00, Sa - Su Closed"
+Brooksmouth Memorial Hospital,599 Amber Vista Apt. 903,Brooksmouth,SC,07211,6869945891,stevenliu@example.com,http://www.clayton-bell.com/,"Mo - Fr 10:00 - 19:00, Sa - Su Closed"
+Sharpshire Health Center,4249 Lisa Mission Suite 713,Sharpshire,IA,05597,1322875422,mcdonaldjames@example.com,http://francis.info/,"Mo - Fr 7:00 - 19:00, Sa - Su Closed"
+West Michele Health Center,7042 Darren Island,West Michele,HI,33783,5516911395,lindagreen@example.org,https://www.franklin.com/,"Mo - Fr 10:00 - 18:00, Sa - Su Closed"
+North Pamelafurt Medical Clinic,098 Lee Squares,North Pamelafurt,AL,26696,4059153818,qallen@example.net,https://vaughn.biz/,"Mo - Fr 10:00 - 19:00, Sa - Su Closed"
+South Tyler Group,784 White Road,South Tyler,IL,93022,6664820322,poncejeremy@example.com,https://www.bennett-powell.biz/,"Mo - Fr 9:00 - 16:00, Sa - Su Closed"
+North Caitlynburgh Medical Clinic,48022 James Burgs Suite 564,North Caitlynburgh,AZ,73645,7930076030,glennsamuel@example.org,http://www.cross-henderson.com/,Mo - Su 9:00 - 19:00
+Melvinchester Medical Center,6202 Glover Station Apt. 790,Melvinchester,PW,07540,4654413826,thorntoneric@example.org,https://www.rocha.com/,"Mo - Fr 7:00 - 18:00, Sa - Su Closed"
+New Nicoleland University Medical Group,769 Thomas Rapids,New Nicoleland,OR,80091,7625025257,marcuspark@example.com,https://www.morrison.com/,Mo - Su 8:00 - 16:00
+New Seanburgh Group,735 Anthony Camp,New Seanburgh,MD,41686,5309998192,tnichols@example.net,http://www.taylor.info/,Mo - Su 9:00 - 19:00
+Jonesberg Health Center,55281 Elizabeth Isle Suite 211,Jonesberg,IA,97385,7675801425,davisthomas@example.net,https://www.hill.biz/,Mo - Su 9:00 - 19:00
+Lake Jefferyside Memorial Hospital,751 Melissa Rest,Lake Jefferyside,MT,64169,1987691125,phansen@example.net,http://www.watson-lee.com/,Mo - Su 8:00 - 19:00
+North Tammy University Medical Group,9813 Janet Lights Apt. 135,North Tammy,PA,75103,5388028143,robin29@example.com,https://hernandez-monroe.com/,Mo - Su 8:00 - 17:00
+Andrewberg Clinic,16640 Michelle Estate,Andrewberg,MA,23529,4671122324,sylvia02@example.net,https://lambert.org/,Mo - Su 8:00 - 18:00
+Longmouth Medical Center,41511 Alyssa Fall Apt. 985,Longmouth,LA,11125,3112742640,acevedopaul@example.net,https://www.johnson.org/,"Mo - Fr 10:00 - 17:00, Sa - Su Closed"
+East Stephenborough Medical Clinic,8428 Brittany Bridge Suite 675,East Stephenborough,MT,00740,3771746093,castillojose@example.net,https://hansen-brown.com/,Mo - Su 7:00 - 16:00
+Annemouth Medical Clinic,6157 Todd Square,Annemouth,PR,18522,5780788893,shawkimberly@example.com,https://torres.biz/,"Mo - Fr 7:00 - 16:00, Sa - Su Closed"
+South Maryville Clinic,378 Roger Lane,South Maryville,NM,84033,5920068570,austincruz@example.org,http://www.peters.com/,Mo - Su 8:00 - 16:00
+Brandifort Medical,7640 Timothy Freeway Apt. 826,Brandifort,ME,87928,6500806492,philip42@example.org,http://www.thompson.info/,Mo - Su 10:00 - 17:00
+Pamelaport Health Center,608 Ellis Walks Apt. 235,Pamelaport,CA,71280,9819259026,ohuff@example.com,http://www.ali.net/,Mo - Su 7:00 - 16:00
+Lake Loriside University Medical Group,57212 Poole Branch,Lake Loriside,VT,19468,3143441922,jenningsgeorge@example.com,https://www.austin.com/,Mo - Su 9:00 - 17:00
+Khanshire Clinic,35479 Denise Ford Suite 169,Khanshire,VA,57458,2434866653,brendamatthews@example.net,http://hill-hendricks.com/,"Mo - Fr 8:00 - 18:00, Sa - Su Closed"
+New Allen Medical,9906 Wong Run Suite 377,New Allen,CA,64544,6740808052,brittanynelson@example.com,http://prince.com/,Mo - Su 10:00 - 16:00
+Mikeville University Medical Group,7347 Jason Pike,Mikeville,OH,90575,7853383187,freemankenneth@example.org,http://carlson-johnson.com/,"Mo - Fr 9:00 - 17:00, Sa - Su Closed"
+Steinfort Memorial Hospital,49682 Woodard Cliffs,Steinfort,RI,63768,8433738682,williamgreen@example.com,https://wheeler-hanson.biz/,"Mo - Fr 9:00 - 17:00, Sa - Su Closed"
+Christineburgh Memorial Hospital,4223 Jeremy Pines Suite 110,Christineburgh,ID,80212,2805940175,welchdaniel@example.com,https://www.smith.com/,Mo - Su 8:00 - 18:00
+North Johnside Health,3523 Garza Hill Suite 724,North Johnside,NE,26849,1790978131,lynchjonathan@example.net,http://wagner.com/,Mo - Su 9:00 - 17:00
+Cynthialand Medical,330 Melissa Radial,Cynthialand,NE,00727,9698129462,timothy56@example.com,http://www.lawrence-choi.com/,"Mo - Fr 9:00 - 17:00, Sa - Su Closed"
+South Coltonmouth Memorial Hospital,15551 Jackson Coves Suite 158,South Coltonmouth,KS,91089,1884791460,munozgrant@example.com,http://smith-alvarez.com/,Mo - Su 7:00 - 18:00
+North Christopherhaven Memorial Hospital,0108 Hall Views,North Christopherhaven,MP,97808,8738529984,utorres@example.net,http://www.mitchell-petersen.com/,"Mo - Fr 9:00 - 17:00, Sa - Su Closed"
+Dunnfurt Medical Center,7052 Rivas Lake Suite 877,Dunnfurt,RI,57692,3985434111,cthompson@example.org,http://www.torres.com/,"Mo - Fr 8:00 - 17:00, Sa - Su Closed"
+New Melinda Clinic,1013 Fuentes Crossing,New Melinda,FL,72423,2604413475,gsmith@example.org,http://www.williamson.com/,Mo - Su 8:00 - 17:00
+Aprilport Group,477 Hernandez Harbor,Aprilport,CA,93849,6776568870,qcampbell@example.com,http://www.avery.com/,Mo - Su 8:00 - 17:00
+West Kylie Medical Center,699 Kevin Passage Apt. 268,West Kylie,NJ,05429,8718010571,xdaniel@example.net,https://barnett-tate.biz/,Mo - Su 10:00 - 17:00
+Mckayhaven Health Center,07100 Gibson Center,Mckayhaven,FL,33882,5762609199,tjuarez@example.net,http://vasquez.com/,Mo - Su 8:00 - 19:00
+Howardshire Group,38268 Jeffrey Springs Suite 841,Howardshire,ID,97581,8973765717,mholland@example.com,http://www.gonzales.net/,Mo - Su 8:00 - 16:00
+Abigailfurt Medical,668 Vance Mills Suite 907,Abigailfurt,CA,66174,1114017736,heatherjones@example.com,http://www.reyes.com/,Mo - Su 9:00 - 17:00
+Velazquezview Health,34447 Hines Gateway,Velazquezview,VA,47337,5365140325,jwalker@example.com,http://silva-scott.net/,"Mo - Fr 9:00 - 18:00, Sa - Su Closed"
+Lake Latoyaburgh Group,9450 Snyder Wall Suite 425,Lake Latoyaburgh,SC,70002,5394091606,ujohnson@example.org,https://www.gray.biz/,"Mo - Fr 10:00 - 16:00, Sa - Su Closed"
+West Mikemouth Clinic,66001 Lorraine Plain Suite 746,West Mikemouth,OK,83949,2872686458,drakejeanne@example.org,https://www.murray.biz/,"Mo - Fr 9:00 - 17:00, Sa - Su Closed"
+Barbarahaven Medical,9641 Wendy Heights Apt. 061,Barbarahaven,WA,70698,7952800147,keithmendoza@example.net,https://www.hardin.com/,"Mo - Fr 7:00 - 16:00, Sa - Su Closed"
+Lake Ashleyland Medical,69131 Sullivan Pass Suite 406,Lake Ashleyland,AZ,29447,4910653514,hjohnson@example.org,http://www.ellis-ramirez.com/,"Mo - Fr 10:00 - 18:00, Sa - Su Closed"
+West Andrewhaven University Medical Group,16180 Joseph Meadow Apt. 033,West Andrewhaven,AK,70274,5811083014,michelegonzalez@example.com,http://calderon.net/,"Mo - Fr 7:00 - 16:00, Sa - Su Closed"
+North Julie Clinic,23494 Robert Mountain Suite 989,North Julie,NY,16727,9758161620,ocurry@example.com,http://woods.com/,"Mo - Fr 8:00 - 16:00, Sa - Su Closed"
+New Nathan Health Center,310 Braun Mission Suite 783,New Nathan,OK,33525,2046241237,collin81@example.net,http://www.smith-miller.com/,Mo - Su 10:00 - 18:00
+Bakerchester Clinic,277 Smith Mountains Apt. 268,Bakerchester,WV,43170,8434025304,jasmine86@example.org,http://lee.com/,"Mo - Fr 8:00 - 16:00, Sa - Su Closed"
+Ashleybury Health Center,732 Cole View Suite 603,Ashleybury,KS,76105,6226630736,laura47@example.net,https://www.travis.biz/,Mo - Su 8:00 - 16:00
+Jeromeborough Memorial Hospital,7565 Sparks Hollow Apt. 919,Jeromeborough,OK,14059,9767236960,alan67@example.com,http://www.carroll-knight.com/,"Mo - Fr 9:00 - 19:00, Sa - Su Closed"
+East Lauren Medical Clinic,93446 Brian Circles Suite 095,East Lauren,HI,78226,1035276771,davidbutler@example.net,https://www.hernandez.com/,"Mo - Fr 8:00 - 19:00, Sa - Su Closed"
+West Davidmouth Medical Clinic,10802 Garcia Rest,West Davidmouth,AR,19952,5009871683,wandajarvis@example.com,http://herrera.org/,"Mo - Fr 7:00 - 16:00, Sa - Su Closed"
+New Matthewport Health,6226 Merritt Rest Apt. 599,New Matthewport,AS,37722,8479936981,petersebony@example.net,http://www.stout.info/,"Mo - Fr 7:00 - 16:00, Sa - Su Closed"
+Tuckerside Memorial Hospital,60547 Dominguez Fords,Tuckerside,NM,16992,9201212906,daniel77@example.org,https://porter.com/,"Mo - Fr 7:00 - 17:00, Sa - Su Closed"
+Port Wendy University Medical Group,298 Jeffrey Greens Apt. 282,Port Wendy,PA,41698,4257165645,krussell@example.com,http://myers.com/,Mo - Su 7:00 - 18:00
+North Juliefort Clinic,9709 Travis Ridges,North Juliefort,AR,71703,7939980716,xjohnson@example.org,http://www.ferguson.com/,Mo - Su 8:00 - 17:00
+East Jeffery Medical Clinic,70034 Leon Throughway Apt. 983,East Jeffery,GU,35563,9200880369,kimberly51@example.com,https://martin-watkins.com/,"Mo - Fr 7:00 - 16:00, Sa - Su Closed"
+Jenniferton Medical,113 James Fords Suite 246,Jenniferton,FM,96515,7304926594,robinsonkevin@example.net,https://dorsey.com/,"Mo - Fr 7:00 - 19:00, Sa - Su Closed"
+South Jessicaton Memorial Hospital,315 Nelson Mill Apt. 648,South Jessicaton,SD,81324,3831027317,goodmanrichard@example.com,https://www.bryant-perez.com/,"Mo - Fr 9:00 - 19:00, Sa - Su Closed"
+Ryanfort Health,38579 Barbara Crossing Suite 332,Ryanfort,MS,81248,4278630417,jessicabradley@example.org,https://www.castillo.com/,Mo - Su 7:00 - 18:00
+Lindseyland Clinic,37023 Susan Valley Apt. 460,Lindseyland,IN,04024,5628299678,michaelstevens@example.org,https://www.white.net/,Mo - Su 9:00 - 19:00
+East Colleen Health Center,187 William Park Apt. 660,East Colleen,KY,83768,7318779169,perezmelinda@example.org,https://www.martin-floyd.com/,Mo - Su 9:00 - 18:00
+West Carolshire Medical Clinic,405 James Cliffs,West Carolshire,WA,02734,4341575074,karen95@example.com,http://reynolds.net/,Mo - Su 10:00 - 19:00
+Jamesside Clinic,868 Reginald Falls Apt. 482,Jamesside,NH,06528,3522562733,ronaldtran@example.org,http://www.tran-bennett.net/,"Mo - Fr 9:00 - 16:00, Sa - Su Closed"
+Edwardsberg Group,17838 Paul Square Apt. 672,Edwardsberg,PW,79487,3448451626,taylorneil@example.org,http://morales.com/,"Mo - Fr 9:00 - 18:00, Sa - Su Closed"
+Wheelermouth Health Center,3440 Williams Parkways,Wheelermouth,PW,29258,5410508058,kentashley@example.org,https://www.williams.com/,Mo - Su 8:00 - 19:00
+Lake Michaelside Memorial Hospital,909 Brandon Mountain Apt. 081,Lake Michaelside,NV,37943,6441129293,moonamy@example.net,http://phillips.info/,"Mo - Fr 8:00 - 17:00, Sa - Su Closed"
+Karenshire Memorial Hospital,698 Perez Divide,Karenshire,MN,44056,4739219676,kathleen62@example.net,http://skinner.net/,"Mo - Fr 9:00 - 18:00, Sa - Su Closed"
+Prestonmouth Health,4078 Michael Forge,Prestonmouth,AZ,60019,7125516878,daisy49@example.com,http://www.frank.com/,"Mo - Fr 8:00 - 16:00, Sa - Su Closed"
+Jennaville Clinic,25486 Humphrey Villages,Jennaville,NJ,38811,5994584230,stephanie17@example.org,http://pearson.org/,Mo - Su 7:00 - 17:00
+Lake Sarah Medical Center,2978 Kara Heights,Lake Sarah,MI,79883,2752961438,christine46@example.net,http://www.haas.org/,"Mo - Fr 9:00 - 16:00, Sa - Su Closed"
+Port Daniel Medical Clinic,788 Ricardo Road Apt. 413,Port Daniel,SC,02916,3162970186,tina95@example.net,https://cannon-meyer.com/,"Mo - Fr 9:00 - 17:00, Sa - Su Closed"
+Taylormouth Health,072 Robinson Neck,Taylormouth,LA,31284,1084380654,robert41@example.net,https://warner-young.com/,Mo - Su 10:00 - 18:00
+Port Patrick Clinic,9056 Matthew Parks Apt. 546,Port Patrick,IA,24394,5666417658,seanhoffman@example.org,http://www.flynn.com/,Mo - Su 9:00 - 17:00
+Lake Bryanport Medical,442 Rickey Common Suite 005,Lake Bryanport,FL,96042,1977444234,joneswanda@example.net,https://castillo.com/,"Mo - Fr 9:00 - 16:00, Sa - Su Closed"
+Coxfurt Clinic,27908 Rachel Mills,Coxfurt,PW,91744,5693551987,patrick25@example.com,https://www.smith-johnson.com/,Mo - Su 7:00 - 18:00
+Guyview Memorial Hospital,07221 Snyder Plains Suite 503,Guyview,SD,59394,2587740501,garciachad@example.org,http://santana.info/,Mo - Su 8:00 - 17:00
+East Williammouth Medical Center,711 Rodriguez Station,East Williammouth,AL,69341,7740551079,njohnson@example.com,http://www.coffey-collier.com/,"Mo - Fr 8:00 - 16:00, Sa - Su Closed"
+Smithshire Health,70725 Edwards Oval,Smithshire,NE,41505,3547639237,proctorricky@example.net,http://www.horn-woodard.net/,"Mo - Fr 8:00 - 17:00, Sa - Su Closed"
+East Mollychester Medical Clinic,268 Edward Glens,East Mollychester,FL,30731,2900231022,richardsullivan@example.com,http://robinson-oneill.com/,Mo - Su 7:00 - 17:00
+Rickyfurt Medical,336 Jeffrey Row,Rickyfurt,MD,88657,6608001271,fitzgeraldadam@example.org,https://www.snow.com/,Mo - Su 10:00 - 17:00
+Johnchester Clinic,88063 Kathleen Loop,Johnchester,AR,22930,8133255529,caldwellashley@example.net,http://rollins-juarez.net/,"Mo - Fr 8:00 - 18:00, Sa - Su Closed"
+Jessicaton University Medical Group,30713 Garcia Views,Jessicaton,MO,25389,9153402433,hmoreno@example.net,http://www.gilmore.com/,Mo - Su 10:00 - 19:00
+Ambermouth Medical,00052 Walton River,Ambermouth,MD,71689,7141406878,tcarr@example.com,http://harris-jacobs.com/,Mo - Su 7:00 - 17:00
+Deborahbury Medical Clinic,3705 Reed Vista Apt. 559,Deborahbury,OK,13782,3976623593,alexis57@example.net,http://www.ruiz-chapman.com/,Mo - Su 10:00 - 19:00
+New Erika Clinic,491 King Passage,New Erika,SD,39525,9996100040,manndeborah@example.org,https://www.obrien-murray.com/,Mo - Su 8:00 - 16:00
+Ricardostad University Medical Group,82891 Ford Forest Suite 601,Ricardostad,VA,37245,7289267229,michaelwhite@example.org,http://www.smith-thompson.com/,"Mo - Fr 9:00 - 19:00, Sa - Su Closed"
+Juareztown Medical Center,9450 Tony Mall,Juareztown,LA,64770,9705866481,fjames@example.org,http://cook.info/,"Mo - Fr 10:00 - 16:00, Sa - Su Closed"
+Thompsonhaven University Medical Group,3490 Guerrero Parks Suite 138,Thompsonhaven,NM,70759,9652950460,ortegajoseph@example.org,http://www.jones-chapman.com/,Mo - Su 10:00 - 16:00
+Lewisborough Memorial Hospital,567 Harold Junctions Suite 091,Lewisborough,MO,81886,6384085198,dmartinez@example.net,https://guerra.biz/,"Mo - Fr 7:00 - 18:00, Sa - Su Closed"
+Lake Mary Medical,4257 Joshua Pine Apt. 749,Lake Mary,VA,20304,2547905266,marcuschandler@example.com,https://www.brown-miller.com/,Mo - Su 9:00 - 19:00
+West Alejandro Medical,0342 Carr Springs,West Alejandro,WY,81452,9352954862,mackenzie42@example.org,http://www.friedman.com/,Mo - Su 10:00 - 16:00
+Port Amber Medical,874 Costa Greens,Port Amber,NV,63986,7917514392,victoriasullivan@example.org,http://www.walker.com/,"Mo - Fr 8:00 - 18:00, Sa - Su Closed"
+Nicoleberg Clinic,532 Charles Fort Suite 708,Nicoleberg,MP,32777,5542090524,brittanyberg@example.org,https://www.huff.info/,"Mo - Fr 7:00 - 16:00, Sa - Su Closed"
+Matthewmouth University Medical Group,31683 Gina Mills Suite 872,Matthewmouth,IN,66002,8079270877,christinacobb@example.com,http://www.beck.net/,Mo - Su 9:00 - 18:00
+Rodriguezport Medical,424 Richard Centers Suite 588,Rodriguezport,OH,89944,4687405758,smithchristopher@example.com,http://www.hill.com/,Mo - Su 8:00 - 16:00
+North Zachary Medical Clinic,778 Santos Stravenue,North Zachary,ID,31855,6137455129,tschmidt@example.com,https://www.stephenson.com/,"Mo - Fr 7:00 - 18:00, Sa - Su Closed"
+East Molly Clinic,93467 Jason Crest,East Molly,AS,33883,1282987279,kathleen64@example.com,http://ferguson.org/,Mo - Su 9:00 - 19:00
+Leeport Health Center,3532 Shelton Squares Suite 847,Leeport,IA,25355,3286598236,mariosilva@example.com,http://robinson-perkins.net/,Mo - Su 9:00 - 16:00
+Davisshire Health,4924 Douglas Springs,Davisshire,VT,20375,9660410589,yrodriguez@example.com,http://www.smith.info/,Mo - Su 10:00 - 18:00
+Lake Russellmouth Memorial Hospital,8934 Manning Mountain Apt. 314,Lake Russellmouth,CT,58059,9040344767,andersonsue@example.org,https://lang-hill.com/,Mo - Su 8:00 - 19:00
+Tinatown Health Center,7100 Sarah Via,Tinatown,DC,81059,1206741810,john63@example.com,https://blair.com/,Mo - Su 9:00 - 19:00
+Woodchester Memorial Hospital,2531 Patricia Stream Suite 091,Woodchester,TX,33396,3503627982,charlesharris@example.org,http://garza.info/,Mo - Su 7:00 - 19:00
+Mooreborough Medical,6690 Turner Spring,Mooreborough,DC,65774,5556770642,brianna13@example.net,https://browning.com/,Mo - Su 8:00 - 17:00
+North Dustinborough Clinic,788 Kimberly Keys Apt. 892,North Dustinborough,OH,96183,9256617438,pdudley@example.net,https://www.garrett.net/,Mo - Su 9:00 - 19:00
+South Joseville Health,030 Mora Prairie Suite 284,South Joseville,GA,50079,7906874868,mark56@example.com,http://www.smith-thompson.com/,"Mo - Fr 10:00 - 18:00, Sa - Su Closed"
+Coxstad Clinic,71394 John Turnpike,Coxstad,ID,15436,1113557224,christopher66@example.org,https://hall.info/,Mo - Su 8:00 - 17:00
+Port Kyle Group,0815 Perry Knoll Suite 498,Port Kyle,MA,23945,7341550081,harringtonluis@example.org,https://rhodes-hobbs.com/,Mo - Su 10:00 - 19:00
+Mariaton Clinic,245 Pamela Isle Suite 000,Mariaton,DE,04062,2227165229,cookpatty@example.net,http://alvarez-keller.com/,Mo - Su 7:00 - 18:00
+Hawkinsmouth Memorial Hospital,0055 Fields Run,Hawkinsmouth,NH,48480,1292369228,xescobar@example.net,https://www.cochran-dixon.com/,"Mo - Fr 9:00 - 16:00, Sa - Su Closed"
+South Jamestown Health Center,90507 Frederick Fort Suite 733,South Jamestown,MS,24389,9201547044,helen98@example.net,https://www.adkins.com/,"Mo - Fr 9:00 - 18:00, Sa - Su Closed"
+South Daniel Medical,9659 Rodriguez Fork,South Daniel,PW,64526,4829952422,joseph92@example.org,https://park.com/,Mo - Su 8:00 - 19:00
+Heathertown Clinic,52598 Young Fort Apt. 472,Heathertown,ND,38954,2281684843,wjenkins@example.com,http://www.pena.com/,Mo - Su 7:00 - 19:00
+North Melissa Group,8700 Davenport Pines,North Melissa,PA,96204,3004092005,daniel14@example.com,http://martinez.biz/,"Mo - Fr 10:00 - 16:00, Sa - Su Closed"
+South Joshua Clinic,0014 Lori Avenue Apt. 809,South Joshua,MT,24817,8711420049,usmith@example.com,https://www.mason-lewis.com/,"Mo - Fr 8:00 - 19:00, Sa - Su Closed"
+Leport Medical Clinic,0313 Nicholas Green,Leport,VI,08426,6188778279,sullivantyler@example.org,https://www.taylor.com/,"Mo - Fr 7:00 - 19:00, Sa - Su Closed"
+North Jenny Group,7634 Patrick Rapids Apt. 137,North Jenny,VA,92063,7599042740,brownjennifer@example.org,https://adams-miller.org/,Mo - Su 10:00 - 19:00
+West Jose Medical Center,419 Margaret Neck Apt. 626,West Jose,GA,77025,2628026304,gmcintosh@example.com,https://www.price-gates.com/,Mo - Su 8:00 - 19:00
+Phillipport Memorial Hospital,7582 Nichols Plains Suite 100,Phillipport,HI,15860,9336638985,qmaldonado@example.org,https://diaz.com/,Mo - Su 7:00 - 17:00
+Wilsonstad Medical Clinic,268 King Viaduct,Wilsonstad,GA,32482,1154887880,edward75@example.net,https://hicks.biz/,Mo - Su 10:00 - 19:00
+East Maria University Medical Group,5175 Felicia Avenue Suite 469,East Maria,AL,45872,4609019004,jessica54@example.net,http://www.sharp.net/,"Mo - Fr 8:00 - 19:00, Sa - Su Closed"
+Dennisville Memorial Hospital,55472 Mullins Corners Apt. 529,Dennisville,KS,39752,1195558765,gcannon@example.org,https://www.daniels.org/,Mo - Su 8:00 - 16:00
+Lake Zacharyburgh Group,099 Melissa Wall,Lake Zacharyburgh,WI,38858,4683174805,paul97@example.net,https://brown-ramsey.com/,Mo - Su 7:00 - 17:00
+South Jay Health Center,38407 Rebecca Vista,South Jay,WY,56296,9468679337,williamskimberly@example.net,https://www.michael.com/,"Mo - Fr 9:00 - 19:00, Sa - Su Closed"
+South George Group,36254 Sarah Dale,South George,MI,43859,8478745501,apennington@example.org,https://gutierrez-newton.net/,Mo - Su 10:00 - 19:00
+North Ashleystad Medical Clinic,5991 Mathews Crest,North Ashleystad,IA,86476,4320066937,xbell@example.org,https://oconnor.com/,"Mo - Fr 9:00 - 17:00, Sa - Su Closed"
+East Brianstad Group,750 Clark Roads,East Brianstad,LA,04969,1776398922,nwilson@example.net,http://www.stephenson.biz/,"Mo - Fr 9:00 - 16:00, Sa - Su Closed"
+Wisestad University Medical Group,72274 Ann Camp Apt. 505,Wisestad,CO,71334,2422718683,lopezmark@example.com,https://www.smith.net/,Mo - Su 9:00 - 19:00
+Lake Holly Memorial Hospital,202 Bryant Light,Lake Holly,NV,61188,5327919163,stricklandcorey@example.net,http://wright.com/,"Mo - Fr 9:00 - 18:00, Sa - Su Closed"
+South Michael Medical,7044 Grant Stravenue,South Michael,KY,29860,9425627846,dawn07@example.com,https://johnson.biz/,"Mo - Fr 7:00 - 16:00, Sa - Su Closed"
+Colemanport Medical Center,588 Stephen Locks Suite 962,Colemanport,MP,05436,6003666683,brandonpratt@example.com,https://www.hill.com/,"Mo - Fr 8:00 - 17:00, Sa - Su Closed"
+Port Jorgestad Health,9326 Rasmussen Springs Apt. 996,Port Jorgestad,MO,35017,9459484521,allenmichael@example.org,http://rice.net/,Mo - Su 10:00 - 18:00
+Davidmouth Memorial Hospital,53495 Brennan Station,Davidmouth,NV,18732,8091995750,nelsonsandra@example.net,https://harris.com/,"Mo - Fr 7:00 - 17:00, Sa - Su Closed"
+Owensburgh Health Center,559 Michael Mills,Owensburgh,GU,57326,7118748087,jenniferjames@example.com,http://atkins-harrison.com/,"Mo - Fr 8:00 - 19:00, Sa - Su Closed"
+Zacharystad University Medical Group,9193 Nichole View Apt. 420,Zacharystad,HI,56801,6928642045,wmendoza@example.com,http://martin.com/,Mo - Su 7:00 - 19:00
+Port Caitlynport University Medical Group,87026 Miller Turnpike Suite 601,Port Caitlynport,MS,04330,8776804459,jennifer51@example.org,http://harris-scott.biz/,Mo - Su 10:00 - 18:00
+North Angelafort Group,8785 Francisco Lakes Apt. 604,North Angelafort,WI,72093,5396738953,allenlisa@example.org,http://garza.info/,"Mo - Fr 8:00 - 19:00, Sa - Su Closed"
+Castilloborough Memorial Hospital,2533 Christina Forest Apt. 949,Castilloborough,MD,10171,7619077778,emilylewis@example.org,https://www.reed.com/,"Mo - Fr 10:00 - 18:00, Sa - Su Closed"
+New David Group,950 Pope Springs Apt. 643,New David,MH,75727,1650027875,newmankristopher@example.org,https://www.nelson.com/,"Mo - Fr 8:00 - 17:00, Sa - Su Closed"
+Port Gabriel Memorial Hospital,4616 Payne View Suite 058,Port Gabriel,PA,92915,3252927587,robert50@example.org,http://www.terry.info/,Mo - Su 9:00 - 17:00
+Lake Eric Clinic,04286 Rodriguez Manors,Lake Eric,ND,89039,6316393967,fosborn@example.org,http://www.ellis-salazar.net/,Mo - Su 10:00 - 17:00
+South Grace Memorial Hospital,1701 Michelle Corner Apt. 612,South Grace,IN,55618,2625722995,garciacharles@example.net,https://www.chapman.com/,"Mo - Fr 10:00 - 17:00, Sa - Su Closed"
+Lake Christopherstad Medical Clinic,2355 Peters Circles Suite 868,Lake Christopherstad,WI,82959,2865012614,lisa73@example.org,http://williams.org/,"Mo - Fr 9:00 - 19:00, Sa - Su Closed"
+Bryanfort Health,7320 Sierra Trafficway,Bryanfort,NC,35940,5031713645,vsutton@example.net,https://sanders.com/,"Mo - Fr 10:00 - 18:00, Sa - Su Closed"
+Lake Jasontown Memorial Hospital,174 Samuel Ferry Apt. 572,Lake Jasontown,WI,31644,3800266291,icurtis@example.org,http://gibson.org/,Mo - Su 9:00 - 18:00
+New Johnnyview Group,47154 Lee Pass Apt. 852,New Johnnyview,IL,05294,9988359276,stewartchristine@example.net,https://patton.com/,Mo - Su 9:00 - 16:00
+Rachelview University Medical Group,8452 Teresa Stream Suite 068,Rachelview,IA,81457,7696211693,ymcdonald@example.net,http://beasley-smith.biz/,Mo - Su 8:00 - 17:00
+Kellybury Group,462 Jason River,Kellybury,WI,53323,5958314089,andrewwright@example.org,http://www.king.com/,Mo - Su 8:00 - 17:00
+Reedfort Medical,81402 Hicks Flat Apt. 979,Reedfort,OK,88192,4581683113,hamptonmelanie@example.com,http://www.perez-ford.com/,"Mo - Fr 8:00 - 19:00, Sa - Su Closed"
+New Brian Medical Center,02349 Adams Plaza,New Brian,PA,10718,2345203239,michelle64@example.com,http://www.mcconnell.biz/,Mo - Su 10:00 - 18:00
+South Kristenton Clinic,921 Michael Avenue,South Kristenton,MD,44851,5184359078,jacobdominguez@example.com,http://www.james.com/,Mo - Su 9:00 - 18:00
+Nicholasfort Clinic,899 Ho Skyway Suite 061,Nicholasfort,FL,55351,4375794260,cohenjade@example.net,https://cooper-steele.com/,"Mo - Fr 9:00 - 17:00, Sa - Su Closed"
+Lake Joseph Medical Clinic,8379 Robinson Well Apt. 912,Lake Joseph,VI,27833,2369536024,vhill@example.com,http://www.nunez-mack.com/,Mo - Su 8:00 - 17:00
+Johnside Group,9759 Samantha Station,Johnside,AK,05689,4355318044,estevens@example.com,https://www.jordan-jackson.net/,"Mo - Fr 8:00 - 18:00, Sa - Su Closed"
+North Jamie Group,33255 Heather Court,North Jamie,FM,91098,8645885742,hellis@example.com,http://www.morton-smith.biz/,"Mo - Fr 7:00 - 18:00, Sa - Su Closed"
+South Jennifer Group,1401 Tammy Greens,South Jennifer,GU,00568,9021669072,hayesxavier@example.org,https://www.olson.com/,Mo - Su 7:00 - 19:00
+East Jonathan University Medical Group,291 Flores Run,East Jonathan,GA,65549,1906610648,ubaker@example.net,https://hill.org/,"Mo - Fr 10:00 - 16:00, Sa - Su Closed"
+Port Williamfort University Medical Group,4252 Taylor Villages Suite 480,Port Williamfort,SC,77045,3586681450,danny74@example.net,http://www.kelley-phillips.com/,Mo - Su 9:00 - 17:00
+North Allisonton Health,3220 Schneider Hill,North Allisonton,CO,72436,6718097892,james89@example.net,https://www.harris.biz/,Mo - Su 8:00 - 16:00
+Lake Crystalbury Group,026 Ford Knoll,Lake Crystalbury,DC,52212,3727882658,judy83@example.net,https://www.harris.com/,"Mo - Fr 8:00 - 17:00, Sa - Su Closed"
+Greenhaven Group,212 Chapman Estate,Greenhaven,MT,72349,1393626015,umason@example.net,https://stevens-rios.info/,Mo - Su 8:00 - 17:00
+North Joshuahaven Group,065 Chang River Suite 925,North Joshuahaven,OK,38647,6157377649,chavezryan@example.com,http://www.mendoza.com/,"Mo - Fr 9:00 - 17:00, Sa - Su Closed"
+North Amandaville Medical Clinic,235 Smith Club,North Amandaville,VT,43926,2513181279,carol46@example.org,http://www.gibson-sheppard.org/,"Mo - Fr 10:00 - 17:00, Sa - Su Closed"
+East John Medical Center,4201 Michael Vista Suite 011,East John,TN,84184,5221553794,mriley@example.net,https://rivas.com/,"Mo - Fr 8:00 - 19:00, Sa - Su Closed"
+Evansland Medical Clinic,47298 Hobbs Road,Evansland,TN,25527,1645955645,jennifer02@example.net,https://willis-morris.com/,Mo - Su 9:00 - 17:00
+Valerieton Health Center,3987 Carrie Parkways Apt. 536,Valerieton,PA,52358,5980139192,mariahlee@example.net,http://www.good.com/,"Mo - Fr 10:00 - 18:00, Sa - Su Closed"
+East Williamfurt Health Center,7748 Davis Mill,East Williamfurt,IN,57090,8873498567,nicholas13@example.net,http://www.ruiz.net/,Mo - Su 8:00 - 19:00
+Thompsonshire University Medical Group,4393 Davis Cliffs,Thompsonshire,AR,40989,5931113499,osimmons@example.org,https://www.ramirez.net/,Mo - Su 7:00 - 17:00
+North Deborah Memorial Hospital,0917 Ann Harbors Suite 631,North Deborah,IL,59187,2932548265,keithanderson@example.org,https://adkins-smith.biz/,"Mo - Fr 9:00 - 16:00, Sa - Su Closed"
+East Phillip Medical,15970 Wood Union,East Phillip,AZ,01282,3209579338,harrismichael@example.org,https://townsend.com/,"Mo - Fr 9:00 - 17:00, Sa - Su Closed"
+Hollyside Clinic,1117 Woods Extensions,Hollyside,RI,25207,1652508666,rileykenneth@example.org,http://www.coffey.com/,Mo - Su 8:00 - 16:00
+Beckfurt Medical Clinic,51455 Wilkins Freeway,Beckfurt,MH,67077,9100215058,younganna@example.com,https://montoya-rodgers.com/,Mo - Su 10:00 - 18:00
+Lake Angelaland Health Center,256 Eric Forks Apt. 533,Lake Angelaland,WA,84816,3582971659,stevenowens@example.net,https://www.powers-harris.com/,"Mo - Fr 8:00 - 16:00, Sa - Su Closed"
+Jacobfort Health Center,213 Cindy Alley Suite 725,Jacobfort,IA,14572,1040396628,caroline94@example.org,https://www.johnson.org/,"Mo - Fr 9:00 - 19:00, Sa - Su Closed"
+Portermouth Clinic,6877 Frey Points Suite 530,Portermouth,IA,74815,4749426334,kburns@example.net,http://scott-smith.info/,Mo - Su 10:00 - 16:00
+Gloverfort University Medical Group,05830 King Roads Suite 138,Gloverfort,NE,25375,3615085797,orodriguez@example.org,http://www.olsen-young.net/,Mo - Su 8:00 - 16:00
+Barnettport Medical Clinic,56761 Michael Loop Apt. 788,Barnettport,NY,03702,9547458558,chase78@example.net,https://burns-hutchinson.org/,"Mo - Fr 7:00 - 17:00, Sa - Su Closed"
+South Makayla Memorial Hospital,005 Jamie Expressway Apt. 338,South Makayla,WA,99744,3141625964,snydersamantha@example.org,http://www.lynn.info/,Mo - Su 10:00 - 17:00
+New Donaldberg Health Center,82938 Mendez Inlet Apt. 123,New Donaldberg,ND,13198,4476065698,jacquelinesmith@example.org,http://santos-phillips.org/,"Mo - Fr 9:00 - 19:00, Sa - Su Closed"
+North Ronald Medical,912 Raymond Causeway,North Ronald,MO,58566,9325274845,gonzalezlisa@example.org,https://anderson.com/,"Mo - Fr 8:00 - 18:00, Sa - Su Closed"
+West Laurenport Health,133 Jose Inlet,West Laurenport,CT,11367,4494416892,eric77@example.org,https://spears-long.biz/,Mo - Su 9:00 - 16:00
+New Scott University Medical Group,496 Danielle Wall,New Scott,GU,58058,3094964485,ewright@example.org,http://www.carter.org/,"Mo - Fr 10:00 - 16:00, Sa - Su Closed"
+Sherryberg Group,09293 Jason Estates,Sherryberg,PW,48947,4869257416,tannermarshall@example.com,https://www.stokes.biz/,"Mo - Fr 8:00 - 17:00, Sa - Su Closed"
+Dudleyside Clinic,2786 Amanda Lodge Apt. 358,Dudleyside,AR,78833,6462127534,qcampbell@example.net,http://howard-barton.com/,"Mo - Fr 10:00 - 17:00, Sa - Su Closed"
+South Kellymouth Medical,10441 Lindsay Mount,South Kellymouth,MO,09081,2287488893,charlesphillips@example.net,https://www.flowers.com/,Mo - Su 10:00 - 16:00
+Clarkberg Medical,2261 Rogers Inlet Suite 165,Clarkberg,HI,35190,9016979418,crystal14@example.org,http://www.curtis-norris.biz/,Mo - Su 8:00 - 17:00
+Ashleyburgh University Medical Group,849 Stewart Mountains Suite 288,Ashleyburgh,VA,13987,2036383683,dustin89@example.net,https://lewis.com/,"Mo - Fr 7:00 - 16:00, Sa - Su Closed"
+Wilsonburgh Health,524 David Lakes,Wilsonburgh,NH,58279,9379117085,lawrencechristopher@example.net,http://austin.net/,"Mo - Fr 8:00 - 18:00, Sa - Su Closed"
+South Susanmouth Memorial Hospital,852 Jim Street Suite 385,South Susanmouth,IN,08888,4284926723,hhall@example.org,http://mejia.com/,Mo - Su 8:00 - 19:00
+Port Deannafurt Medical Center,03542 Joshua Lane,Port Deannafurt,AR,68201,8986525176,martinezmark@example.com,https://www.lewis.biz/,"Mo - Fr 9:00 - 17:00, Sa - Su Closed"
+Watsonborough Health,282 Shaw Villages,Watsonborough,KS,16863,1578183698,jimmycole@example.org,http://wilson-johnston.com/,Mo - Su 7:00 - 16:00
+Lake Hayleystad Health Center,65266 Shane Pike Apt. 067,Lake Hayleystad,TN,65980,1925141762,xhoward@example.net,http://www.stewart.com/,"Mo - Fr 7:00 - 19:00, Sa - Su Closed"
+South Gabrielborough Medical Center,836 Reid Mountain Apt. 914,South Gabrielborough,WI,07566,9469377398,marcusbrown@example.net,http://www.caldwell-johnson.com/,"Mo - Fr 8:00 - 16:00, Sa - Su Closed"
+Masonport Memorial Hospital,71849 Jamie Garden,Masonport,NC,64875,2505011386,vgoodman@example.com,http://www.hudson.org/,"Mo - Fr 7:00 - 18:00, Sa - Su Closed"
+South Victoria Health Center,13896 John Divide,South Victoria,CO,68708,1848318199,jessehahn@example.com,https://www.smith.com/,"Mo - Fr 10:00 - 16:00, Sa - Su Closed"
+West Alexis Health,573 Barker Loop Apt. 046,West Alexis,AR,49747,5938438402,hturner@example.net,https://patterson.com/,"Mo - Fr 7:00 - 16:00, Sa - Su Closed"
+Ashleyburgh Group,88108 Matthew Wells,Ashleyburgh,TN,17386,8103543487,steven66@example.org,https://hart.biz/,"Mo - Fr 7:00 - 19:00, Sa - Su Closed"
+Caitlinton Group,6929 Tonya Expressway Suite 091,Caitlinton,PA,06085,4750842507,andrea36@example.com,https://thompson.com/,Mo - Su 8:00 - 19:00
+Hahnside Memorial Hospital,4505 Jose Stravenue Suite 035,Hahnside,OR,01062,2731250225,foxtravis@example.net,https://www.watson-king.org/,"Mo - Fr 8:00 - 16:00, Sa - Su Closed"
+Conleyfurt Group,11450 Charles Bridge Suite 034,Conleyfurt,TN,46151,3310403218,nwilson@example.net,http://pierce-russo.com/,"Mo - Fr 7:00 - 17:00, Sa - Su Closed"
+East Victoria University Medical Group,628 Danny Ways,East Victoria,KY,60282,8547900472,tiffanykrueger@example.org,https://brooks-moore.com/,"Mo - Fr 9:00 - 18:00, Sa - Su Closed"
+North John Medical,24502 John Brooks,North John,CA,03091,8627816998,fordmelissa@example.org,http://www.wright-monroe.com/,"Mo - Fr 8:00 - 19:00, Sa - Su Closed"
+Perezmouth University Medical Group,893 Dominguez Island,Perezmouth,NC,83706,6111312054,joshuachristensen@example.com,https://parker.com/,Mo - Su 10:00 - 18:00
+North Brandyshire Clinic,4827 Norris Mountain,North Brandyshire,NM,22788,3188687872,qwong@example.net,http://www.wade-hayes.com/,"Mo - Fr 9:00 - 19:00, Sa - Su Closed"
+Josephtown Clinic,325 Mendoza Station,Josephtown,VT,29439,1442854810,samantha36@example.org,https://www.rios.com/,Mo - Su 10:00 - 16:00
+Calebberg Medical Clinic,9815 Bailey Manors,Calebberg,VT,94014,8793341942,douglas99@example.net,http://tapia-webster.com/,Mo - Su 9:00 - 19:00
+Ryanborough Memorial Hospital,607 Julie Course Suite 550,Ryanborough,AZ,80567,4624169503,seanruiz@example.com,https://moore.com/,"Mo - Fr 10:00 - 16:00, Sa - Su Closed"
+North Alexandra Clinic,361 Peck Trail,North Alexandra,PR,80703,5640930343,simmonsmorgan@example.org,http://pacheco.org/,"Mo - Fr 8:00 - 17:00, Sa - Su Closed"
+Charlesside Health,5099 Tony Landing Apt. 264,Charlesside,WV,13486,6980711065,johncrawford@example.org,http://www.aguilar.com/,"Mo - Fr 7:00 - 18:00, Sa - Su Closed"
+Johnsonchester University Medical Group,3935 Gregory Unions Suite 690,Johnsonchester,MP,18701,5931263392,marymeyer@example.net,http://schultz.com/,"Mo - Fr 7:00 - 17:00, Sa - Su Closed"
+New Suzanne Group,745 Tiffany Village,New Suzanne,AL,84705,8698451736,brandonbradford@example.net,http://www.dunn.com/,Mo - Su 9:00 - 16:00
+Brownville Medical Center,63534 Franco Port,Brownville,VA,01038,6849818223,fishermalik@example.org,http://www.hicks.org/,Mo - Su 7:00 - 16:00
+New Kathleenside Medical Center,7601 Scott Cape Suite 785,New Kathleenside,TN,13055,6657770829,morajennifer@example.com,https://www.knox.org/,"Mo - Fr 8:00 - 18:00, Sa - Su Closed"
+Lehaven Clinic,6425 Jessica Shores Suite 173,Lehaven,RI,63698,2630056020,michellesmith@example.org,https://www.hamilton.com/,"Mo - Fr 10:00 - 17:00, Sa - Su Closed"
+North Timothy Medical Center,5632 Garcia Glens Suite 934,North Timothy,TN,99470,1573956529,lisahouston@example.com,https://www.ingram.net/,Mo - Su 10:00 - 19:00
+North Ianmouth Health Center,707 Dillon Drives Suite 313,North Ianmouth,GU,36813,9539893513,cwilliams@example.org,http://www.rich.com/,"Mo - Fr 7:00 - 16:00, Sa - Su Closed"
+Diazmouth Group,4711 Kristen Turnpike,Diazmouth,WV,68605,8134207642,acarter@example.com,https://www.hamilton-smith.com/,"Mo - Fr 9:00 - 19:00, Sa - Su Closed"
+West Charles University Medical Group,764 Carol Center Suite 571,West Charles,NE,42251,9832973800,mary28@example.com,http://zimmerman.com/,Mo - Su 7:00 - 18:00
+New Jason Medical Center,5856 Rivera Village,New Jason,IL,56391,2054677783,robertwiley@example.com,https://turner.biz/,"Mo - Fr 8:00 - 17:00, Sa - Su Closed"
+Ingrambury Clinic,6107 Yates Villages Apt. 407,Ingrambury,GA,48966,8094163187,bjenkins@example.net,https://rogers.org/,Mo - Su 7:00 - 16:00
+Sueside Group,327 Vincent Stravenue Apt. 405,Sueside,IA,95236,5141777335,garciamichael@example.net,https://weber.biz/,Mo - Su 9:00 - 19:00
+Bretthaven Clinic,88793 Nancy Roads,Bretthaven,GU,90918,5712956661,kimberly83@example.org,http://www.rhodes.biz/,"Mo - Fr 9:00 - 16:00, Sa - Su Closed"
+South Ginaview University Medical Group,24370 Thompson Crossing Apt. 934,South Ginaview,MA,27040,2417435108,vickirogers@example.com,http://rodriguez.biz/,"Mo - Fr 9:00 - 16:00, Sa - Su Closed"
+East Dana Health,672 Murphy Street,East Dana,DE,88746,1624209493,wongmelissa@example.net,http://www.woodard.com/,Mo - Su 8:00 - 16:00
+Kennethhaven Memorial Hospital,58622 Valdez Underpass Apt. 881,Kennethhaven,CT,67441,3081298606,carterjessica@example.org,http://www.bowers.com/,"Mo - Fr 10:00 - 17:00, Sa - Su Closed"
+West Mary Clinic,5092 Lambert Throughway,West Mary,NY,67536,4430014543,scott36@example.org,http://alvarado.info/,Mo - Su 9:00 - 16:00
+New Justin Clinic,446 Heather River Apt. 850,New Justin,VA,04957,7231406041,paige01@example.net,http://stein.com/,Mo - Su 9:00 - 17:00
+Carterton University Medical Group,5592 Nathaniel Vista Apt. 070,Carterton,PA,41024,4565698879,foxrichard@example.net,http://nelson.com/,Mo - Su 7:00 - 17:00
+Jeremymouth Medical,225 Michelle Mission Suite 687,Jeremymouth,AR,52844,2001963492,mmejia@example.com,https://montgomery.biz/,"Mo - Fr 9:00 - 17:00, Sa - Su Closed"
+Jenniferside Clinic,34713 Johnson Ways,Jenniferside,SD,38150,4208870742,petersonbrandi@example.com,http://stein.com/,"Mo - Fr 10:00 - 19:00, Sa - Su Closed"
+Port Aaron Medical,04081 Victoria Tunnel Apt. 277,Port Aaron,SC,72932,2458569131,williamskendra@example.net,https://byrd-rasmussen.com/,"Mo - Fr 10:00 - 18:00, Sa - Su Closed"
+Mossfort Memorial Hospital,363 Richards Parkway Suite 654,Mossfort,ME,19773,1985613604,huntertracey@example.org,http://www.frost-woods.com/,Mo - Su 7:00 - 19:00
+Westville Health Center,55118 Reid Fort Suite 116,Westville,TX,77004,1730587562,amanda81@example.com,http://www.sanders.org/,Mo - Su 9:00 - 17:00
+Jacobtown Group,1891 Perez Ports Suite 211,Jacobtown,FM,60739,3084577482,rgraves@example.com,http://castillo-montgomery.com/,"Mo - Fr 7:00 - 16:00, Sa - Su Closed"
+Bestland Clinic,6548 Schwartz Place,Bestland,CO,69285,8412294439,kbell@example.net,https://combs-marshall.com/,Mo - Su 9:00 - 19:00
+New Christopherton Clinic,12273 Joseph Cove Suite 972,New Christopherton,GU,06522,9147963967,heathmark@example.com,https://white.com/,"Mo - Fr 9:00 - 17:00, Sa - Su Closed"
+South Stevebury Group,35245 Zachary Court Apt. 945,South Stevebury,OH,77394,8230411653,harrisdavid@example.net,http://braun.info/,Mo - Su 9:00 - 17:00
+Sarahfurt Health,4616 Christopher Trafficway Suite 070,Sarahfurt,WI,27806,2721186543,yolandajones@example.com,https://www.romero-figueroa.com/,Mo - Su 10:00 - 16:00
+South Jessicatown Medical,84004 Ashlee Dale,South Jessicatown,ME,37662,9413353865,lori75@example.com,https://merritt.info/,"Mo - Fr 8:00 - 16:00, Sa - Su Closed"
+West Josephstad Group,653 Douglas Square,West Josephstad,CO,87490,6417479717,abigail57@example.org,http://perez.info/,Mo - Su 7:00 - 19:00
+North Mary Clinic,785 Rodgers Skyway Suite 013,North Mary,DE,51550,2083442308,moorenicholas@example.org,https://www.hines-james.com/,Mo - Su 9:00 - 17:00
+Reginaport Health Center,493 Cheryl Glen,Reginaport,CA,84590,4615716798,nicole81@example.org,https://allen.com/,Mo - Su 9:00 - 17:00
+South Prestontown Medical Center,702 Ashley Walks Apt. 534,South Prestontown,ME,02130,6687773849,cathy36@example.com,http://www.hayes.com/,"Mo - Fr 8:00 - 16:00, Sa - Su Closed"
+Dennisville University Medical Group,190 Christopher Mills Apt. 792,Dennisville,MO,73569,4513978691,rochadana@example.org,https://townsend.com/,"Mo - Fr 9:00 - 16:00, Sa - Su Closed"
+Lake Emily Medical,92170 Martinez Point,Lake Emily,MA,99328,6861574797,vwoods@example.org,http://chavez-graham.com/,Mo - Su 7:00 - 17:00
+Sabrinamouth Clinic,7067 Gabrielle Pike Suite 285,Sabrinamouth,KY,69938,6380427857,davidpowell@example.com,https://crawford.com/,"Mo - Fr 7:00 - 18:00, Sa - Su Closed"
+Jonathontown Health Center,4317 Jill Shores,Jonathontown,SD,50910,3311995777,morriswilliam@example.net,http://www.williams.com/,Mo - Su 9:00 - 17:00
+North Loriborough Medical Clinic,29030 Seth Passage Apt. 104,North Loriborough,MI,80523,4076127621,fosterrandy@example.net,https://www.wilson.info/,"Mo - Fr 8:00 - 18:00, Sa - Su Closed"
+Port Tracifurt Clinic,6629 Jason Mills,Port Tracifurt,NV,61960,5709238872,melissa39@example.net,http://cunningham.info/,Mo - Su 9:00 - 18:00
+Millerbury Clinic,027 Dylan Prairie,Millerbury,UT,06982,4649817657,gthomas@example.org,http://www.murray.com/,"Mo - Fr 7:00 - 17:00, Sa - Su Closed"
+Port Bryan University Medical Group,49647 Thompson Dam Suite 031,Port Bryan,MP,63962,3389328093,jonesmelissa@example.net,http://harvey-coffey.info/,"Mo - Fr 7:00 - 19:00, Sa - Su Closed"
+West Colton Medical Clinic,68671 Schneider Course Suite 636,West Colton,AL,68716,7284336199,rebecca39@example.org,https://www.wright-jones.biz/,"Mo - Fr 8:00 - 19:00, Sa - Su Closed"
+Port Dennis Medical,087 Powell Station Suite 499,Port Dennis,UT,10989,5726271871,michael28@example.com,https://www.dalton-gardner.net/,Mo - Su 7:00 - 19:00
+Matthewview Medical,9411 Mitchell Underpass,Matthewview,HI,58343,4041092810,kcarey@example.org,https://allen.com/,Mo - Su 10:00 - 17:00
+Deborahburgh University Medical Group,813 Michael Cliffs,Deborahburgh,PR,83616,1743731541,obrown@example.com,http://www.chang-lopez.biz/,"Mo - Fr 10:00 - 19:00, Sa - Su Closed"
+Schroedershire Health Center,4951 Robert Stream Apt. 314,Schroedershire,IL,13656,5323167941,curtis19@example.com,http://www.lyons.biz/,Mo - Su 8:00 - 16:00
+Lake Jamie Medical,301 Smith Manor,Lake Jamie,MI,90893,3408331747,tiffany07@example.org,https://medina.com/,"Mo - Fr 10:00 - 16:00, Sa - Su Closed"
+Lake Catherineburgh Medical Center,9848 Gonzalez Tunnel,Lake Catherineburgh,AR,57405,9292988083,veronica92@example.net,https://www.hoffman-baker.com/,Mo - Su 7:00 - 16:00
+Walterberg University Medical Group,1928 Chad Via,Walterberg,NY,06745,2022307437,whitneyjennifer@example.com,https://www.miller.com/,Mo - Su 7:00 - 18:00
+Ochoaville Health Center,3395 Ellison Valley Suite 887,Ochoaville,FM,62014,7289632546,toddellis@example.com,http://www.riley.com/,Mo - Su 9:00 - 17:00
+Lake Frank Clinic,34802 Matthew Drive,Lake Frank,TN,34905,8080820084,stephenjohnson@example.net,https://brown.biz/,"Mo - Fr 7:00 - 17:00, Sa - Su Closed"
+Jodimouth Medical Clinic,96837 Jennifer Inlet,Jodimouth,MT,99373,7553096720,nancyleon@example.net,http://www.johnson-robinson.org/,Mo - Su 10:00 - 17:00
+Port Williammouth Health Center,88098 Miller Grove Apt. 825,Port Williammouth,MT,10034,6345431568,nathancolon@example.com,http://www.rogers.org/,Mo - Su 8:00 - 16:00
+Smithfort Health,6526 Robert Well Suite 023,Smithfort,DE,33292,6809803657,castillotony@example.net,https://coleman.com/,"Mo - Fr 9:00 - 17:00, Sa - Su Closed"
+Michaelshire Clinic,154 Philip Locks,Michaelshire,DE,50813,3198501482,vwilson@example.org,http://www.roy-williams.com/,Mo - Su 9:00 - 18:00
+West Samantha Medical Center,11149 Potts Summit Apt. 534,West Samantha,OR,35608,3604684346,joelbarker@example.com,https://chandler.com/,"Mo - Fr 10:00 - 19:00, Sa - Su Closed"
+Rodriguezview University Medical Group,270 Michael Mountain,Rodriguezview,NH,41408,9710862016,timothy13@example.net,https://sexton.info/,"Mo - Fr 7:00 - 18:00, Sa - Su Closed"
+Crystalfurt Health Center,531 Sawyer Drive Suite 989,Crystalfurt,GA,46644,2662601108,robinsonrobert@example.com,https://www.long.info/,Mo - Su 9:00 - 18:00
+Nancybury University Medical Group,4569 Walker Inlet,Nancybury,MT,27736,5408737513,markgomez@example.org,https://lewis.com/,"Mo - Fr 9:00 - 18:00, Sa - Su Closed"
+Davisport Group,513 Becky Causeway Suite 491,Davisport,NH,40626,5842031248,cooktimothy@example.net,https://www.baird.info/,"Mo - Fr 7:00 - 19:00, Sa - Su Closed"
+Annettebury Health,65340 Jenna Mountains,Annettebury,LA,55804,3936333019,johnsonbrian@example.org,https://reynolds.com/,Mo - Su 9:00 - 17:00
+Laurenland Health Center,226 Nathan Underpass,Laurenland,WI,98800,4234952150,seth09@example.net,http://www.lee-norton.biz/,Mo - Su 8:00 - 18:00
+Lake Timothychester Medical,433 Lyons Throughway,Lake Timothychester,FL,06648,7050440961,markgibson@example.org,https://www.richard.biz/,Mo - Su 8:00 - 16:00
+Maryview University Medical Group,1813 Connor Way,Maryview,NH,57705,1357230644,imorgan@example.net,https://miller.info/,Mo - Su 7:00 - 18:00
+New Rachelborough Memorial Hospital,094 Lewis Isle,New Rachelborough,ND,38497,5303800459,andrew47@example.com,http://www.morrison-nelson.com/,"Mo - Fr 10:00 - 18:00, Sa - Su Closed"
+West Meganshire University Medical Group,46422 Michelle Lights,West Meganshire,MA,47538,8531630030,sanfordchristopher@example.com,https://jackson.biz/,Mo - Su 10:00 - 19:00
+West Craig Health Center,133 Xavier Harbor Suite 650,West Craig,UT,10489,7683404582,rebeccarichardson@example.org,http://www.morales.org/,Mo - Su 9:00 - 18:00
+Port Robyn Medical,657 Miranda Gardens Suite 301,Port Robyn,NY,93891,4993730923,paul60@example.org,http://www.brown.net/,"Mo - Fr 7:00 - 19:00, Sa - Su Closed"
+Elizabethstad Memorial Hospital,672 Lin Hills Suite 573,Elizabethstad,MN,15545,7632251702,wilkinsmelissa@example.com,http://www.turner.org/,Mo - Su 8:00 - 16:00
+New Marissaport Medical Center,29353 Sullivan Mission,New Marissaport,OK,10738,2882329730,edwardsmarissa@example.com,https://www.hodge-harris.com/,"Mo - Fr 10:00 - 18:00, Sa - Su Closed"
+Lopezburgh Medical Clinic,6564 Hill Lane Apt. 539,Lopezburgh,WY,36289,5450588735,fbest@example.com,http://carter.com/,"Mo - Fr 8:00 - 17:00, Sa - Su Closed"
+Robertville Health Center,29301 Andrews Oval,Robertville,MP,39244,7301554640,meyerjason@example.org,http://douglas.com/,"Mo - Fr 9:00 - 17:00, Sa - Su Closed"
+South Timothyview Health Center,858 Randall Isle,South Timothyview,IL,95771,8098260909,nhill@example.net,https://www.fernandez.com/,Mo - Su 8:00 - 18:00
+East Michelle Health,195 Erin Stravenue Suite 516,East Michelle,NY,75099,2660096402,natalienichols@example.org,https://www.cuevas-cook.com/,Mo - Su 10:00 - 17:00
+New Anthonyburgh Medical Clinic,3359 Andrew Streets,New Anthonyburgh,CO,23212,4037454242,phamjennifer@example.org,https://gonzalez-lee.biz/,"Mo - Fr 7:00 - 18:00, Sa - Su Closed"
+Brittneybury Group,342 Smith Via,Brittneybury,GU,10682,1493121253,kjohnson@example.com,http://mcdonald-horton.info/,Mo - Su 8:00 - 19:00
+Payneside Group,470 Justin Lock,Payneside,GA,43580,2205450390,richard24@example.com,http://www.clark.net/,Mo - Su 9:00 - 16:00
+Davidfurt Health,579 Matthews Bridge Suite 791,Davidfurt,IA,63754,5940149101,amandafields@example.com,https://www.perry-evans.com/,Mo - Su 9:00 - 19:00
+Rebeccafort Medical Center,4553 Smith Meadow,Rebeccafort,MP,37727,3284890543,scottscott@example.org,https://phillips.com/,"Mo - Fr 8:00 - 19:00, Sa - Su Closed"
+Mirandaberg Health,2715 James Shore Apt. 053,Mirandaberg,TX,02799,4679648262,dylan55@example.com,https://www.lopez-holland.com/,"Mo - Fr 10:00 - 19:00, Sa - Su Closed"
+West Raven Medical,684 Alicia Branch Suite 834,West Raven,UT,33840,4251465875,alexandra59@example.org,http://reid-mendez.com/,"Mo - Fr 8:00 - 16:00, Sa - Su Closed"
+Lake Antonio Clinic,0500 Rachel Crescent Suite 493,Lake Antonio,AK,42767,2655571581,kathryn31@example.com,http://wood.org/,Mo - Su 8:00 - 19:00
+Cochranberg Medical,703 Tina Court,Cochranberg,MT,88196,1268757742,balvarez@example.org,http://www.casey.com/,Mo - Su 10:00 - 16:00
+Lake Jessemouth Medical,3016 Chelsey Vista,Lake Jessemouth,KS,11848,7364359795,jessicamelendez@example.com,http://stokes.info/,"Mo - Fr 9:00 - 16:00, Sa - Su Closed"
+South Ericmouth Medical Clinic,9738 Suzanne Mountain Apt. 589,South Ericmouth,UT,79471,8169187358,evanscarolyn@example.net,https://scott.com/,"Mo - Fr 8:00 - 18:00, Sa - Su Closed"
+South Angelaburgh Health,812 Matthew Mountains,South Angelaburgh,GU,99679,8674971380,sprice@example.com,https://www.thompson.biz/,"Mo - Fr 10:00 - 16:00, Sa - Su Closed"
+Montgomeryhaven Clinic,987 Payne Common,Montgomeryhaven,CO,81519,6836412226,josephmorales@example.net,http://lutz.net/,Mo - Su 9:00 - 16:00
+New Danielle Group,13279 Barnes Radial Suite 353,New Danielle,GA,89975,6089209736,laurabenton@example.org,http://www.davis-lee.com/,"Mo - Fr 9:00 - 17:00, Sa - Su Closed"
+Maldonadoville Memorial Hospital,9490 Fleming Mountain,Maldonadoville,MT,68438,8118386163,wcastro@example.net,http://www.bailey.com/,"Mo - Fr 7:00 - 16:00, Sa - Su Closed"
+Elizabethville Health,2540 Johnson Burgs,Elizabethville,NY,29903,4194269700,charles90@example.org,https://www.mitchell.com/,"Mo - Fr 8:00 - 18:00, Sa - Su Closed"
+South Nicoleborough Memorial Hospital,9896 Jones Hill Apt. 140,South Nicoleborough,AZ,52958,4921036922,pjackson@example.net,http://www.holt.org/,Mo - Su 10:00 - 18:00
+Hughesville Medical,95401 Cox Bridge,Hughesville,MI,69745,6175556001,nicholashowell@example.org,http://moreno-lee.com/,Mo - Su 8:00 - 18:00
+West Brian Medical Clinic,256 Cory Stream,West Brian,AZ,81820,2236833432,powerspaula@example.net,https://simmons.org/,"Mo - Fr 7:00 - 19:00, Sa - Su Closed"
+Lake Kenneth Medical Clinic,8861 Richardson Drive Suite 862,Lake Kenneth,MA,58539,9386828821,vcosta@example.org,https://valdez-dunn.biz/,Mo - Su 8:00 - 16:00
+New Tara Group,78168 Sexton Creek,New Tara,SC,52099,6364806520,richard78@example.org,http://woods.net/,"Mo - Fr 8:00 - 18:00, Sa - Su Closed"
+South Benjamin Clinic,01622 Copeland Mall,South Benjamin,AR,90534,1367056438,ysmall@example.com,https://www.flores-mcgee.com/,"Mo - Fr 7:00 - 17:00, Sa - Su Closed"
+Brittanychester Clinic,14721 Elizabeth Drive Apt. 665,Brittanychester,NJ,96905,6649643133,caitlyn14@example.com,http://www.bridges.com/,"Mo - Fr 7:00 - 18:00, Sa - Su Closed"
+Lake Megan Health,931 Harmon Shoal Suite 001,Lake Megan,VT,10869,7227545506,swilson@example.net,http://www.bush-bautista.com/,"Mo - Fr 10:00 - 16:00, Sa - Su Closed"
+Reyesville Health Center,826 Diana Lake Suite 561,Reyesville,AS,92065,3007364338,timrangel@example.net,http://www.green-gibson.info/,Mo - Su 7:00 - 16:00
+West Melissa Clinic,73224 Smith Flat Apt. 520,West Melissa,GU,56273,2543860193,ericdiaz@example.org,https://gallegos-carpenter.info/,"Mo - Fr 8:00 - 17:00, Sa - Su Closed"
+Lake Bruce Clinic,17348 Cummings Parkways,Lake Bruce,MP,21378,6256663651,madisoncarroll@example.org,http://johnson-cooper.net/,"Mo - Fr 7:00 - 16:00, Sa - Su Closed"
+East Melissafurt Health Center,454 Hamilton Parks,East Melissafurt,VA,25185,9649659944,guy64@example.com,http://white.com/,Mo - Su 9:00 - 17:00
+South Nathan Health Center,143 Gonzalez Island Apt. 069,South Nathan,OR,21465,4097314359,greggcontreras@example.com,http://miller-ayala.com/,Mo - Su 9:00 - 18:00
+West Sandraburgh Memorial Hospital,203 Nathan Island,West Sandraburgh,AR,03183,3715387139,rachel18@example.org,https://www.blanchard-miller.com/,Mo - Su 8:00 - 19:00
+Lake Danny Memorial Hospital,71889 Marilyn Vista Apt. 498,Lake Danny,AZ,08048,2204070683,dunnpaul@example.com,http://www.neal-hatfield.org/,Mo - Su 7:00 - 16:00
+South Eugene Medical Center,971 Bowen Squares Apt. 032,South Eugene,CO,14205,2037439089,mark99@example.com,https://www.johnson.biz/,"Mo - Fr 10:00 - 18:00, Sa - Su Closed"
+Toniside Clinic,9590 Paul Ways,Toniside,VT,51203,7369637011,williamskelly@example.org,http://forbes-mcdonald.org/,Mo - Su 10:00 - 16:00
+East Ryanburgh Health Center,61439 Lowe Squares Apt. 960,East Ryanburgh,GA,64306,7263930573,higginsdenise@example.org,http://www.mcguire.info/,Mo - Su 7:00 - 18:00
+Jenniferhaven Clinic,06137 Washington Glen Apt. 408,Jenniferhaven,SC,90229,9779192303,snelson@example.org,http://hoffman.net/,Mo - Su 9:00 - 16:00
+North Zacharyberg Health,590 Hall Club,North Zacharyberg,WV,37880,6137930297,tyler79@example.com,http://rogers.com/,"Mo - Fr 9:00 - 17:00, Sa - Su Closed"
+South William University Medical Group,6280 Jones Roads Suite 041,South William,OR,24153,8131319459,phernandez@example.net,https://www.stanton-jordan.com/,"Mo - Fr 8:00 - 17:00, Sa - Su Closed"
+Richardstad Health Center,6641 Christy Lodge Suite 908,Richardstad,CO,01934,9131720564,sjones@example.com,http://williams.com/,Mo - Su 8:00 - 16:00
+Peterstad Medical Clinic,73760 Michael Dale,Peterstad,SC,53822,7273043662,diane38@example.com,https://russell-gomez.com/,Mo - Su 8:00 - 16:00
+North Omarton Clinic,6917 Guerrero Hollow Apt. 122,North Omarton,TX,01736,6543227486,jessicahamilton@example.net,http://sloan.com/,Mo - Su 9:00 - 19:00
+New Amy Clinic,2222 Nichols Flats Suite 374,New Amy,GU,93874,6384936766,othompson@example.com,http://arnold.com/,Mo - Su 10:00 - 17:00
+North Manuel Health Center,7147 Ramirez Bypass,North Manuel,NC,17769,2977209992,kconway@example.org,http://www.anderson.com/,Mo - Su 9:00 - 18:00
+Bullockshire University Medical Group,453 Tony River,Bullockshire,GU,51334,9317748584,panderson@example.net,http://patel-ware.com/,Mo - Su 8:00 - 16:00
+New Jeremymouth Medical,34736 Barry View,New Jeremymouth,NE,81954,9779806311,harrisdon@example.com,https://www.hoffman-forbes.net/,Mo - Su 10:00 - 18:00
+Lisabury Memorial Hospital,7775 Barbara Valley,Lisabury,GU,48358,3648369092,sheryljenkins@example.org,http://www.wallace.com/,Mo - Su 10:00 - 19:00
+Nicolefort Health Center,12437 Sean Crossing Suite 106,Nicolefort,MD,49802,1209675136,wilsonhannah@example.net,http://www.chan.com/,"Mo - Fr 9:00 - 16:00, Sa - Su Closed"
+South Wandaview Group,013 Richard Locks,South Wandaview,ND,71220,5917050627,djohnson@example.net,https://www.russell.com/,"Mo - Fr 10:00 - 17:00, Sa - Su Closed"
+East Timothystad Group,2560 Alvarado Turnpike Apt. 501,East Timothystad,PR,31848,9755093727,kellyballard@example.org,http://roberts.biz/,"Mo - Fr 8:00 - 17:00, Sa - Su Closed"
+Lake Austin Medical Clinic,19396 Houston Pass Suite 723,Lake Austin,FM,17242,1916918296,bmoore@example.org,http://www.thompson.biz/,Mo - Su 10:00 - 18:00
+Kimberlyhaven Health Center,7398 Taylor Cape,Kimberlyhaven,PW,53917,3170983160,amyfarrell@example.net,https://rivera-sims.org/,"Mo - Fr 10:00 - 18:00, Sa - Su Closed"
+Port Paigeburgh Medical,84752 Justin Circle,Port Paigeburgh,CO,64351,5675426802,donnabrown@example.org,http://www.johnson.com/,"Mo - Fr 8:00 - 16:00, Sa - Su Closed"
+Gallowayburgh Health Center,237 Lawrence Trail,Gallowayburgh,MA,06999,3548746390,harperchristopher@example.net,http://www.santos.org/,Mo - Su 10:00 - 19:00
+South Christopher Memorial Hospital,9403 Adrian Ways,South Christopher,KY,62783,3038171069,margaretwest@example.org,http://www.scott.com/,"Mo - Fr 9:00 - 16:00, Sa - Su Closed"
+East Amanda Medical,066 Walker Shores Suite 254,East Amanda,TX,00644,4248951531,lisaritter@example.org,https://www.wright.com/,"Mo - Fr 9:00 - 19:00, Sa - Su Closed"
+New Cynthia Medical,29385 Gabriella Neck,New Cynthia,GA,04129,8176453689,changjohn@example.net,http://oconnor.com/,"Mo - Fr 9:00 - 17:00, Sa - Su Closed"
+North Matthew Medical Clinic,71749 Sergio Wall Suite 995,North Matthew,CO,17497,2980805542,gdavis@example.com,http://www.garcia.biz/,Mo - Su 10:00 - 19:00
+South Faithhaven Memorial Hospital,83530 Harper Viaduct,South Faithhaven,VI,05615,4625907209,nwhitney@example.net,https://www.hamilton.net/,Mo - Su 8:00 - 19:00
+East Williamstad Health Center,2299 Gray Extensions,East Williamstad,RI,43262,6894159389,dgibson@example.com,http://leblanc.info/,Mo - Su 10:00 - 19:00
+North Donnabury Group,01584 Brock Oval Apt. 160,North Donnabury,PA,96283,1025373036,andrewsandrew@example.org,https://kelly.com/,"Mo - Fr 10:00 - 17:00, Sa - Su Closed"
+Shawmouth Memorial Hospital,834 Wilcox Mews,Shawmouth,TN,16716,9002935891,lisaross@example.net,https://jones.com/,Mo - Su 10:00 - 19:00
+Robinsonfort Clinic,9994 Thornton Greens,Robinsonfort,VI,26247,5675964520,maddenjoy@example.com,https://www.reed.com/,Mo - Su 8:00 - 17:00
+Whitefort Medical Center,352 Adams View,Whitefort,DE,22696,5966655563,melissagillespie@example.com,http://esparza.com/,"Mo - Fr 8:00 - 16:00, Sa - Su Closed"
+Lake Jennifer Medical Clinic,147 Walker Manor,Lake Jennifer,IN,50516,1088846628,djohnson@example.org,http://ramirez.com/,Mo - Su 8:00 - 19:00
+Tylerfurt Medical Center,7145 Hernandez Stream,Tylerfurt,AS,91599,4385612672,catherinebennett@example.org,https://www.collins.org/,"Mo - Fr 8:00 - 19:00, Sa - Su Closed"
+Hollandhaven Memorial Hospital,69914 Suzanne Burg,Hollandhaven,CO,49159,7443047140,kelly23@example.com,https://jackson.org/,Mo - Su 9:00 - 19:00
+Mooremouth Health,244 Griffin Junctions,Mooremouth,UT,33018,8201972767,mariaellis@example.org,http://moses.com/,"Mo - Fr 9:00 - 17:00, Sa - Su Closed"
+West Susanstad University Medical Group,412 Meyers Mount,West Susanstad,MI,07054,6443493309,kentkayla@example.org,http://www.gardner-hill.net/,"Mo - Fr 9:00 - 19:00, Sa - Su Closed"
+South Seanland Medical,1588 Henry Mountain Suite 263,South Seanland,NJ,91815,9843869082,riverajohn@example.com,http://franco.com/,"Mo - Fr 9:00 - 17:00, Sa - Su Closed"
+Brendantown Medical Clinic,247 Kristin Dam Suite 553,Brendantown,NY,52852,5417314870,obrown@example.org,https://www.johnson.com/,"Mo - Fr 8:00 - 19:00, Sa - Su Closed"
+New Jason Health,66453 Andrew Falls Apt. 195,New Jason,KY,38625,3260737747,parkervictoria@example.org,http://www.maynard.com/,Mo - Su 10:00 - 16:00
+Sotoberg Clinic,473 Jones Divide,Sotoberg,TX,66018,5614185358,tjohnson@example.net,https://www.walker.info/,"Mo - Fr 7:00 - 16:00, Sa - Su Closed"
+East Ericburgh Health,64947 Andre Rapids Suite 180,East Ericburgh,HI,35012,7013946765,wmiller@example.org,https://www.pittman.com/,"Mo - Fr 7:00 - 18:00, Sa - Su Closed"
+Port Kellytown Health Center,926 Caitlin Forks,Port Kellytown,ND,78154,6700609256,juliejones@example.net,http://stevens.com/,Mo - Su 10:00 - 19:00
+Jimmyport University Medical Group,925 Berger Corners Apt. 870,Jimmyport,AS,31326,7879061488,carrieballard@example.com,http://www.jones-powers.info/,"Mo - Fr 7:00 - 17:00, Sa - Su Closed"
+Shannonhaven Health,5447 Jonathan Mountains Suite 255,Shannonhaven,DC,97661,6027325725,brenda19@example.org,http://kim.com/,Mo - Su 9:00 - 19:00
+Lake Hunter Health,8004 Wilson Burgs,Lake Hunter,WV,83996,5363009399,peckbrian@example.net,https://www.wall.com/,"Mo - Fr 8:00 - 18:00, Sa - Su Closed"
+Pottstown Group,881 Nancy Causeway,Pottstown,MD,57046,3655594475,tylerduncan@example.org,http://wright-peters.info/,Mo - Su 10:00 - 17:00
+Roystad Memorial Hospital,361 David Inlet Apt. 989,Roystad,MN,55757,2696202895,santosbrian@example.com,https://www.valdez-vasquez.com/,"Mo - Fr 8:00 - 17:00, Sa - Su Closed"
+Lake Kelseyhaven Memorial Hospital,3814 Angela Prairie,Lake Kelseyhaven,MS,17711,8232184760,xmiller@example.com,https://schneider.net/,"Mo - Fr 7:00 - 19:00, Sa - Su Closed"
+South Debrahaven Medical Center,618 Lee Inlet Apt. 116,South Debrahaven,NV,85334,6906756678,grantgalloway@example.org,http://www.bowers.com/,"Mo - Fr 7:00 - 19:00, Sa - Su Closed"
+North Yesenia Group,262 Carolyn Hill,North Yesenia,NJ,40358,9515027021,ayoung@example.org,http://www.rodriguez-young.com/,"Mo - Fr 10:00 - 17:00, Sa - Su Closed"
+Port Karenmouth University Medical Group,7252 Friedman Shoals Suite 304,Port Karenmouth,IL,82042,4637280926,jasonhall@example.com,https://www.johnson-neal.com/,Mo - Su 8:00 - 18:00
+Wayneland Medical Clinic,76468 Potter Ridge,Wayneland,IA,05172,7439299313,johnconner@example.org,http://garner.com/,Mo - Su 7:00 - 18:00
+Howelltown Medical,51496 David Crossing Suite 671,Howelltown,WY,97918,9091793703,hbarry@example.com,http://www.bennett.org/,"Mo - Fr 7:00 - 18:00, Sa - Su Closed"
+Joanville Health Center,10411 Johnathan Inlet,Joanville,DE,53774,2276899009,christianjohnson@example.com,http://stewart.biz/,"Mo - Fr 10:00 - 19:00, Sa - Su Closed"
+East Monique Health Center,7961 Nathan Terrace,East Monique,WY,87612,5939973467,silvarachel@example.org,http://frank.info/,"Mo - Fr 7:00 - 16:00, Sa - Su Closed"
+West Bobbyville Medical Center,6603 Rios Plains,West Bobbyville,AZ,87282,1356011891,keithjohnson@example.net,http://bautista.com/,Mo - Su 8:00 - 19:00
+Lake Jacquelinestad Clinic,87285 Thomas Prairie Apt. 523,Lake Jacquelinestad,UT,01553,6708235811,tbrown@example.org,http://www.garcia-stuart.com/,"Mo - Fr 10:00 - 17:00, Sa - Su Closed"
+Stephanieville Group,0503 Billy Lakes Apt. 384,Stephanieville,SC,72035,2079535970,timothy69@example.org,https://white.com/,"Mo - Fr 9:00 - 16:00, Sa - Su Closed"
+Lake David Group,697 John Club,Lake David,GU,15009,7546096824,hcarey@example.org,http://james.com/,Mo - Su 8:00 - 17:00
+Elizabethhaven Medical Clinic,14259 Kayla Club Apt. 365,Elizabethhaven,ND,96418,4410270164,lindawoods@example.com,https://www.perez.com/,Mo - Su 9:00 - 18:00
+North Kennethton Group,70022 Day Flats Suite 740,North Kennethton,AR,47025,6839362153,esantana@example.com,http://www.murray-gonzales.com/,"Mo - Fr 9:00 - 19:00, Sa - Su Closed"
+North Paul Memorial Hospital,6525 Stewart Lane Suite 993,North Paul,VA,08273,1578622348,dfloyd@example.org,https://www.romero.com/,Mo - Su 9:00 - 16:00
+Rachelchester Medical Center,501 Cassandra Meadows,Rachelchester,PR,16578,1244397001,jason37@example.net,http://www.richardson-price.com/,Mo - Su 10:00 - 19:00
+Cooperland Clinic,9797 Teresa Ferry Apt. 542,Cooperland,FL,16530,8524970531,williamtrujillo@example.com,http://www.turner.com/,Mo - Su 8:00 - 16:00
+Walshtown Medical Center,006 Martinez Fork Apt. 244,Walshtown,AR,23461,4685550070,walterkrystal@example.com,http://combs-sullivan.net/,"Mo - Fr 9:00 - 19:00, Sa - Su Closed"
+Samuelchester Memorial Hospital,20969 Michael Port Suite 678,Samuelchester,ND,75008,4616862022,blakeduffy@example.org,https://www.henson.com/,Mo - Su 8:00 - 18:00
+Garciachester Medical Center,94840 Amanda Camp Apt. 405,Garciachester,GA,38131,8578385211,latoyaparks@example.net,https://schmidt-lindsey.biz/,"Mo - Fr 8:00 - 17:00, Sa - Su Closed"
+Lewischester University Medical Group,28121 Esparza Points Apt. 710,Lewischester,SC,11943,4848654123,arobinson@example.com,https://www.duke.com/,Mo - Su 7:00 - 18:00
+Port Eddie Medical Clinic,76365 Neal Shoals,Port Eddie,OH,22148,3266273860,gwheeler@example.com,https://butler.com/,"Mo - Fr 9:00 - 16:00, Sa - Su Closed"
+Port Kevin Health Center,3960 Scott Parkway,Port Kevin,VI,33685,1161432927,hansoncory@example.net,https://bradley.com/,"Mo - Fr 9:00 - 16:00, Sa - Su Closed"
+South Johnton University Medical Group,227 Davis Turnpike Suite 453,South Johnton,AZ,56465,2406851689,ymiller@example.org,https://jones-burke.biz/,Mo - Su 8:00 - 18:00
+Hartfurt Medical Center,3366 Juarez Path,Hartfurt,NE,09767,1417806946,jessica96@example.net,https://thompson.net/,"Mo - Fr 10:00 - 16:00, Sa - Su Closed"
+East Christopher Health Center,254 Leslie Cape Suite 125,East Christopher,VT,39985,7046073626,dustinmcfarland@example.org,http://boyer.com/,"Mo - Fr 8:00 - 19:00, Sa - Su Closed"
+Davidside Medical,6521 Michelle Drive,Davidside,CA,10072,2506843068,maryarroyo@example.org,http://lewis.com/,"Mo - Fr 8:00 - 17:00, Sa - Su Closed"

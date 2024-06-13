@@ -28,5 +28,13 @@
 - pipenv install (installs packages from our pipfile to your machine)
 - pipenv install <package-name> (to add more packages to the pipfile)
 
+## Instructions for Querying the Database
+
+- To query the database with SQL commands, you must be given the login credientials by an administrator.
+- Then you can use the **query** function defined in **fake_data/connect.py**:
+    - from fake_data.connect import query
+    - query("SELECT * FROM patients LIMIT 5")
+    - results will populate in query.csv
 
 ### Thank you!!
+
