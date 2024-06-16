@@ -58,7 +58,7 @@ possible_surgeries = ['Appendectomy', 'Cholecystectomy', 'Hernia repair', 'Maste
 possible_conditions = ['Heart disease', 'Stroke', 'Diabetes', 'Cancer', 'High blood pressure', 'High cholesterol', 'Asthma', 'Arthritis', 'Osteoporosis', 'Alzheimer\'s', 'Dementia', 'Depression', 'Anxiety', 'Bipolar disorder', 'Schizophrenia', 'ADHD', 'Autism', 'Epilepsy', 'Migraines', 'Thyroid disease', 'Kidney disease', 'Liver disease', 'Lung disease', 'COPD', 'Crohn\'s disease', 'Ulcerative colitis', 'Celiac disease', 'Multiple sclerosis', 'Lupus', 'Rheumatoid arthritis', 'Psoriasis', 'HIV/AIDS', 'Hepatitis', 'Tuberculosis']
 medical_conditions = ['Asthma', 'Diabetes', 'High blood pressure', 'High cholesterol', 'Heart disease', 'Stroke', 'Cancer', 'Arthritis', 'Osteoporosis', 'Alzheimer\'s', 'Dementia', 'Depression', 'Anxiety', 'Bipolar disorder', 'Schizophrenia', 'ADHD', 'Autism', 'Epilepsy', 'Migraines', 'Thyroid disease', 'Kidney disease', 'Liver disease', 'Lung disease', 'COPD', 'Crohn\'s disease', 'Ulcerative colitis', 'Celiac disease', 'Multiple sclerosis', 'Lupus', 'Rheumatoid arthritis', 'Psoriasis', 'HIV/AIDS', 'Hepatitis', 'Tuberculosis']
 
-def generate_patient_data():
+def generate_patient_data(emails):
   password = fake.password()
   SSN = fake.random_int(min=100000000, max=999999999)
   phone = fake.random_int(min=1000000000, max=9999999999)
