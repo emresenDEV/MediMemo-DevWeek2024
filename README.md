@@ -1,8 +1,8 @@
 # MediMemo-DevWeek2024
 
- This application is currently in development. Our goal is to create a health app that prevents the loss of patient data during data entry due to network loss and seamlessly updates patient files once the connection is restored.
+ This application is currently in development. Our goal is to create a medical record system that prevents the loss of patient data during data entry due to network loss and seamlessly updates patient files once the connection is restored.
 
-## Anticipated Features:
+## Anticipated Features
 - Scheduling Tool
 - Data Entry Tool
 - Patient History Viewer
@@ -11,15 +11,13 @@
 ## Running the Program
 
 ### First Time
-
-    - must have node.js installed
-    - terminal command:
-        - cd client && npm install && npm start
+- must have node.js installed
+- terminal command:
+    - cd client && npm install && npm start
 
 ### Future Times
-
-    - terminal command:
-        - cd client && npm start
+- terminal command:
+    - cd client && npm start
 
 ## Instructions for Using Pipenv
 

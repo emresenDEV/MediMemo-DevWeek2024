@@ -1,6 +1,5 @@
 import psycopg2
 from config import load_config
-from tabulate import tabulate
 import csv
 
 def connect(config):
@@ -35,9 +34,8 @@ def query(operation):
 if __name__ == '__main__':
     # config = load_config()
     # connect(config)
+    input = input("Type query and press enter: ")
+    query(input)
+    print("Query results saved to 'query.csv'")
 
-    headers, staff = query('SELECT * FROM staff LIMIT 2;')
-    # staff = query('SELECT * FROM staff;')
-    # print(headers)
-    # print(staff)
-    # print(tabulate(staff, headers=headers))
+    # pass
