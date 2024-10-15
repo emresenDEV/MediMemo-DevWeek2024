@@ -13,7 +13,7 @@ import Paper from '@mui/material/Paper';
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { ViewState } from "@devexpress/dx-react-scheduler";
 
-function Test({ appointments, setAppointments, selectedAppointment, setSelectedAppointment, selectedClient, setSelectedClient }) {
+function Schedule({ appointments, setAppointments, selectedAppointment, setSelectedAppointment, selectedClient, setSelectedClient }) {
   const history = useHistory()
   // console.log(appointments)
   // console.log(selectedAppointment)
@@ -77,4 +77,4 @@ function Test({ appointments, setAppointments, selectedAppointment, setSelectedA
   );
 };
 
-export default Test
+export default Schedule
